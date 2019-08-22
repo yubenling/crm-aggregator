@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://code.alibabatech.com/schema/dubbo        
+                        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+                        http://www.springframework.org/schema/jdbc 
+                        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+	<!-- 自动扫描 -->
+	<context:component-scan base-package="com.kycrm.member.*" />
+	<!-- 支持异步方法执行 -->
+	<task:annotation-driven />
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/env.properties</value>
+				<value>classpath:/redis.properties</value>
+				<value>classpath:/dubbo.properties</value>
+				<value>classpath:/alipay.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!--  @author:Jackstraw_yu  -->
+	<!-- 自定义异常处理,SessionOutException 空实体,ajax请求登录超时时抛出,用于系统捕捉重定向到淘宝登录页 -->  
+    <bean id="exceptionResolver"  
+        class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+        <property name="exceptionMappings">  
+            <props>  
+                <prop key="com.kycrm.member.commons.exception.SessionOutException">
+                	https://login.taobao.com/member/login.jhtml
+                </prop>
+            </props>  
+        </property>  
+    </bean>  
+	<!--  @author:Jackstraw_yu  -->
+
+	<import resource="../dubbo/dubbo-consumer.xml"/>
+	<import resource="spring-redis.xml"/>
+	<import resource="spring-pay-config.xml"/>
+	<import resource="spring-taobao-log.xml"/>
+	<!-- 项目启动时 初始化一次性任务 -->
+	<bean init-method="init" class="com.kycrm.member.core.init.InitSpringListener" />
+</beans>

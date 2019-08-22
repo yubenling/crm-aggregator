@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.message.ISmsRecordDTODao">
+	<resultMap type="com.kycrm.member.domain.entity.message.SmsRecordDTO"
+		id="smsRecordDTO_Map">
+		<result column="uid" property="uid" />
+		<result column="user_id" property="userId" />
+		<result column="type" property="type" />
+		<result column="rec_num" property="recNum" />
+		<result column="buyer_nick" property="buyerNick" />
+		<result column="content" property="content" />
+		<result column="actual_deduction" property="actualDeduction" />
+		<result column="autograph" property="autograph" />
+		<result column="biz_id" property="bizId" />
+		<result column="channel" property="channel" />
+		<result column="code" property="code" />
+		<result column="nick_name" property="nickname" />
+		<result column="order_id" property="orderId" />
+		<result column="receiver_time" property="receiverTime" />
+		<result column="result_code" property="resultCode" />
+		<result column="source" property="source" />
+		<result column="status" property="status" />
+		<result column="task_id" property="taskId" />
+		<result column="msg_id" property="msgId" />
+		<result column="is_show" property="isShow" />
+		<result column="send_time" property="sendTime" />
+		<result column="display_time" property="displayDate" jdbcType="VARCHAR"/>
+		<result column="createdDate" property="createdDate" />
+		<result column="lastModifiedDate" property="lastModifiedDate" />
+		<result column="createdBy" property="createdBy" />
+		<result column="lastModifiedBy" property="lastModifiedBy" />
+		<result column="activity_name" property="activityName" />
+	</resultMap>
+
+	<!-- 自动创建用户短信记录表 -->
+	<insert id="doCreateTableByNewUser" parameterType="java.lang.String">
+		CREATE TABLE
+		`crm_sms_record_dto${_parameter}` (
+		`id` bigint(20) NOT NULL
+		AUTO_INCREMENT,
+		`uid` bigint(20) NOT NULL COMMENT '用户表的主键id',
+		`user_id`
+		varchar(255) DEFAULT NULL COMMENT '用户昵称',
+		`type` varchar(99) DEFAULT
+		NULL COMMENT '短信类型',
+		`rec_num` varchar(255) DEFAULT NULL COMMENT
+		'短信接收号码',
+		`buyer_nick` varchar(1000) DEFAULT NULL COMMENT '买家昵称',
+		`content` varchar(1500) DEFAULT NULL COMMENT '短信内容',
+		`actual_deduction` int(11) DEFAULT NULL COMMENT '实际扣除短信条数',
+		`autograph` varchar(255) DEFAULT NULL COMMENT '短信签名',
+		`biz_id`
+		bigint(20) DEFAULT NULL COMMENT '短信发送流水号',
+		`channel` varchar(255)
+		DEFAULT NULL COMMENT '渠道',
+		`code` varchar(255) DEFAULT NULL COMMENT
+		'模板编码',
+		`nickname` varchar(255) DEFAULT NULL COMMENT '收货人昵称',
+		`order_id` varchar(255) DEFAULT NULL COMMENT '订单id',
+		`receiver_time`
+		datetime DEFAULT NULL COMMENT '短信接收时间',
+		`result_code` varchar(255)
+		DEFAULT NULL COMMENT '短信错误码',
+		`source` varchar(255) DEFAULT NULL
+		COMMENT '数据来源',
+		`status` int(11) DEFAULT NULL COMMENT '发送状态
+		1：发送失败，2：发送成功，3：手机号码不正确，4：号码重复， 5：黑名单， 6 ：重复被屏蔽 /重复发送',
+		`task_id`
+		bigint(20) DEFAULT NULL COMMENT '任务id',
+		`msg_id` bigint(20) DEFAULT
+		NULL COMMENT '总记录id',
+		`is_show` tinyint(1) DEFAULT NULL COMMENT '是否删除',
+		`send_time` datetime DEFAULT NULL COMMENT '发送时间',
+		`activity_name`
+		varchar(255) DEFAULT NULL COMMENT '活动名称',
+		`createdDate` datetime
+		DEFAULT NULL COMMENT '创建时间',
+		`lastModifiedDate` datetime DEFAULT NULL
+		COMMENT '最后一次修改时间',
+		`shield_day` int(3) DEFAULT 0 COMMENT '屏蔽天数',
+		`optlock` int(11) NOT NULL DEFAULT '0',
+		PRIMARY KEY (`id`),
+		KEY
+		`createdDate` (`createdDate`) USING BTREE
+		) ENGINE=InnoDB DEFAULT
+		CHARSET=utf8 ROW_FORMAT=FIXED;
+	</insert>
+
+	<!-- 是否存在表 -->
+	<select id="isExistsTable" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_sms_record_dto${_parameter}'
+	</select>
+	<!-- 插入一条短信记录 -->
+	<insert id="doCreateSmsRecordDTOBySingle" parameterType="com.kycrm.member.domain.entity.message.SmsRecordDTO">
+		INSERT
+		INTO
+		crm_sms_record_dto${uid}(createdDate,lastModifiedDate,biz_id,rec_num,result_code,code,
+		content,receiver_time,send_time,type,status,channel,actual_deduction,order_id,
+		buyer_nick,nickname,autograph,user_id,uid,msg_id,task_id,is_show,activity_name,source)
+		VALUE(NOW(),NOW(),#{bizId},#{recNum},#{resultCode},#{code},#{content},#{receiverTime},
+		NOW(),#{type},#{status},#{channel},#{actualDeduction},#{orderId},#{buyerNick},
+		#{nickname},#{autograph},#{userId},#{uid},#{msgId},#{taskId},#{isShow},#{activityName},#{source})
+	</insert>
+
+
+	<!-- 插入短信记录集合 -->
+	<insert id="doCreateSmsRecordDTOByList" parameterType="com.kycrm.member.domain.entity.base.BaseListEntity">
+		INSERT INTO
+		crm_sms_record_dto${uid}(createdDate,lastModifiedDate,biz_id,rec_num,result_code,code,
+		content,receiver_time,send_time,type,status,channel,actual_deduction,order_id,
+		buyer_nick,nickname,autograph,user_id,uid,msg_id,task_id,is_show,activity_name,source)
+		VALUES
+		<foreach collection="entityList" item="item" index="index"
+			separator=",">
+			(NOW(),NOW(),#{item.bizId},#{item.recNum},#{item.resultCode},
+			#{item.code},#{item.content},#{item.receiverTime},NOW(),
+			#{item.type},#{item.status},#{item.channel},#{item.actualDeduction},#{item.orderId},
+			#{item.buyerNick},#{item.nickname},#{item.autograph},#{item.userId},#{uid},#{item.msgId},
+			#{item.taskId},#{item.isShow},#{item.activityName},#{item.source})
+		</foreach>
+	</insert>
+
+	<select id="findSmsSendRecordList" parameterType="com.kycrm.member.domain.vo.message.SmsRecordVO"
+		resultMap="smsRecordDTO_Map">
+		SELECT t1.id,t1.type,t1.rec_num,t1.buyer_nick,t1.send_time,
+		t1.content,t1.status,t1.actual_deduction,t1.order_id
+		FROM
+		crm_sms_record_dto${uid} t1,
+		(SELECT id
+		FROM crm_sms_record_dto${uid}
+		<where>
+			<if test="typeList != null and typeList.size >0">
+				AND type IN
+				<foreach collection="typeList" item="item" index="index"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="status != null">
+				AND status = #{status}
+			</if>
+			<if test="recNum != null and recNum != ''">
+				AND rec_num = #{recNum}
+			</if>
+			<if test="orderId != null and orderId != ''">
+				AND order_id = #{orderId}
+			</if>
+			<if test="buyerNick != null and buyerNick != ''">
+				AND buyer_nick = #{buyerNick}
+			</if>
+			<if test="beginTime != null">
+				AND DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{beginTime},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="endTime != null">
+				AND DATE_FORMAT(#{endTime},'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s')
+			</if>
+		</where>
+		ORDER BY id DESC
+		limit #{startRows},#{currentRows})t2
+		WHERE t1.id =
+		t2.id
+	</select>
+
+	<select id="findSendRecordCount" parameterType="com.kycrm.member.domain.vo.message.SmsRecordVO"
+		resultType="java.lang.Long">
+		SELECT COUNT(1)
+		FROM crm_sms_record_dto${uid}
+		<where>
+			<if test="typeList != null and typeList.size >0">
+				AND type IN
+				<foreach collection="typeList" item="item" index="index"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="status != null">
+				AND status = #{status}
+			</if>
+			<if test="recNum != null and recNum != ''">
+				AND rec_num = #{recNum}
+			</if>
+			<if test="orderId != null and orderId != ''">
+				AND order_id = #{orderId}
+			</if>
+			<if test="buyerNick != null and buyerNick != ''">
+				AND buyer_nick = #{buyerNick}
+			</if>
+			<if test="beginTime != null">
+				AND DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{beginTime},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="endTime != null">
+				AND DATE_FORMAT(#{endTime},'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s')
+			</if>
+		</where>
+	</select>
+
+
+	<select id="findSendDeductionNum" parameterType="com.kycrm.member.domain.vo.message.SmsRecordVO"
+		resultType="java.lang.Long">
+		SELECT SUM(actual_deduction)
+		FROM crm_sms_record_dto${uid}
+		<where>
+			<if test="typeList != null and typeList.size >0">
+				AND type IN
+				<foreach collection="typeList" item="item" index="index"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="status != null and status != ''">
+				and status = #{status}
+			</if>
+			<if test="recNum != null and recNum != ''">
+				AND rec_num = #{recNum}
+			</if>
+			<if test="orderId != null and orderId != ''">
+				AND order_id = #{orderId}
+			</if>
+			<if test="buyerNick != null and buyerNick != ''">
+				AND buyer_nick = #{buyerNick}
+			</if>
+			<if test="beginTime != null">
+				AND DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{beginTime},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="endTime != null">
+				AND DATE_FORMAT(#{endTime},'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s')
+			</if>
+		</where>
+	</select>
+
+	<!-- -->
+	<select id="tradeCenterEffectRecordTid"
+		parameterType="com.kycrm.member.domain.vo.effect.TradeCenterEffectVO"
+		resultType="java.lang.String">
+		select order_id
+		from crm_sms_record_dto${uid}
+		<where>
+			status = 2
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="taskId != null">
+				and task_id = #{taskId}
+			</if>
+			<if test="beginTime != null and endTime != null">
+				and send_time between #{beginTime} and #{endTime}
+			</if>
+		</where>
+	</select>
+
+	<!-- queryTidSendTime -->
+	<select id="queryTidSendTime" parameterType="com.kycrm.member.domain.entity.message.SmsRecordDTO"
+		resultType="java.util.Date">
+		select send_time
+		from crm_sms_record_dto${uid}
+		<where>
+			status = 2
+			<if test="orderId != null and orderId != ''">
+				and order_id = #{orderId}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询时间段内每天的下单金额 -->
+	<select id="listDaysSmsMoney" resultType="com.kycrm.member.domain.vo.trade.TradeVO">
+		select
+		sum(actual_deduction) * 0.05
+		minPayment,DATE_FORMAT(send_time,'%Y-%m-%d') minCreatedTimeStr
+		from
+		crm_sms_record_dto${uid}
+		where status = 2 and send_time
+		between
+		#{minCreatedTime} and #{maxCreatedTime}
+		group by minCreatedTimeStr
+		order
+		by minCreatedTimeStr ASC
+	</select>
+
+	<!-- sumSmsNumByTime -->
+	<select id="sumSmsNumByTime" resultType="java.lang.Integer">
+		select
+		sum(actual_deduction)
+		from crm_sms_record_dto${uid}
+		where status = 2 and
+		send_time between #{beginTime} and #{endTime}
+	</select>
+
+	<!-- countRecordByTime -->
+	<select id="countRecordByTime" resultType="java.lang.Integer">
+		select count(*) from
+		(select distinct(buyer_nick)
+		from
+		crm_sms_record_dto${uid}
+		where status =
+		2 and send_time
+		between #{beginTime} and #{endTime}) record
+	</select>
+
+	<!-- 根据taskId查询发送记录 -->
+	<select id="listRecordByTaskId" parameterType="java.util.Map"
+		resultMap="smsRecordDTO_Map">
+		select
+		order_id,actual_deduction,type
+		from
+		crm_sms_record_dto${uid}
+		where
+		status = 2 and task_id = #{taskId} and
+		send_time between #{beginTime}
+		and #{endTime}
+	</select>
+	<!-- 查询发送记录的手机号 -->
+	<select id="queryPhoneList" parameterType="com.kycrm.member.domain.vo.message.SmsRecordVO"
+		resultType="java.lang.String">
+		select rec_num
+		from crm_sms_record_dto${uid}
+		<where>
+			<if test="msgId != null">
+				and msg_id = #{msgId}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="beginTime != null and endTime != null">
+				and send_time between #{beginTime} and #{endTime}
+			</if>
+		</where>
+		<if test="startRows != null and currentRows != null">
+			limit #{startRows},#{currentRows}
+		</if>
+	</select>
+
+	<!-- 查询预售订单发送记录的订单号 -->
+	<select id="queryTidList" parameterType="com.kycrm.member.domain.vo.message.SmsRecordVO"
+		resultType="java.lang.String">
+		select order_id
+		from crm_sms_record_dto${uid}
+		<where>
+			<if test="msgId != null">
+				and msg_id = #{msgId}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="beginTime != null and endTime != null">
+				and send_time between #{beginTime} and #{endTime}
+			</if>
+		</where>
+		<if test="startRows != null and currentRows != null">
+			limit #{startRows},#{currentRows}
+		</if>
+	</select>
+
+	<!-- 根据msgId统计发送成功短信条数 -->
+	<select id="countSuccessRecordByMsgId" resultType="java.lang.Integer">
+		select
+		count(*)
+		from crm_sms_record_dto${uid}
+		where msg_id = #{msgId}
+	</select>
+
+	<!-- 根据手机号查询发送记录 -->
+	<select id="listSmsRecordByPhone" resultMap="smsRecordDTO_Map">
+		select
+		send_time,content,receiver_time
+		from crm_sms_record_dto${uid}
+		where
+		rec_num = #{phone} and is_show = 1
+	</select>
+
+	<!-- 根据条件查询卖家回复记录 -->
+	<select id="listSellerRevert" parameterType="com.kycrm.member.domain.vo.message.SmsRecordVO"
+		resultMap="smsRecordDTO_Map">
+		select id,send_time,rec_num,buyer_nick,content
+		from
+		crm_sms_record_dto${uid}
+		<where>
+			type = '36' and is_show = 1
+			<if test="beginTime != null">
+				and send_time >= #{beginTime}
+			</if>
+			<if test="endTime != null">
+				and #{endTime} >= send_time
+			</if>
+			<if test="recNum != null and recNum != ''">
+				and rec_num = #{recNum}
+			</if>
+			<if test="buyerNick != null and buyerNick != ''">
+				and buyer_nick = #{buyerNick}
+			</if>
+		</where>
+		order by send_time DESC
+		<if test="startRows != null and currentRows != null">
+			limit #{startRows},#{currentRows}
+		</if>
+	</select>
+
+	<!-- 根据条件查询卖家回复记录总记录数 -->
+	<select id="countSellerRevert" parameterType="com.kycrm.member.domain.vo.message.SmsRecordVO"
+		resultType="java.lang.Integer">
+		select count(*)
+		from crm_sms_record_dto${uid}
+		<where>
+			type = "36" and is_show = 1
+			<if test="beginTime != null">
+				and send_time >= #{beginTime}
+			</if>
+			<if test="endTime != null">
+				and #{endTime} >= send_time
+			</if>
+			<if test="recNum != null and recNum != ''">
+				and rec_num = #{recNum}
+			</if>
+			<if test="buyerNick != null and buyerNick != ''">
+				and buyer_nick = #{buyerNick}
+			</if>
+		</where>
+	</select>
+
+	<select id="findSmsRecordDTOShieldDay" parameterType="java.util.Map"
+		resultType="java.lang.String">
+		SELECT rec_num
+		FROM crm_sms_record_dto${uid}
+		WHERE TYPE IN("33", "34",
+		"35")
+		AND status = 2
+		AND DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s') >=
+		DATE_FORMAT(#{beginTime},'%Y/%m/%d %H:%i:%s')
+		AND
+		DATE_FORMAT(#{endTime},'%Y/%m/%d %H:%i:%s') >=
+		DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s')
+		AND rec_num IN
+		<foreach collection="list" item="item" index="index" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		GROUP BY rec_num
+	</select>
+
+	<!-- 营销中心发送记录详情 -->
+	<select id="listMsgDetail" parameterType="java.util.Map"
+		resultMap="smsRecordDTO_Map">
+		select rec_num,send_time,content,actual_deduction,status
+		from
+		crm_sms_record_dto${uid}
+		<where>
+			msg_id = #{msgId}
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="mobile != null and mobile != ''">
+				and rec_num = #{mobile}
+			</if>
+			<if test="status != null and status != ''">
+				and status = #{status}
+			</if>
+		</where>
+		<if test="startRows != null and pageSize != null">
+			limit #{startRows},#{pageSize}
+		</if>
+	</select>
+
+	<!-- 营销中心发送记录详情总记录 -->
+	<select id="countMsgDetail" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(*)
+		from crm_sms_record_dto${uid}
+		<where>
+			msg_id = #{msgId}
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="mobile != null and mobile != ''">
+				and rec_num = #{mobile}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+		</where>
+	</select>
+
+	<!-- 更改记录是否显示 -->
+	<update id="updateRecordIsShow">
+		update crm_sms_record_dto${uid}
+		set is_show = 0
+		where
+		id = #{id}
+	</update>
+
+	<!-- 根据发送总记录id统计总扣费条数 -->
+	<select id="sumDeductionById" resultType="java.lang.Long">
+		select
+		sum(actual_deduction) actual_deduction
+		from crm_sms_record_dto${uid}
+		where msg_id = #{msgId} and status = 2
+	</select>
+
+
+	<select id="findSmsRecordDTOFrontDayCount" resultType="java.lang.Long">
+		SELECT
+		sum(actual_deduction)
+		FROM crm_sms_record_dto${uid}
+		WHERE
+		TO_DAYS(NOW())
+		- TO_DAYS(send_time) = 1
+	</select>
+
+	<select id="findSmsRecordDTOReminderCount" resultType="java.lang.Long">
+		SELECT
+		sum(actual_deduction)
+		FROM crm_sms_record_dto${uid}
+		WHERE
+		TO_DAYS(NOW())
+		- TO_DAYS(send_time) = 1
+		AND type IN ('2','3','4')
+	</select>
+
+	<delete id="deleteAllSmsRecordDTO">
+		DELETE FROM crm_sms_record_dto${uid}
+	</delete>
+
+	<select id="findShieldByPhoneAndDay" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM crm_sms_record_dto${uid}
+		WHERE rec_num =
+		#{phone}
+		AND TYPE IN("33", "34", "35")
+		AND status = 2
+		AND
+		DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s') >=
+		DATE_FORMAT(#{beginTime},'%Y/%m/%d %H:%i:%s')
+		AND
+		DATE_FORMAT(#{endTime},'%Y/%m/%d %H:%i:%s') >=
+		DATE_FORMAT(send_time,'%Y/%m/%d %H:%i:%s')
+	</select>
+
+	<!-- 短信记录表添加索引 -->
+	<insert id="addSmsRecordTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		`crm_sms_record_dto${_parameter}`
+		ADD INDEX index_rec_num (rec_num),
+		ADD INDEX index_order_id (order_id),
+		ADD INDEX index_type (type),
+		ADD
+		KEY index_buyer_nick (buyer_nick(255)),
+		ADD INDEX index_send_time
+		(send_time),
+		ADD INDEX index_msg_id (msg_id),
+		ADD INDEX index_task_id
+		(task_id);
+	</insert>
+
+	<update id="batchUpdateSmsRecordSendAndRecieveDate"
+		parameterType="java.util.Map">
+		UPDATE crm_sms_record_dto${uid} s1,
+		crm_sms_record_dto${uid} s2
+		SET s1.receiver_time = DATE_ADD(
+		s2.receiver_time,
+		INTERVAL - 8 HOUR
+		),
+		s1.send_time = DATE_ADD(
+		s2.receiver_time,
+		INTERVAL - 8 HOUR
+		)
+		WHERE
+		s1.id = s2.id;
+	</update>
+
+	<select id="listReportByDate" parameterType="java.util.Map"
+		resultMap="smsRecordDTO_Map">
+		select
+		(CASE
+		WHEN 'day' = #{dateType} THEN date_format(send_time,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN date_format(send_time,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN date_format(send_time, '%Y')
+		END) as
+		content, sum(actual_deduction) actual_deduction
+		from
+		crm_sms_record_dto${uid}
+		<where>
+			uid = #{uid}
+			<if test="bTime != null and eTime != null">
+				and send_time between #{bTime} and #{eTime}
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} >= send_time
+			</if>
+			<if test="bTime != null and eTime == null">
+				and send_time >= #{bTime}
+			</if>
+		</where>
+		group by (CASE
+		WHEN 'day' = #{dateType} THEN date_format(send_time,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN date_format(send_time,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN date_format(send_time, '%Y')
+		END)
+		order by
+		(CASE
+		WHEN 'day' = #{dateType} THEN date_format(send_time,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN date_format(send_time,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN date_format(send_time, '%Y')
+		END) DESC
+		<if test="startRows != null and pageSize != null">
+			limit #{startRows},#{pageSize}
+		</if>
+	</select>
+
+	<!-- 按照日期分页查询账单总记录数 -->
+	<select id="countReportByDate" resultType="java.lang.Integer">
+		select count(*) from
+		(select
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_time, '%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(send_time, '%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(send_time, '%Y')
+		END as content
+		from
+		crm_sms_record_dto${uid}
+		<where>
+			1 = 1
+			<if test="bTime != null and eTime != null">
+				and send_time between #{bTime} and #{eTime}
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} > send_time
+			</if>
+			<if test="bTime != null and eTime == null">
+				and send_time > #{bTime}
+			</if>
+		</where>
+		group by (CASE
+		WHEN 'day' = #{dateType} THEN date_format(send_time,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN date_format(send_time,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN date_format(send_time, '%Y')
+		END)) report
+	</select>
+
+	<!-- 计算短信消费条数 -->
+	<select id="sumReportSmsNum" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		SELECT sum(actual_deduction)
+		FROM (
+		SELECT
+		(
+		CASE
+		WHEN 'day' = #{dateType}
+		THEN
+		date_format(send_time,
+		'%Y-%m-%d')
+		WHEN
+		'month' = #{dateType} THEN
+		date_format(send_time,
+		'%Y-%m')
+		WHEN 'year' = #{dateType}
+		THEN
+		date_format(send_time, '%Y')
+		END
+		) AS display_time,
+		sum(actual_deduction) AS
+		actual_deduction
+		FROM
+		crm_sms_record_dto${uid}
+		WHERE
+		uid = #{uid}
+		<if test="bTime != null and eTime != null">
+			and send_time between #{bTime} and #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			and #{eTime} > send_time
+		</if>
+		<if test="bTime != null and eTime == null">
+			and send_time > #{bTime}
+		</if>
+		GROUP BY
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_time,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(send_time,
+		'%Y-%m')
+		WHEN 'year' =
+		#{dateType} THEN
+		date_format(send_time, '%Y')
+		END
+		)
+		ORDER BY send_time DESC
+		)T
+	</select>
+
+	<!-- 计算短信消费条数 -->
+	<select id="sumReportSmsNumByDate" parameterType="java.util.Map"
+		resultMap="smsRecordDTO_Map">
+		SELECT
+		(
+		CASE
+		WHEN 'day' = #{dateType}
+		THEN
+		date_format(send_time,
+		'%Y-%m-%d')
+		WHEN
+		'month' = #{dateType} THEN
+		date_format(send_time,
+		'%Y-%m')
+		WHEN 'year' = #{dateType}
+		THEN
+		date_format(send_time, '%Y')
+		END
+		)
+		AS display_time,
+		sum(actual_deduction) AS
+		actual_deduction
+		FROM
+		crm_sms_record_dto${uid}
+		WHERE
+		uid = #{uid}
+		<if test="bTime != null and eTime != null">
+			and send_time between #{bTime} and #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			and #{eTime} > send_time
+		</if>
+		<if test="bTime != null and eTime == null">
+			and send_time > #{bTime}
+		</if>
+		GROUP BY
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_time,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(send_time,
+		'%Y-%m')
+		WHEN 'year' =
+		#{dateType} THEN
+		date_format(send_time, '%Y')
+		END
+		)
+		ORDER BY send_time DESC
+		<if test="startRow != null and range != null">
+			LIMIT #{startRow}, #{range}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.syn.dao.syn.IUserSynDataDao">
+	<!-- 插入新数据 -->
+	<insert id="doCreateUserSynDataByInit"
+		parameterType="com.kycrm.member.domain.entity.syn.UserSynData">
+		INSERT INTO
+		crm_user_syn_data(uid,userNick,isSmsRecordEnd,isTradeEnd,isMemberEnd,smsRecordStartNum,tradeStartNum,memberStartNum,createdDate,lastModifedDate)
+		VALUE(#{uid},#{userNick},0,0,0,0,0,0,now(),now())
+	</insert>
+
+	<select id="findAll"
+		resultType="com.kycrm.member.domain.entity.syn.UserSynData">
+		SELECT * FROM crm_user_syn_data
+	</select>
+
+	<update id="doUpdateTradeStatus"
+		parameterType="com.kycrm.member.domain.entity.syn.UserSynData">
+		UPDATE crm_user_syn_data
+		SET
+		isTradeEnd=#{isTradeEnd},tradeStartNum=#{tradeStartNum}
+		WHERE
+		uid=#{uid}
+	</update>
+
+	<update id="doUpdateMemberStatus"
+		parameterType="com.kycrm.member.domain.entity.syn.UserSynData">
+		UPDATE crm_user_syn_data
+		SET
+		isMemberEnd=#{isSmsRecordEnd},memberStartNum=#{memberStartNum}
+		WHERE
+		uid=#{uid}
+	</update>
+
+	<update id="doUpdateSmsRecordStatus"
+		parameterType="com.kycrm.member.domain.entity.syn.UserSynData">
+		UPDATE crm_user_syn_data
+		SET
+		isSmsRecordEnd=#{isSmsRecordEnd},smsRecordStartNum=#{smsRecordStartNum}
+		WHERE uid=#{uid}
+	</update>
+
+	<!-- 查询需要同步mongo订单的用户数据 -->
+	<select id="findTradeSynStart"
+		resultType="com.kycrm.member.domain.entity.syn.UserSynData">
+		SELECT uid,userNick,isTradeEnd,tradeStartNum
+		FROM
+		crm_user_syn_data
+		WHERE isTradeEnd=0
+	</select>
+
+	<!-- 查询需要同步mongo短信的用户数据 -->
+	<select id="findSmsRecordSynStart"
+		resultType="com.kycrm.member.domain.entity.syn.UserSynData">
+		SELECT uid,userNick,isSmsRecordEnd,smsRecordStartNum
+		FROM
+		crm_user_syn_data
+		WHERE isSmsRecordEnd=0
+	</select>
+
+</mapper>

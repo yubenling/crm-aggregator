@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.message.ISmsSendListImportDao">
+	 <select id="findImportPhoneByteById" parameterType="java.lang.Long" resultType="com.kycrm.member.domain.entity.message.SmsSendListImport">
+	 	SELECT import_phone_byte AS importPhoneByte
+		FROM crm_sms_sendlist_import 
+		WHERE id = #{id}
+	 </select>
+	 
+	 <!-- 添加数据 -->
+	 <insert id="saveSmsSendListImport" parameterType="com.kycrm.member.domain.entity.message.SmsSendListImport" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO crm_sms_sendlist_import
+			(uid,file_name,send_number,success_number,
+			error_number,repetition_number,state,
+			createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock)
+		VALUE
+			(#{uid},#{fileName},#{sendNumber},#{successNumber},
+			#{errorNumber},#{repetitionNumber},#{state},
+			#{createdBy},NOW(),#{lastModifiedBy},NOW(),0);
+	 </insert>
+	 
+	 <!-- 更新电话号码上传数据 -->
+	<update id="updateSmsSendListImportById" parameterType="com.kycrm.member.domain.entity.message.SmsSendListImport">
+		update crm_sms_sendlist_import
+		<set>
+			<if test="successNumber != null">
+				success_number = #{successNumber},
+			</if>
+			<if test="errorNumber != null">
+				error_number = #{errorNumber},
+			</if>
+			<if test="repetitionNumber != null">
+				repetition_number = #{repetitionNumber},
+			</if>
+			<if test="importPhoneByte != null ">
+				import_phone_byte = #{importPhoneByte},
+			</if>
+			<if test="state != null">
+				state = #{state},
+			</if>
+			lastModifiedDate = now()
+		</set>
+		where id = #{id}
+	</update>
+		<!-- 根据条件查询出分页数据 -->
+	<select id="findSmsSendLists" parameterType="com.kycrm.member.domain.vo.message.SmsSendListImportVO" resultType="com.kycrm.member.domain.entity.message.SmsSendListImport">
+		SELECT 
+				id,
+				file_name AS fileName,
+				send_number AS sendNumber,
+				success_number AS successNumber,
+				error_number AS errorNumber,
+				repetition_number AS repetitionNumber,
+				state,
+				createdDate
+		FROM crm_sms_sendlist_import 
+		<where>
+			uid  = #{uid}
+			<if test="recordId !=null and recordId !='' ">
+				and id  = #{recordId}
+			</if>
+			<if test="beginTime !=null">
+				and DATE_FORMAT(createdDate,'%Y/%m/%d %H:%i:%s') >= DATE_FORMAT(#{beginTime},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="endTime !=null">
+				and DATE_FORMAT(#{endTime}, '%Y/%m/%d %H:%i:%s')  >= DATE_FORMAT(createdDate, '%Y/%m/%d %H:%i:%s')   
+			</if>
+			<if test="fileName !=null and fileName !='' ">
+				and file_name  = #{fileName}
+			</if>
+		</where>
+		order by createdDate DESC
+	</select>
+	
+	<!-- 删除导入发送记录 -->
+	<delete id="deleteSmsSendListById" parameterType="java.lang.Long">
+	 	DELETE FROM crm_sms_sendlist_import WHERE id=#{recordId}
+	 </delete>
+	 
+	 
+	<!-- 以下代码只执行一次 --> 
+	 <select id="findSmsSendListImport" parameterType="java.lang.Long" resultType="com.kycrm.member.domain.entity.message.SmsSendListImport">
+	 	SELECT i.id,i.uid
+		FROM crm_sms_sendlist_import i
+		INNER JOIN CRM_USER u ON i.uid = u.id
+		<where>
+			i.import_phone IS NOT NULL
+			AND i.import_phone_byte IS NULL
+			AND u.expiration_time > NOW()
+		 	<if test="_parameter != null">
+        		AND i.uid = ${_parameter}
+        	</if>
+		</where>
+	 </select>
+	 
+	 <!-- 通过id查询出导入的电话号码数据 -->
+	 <select id="findImportPhoneById" parameterType="java.lang.Long" resultType="java.lang.String">
+	 	SELECT import_phone
+		FROM crm_sms_sendlist_import 
+		WHERE id = #{id}
+	 </select>
+	 
+	 <update id="disposeImportPhoneSaveByte" parameterType="com.kycrm.member.domain.entity.message.SmsSendListImport">
+		UPDATE crm_sms_sendlist_import
+		SET import_phone_byte = #{importPhoneByte}
+		WHERE id = #{id}
+	</update>
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.member.ITestDao">
+	<resultMap id="memberInfoMap"
+		type="com.kycrm.member.domain.entity.member.MemberInfoDTO">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="uid" property="uid" jdbcType="BIGINT"/>
+		<result column="buyer_id" property="buyerId" jdbcType="VARCHAR" />
+		<result column="grade_id" property="gradeId" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="buyer_nick" property="buyerNick" jdbcType="VARCHAR" />
+		<result column="buyer_email" property="buyerEmail" jdbcType="VARCHAR" />
+		<result column="buyer_alipay_no" property="buyerAlipayNo"
+			jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="trade_num" property="tradeNum" jdbcType="BIGINT" />
+		<result column="close_trade_num" property="closeTradeNum"
+			jdbcType="BIGINT" />
+		<result column="trade_amount" property="tradeAmount" jdbcType="DOUBLE" />
+		<result column="close_trade_amount" property="closeTradeAmount"
+			jdbcType="DOUBLE" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="item_num" property="itemNum" jdbcType="BIGINT" />
+		<result column="close_item_num" property="closeItemNum"
+			jdbcType="BIGINT" />
+		<result column="avg_trade_price" property="avgTradePrice"
+			jdbcType="DOUBLE" />
+		<result column="relation_source" property="relationSource"
+			jdbcType="INTEGER" />
+		<result column="last_trade_time" property="lastTradeTime"
+			jdbcType="TIME" />
+		<result column="gender" property="gender" jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="INTEGER" />
+		<result column="occupation" property="occupation" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="VARCHAR" />
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="we_chat" property="weChat" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="register_date" property="registerDate"
+			jdbcType="TIME" />
+		<result column="score" property="score" jdbcType="VARCHAR" />
+		<result column="remark_str" property="remarkStr" jdbcType="VARCHAR" />
+		<result column="cur_grade_name" property="curGradeName"
+			jdbcType="VARCHAR" />
+		<result column="is_refund" property="isRefund" jdbcType="INTEGER" />
+		<result column="neutral_bad_bate" property="neutralBadRate"
+			jdbcType="INTEGER" />
+
+		<result column="createdBy" property="createdBy" jdbcType="VARCHAR" />
+		<result column="createdDate" property="createdDate" jdbcType="TIME" />
+		<result column="lastModifiedBy" property="lastModifiedBy"
+			jdbcType="VARCHAR" />
+		<result column="lastModifiedDate" property="lastModifiedDate"
+			jdbcType="TIME" />
+		<!-- 锁optlock -->
+		<result column="optlock" property="version" jdbcType="BIGINT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,buyer_id,grade_id,user_id,buyer_nick,buyer_email,buyer_alipay_no,status,trade_num,
+		close_trade_num,trade_amount,close_trade_amount,province,city,item_num,close_item_num,
+		avg_trade_price,relation_source,last_trade_time,gender,age,occupation,birthday,qq,
+		we_chat,phone,register_date,score,remark_str,cur_grade_name,is_refund,neutral_bad_bate,
+		createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock
+	</sql>
+	<select id="findMemberByParam" resultMap="memberInfoMap"
+		parameterType="com.kycrm.member.domain.vo.member.MemberInfoVO">
+		select
+		<include refid="Base_Column_List" />
+		from crm_member
+		where taobao_user_nick = #{taobao_user_nick,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findUserByNick" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select buyerNick from crm_member where taobao_user_nick = #{sellerNick}
+	</select>
+
+	<!-- 批量保存会员信息 author:jackstraw_yu -->
+	<insert id="batchSaveMemberInfoDTO" parameterType="java.util.Map">
+		INSERT INTO crm_member_info_dto
+		(
+		uid,user_name,buyer_id,grade_id,buyer_nick,buyer_email,
+		buyer_alipay_no,status,trade_num,close_trade_num,trade_amount,
+		close_trade_amount,province,city,item_num,close_item_num,
+		avg_trade_price,relation_source,last_trade_time,gender,
+		age,occupation,birthday,qq,we_chat,mobile,register_date,score,
+		cur_grade_name,neutral_bad_rate,unsubscribe,receiver_name,
+		remark_str,receiver_info_str,
+		createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock
+		)
+		VALUES
+		<foreach collection="memberInfoList" item="member" index="index"
+			separator=",">
+			(
+			#{member.uid},#{member.userName},#{member.buyerId},#{member.gradeId},#{member.buyerNick},#{member.buyerEmail},
+			#{member.buyerAlipayNo},#{member.status},#{member.tradeNum},#{member.closeTradeNum},#{member.tradeAmount},
+			#{member.closeTradeAmount},#{member.province},#{member.city},#{member.itemNum},#{member.closeItemNum},
+			#{member.avgTradePrice},#{member.relationSource},#{member.lastTradeTime},#{member.gender},
+			#{member.age},#{member.occupation},#{member.birthday},#{member.qq},#{member.weChat},#{member.mobile},#{member.registerDate},#{member.score},
+			#{member.curGradeName},#{member.neutralBadRate},#{member.unsubscribe},#{member.receiverName},
+			#{remark_str},#{receiverInfoStr},
+			#{member.userName}, NOW(), #{member.userName}, NOW(), 0
+			)
+		</foreach>
+	</insert>
+
+</mapper>

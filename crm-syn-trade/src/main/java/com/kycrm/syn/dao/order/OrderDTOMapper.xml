@@ -1,0 +1,1490 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.syn.dao.order.IOrderDTODao">
+	<resultMap type="com.kycrm.member.domain.entity.order.OrderDTO"
+		id="order">
+		<id column="oid" jdbcType="BIGINT" property="oid" />
+		<result column="id" jdbcType="BIGINT" property="id" />
+		<result column="uid" jdbcType="BIGINT" property="uid" />
+		<result column="pic_path" jdbcType="VARCHAR" property="picPath" />
+		<result column="seller_nick" jdbcType="VARCHAR" property="sellerNick" />
+		<result column="buyer_nick" jdbcType="VARCHAR" property="buyerNick" />
+		<result column="refund_status" jdbcType="VARCHAR" property="refundStatus" />
+		<result column="buyer_rate" jdbcType="TINYINT" property="buyerRate" />
+		<result column="seller_rate" jdbcType="TINYINT" property="sellerRate" />
+		<result column="seller_type" jdbcType="VARCHAR" property="sellerType" />
+		<result column="cid" jdbcType="BIGINT" property="cid" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="iid" jdbcType="VARCHAR" property="iid" />
+		<result column="price" jdbcType="DECIMAL" property="price" />
+		<result column="num_iid" jdbcType="BIGINT" property="numIid" />
+		<result column="num" jdbcType="BIGINT" property="num" />
+		<result column="order_from" jdbcType="VARCHAR" property="orderFrom" />
+		<result column="total_fee" jdbcType="DECIMAL" property="totalFee" />
+		<result column="payment" jdbcType="DECIMAL" property="payment" />
+		<result column="modified" jdbcType="TIMESTAMP" property="modified" />
+		<result column="refund_id" jdbcType="BIGINT" property="refundId" />
+		<result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+		<result column="consign_time" jdbcType="TIMESTAMP" property="consignTime" />
+		<result column="trade_payment" jdbcType="DECIMAL" property="tradePayment" />
+		<result column="trade_seller_rate" jdbcType="TINYINT" property="tradeSellerRate" />
+		<result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+		<result column="receiver_state" jdbcType="VARCHAR" property="receiverState" />
+		<result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress" />
+		<result column="receiver_zip" jdbcType="VARCHAR" property="receiverZip" />
+		<result column="receiver_mobile" jdbcType="VARCHAR" property="receiverMobile" />
+		<result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />
+		<result column="trade_consign_time" jdbcType="TIMESTAMP"
+			property="tradeConsignTime" />
+		<result column="received_payment" jdbcType="DECIMAL" property="receivedPayment" />
+		<result column="receiver_country" jdbcType="VARCHAR" property="receiverCountry" />
+		<result column="receiver_town" jdbcType="VARCHAR" property="receiverTown" />
+		<result column="shop_pick" jdbcType="VARCHAR" property="shopPick" />
+		<result column="tid" jdbcType="BIGINT" property="tid" />
+		<result column="trade_num" jdbcType="BIGINT" property="tradeNum" />
+		<result column="trade_status" jdbcType="VARCHAR" property="tradeStatus" />
+		<result column="trade_title" jdbcType="VARCHAR" property="tradeTitle" />
+		<result column="trade_type" jdbcType="VARCHAR" property="tradeType" />
+		<result column="trade_total_fee" jdbcType="DECIMAL" property="tradeTotalFee" />
+		<result column="trade_created" jdbcType="TIMESTAMP" property="tradeCreated" />
+		<result column="trade_pay_time" jdbcType="TIMESTAMP" property="tradePayTime" />
+		<result column="trade_modified" jdbcType="TIMESTAMP" property="tradeModified" />
+		<result column="trade_end_time" jdbcType="TIMESTAMP" property="tradeEndTime" />
+		<result column="buyer_flag" jdbcType="BIGINT" property="buyerFlag" />
+		<result column="seller_flag" jdbcType="BIGINT" property="sellerFlag" />
+		<result column="step_trade_status" jdbcType="VARCHAR" property="stepTradeStatus" />
+		<result column="step_paid_fee" jdbcType="DECIMAL" property="stepPaidFee" />
+		<result column="trade_shipping_type" jdbcType="VARCHAR"
+			property="tradeShippingType" />
+		<result column="buyer_cod_fee" jdbcType="DECIMAL" property="buyerCodFee" />
+		<result column="trade_adjust_fee" jdbcType="DECIMAL" property="tradeAdjustFee" />
+		<result column="trade_from" jdbcType="VARCHAR" property="tradeFrom" />
+		<result column="trade_buyer_rate" jdbcType="TINYINT" property="tradeBuyerRate" />
+		<result column="receiver_city" jdbcType="VARCHAR" property="receiverCity" />
+		<result column="receiver_district" jdbcType="VARCHAR" property="receiverDistrict" />
+		<result column="trade_source" jdbcType="INTEGER" property="tradeSource" />
+		<result column="msg_id" jdbcType="BIGINT" property="msgId" />
+		<result column="item_meal_name" jdbcType="VARCHAR" property="itemMealName" />
+		<result column="outer_iid" jdbcType="VARCHAR" property="outerIid" />
+		<result column="snapshot_url" jdbcType="VARCHAR" property="snapshotUrl" />
+		<result column="snapshot" jdbcType="VARCHAR" property="snapshot" />
+		<result column="timeout_action_time" jdbcType="TIMESTAMP"
+			property="timeoutActionTime" />
+		<result column="sub_order_tax_fee" jdbcType="VARCHAR" property="subOrderTaxFee" />
+		<result column="sub_order_tax_rate" jdbcType="VARCHAR"
+			property="subOrderTaxRate" />
+		<result column="estimate_con_time" jdbcType="VARCHAR" property="estimateConTime" />
+		<result column="item_meal_id" jdbcType="BIGINT" property="itemMealId" />
+		<result column="sku_id" jdbcType="VARCHAR" property="skuId" />
+		<result column="outer_sku_id" jdbcType="VARCHAR" property="outerSkuId" />
+		<result column="discount_fee" jdbcType="DECIMAL" property="discountFee" />
+		<result column="adjust_fee" jdbcType="DECIMAL" property="adjustFee" />
+		<result column="sku_properties_name" jdbcType="VARCHAR"
+			property="skuPropertiesName" />
+		<result column="is_oversold" jdbcType="TINYINT" property="isOversold" />
+		<result column="is_service_order" jdbcType="TINYINT" property="isServiceOrder" />
+		<result column="order_attr" jdbcType="VARCHAR" property="orderAttr" />
+		<result column="shipping_type" jdbcType="VARCHAR" property="shippingType" />
+		<result column="bind_oid" jdbcType="BIGINT" property="bindOid" />
+		<result column="logistics_company" jdbcType="VARCHAR" property="logisticsCompany" />
+		<result column="invoice_no" jdbcType="VARCHAR" property="invoiceNo" />
+		<result column="is_daixiao" jdbcType="TINYINT" property="isDaixiao" />
+		<result column="divide_order_fee" jdbcType="DECIMAL" property="divideOrderFee" />
+		<result column="part_mjz_discount" jdbcType="VARCHAR" property="partMjzDiscount" />
+		<result column="ticket_outer_id" jdbcType="VARCHAR" property="ticketOuterId" />
+		<result column="ticket_expdate_key" jdbcType="VARCHAR"
+			property="ticketExpdateKey" />
+		<result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+		<result column="is_www" jdbcType="VARCHAR" property="isWww" />
+		<result column="tmser_spu_code" jdbcType="VARCHAR" property="tmserSpuCode" />
+		<result column="bind_oids" jdbcType="VARCHAR" property="bindOids" />
+		<result column="zhengji_status" jdbcType="VARCHAR" property="zhengjiStatus" />
+		<result column="md_qualification" jdbcType="VARCHAR" property="mdQualification" />
+		<result column="md_fee" jdbcType="DECIMAL" property="mdFee" />
+		<result column="customization" jdbcType="VARCHAR" property="customization" />
+		<result column="inv_type" jdbcType="VARCHAR" property="invType" />
+		<result column="is_sh_ship" jdbcType="TINYINT" property="isShShip" />
+		<result column="shipper" jdbcType="VARCHAR" property="shipper" />
+		<result column="f_type" jdbcType="VARCHAR" property="fType" />
+		<result column="f_status" jdbcType="VARCHAR" property="fStatus" />
+		<result column="f_term" jdbcType="VARCHAR" property="fTerm" />
+		<result column="combo_id" jdbcType="VARCHAR" property="comboId" />
+		<result column="assembly_rela" jdbcType="VARCHAR" property="assemblyRela" />
+		<result column="assembly_price" jdbcType="VARCHAR" property="assemblyPrice" />
+		<result column="assembly_item" jdbcType="VARCHAR" property="assemblyItem" />
+		<result column="sub_order_tax_promotion_fee" jdbcType="VARCHAR"
+			property="subOrderTaxPromotionFee" />
+		<result column="fqg_num" jdbcType="BIGINT" property="fqgNum" />
+		<result column="is_fqg_s_fee" jdbcType="TINYINT" property="isFqgSFee" />
+		<result column="trade_created_time" jdbcType="TIME" property="tradeCreatedTime" />
+		<result column="trade_pay_time_hms" jdbcType="TIME" property="tradePayTimeHms" />
+		<result column="trade_end_time_hms" jdbcType="TIME" property="tradeEndTimeHms" />
+		<result column="optlock" jdbcType="TIME" property="version" />
+		<!--添加week -->
+		<result column="week" jdbcType="VARCHAR" property="week" />
+		<result column="result" jdbcType="VARCHAR" property="result" />
+	</resultMap>
+
+	<resultMap id="tempEntity"
+		type="com.kycrm.member.domain.entity.member.TempEntity">
+		<result column="num" property="num" />
+		<result column="buyer_nick" property="buyerNick" />
+	</resultMap>
+
+	<resultMap id="orderTempEntity"
+		type="com.kycrm.member.domain.entity.order.OrderTempEntity">
+		<result column="ID" property="id" />
+		<result column="BUYER_NICK" property="buyerNick" />
+		<result column="TRADE_AMOUNT" property="tradeAmount" />
+		<result column="ITEM_NUM" property="itemNum" />
+		<result column="ADD_ITEM_NUM" property="addItemNum" />
+		<result column="CLOSE_TRADE_AMOUNT" property="closeTradeAmount" />
+		<result column="CLOSE_ITEM_NUM" property="closeItemNum" />
+		<result column="LAST_TRADE_TIME" property="lastTradeTime" />
+		<result column="FIRST_PAY_TIME" property="firstPayTime" />
+		<result column="FIRST_TRADE_TIME" property="firstTradeTime" />
+		<result column="LAST_PAY_TIME" property="lastPayTime" />
+		<result column="FIRST_TRADE_FINISH_TIME" property="firstTradeFinishTime" />
+		<result column="LAST_TRADE_FINISH_TIME" property="lastTradeFinishTime" />
+		<result column="TBREFUND_STATUS" property="tbrefundStatus" />
+		<result column="TBORDER_STATUS" property="tborderStatus" />
+	</resultMap>
+
+	<!-- 是否存在表 -->
+	<select id="isExistsTable" parameterType="java.lang.Long"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_order_dto${_parameter}'
+	</select>
+
+	<!-- 自动创建用户子订单表 添加订单付款时间为周几 -->
+	<insert id="doCreateTableByNewUser" parameterType="java.lang.Long">
+		CREATE TABLE
+		`crm_order_dto${_parameter}` (
+		`id` bigint(20) not null AUTO_INCREMENT
+		comment '主键id',
+		`uid` bigint(20) comment '用户主键id',
+		`pic_path`
+		varchar(255) comment '商品图片的绝对路径',
+		`seller_nick` varchar(255) comment
+		'卖家昵称',
+		`buyer_nick` varchar(1000) comment '买家昵称',
+		`refund_status`
+		varchar(255) comment '退款状态。退款状态。可选值
+		WAIT_SELLER_AGREE(买家已经申请退款，等待卖家同意)
+		WAIT_BUYER_RETURN_GOODS(卖家已经同意退款，等待买家退货)
+		WAIT_SELLER_CONFIRM_GOODS(买家已经退货，等待卖家确认收货) SELLER_REFUSE_BUYER(卖家拒绝退款)
+		CLOSED(退款关闭) SUCCESS(退款成功)',
+		`buyer_rate` tinyint(2) comment
+		'买家是否已评价。可选值：true(已评价)，false(未评价)',
+		`seller_rate` tinyint(2) comment
+		'卖家是否已评价。可选值：true(已评价)，false(未评价)',
+		`seller_type` varchar(255) comment
+		'卖家类型，可选值为：B（商城商家），C（普通卖家）',
+		`cid` bigint(10) comment '交易商品对应的类目ID',
+		`oid` bigint(20) comment '子订单编号',
+		`status` varchar(255) comment
+		'订单状态（请关注此状态，如果为TRADE_CLOSED_BY_TAOBAO状态，则不要对此订单进行发货，切记啊！）。可选值:',
+		`title` varchar(255) comment '商品标题',
+		`type` varchar(255) comment '交易类型
+		',
+		`iid` varchar(255) comment '商品的字符串编号(注意：iid近期即将废弃，请用num_iid参数)',
+		`price` decimal(20,2) comment '商品价格。精确到2位小数单位:元。如:200.07，表示:200元7分 ;',
+		`num_iid` bigint(20) comment '商品数字ID',
+		`num` bigint(10) comment
+		'购买数量。取值范围:大于零的整数',
+		`order_from` varchar(255) comment
+		'子订单来源,如jhs(聚划算)、taobao(淘宝)、wap(无线)',
+		`total_fee` decimal(20,2) comment
+		'应付金额（商品价格 * 商品数量 + 手工调整金额 -
+		子订单级订单优惠金额）。精确到2位小数;单位:元。如:200.07，表示:200元7分',
+		`payment` decimal(20,2)
+		comment
+		'子订单实付金额。精确到2位小数，单位:元。如:200.07，表示:200元7分。对于多子订单的交易，计算公式如下：payment =
+		price * num + adjust_fee - discount_fee
+		；单子订单交易，payment与主订单的payment一致，对于退款成功的子订单，由于主订单的优惠分摊金额，会造成该字段可能不为0.00元。建议使用退款前的实付金额减去退款单中的实际退款金额计算。',
+		`modified` datetime comment
+		'订单修改时间，目前只有taobao.trade.ordersku.update会返回此字段。',
+		`refund_id`
+		bigint(20) comment '最近退款ID ',
+		`end_time` datetime comment
+		'子订单的交易结束时间说明：子订单有单独的结束时间，与主订单的结束时间可能有所不同，在有退款发起的时候或者是主订单分阶段付款的时候，子订单的结束时间会早于主订单的结束时间，所以开放这个字段便于订单结束状态的判断',
+		`consign_time` datetime comment
+		'子订单发货时间，当卖家对订单进行了多次发货，子订单的发货时间和主订单的发货时间可能不一样了，那么就需要以子订单的时间为准。（没有进行多次发货的订单，主订单的发货时间和子订单的发货时间都一样）',
+		`trade_payment` decimal(20,2) comment
+		'实付金额。精确到2位小数;单位:元。如:200.07，表示:200元7分 //payment(主订单冗余字段)',
+		`trade_seller_rate` tinyint(2) comment
+		'卖家是否已评价。可选值:true(已评价),false(未评价)/ller_rate(主订单冗余字段)',
+		`receiver_name`
+		varchar(1000) comment '收货人的姓名//receiver_name(主订单冗余字段)',
+		`receiver_state` varchar(255) comment
+		'收货人的所在省份//receiver_state(主订单冗余字段)',
+		`receiver_address` varchar(2000)
+		comment '收货人的详细地址//receiver_address(主订单冗余字段)',
+		`receiver_zip`
+		varchar(255) comment '收货人的邮编//receiver_zip(主订单冗余字段)',
+		`receiver_mobile` varchar(255) comment
+		'收货人的手机号码//receiver_mobile(主订单冗余字段)',
+		`receiver_phone` varchar(255)
+		comment '收货人的电话号码//receiver_phone(主订单冗余字段)',
+		`trade_consign_time`
+		datetime comment
+		'卖家发货时间。格式:yyyy-MM-ddHH:mm:ss//consign_time(主订单冗余字段)',
+		`received_payment` decimal(20,2) comment
+		'卖家实际收到的支付宝打款金额（由于子订单可以部分确认收货，这个金额会随着子订单的确认收货而不断增加，交易成功后等于买家实付款减去退款金额）。精确到2位小数;单位:元。如:200.07，表示:200元7分//received_payment(主订单冗余字段)',
+		`receiver_country` varchar(255) comment
+		'收货人国籍//receiver_country(主订单冗余字段)',
+		`receiver_town` varchar(255)
+		comment '收货人街道地址//receiver_town(主订单冗余字段)',
+		`shop_pick` varchar(255)
+		comment '门店自提，总店发货，分店取货的门店自提订单标识 /op_pick(主订单冗余字段)',
+		`tid` bigint(20)
+		comment '交易编号(父订单的交易编号)//tid(主订单冗余字段)',
+		`trade_num` bigint(20) comment
+		'商品购买数量。取值范围：大于零的整数,对于一个trade对应多个order的时候（一笔主订单，对应多笔子订单），num=0，num是一个跟商品关联的属性，一笔订单对应多比子订单的时候，主订单上的num无意义。//num(主订单冗余字段)',
+		`trade_status` varchar(255) comment
+		'交易状态。可选值:*TRADE_NO_CREATE_PAY(没有创建支付宝交易)*WAIT_BUYER_PAY(等待买家付款)*SELLER_CONSIGNED_PART(卖家部分发货)*WAIT_SELLER_SEND_GOODS(等待卖家发货,即:买家已付款)*WAIT_BUYER_CONFIRM_GOODS(等待买家确认收货,即:卖家已发货)*TRADE_BUYER_SIGNED(买家已签收,货到付款专用)*TRADE_FINISHED(交易成功)*TRADE_CLOSED(付款以后用户退款成功，交易自动关闭)*TRADE_CLOSED_BY_TAOBAO(付款以前，卖家或买家主动关闭交易)*PAY_PENDING(国际信用卡支付付款确认中)*WAIT_PRE_AUTH_CONFIRM(0元购合约中)*PAID_FORBID_CONSIGN(拼团中订单，已付款但禁止发货)//status(主订单冗余字段)',
+		`trade_title` varchar(255) comment
+		'交易标题，以店铺名作为此标题的值。注:taobao.trades.get接口返回的Trade中的title是商品名称//title(主订单冗余字段)',
+		`trade_type` varchar(255) comment
+		'交易类型列表，同时查询多种交易类型可用逗号分隔。默认同时查询guarantee_trade,auto_delivery,ec,cod的4种交易类型的数据可选值fixed(一口价)auction(拍卖)guarantee_trade(一口价、拍卖)auto_delivery(自动发货)independent_simple_trade(旺店入门版交易)independent_shop_trade(旺店标准版交易)ec(直冲)cod(货到付款)fenxiao(分销)game_equipment(游戏装备)shopex_trade(ShopEX交易)netcn_trade(万网交易)external_trade(统一外部交易)o2o_offlinetrade（O2O交易）step(万人团)nopaid(无付款订单)pre_auth_type(预授权0元购机交易)/pe(主订单冗余字段)',
+		`trade_total_fee` decimal(20,2) comment
+		'商品金额（商品价格乘以数量的总金额）。精确到2位小数;单位:元。如:200.07，表示:200元7分//total_fee(主订单冗余字段)',
+		`trade_created` datetime comment
+		'交易创建时间。格式:yyyy-MM-ddHH:mm:ss//created(主订单冗余字段)',
+		`trade_pay_time`
+		datetime comment
+		'付款时间。格式:yyyy-MM-ddHH:mm:ss。订单的付款时间即为物流订单的创建时间。//pay_time(主订单冗余字段)',
+		`trade_modified` datetime comment
+		'交易修改时间(用户对订单的任何修改都会更新此字段)。格式:yyyy-MM-ddHH:mm:ss//modified(主订单冗余字段)',
+		`trade_end_time` datetime comment
+		'交易结束时间。交易成功时间(更新交易状态为成功的同时更新)/确认收货时间或者交易关闭时间。格式:yyyy-MM-ddHH:mm:ss//end_time(主订单冗余字段)',
+		`buyer_flag` bigint(10) comment
+		'买家备注旗帜（与淘宝网上订单的买家备注旗帜对应，只有买家才能查看该字段）红、黄、绿、蓝、紫分别对应1、2、3、4、5/yer_flag(主订单冗余字段)',
+		`seller_flag` bigint(10) comment
+		'卖家备注旗帜（与淘宝网上订单的卖家备注旗帜对应，只有卖家才能查看该字段）红、黄、绿、蓝、紫分别对应1、2、3、4、5/ller_flag(主订单冗余字段)',
+		`step_trade_status` varchar(255) comment
+		'分阶段付款的订单状态（例如万人团订单等），目前有三返回状态FRONT_NOPAID_FINAL_NOPAID(定金未付尾款未付)，FRONT_PAID_FINAL_NOPAID(定金已付尾款未付)，FRONT_PAID_FINAL_PAID(定金和尾款都付)//step_trade_status(主订单冗余字段)',
+		`step_paid_fee` decimal(20,2) comment
+		'分阶段付款的已付金额（万人团订单已付金额）//step_paid_fee(主订单冗余字段)',
+		`trade_shipping_type`
+		varchar(255) comment
+		'创建交易时的物流方式（交易完成前，物流方式有可能改变，但系统里的这个字段一直不变）。可选值：free(卖家包邮),post(平邮),express(快递),ems(EMS),virtual(虚拟发货)，25(次日必达)，26(预约配送)。/ipping_type(主订单冗余字段)',
+		`buyer_cod_fee` decimal(20,2) comment
+		'买家货到付款服务费。精确到2位小数;单位:元。如:12.07，表示:12元7分/yer_cod_fee(主订单冗余字段)',
+		`trade_adjust_fee` decimal(20,2) comment
+		'卖家手工调整金额，精确到2位小数，单位：元。如：200.07，表示：200元7分。来源于订单价格修改，如果有多笔子订单的时候，这个为0，单笔的话则跟[order].adjust_fee一样//adjust_fee(主订单冗余字段)',
+		`trade_from` varchar(255) comment
+		'交易内部来源。WAP(手机);HITAO(嗨淘);TOP(TOP平台);TAOBAO(普通淘宝);JHS(聚划算)一笔订单可能同时有以上多个标记，则以逗号分隔//trade_from(主订单冗余字段)',
+		`trade_buyer_rate` tinyint(2) comment
+		'买家是否已评价。可选值:true(已评价),false(未评价)。如买家只评价未打分，此字段仍返回false
+		/yer_rate(主订单冗余字段)',
+		`receiver_city` varchar(255) comment
+		'收货人的所在城市//receiver_city(主订单冗余字段)',
+		`receiver_district` varchar(255)
+		comment
+		'收货人的所在地区//receiver_district(主订单冗余字段)',
+		`trade_source` int(1)
+		comment '订单来源 1、拉取sysInfo数据库，同步订单 2、用户导入',
+		`msg_id` bigint(10) comment
+		'营销短信发送id ',
+		`item_meal_name` varchar(255) comment
+		'套餐的值。如：M8原装电池:便携支架:M8专用座充:莫凡保护袋',
+		`outer_iid` varchar(255) comment
+		'商家外部编码(可与商家外部系统对接)。外部商家自己定义的商品Item的id，可以通过taobao.items.custom.get获取商品的Item的信息',
+		`snapshot_url` varchar(255) comment '订单快照URL',
+		`snapshot` varchar(255)
+		comment '订单快照详细信息',
+		`timeout_action_time` datetime comment
+		'订单超时到期时间。格式:yyyy-MM-dd HH:mm:ss',
+		`sub_order_tax_fee` varchar(255)
+		comment '天猫国际官网直供子订单关税税费',
+		`sub_order_tax_rate` varchar(255) comment
+		'天猫国际官网直供子订单关税税率',
+		`estimate_con_time` varchar(255) comment '子订单预计发货时间
+		',
+		`item_meal_id` bigint(10) comment '套餐ID',
+		`sku_id` varchar(255)
+		comment
+		'商品的最小库存单位Sku的id.可以通过taobao.item.sku.get获取详细的Sku信息',
+		`outer_sku_id` varchar(255) comment '外部网店自己定义的Sku编号',
+		`discount_fee`
+		decimal(20,2) comment '子订单级订单优惠金额。精确到2位小数;单位:元。如:200.07，表示:200元7分',
+		`adjust_fee` decimal(20,2) comment '手工调整金额.格式为:1.01;单位:元;精确到小数点后两位.',
+		`sku_properties_name` varchar(255) comment
+		'SKU的值。如：机身颜色:黑色;手机套餐:官方标配',
+		`is_oversold` tinyint(2) comment '是否超卖 ',
+		`is_service_order` tinyint(2) comment '是否是服务订单，是返回true，否返回false。',
+		`order_attr` varchar(255) comment 'top动态字段',
+		`shipping_type`
+		varchar(255) comment
+		'子订单的运送方式（卖家对订单进行多次发货之后，一个主订单下的子订单的运送方式可能不同，用order.shipping_type来区分子订单的运送方式）',
+		`bind_oid` bigint(20) comment
+		'捆绑的子订单号，表示该子订单要和捆绑的子订单一起发货，用于卖家子订单捆绑发货',
+		`logistics_company`
+		varchar(255) comment '子订单发货的快递公司名称',
+		`invoice_no` varchar(255) comment
+		'子订单所在包裹的运单号',
+		`is_daixiao` tinyint(2) comment
+		'表示订单交易是否含有对应的代销采购单。如果该订单中存在一个对应的代销采购单，那么该值为true；反之，该值为false。',
+		`divide_order_fee` decimal(20,2) comment '分摊之后的实付金额 ',
+		`part_mjz_discount` varchar(255) comment '优惠分摊',
+		`ticket_outer_id`
+		varchar(255) comment '对应门票有效期的外部id',
+		`ticket_expdate_key` varchar(255)
+		comment '门票有效期的key',
+		`store_code` varchar(255) comment '发货的仓库编码',
+		`is_www` varchar(255) comment '子订单是否是www订单',
+		`tmser_spu_code`
+		varchar(255) comment '支持家装类物流的类型',
+		`bind_oids` varchar(255) comment
+		'bind_oid字段的升级，支持返回绑定的多个子订单，多个子订单以半角逗号分隔',
+		`zhengji_status`
+		varchar(255) comment
+		'征集预售订单征集状态：1（征集中），2（征集成功），3（征集失败）',
+		`md_qualification` varchar(255) comment '免单资格属性',
+		`md_fee`
+		decimal(20,2) comment '免单金额 ',
+		`customization` varchar(255) comment
+		'定制信息',
+		`inv_type` varchar(255) comment '库存类型：6为在途 ',
+		`is_sh_ship`
+		tinyint(2) comment '是否发货',
+		`shipper` varchar(255) comment '仓储信息',
+		`f_type` varchar(255) comment '订单履行类型，如喵鲜生极速达（jsd）',
+		`f_status`
+		varchar(255) comment '订单履行状态，如喵鲜生极速达：分单完成',
+		`f_term` varchar(255)
+		comment '单履行内容，如喵鲜生极速达：storeId,phone',
+		`combo_id` varchar(255) comment
+		'天猫搭配宝',
+		`assembly_rela` varchar(255) comment '主商品订单id',
+		`assembly_price` varchar(255) comment '价格',
+		`assembly_item`
+		varchar(255) comment 'assemblyItem',
+		`sub_order_tax_promotion_fee`
+		varchar(255) comment '天猫国际子订单计税优惠金额',
+		`fqg_num` bigint(10) comment
+		'花呗分期期数',
+		`is_fqg_s_fee` tinyint(2) comment '是否商家承担手续费',
+		`trade_created_time` time comment '交易创建时段，无日期，格式:HH:mm:ss',
+		`trade_pay_time_hms` time comment
+		'付款时间，无日期。格式:HH:mm:ss。订单的付款时间即为物流订单的创建时间。',
+		`createdBy` varchar(255),
+		`createdDate` datetime,
+		`lastModifiedBy` varchar(255),
+		`lastModifiedDate` datetime,
+		`week` varchar(255) comment '付款时间为周几',
+		`result` varchar(255) comment '订单评价结果',
+		`optlock` int,
+		PRIMARY KEY
+		(`id`)
+		)
+		ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED
+		COMMENT='子订单';
+	</insert>
+
+	<insert id="addOrderTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		`crm_order_dto${_parameter}`
+		ADD INDEX index_tid (tid),
+		ADD INDEX
+		index_receiver_mobile (receiver_mobile),
+		ADD INDEX index_trade_created
+		(trade_created),
+		ADD INDEX index_trade_consign_time
+		(trade_consign_time),
+		ADD INDEX index_trade_end_time (trade_end_time),
+		ADD INDEX index_trade_payment (trade_payment),
+		ADD INDEX index_num_iid
+		(num_iid),
+		ADD INDEX index_msg_id (msg_id),
+		ADD INDEX
+		index_trade_created_time (trade_created_time),
+		ADD INDEX index_oid
+		(oid),
+		ADD INDEX index_title (title(255)),
+		ADD INDEX index_status (status),
+		ADD KEY index_buyer_nick (buyer_nick(255)),
+		ADD INDEX index_refund_id
+		(refund_id),
+		ADD INDEX index_trade_status (trade_status),
+		ADD INDEX
+		index_trade_pay_time (trade_pay_time),
+		ADD INDEX
+		index_trade_pay_time_hms (trade_pay_time_hms);
+	</insert>
+
+	<!-- 批量保存子订单 添加订单付款时间为周几 -->
+	<insert id="doCreateOrderDTOByList" parameterType="java.util.Map">
+		INSERT INTO crm_order_dto${uid}
+		(uid,oid,createdDate,lastModifiedDate,adjust_fee,
+		assembly_item,assembly_price,assembly_rela,bind_oid,bind_oids,buyer_cod_fee,buyer_flag,
+		buyer_nick,buyer_rate,cid,combo_id,consign_time,customization,discount_fee,
+		divide_order_fee,end_time,estimate_con_time,f_term,f_type,fqg_num,iid,inv_type,invoice_no,
+		is_daixiao,is_fqg_s_fee,is_oversold,is_service_order,is_sh_ship,is_www,item_meal_id,
+		item_meal_name,logistics_company,md_fee,md_qualification,modified,num,num_iid,order_attr,
+		order_from,outer_iid,outer_sku_id,part_mjz_discount,payment,pic_path,price,received_payment,
+		receiver_address,receiver_city,receiver_country,receiver_district,receiver_mobile,receiver_name,
+		receiver_phone,receiver_state,receiver_town,receiver_zip,refund_id,refund_status,seller_flag,
+		seller_nick,seller_rate,seller_type,shipper,shipping_type,shop_pick,sku_id,sku_properties_name,
+		snapshot,snapshot_url,status,step_paid_fee,step_trade_status,store_code,sub_order_tax_fee,
+		sub_order_tax_promotion_fee,sub_order_tax_rate,ticket_expdate_key,ticket_outer_id,tid,
+		timeout_action_time,title,tmser_spu_code,total_fee,trade_adjust_fee,trade_buyer_rate,trade_consign_time,
+		trade_created,trade_end_time,trade_from,trade_modified,trade_num,trade_pay_time,trade_payment,trade_seller_rate,
+		trade_shipping_type,trade_status,trade_title,trade_total_fee,trade_type,type,zhengji_status,trade_source,
+		f_status,msg_id,optlock,trade_created_time,trade_pay_time_hms,trade_end_time_hms,week,result,front,tail)
+		VALUES
+		<foreach collection="list" item="order" index="index"
+			separator=",">
+			(#{order.uid},#{order.oid},now(),now(),#{order.adjustFee},#{order.assemblyItem},#{order.assemblyPrice},
+			#{order.assemblyRela},#{order.bindOid},#{order.bindOids},#{order.buyerCodFee},#{order.buyerFlag},#{order.buyerNick},
+			#{order.buyerRate},#{order.cid},#{order.comboId},#{order.consignTime},#{order.customization},#{order.discountFee},
+			#{order.divideOrderFee},#{order.endTime},#{order.estimateConTime},#{order.fTerm},#{order.fType},#{order.fqgNum},
+			#{order.iid},#{order.invType},#{order.invoiceNo},#{order.isDaixiao},#{order.isFqgSFee},#{order.isOversold},#{order.isServiceOrder},
+			#{order.isShShip},#{order.isWww},#{order.itemMealId},#{order.itemMealName},#{order.logisticsCompany},#{order.mdFee},
+			#{order.mdQualification},#{order.modified},#{order.num},#{order.numIid},#{order.orderAttr},#{order.orderFrom},#{order.outerIid},
+			#{order.outerSkuId},#{order.partMjzDiscount},#{order.payment},#{order.picPath},#{order.price},#{order.receivedPayment},
+			#{order.receiverAddress},#{order.receiverCity},#{order.receiverCountry},#{order.receiverDistrict},#{order.receiverMobile},
+			#{order.receiverName},#{order.receiverPhone},#{order.receiverState},#{order.receiverTown},#{order.receiverZip},#{order.refundId},
+			#{order.refundStatus},#{order.sellerFlag},#{order.sellerNick},#{order.sellerRate},#{order.sellerType},#{order.shipper},
+			#{order.shippingType},#{order.shopPick},#{order.skuId},#{order.skuPropertiesName},#{order.snapshot},#{order.snapshotUrl},
+			#{order.status},#{order.stepPaidFee},#{order.stepTradeStatus},#{order.storeCode},#{order.subOrderTaxFee},
+			#{order.subOrderTaxPromotionFee},#{order.subOrderTaxRate},#{order.ticketExpDateKey},#{order.ticketOuterId},#{order.tid},
+			#{order.timeoutActionTime},#{order.title},#{order.tmserSpuCode},#{order.totalFee},#{order.tradeAdjustFee},#{order.tradeBuyerRate},
+			#{order.tradeConsignTime},#{order.tradeCreated},#{order.tradeEndTime},#{order.tradeFrom},#{order.tradeModified},#{order.tradeNum},
+			#{order.tradePayTime},#{order.tradePayment},#{order.tradeSellerRate},#{order.tradeShippingType},#{order.tradeStatus},#{order.tradeTitle},
+			#{order.tradeTotalFee},#{order.tradeType},#{order.type},#{order.zhengjiStatus},#{order.tradeSource},#{order.fStatus},#{order.msgId},0,
+			#{order.tradeCreatedTime},#{order.tradePayTimeHms},#{order.tradeEndTimeHms},#{order.week},#{order.result},#{order.front},#{order.tail})
+		</foreach>
+	</insert>
+
+	<!-- 保存单个子订单 添加订单付款时间为周几 -->
+	<insert id="doCreateOrderDTOByBySingle" parameterType="com.kycrm.member.domain.entity.order.OrderDTO">
+		INSERT
+		INTO crm_order_dto${uid}
+		(uid,oid,createdDate,lastModifiedDate,adjust_fee,
+		assembly_item,assembly_price,assembly_rela,bind_oid,bind_oids,buyer_cod_fee,buyer_flag,
+		buyer_nick,buyer_rate,cid,combo_id,consign_time,customization,discount_fee,
+		divide_order_fee,end_time,estimate_con_time,f_term,f_type,fqg_num,iid,inv_type,invoice_no,
+		is_daixiao,is_fqg_s_fee,is_oversold,is_service_order,is_sh_ship,is_www,item_meal_id,
+		item_meal_name,logistics_company,md_fee,md_qualification,modified,num,num_iid,order_attr,
+		order_from,outer_iid,outer_sku_id,part_mjz_discount,payment,pic_path,price,received_payment,
+		receiver_address,receiver_city,receiver_country,receiver_district,receiver_mobile,receiver_name,
+		receiver_phone,receiver_state,receiver_town,receiver_zip,refund_id,refund_status,seller_flag,
+		seller_nick,seller_rate,seller_type,shipper,shipping_type,shop_pick,sku_id,sku_properties_name,
+		snapshot,snapshot_url,status,step_paid_fee,step_trade_status,store_code,sub_order_tax_fee,
+		sub_order_tax_promotion_fee,sub_order_tax_rate,ticket_expdate_key,ticket_outer_id,tid,
+		timeout_action_time,title,tmser_spu_code,total_fee,trade_adjust_fee,trade_buyer_rate,trade_consign_time,
+		trade_created,trade_end_time,trade_from,trade_modified,trade_num,trade_pay_time,trade_payment,trade_seller_rate,
+		trade_shipping_type,trade_status,trade_title,trade_total_fee,trade_type,type,zhengji_status,trade_source,
+		f_status,msg_id,optlock,week,result,trade_created_time,trade_pay_time_hms,trade_end_time_hms,front,tail)
+		VALUE
+		(#{uid},#{oid},now(),now(),#{adjustFee},#{assemblyItem},#{assemblyPrice},#{assemblyRela},#{bindOid},#{bindOids},
+		#{buyerCodFee},#{buyerFlag},#{buyerNick},#{buyerRate},#{cid},#{comboId},#{consignTime},#{customization},#{discountFee},#{divideOrderFee},
+		#{endTime},#{estimateConTime},#{fTerm},#{fType},#{fqgNum},#{iid},#{invType},#{invoiceNo},#{isDaixiao},#{isFqgSFee},#{isOversold},
+		#{isServiceOrder},#{isShShip},#{isWww},#{itemMealId},#{itemMealName},#{logisticsCompany},#{mdFee},#{mdQualification},#{modified},#{num},
+		#{numIid},#{orderAttr},#{orderFrom},#{outerIid},#{outerSkuId},#{partMjzDiscount},#{payment},#{picPath},#{price},#{receivedPayment},
+		#{receiverAddress},#{receiverCity},#{receiverCountry},#{receiverDistrict},#{receiverMobile},#{receiverName},#{receiverPhone},
+		#{receiverState},#{receiverTown},#{receiverZip},#{refundId},#{refundStatus},#{sellerFlag},#{sellerNick},#{sellerRate},#{sellerType},
+		#{shipper},#{shippingType},#{shopPick},#{skuId},#{skuPropertiesName},#{snapshot},#{snapshotUrl},#{status},#{stepPaidFee},#{stepTradeStatus},
+		#{storeCode},#{subOrderTaxFee},#{subOrderTaxPromotionFee},#{subOrderTaxRate},#{ticketExpDateKey},#{ticketOuterId},#{tid},
+		#{timeoutActionTime},#{title},#{tmserSpuCode},#{totalFee},#{tradeAdjustFee},#{tradeBuyerRate},#{tradeConsignTime},#{tradeCreated},
+		#{tradeEndTime},#{tradeFrom},#{tradeModified},#{tradeNum},#{tradePayTime},#{tradePayment},#{tradeSellerRate},#{tradeShippingType},
+		#{tradeStatus},#{tradeTitle},#{tradeTotalFee},#{tradeType},#{type},#{zhengjiStatus},#{tradeSource},#{fStatus},#{msgId},0,#{week},#{result},#{tradeCreatedTime},#{tradePayTimeHms},#{tradeEndTimeHms},#{front},#{tail})
+	</insert>
+
+	<!-- 批量更新订单信息 -->
+	<update id="doUpdateOrderDTOByList" parameterType="java.util.Map">
+		<foreach collection="list" item="order" index="index"
+			separator=";" open="" close="">
+			UPDATE crm_order_dto${uid}
+			<set>
+				lastModifiedDate = now(),optlock = optlock + 1
+				<if test="order.uid != null">
+					,uid = #{order.uid}
+				</if>
+				<if test="order.itemMealName != null">
+					,item_meal_name = #{order.itemMealName}
+				</if>
+				<if test="order.picPath != null">
+					,pic_path = #{order.picPath}
+				</if>
+				<if test="order.refundStatus != null">
+					,refund_status = #{order.refundStatus}
+				</if>
+				<if test="order.outerIid != null">
+					,outer_iid = #{order.outerIid}
+				</if>
+				<if test="order.snapshotUrl != null">
+					,snapshot_url = #{order.snapshotUrl}
+				</if>
+				<if test="order.snapshot != null">
+					,snapshot = #{order.snapshot}
+				</if>
+				<if test="order.timeoutActionTime != null">
+					,timeout_action_time = #{order.timeoutActionTime}
+				</if>
+				<if test="order.buyerRate != null">
+					,buyer_rate = #{order.buyerRate}
+				</if>
+				<if test="order.sellerRate != null">
+					,seller_rate = #{order.sellerRate}
+				</if>
+				<if test="order.sellerType != null">
+					,seller_type = #{order.sellerType}
+				</if>
+				<if test="order.cid != null">
+					,cid = #{order.cid}
+				</if>
+				<if test="order.subOrderTaxFee != null">
+					,sub_order_tax_fee = #{order.subOrderTaxFee}
+				</if>
+				<if test="order.subOrderTaxRate != null">
+					,sub_order_tax_rate = #{order.subOrderTaxRate}
+				</if>
+				<if test="order.estimateConTime != null">
+					,estimate_con_time = #{order.estimateConTime}
+				</if>
+				<if test="order.status != null">
+					,status = #{order.status}
+				</if>
+				<if test="order.title != null">
+					,title = #{order.title}
+				</if>
+				<if test="order.type != null">
+					,type = #{order.type}
+				</if>
+				<if test="order.iid != null">
+					,iid = #{order.iid}
+				</if>
+				<if test="order.price != null">
+					,price = #{order.price}
+				</if>
+				<if test="order.numIid != null">
+					,num_iid = #{order.numIid}
+				</if>
+				<if test="order.itemMealId != null">
+					,item_meal_id = #{order.itemMealId}
+				</if>
+				<if test="order.skuId != null">
+					,sku_id = #{order.skuId}
+				</if>
+				<if test="order.num != null">
+					,num = #{order.num}
+				</if>
+				<if test="order.outerSkuId != null">
+					,outer_sku_id = #{order.outerSkuId}
+				</if>
+				<if test="order.orderFrom != null">
+					,order_from = #{order.orderFrom}
+				</if>
+				<if test="order.totalFee != null">
+					,total_fee = #{order.totalFee}
+				</if>
+				<if test="order.payment != null">
+					,payment = #{order.payment}
+				</if>
+				<if test="order.discountFee != null">
+					,discount_fee = #{order.discountFee}
+				</if>
+				<if test="order.adjustFee != null">
+					,adjust_fee = #{order.adjustFee}
+				</if>
+				<if test="order.modified != null">
+					,modified = #{order.modified}
+				</if>
+				<if test="order.skuPropertiesName != null">
+					,sku_properties_name = #{order.skuPropertiesName}
+				</if>
+				<if test="order.refundId != null">
+					,refund_id = #{order.refundId}
+				</if>
+				<if test="order.isOversold != null">
+					,is_oversold = #{order.isOversold}
+				</if>
+				<if test="order.isServiceOrder != null">
+					,is_service_order = #{order.isServiceOrder}
+				</if>
+				<if test="order.endTime != null">
+					,end_time = #{order.endTime}
+				</if>
+				<if test="order.consignTime != null">
+					,consign_time = #{order.consignTime}
+				</if>
+				<if test="order.orderAttr != null">
+					,order_attr = #{order.orderAttr}
+				</if>
+				<if test="order.shippingType != null">
+					,shipping_type = #{order.shippingType}
+				</if>
+				<if test="order.bindOid != null">
+					,bind_oid = #{order.bindOid}
+				</if>
+				<if test="order.logisticsCompany != null">
+					,logistics_company = #{order.logisticsCompany}
+				</if>
+				<if test="order.invoiceNo != null">
+					,invoice_no = #{order.invoiceNo}
+				</if>
+				<if test="order.isDaixiao != null">
+					,is_daixiao = #{order.isDaixiao}
+				</if>
+				<if test="order.divideOrderFee != null">
+					,divide_order_fee = #{order.divideOrderFee}
+				</if>
+				<if test="order.partMjzDiscount != null">
+					,part_mjz_discount = #{order.partMjzDiscount}
+				</if>
+				<if test="order.ticketOuterId != null">
+					,ticket_outer_id = #{order.ticketOuterId}
+				</if>
+				<if test="order.ticketExpDateKey != null">
+					,ticket_expdate_key = #{order.ticketExpDateKey}
+				</if>
+				<if test="order.storeCode != null">
+					,store_code = #{order.storeCode}
+				</if>
+				<if test="order.isWww != null">
+					,is_www = #{order.isWww}
+				</if>
+				<if test="order.tmserSpuCode != null">
+					,tmser_spu_code = #{order.tmserSpuCode}
+				</if>
+				<if test="order.bindOids != null">
+					,bind_oids = #{order.bindOids}
+				</if>
+				<if test="order.zhengjiStatus != null">
+					,zhengji_status = #{order.zhengjiStatus}
+				</if>
+				<if test="order.mdQualification != null">
+					,md_qualification = #{order.mdQualification}
+				</if>
+				<if test="order.mdFee != null">
+					,md_fee = #{order.mdFee}
+				</if>
+				<if test="order.customization != null">
+					,customization = #{order.customization}
+				</if>
+				<if test="order.invType != null">
+					,inv_type = #{order.invType}
+				</if>
+				<if test="order.isShShip != null">
+					,is_sh_ship = #{order.isShShip}
+				</if>
+				<if test="order.shipper != null">
+					,shipper = #{order.shipper}
+				</if>
+				<if test="order.fType != null">
+					,f_type = #{order.fType}
+				</if>
+				<if test="order.fStatus != null">
+					,f_status = #{order.fStatus}
+				</if>
+				<if test="order.fTerm != null">
+					,f_term = #{order.fTerm}
+				</if>
+				<if test="order.comboId != null">
+					,combo_id = #{order.comboId}
+				</if>
+				<if test="order.assemblyRela != null">
+					,assembly_rela = #{order.assemblyRela}
+				</if>
+				<if test="order.assemblyPrice != null">
+					,assembly_price = #{order.assemblyPrice}
+				</if>
+				<if test="order.assemblyItem != null">
+					,assembly_item = #{order.assemblyItem}
+				</if>
+				<if test="order.subOrderTaxPromotionFee != null">
+					,sub_order_tax_promotion_fee =
+					#{order.subOrderTaxPromotionFee}
+				</if>
+				<if test="order.fqgNum != null">
+					,fqg_num = #{order.fqgNum}
+				</if>
+				<if test="order.isFqgSFee != null">
+					,is_fqg_s_fee = #{order.isFqgSFee}
+				</if>
+				<if test="order.tradePayment != null">
+					,trade_payment = #{order.tradePayment}
+				</if>
+				<if test="order.tradeSellerRate != null">
+					,trade_seller_rate = #{order.tradeSellerRate}
+				</if>
+				<if test="order.tradeConsignTime != null">
+					,trade_consign_time = #{order.tradeConsignTime}
+				</if>
+				<if test="order.receivedPayment != null">
+					,received_payment = #{order.receivedPayment}
+				</if>
+				<if test="order.shopPick != null">
+					,shop_pick = #{order.shopPick}
+				</if>
+				<if test="order.tradeStatus != null">
+					,trade_status = #{order.tradeStatus}
+				</if>
+				<if test="order.tradeType != null">
+					,trade_type = #{order.tradeType}
+				</if>
+				<if test="order.tradeTotalFee != null">
+					,trade_total_fee = #{order.tradeTotalFee}
+				</if>
+				<if test="order.tradePayTime != null">
+					,trade_pay_time = #{order.tradePayTime}
+				</if>
+				<if test="order.tradeModified != null">
+					,trade_modified = #{order.tradeModified}
+				</if>
+				<if test="order.tradeEndTime != null">
+					,trade_end_time = #{order.tradeEndTime}
+				</if>
+				<if test="order.buyerFlag != null">
+					,buyer_flag = #{order.buyerFlag}
+				</if>
+				<if test="order.sellerFlag != null">
+					,seller_flag = #{order.sellerFlag}
+				</if>
+				<if test="order.stepTradeStatus != null">
+					,step_trade_status = #{order.stepTradeStatus}
+				</if>
+				<if test="order.stepPaidFee != null">
+					,step_paid_fee = #{order.stepPaidFee}
+				</if>
+				<if test="order.tradeShippingType != null">
+					,trade_shipping_type = #{order.tradeShippingType}
+				</if>
+				<if test="order.buyerCodFee != null">
+					,buyer_cod_fee = #{order.buyerCodFee}
+				</if>
+				<if test="order.tradeAdjustFee != null">
+					,trade_adjust_fee = #{order.tradeAdjustFee}
+				</if>
+				<if test="order.tradeFrom != null">
+					,trade_from = #{order.tradeFrom}
+				</if>
+				<if test="order.tradeCreated != null">
+					,trade_created = #{order.tradeCreated}
+				</if>
+				<if test="order.tradeBuyerRate != null">
+					,trade_buyer_rate = #{order.tradeBuyerRate}
+				</if>
+				<if test="order.msgId != null">
+					,msg_id = #{order.msgId}
+				</if>
+				<if test="order.week != null">
+					,week = #{order.week}
+				</if>
+				<if test="order.result !=null">
+					,result=#{order.result}
+				</if>
+				<if test="order.tradePayTimeHms != null">
+					,trade_pay_time_hms=#{order.tradePayTimeHms}
+				</if>
+				<if test="order.tradeEndTimeHms != null">
+					,trade_end_time_hms=#{order.tradeEndTimeHms}
+				</if>
+				<if test="order.front != null">
+					,front=#{order.front}
+				</if>
+				<if test="order.tail != null">
+					,tail=#{order.tail}-IFNULL(front,0)
+				</if>
+			</set>
+			WHERE oid = #{order.oid}
+		</foreach>
+	</update>
+
+	<!-- 更新单个子订单信息 -->
+	<update id="doUpdateOrderDTOBySingle" parameterType="com.kycrm.member.domain.entity.order.OrderDTO">
+		UPDATE crm_order_dto${uid}
+		<set>
+			lastModifiedDate = now(),optlock=optlock+1
+			<if test="itemMealName != null">
+				,item_meal_name = #{itemMealName}
+			</if>
+			<if test="picPath != null">
+				,pic_path = #{picPath}
+			</if>
+			<if test="refundStatus != null">
+				,refund_status = #{refundStatus}
+			</if>
+			<if test="outerIid != null">
+				,outer_iid = #{outerIid}
+			</if>
+			<if test="snapshotUrl != null">
+				,snapshot_url = #{snapshotUrl}
+			</if>
+			<if test="snapshot != null">
+				,snapshot = #{snapshot}
+			</if>
+			<if test="timeoutActionTime != null">
+				,timeout_action_time = #{timeoutActionTime}
+			</if>
+			<if test="buyerRate != null">
+				,buyer_rate = #{buyerRate}
+			</if>
+			<if test="sellerRate != null">
+				,seller_rate = #{sellerRate}
+			</if>
+			<if test="sellerType != null">
+				,seller_type = #{sellerType}
+			</if>
+			<if test="cid != null">
+				,cid = #{cid}
+			</if>
+			<if test="subOrderTaxFee != null">
+				,sub_order_tax_fee = #{subOrderTaxFee}
+			</if>
+			<if test="subOrderTaxRate != null">
+				,sub_order_tax_rate = #{subOrderTaxRate}
+			</if>
+			<if test="estimateConTime != null">
+				,estimate_con_time = #{estimateConTime}
+			</if>
+			<if test="status != null">
+				,status = #{status}
+			</if>
+			<if test="title != null">
+				,title = #{title}
+			</if>
+			<if test="type != null">
+				,type = #{type}
+			</if>
+			<if test="iid != null">
+				,iid = #{iid}
+			</if>
+			<if test="price != null">
+				,price = #{price}
+			</if>
+			<if test="numIid != null">
+				,num_iid = #{numIid}
+			</if>
+			<if test="itemMealId != null">
+				,item_meal_id = #{itemMealId}
+			</if>
+			<if test="skuId != null">
+				,sku_id = #{skuId}
+			</if>
+			<if test="num != null">
+				,num = #{num}
+			</if>
+			<if test="outerSkuId != null">
+				,outer_sku_id = #{outerSkuId}
+			</if>
+			<if test="orderFrom != null">
+				,order_from = #{orderFrom}
+			</if>
+			<if test="totalFee != null">
+				,total_fee = #{totalFee}
+			</if>
+			<if test="payment != null">
+				,payment = #{payment}
+			</if>
+			<if test="discountFee != null">
+				,discount_fee = #{discountFee}
+			</if>
+			<if test="adjustFee != null">
+				,adjust_fee = #{adjustFee}
+			</if>
+			<if test="modified != null">
+				,modified = #{modified}
+			</if>
+			<if test="skuPropertiesName != null">
+				,sku_properties_name = #{skuPropertiesName}
+			</if>
+			<if test="refundId != null">
+				,refund_id = #{refundId}
+			</if>
+			<if test="isOversold != null">
+				,is_oversold = #{isOversold}
+			</if>
+			<if test="isServiceOrder != null">
+				,is_service_order = #{isServiceOrder}
+			</if>
+			<if test="endTime != null">
+				,end_time = #{endTime}
+			</if>
+			<if test="consignTime != null">
+				,consign_time = #{consignTime}
+			</if>
+			<if test="orderAttr != null">
+				,order_attr = #{orderAttr}
+			</if>
+			<if test="shippingType != null">
+				,shipping_type = #{shippingType}
+			</if>
+			<if test="bindOid != null">
+				,bind_oid = #{bindOid}
+			</if>
+			<if test="logisticsCompany != null">
+				,logistics_company = #{logisticsCompany}
+			</if>
+			<if test="invoiceNo != null">
+				,invoice_no = #{invoiceNo}
+			</if>
+			<if test="isDaixiao != null">
+				,is_daixiao = #{isDaixiao}
+			</if>
+			<if test="divideOrderFee != null">
+				,divide_order_fee = #{divideOrderFee}
+			</if>
+			<if test="partMjzDiscount != null">
+				,part_mjz_discount = #{partMjzDiscount}
+			</if>
+			<if test="ticketOuterId != null">
+				,ticket_outer_id = #{ticketOuterId}
+			</if>
+			<if test="ticketExpDateKey != null">
+				,ticket_expdate_key = #{ticketExpDateKey}
+			</if>
+			<if test="storeCode != null">
+				,store_code = #{storeCode}
+			</if>
+			<if test="isWww != null">
+				,is_www = #{isWww}
+			</if>
+			<if test="tmserSpuCode != null">
+				,tmser_spu_code = #{tmserSpuCode}
+			</if>
+			<if test="bindOids != null">
+				,bind_oids = #{bindOids}
+			</if>
+			<if test="zhengjiStatus != null">
+				,zhengji_status = #{zhengjiStatus}
+			</if>
+			<if test="mdQualification != null">
+				,md_qualification = #{mdQualification}
+			</if>
+			<if test="mdFee != null">
+				,md_fee = #{mdFee}
+			</if>
+			<if test="customization != null">
+				,customization = #{customization}
+			</if>
+			<if test="invType != null">
+				,inv_type = #{invType}
+			</if>
+
+			<if test="isShShip != null">
+				,is_sh_ship = #{isShShip}
+			</if>
+			<if test="shipper != null">
+				,shipper = #{shipper}
+			</if>
+			<if test="fType != null">
+				,f_type = #{fType}
+			</if>
+			<if test="fStatus != null">
+				,f_status = #{fStatus}
+			</if>
+			<if test="fTerm != null">
+				,f_term = #{fTerm}
+			</if>
+			<if test="comboId != null">
+				,combo_id = #{comboId}
+			</if>
+			<if test="assemblyRela != null">
+				,assembly_rela = #{assemblyRela}
+			</if>
+			<if test="assemblyPrice != null">
+				,assembly_price = #{assemblyPrice}
+			</if>
+			<if test="assemblyItem != null">
+				,assembly_item = #{assemblyItem}
+			</if>
+			<if test="subOrderTaxPromotionFee != null">
+				,sub_order_tax_promotion_fee = #{subOrderTaxPromotionFee}
+			</if>
+			<if test="fqgNum != null">
+				,fqg_num = #{fqgNum}
+			</if>
+			<if test="isFqgSFee != null">
+				,is_fqg_s_fee = #{isFqgSFee}
+			</if>
+			<if test="tradePayment != null">
+				,trade_payment = #{tradePayment}
+			</if>
+			<if test="tradeSellerRate != null">
+				,trade_seller_rate = #{tradeSellerRate}
+			</if>
+			<if test="tradeConsignTime != null">
+				,trade_consign_time = #{tradeConsignTime}
+			</if>
+			<if test="receivedPayment != null">
+				,received_payment = #{receivedPayment}
+			</if>
+			<if test="shopPick != null">
+				,shop_pick = #{shopPick}
+			</if>
+			<if test="tradeStatus != null">
+				,trade_status = #{tradeStatus}
+			</if>
+			<if test="tradeType != null">
+				,trade_type = #{tradeType}
+			</if>
+			<if test="tradeTotalFee != null">
+				,trade_total_fee = #{tradeTotalFee}
+			</if>
+			<if test="tradePayTime != null">
+				,trade_pay_time = #{tradePayTime}
+			</if>
+			<if test="tradeModified != null">
+				,trade_modified = #{tradeModified}
+			</if>
+			<if test="tradeEndTime != null">
+				,trade_end_time = #{tradeEndTime}
+			</if>
+			<if test="buyerFlag != null">
+				,buyer_flag = #{buyerFlag}
+			</if>
+			<if test="sellerFlag != null">
+				,seller_flag = #{sellerFlag}
+			</if>
+			<if test="stepTradeStatus != null">
+				,step_trade_status = #{stepTradeStatus}
+			</if>
+			<if test="stepPaidFee != null">
+				,step_paid_fee = #{stepPaidFee}
+			</if>
+			<if test="tradeShippingType != null">
+				,trade_shipping_type = #{tradeShippingType}
+			</if>
+			<if test="buyerCodFee != null">
+				,buyer_cod_fee = #{buyerCodFee}
+			</if>
+			<if test="tradeAdjustFee != null">
+				,trade_adjust_fee = #{tradeAdjustFee}
+			</if>
+			<if test="tradeFrom != null">
+				,trade_from = #{tradeFrom}
+			</if>
+			<if test="tradeCreated != null">
+				,trade_created = #{tradeCreated}
+			</if>
+			<if test="tradeBuyerRate != null">
+				,trade_buyer_rate = #{tradeBuyerRate}
+			</if>
+			<if test="msgId != null">
+				,msg_id = #{msgId}
+			</if>
+			<if test="week != null">
+				,week =#{week}
+			</if>
+			<if test="result != null">
+				,result=#{result}
+			</if>
+			<if test="tradePayTimeHms != null">
+				,trade_pay_time_hms=#{tradePayTimeHms}
+			</if>
+			<if test="tradeEndTimeHms != null">
+				,trade_end_time_hms=#{tradeEndTimeHms}
+			</if>
+			<if test="front != null ">
+				,front =#{front}
+			</if>
+			<if test="tail !=null">
+				,tail=#{tail}-IFNULL(front,0)
+			</if>
+		</set>
+		WHERE oid = #{oid}
+	</update>
+
+
+	<select id="findStatusByOid" parameterType="java.util.Map"
+		resultType="java.lang.String" useCache="false" flushCache="true">
+		SELECT
+		status
+		FROM crm_order_dto${uid}
+		WHERE oid = #{oid} limit 0,1
+	</select>
+
+	<update id="updateTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		crm_order_dto${uid} DROP PRIMARY KEY;
+		ALTER TABLE crm_order_dto${uid}
+		ADD PRIMARY KEY(ID);
+	</update>
+
+	<update id="fixColumnLength1" parameterType="java.lang.Long">
+		UPDATE CRM_MEMBER_INFO_DTO${uid}
+		SET FIRST_PAY_TIME = DATE_ADD(FIRST_TRADE_TIME,INTERVAL 1 HOUR)
+		WHERE FIRST_PAY_TIME IS NULL AND TRADE_NUM > 0;
+
+		UPDATE CRM_MEMBER_INFO_DTO${uid}
+		SET LAST_PAY_TIME = DATE_ADD(LAST_TRADE_TIME,INTERVAL 1 HOUR)
+		WHERE LAST_PAY_TIME IS NULL AND TRADE_NUM > 0;
+
+		UPDATE CRM_MEMBER_INFO_DTO${uid}
+		SET FIRST_TRADE_FINISH_TIME = DATE_ADD(FIRST_PAY_TIME,INTERVAL 14 DAY)
+		WHERE FIRST_TRADE_FINISH_TIME IS NULL AND TRADE_NUM > 0;
+
+		UPDATE CRM_MEMBER_INFO_DTO${uid}
+		SET LAST_TRADE_FINISH_TIME = DATE_ADD(LAST_PAY_TIME,INTERVAL 14 DAY)
+		WHERE LAST_TRADE_FINISH_TIME IS NULL AND TRADE_NUM > 0;
+	</update>
+
+	<update id="fixColumnLength2" parameterType="java.lang.Long">
+		alter table
+		crm_order_dto${uid} add column result varchar(255) comment
+		"订单评价结果";
+		alter table crm_order_dto${uid} add key index_result (result);
+	</update>
+
+
+
+	<select id="updateTradeCreatedTime" parameterType="java.lang.Long">
+		UPDATE
+		CRM_ORDER_DTO${uid} T1,
+		CRM_ORDER_DTO${uid} T2
+		SET T1.TRADE_CREATED_TIME
+		=
+		SUBSTRING(IFNULL(T2.TRADE_CREATED,NULL), 12)
+		WHERE
+		T1.ID = T2.ID
+	</select>
+
+	<select id="getMultiOrderTidList" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+	<![CDATA[ 
+		SELECT
+			tid
+		FROM
+			crm_order_dto${uid} o
+		WHERE
+			o.order_from <> "import"
+		GROUP BY
+			tid
+		HAVING
+			count(1) > 1
+	]]>
+	</select>
+
+	<!--更新订单的评价结果 -->
+	<update id="updateOrderResult" parameterType="java.util.Map">
+		UPDATE
+		crm_order_dto${uid} set result=#{result} where oid=#{oid}
+	</update>
+
+	<select id="checkColumnIfExist" resultType="java.lang.Long">
+		SELECT
+		count(*)
+		FROM
+		information_schema.`columns`
+		WHERE
+		table_name = "crm_order_dto${uid}"
+		AND column_name = #{columnName}
+	</select>
+
+	<select id="getCountByCondition" resultType="java.lang.Long">
+		SELECT
+		COUNT(1)
+		FROM
+		CRM_ORDER_DTO${uid} T1
+	</select>
+
+	<select id="getCount" resultType="java.lang.Long">
+		SELECT
+		COUNT(1)
+		FROM
+		CRM_ORDER_DTO${uid} T1
+	</select>
+
+	<select id="getIdList" resultType="java.lang.Long">
+		SELECT
+		ID
+		FROM
+		CRM_ORDER_DTO${uid}
+		WHERE
+		${column} IS NULL
+		LIMIT #{startPoint},#{range}
+	</select>
+
+	<select id="getOrderList" resultMap="order">
+		SELECT
+		ID,
+		TRADE_PAY_TIME,
+		TRADE_END_TIME
+		FROM
+		CRM_ORDER_DTO${uid}
+		WHERE
+		TRADE_PAY_TIME_HMS IS NULL
+		AND
+		TRADE_END_TIME_HMS IS NULL
+		AND
+		`WEEK` IS NULL
+		LIMIT
+		#{startPoint},#{range}
+	</select>
+
+	<select id="getAddItemNumFromOrderTable" resultMap="tempEntity">
+		SELECT
+		id,
+		sum(num) AS 'num',
+		buyer_nick
+		FROM
+		crm_order_dto${uid}
+		WHERE
+		buyer_nick IN
+		<foreach collection=" buyerNickList" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		buyer_nick
+	</select>
+
+	<update id="batchUpdateTradePayTimeHMS">
+		UPDATE crm_order_dto${uid} t1,
+		crm_order_dto${uid} t2
+		SET
+		t1.trade_pay_time_hms = time(t2.trade_pay_time)
+		WHERE
+		t1.oid = t2.oid
+		AND t1.id IN
+		<foreach collection="idList" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+	<update id="batchUpdateTradeEndTimeHMS">
+		UPDATE crm_order_dto${uid} t1,
+		crm_order_dto${uid} t2
+		SET
+		t1.trade_end_time_hms = time(t2.trade_end_time)
+		WHERE
+		t1.oid = t2.oid
+		AND t1.id IN
+		<foreach collection="idList" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+	<update id="batchUpdateWeek">
+		UPDATE crm_order_dto${uid} t1,
+		crm_order_dto${uid} t2
+		SET t1.`week` =
+		DAYOFWEEK(t2.trade_pay_time)
+		WHERE
+		t1.id = t2.id
+		AND t1.id IN
+		<foreach collection="idList" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+	<update id="batchUpdateOrder">
+		INSERT INTO CRM_ORDER_DTO${uid}
+		(
+		ID,
+		TRADE_PAY_TIME_HMS,
+		TRADE_END_TIME_HMS,
+		`WEEK`
+		)
+		VALUES
+		<foreach collection="orderList" item="order" index="index"
+			separator=",">
+			(
+			#{order.id},
+			#{order.tradePayTimeHms},
+			#{order.tradeEndTimeHms},
+			#{order.week}
+			)
+		</foreach>
+		ON DUPLICATE KEY UPDATE
+		ID = VALUES(ID),
+		TRADE_PAY_TIME_HMS =
+		VALUES(TRADE_PAY_TIME_HMS),
+		TRADE_END_TIME_HMS =
+		VALUES(TRADE_END_TIME_HMS),
+		WEEK = VALUES(WEEK)
+	</update>
+
+	<select id="getOidList" resultType="java.lang.Long">
+		SELECT
+		OID
+		FROM
+		CRM_ORDER_DTO${uid}
+		LIMIT #{startPoint},#{range}
+	</select>
+
+	<update id="batchUpdateResult">
+		UPDATE crm_order_dto${uid} t1,
+		crm_trade_rates${uid} t2
+		SET t1.result =
+		IFNULL(t2.result, 'good')
+		WHERE
+		t1.oid = t2.oid
+		AND t1.oid IN
+		<foreach collection="idList" item="oid" open="(" close=")"
+			separator=",">
+			#{oid}
+		</foreach>
+	</update>
+
+	<select id="getTradeAmountAndItemNum" resultMap="orderTempEntity">
+		SELECT
+		T.BUYER_NICK,
+		SUM(T.PAYMENT) AS 'TRADE_AMOUNT',
+		SUM(T.NUM) AS
+		'ITEM_NUM'
+		FROM
+		CRM_TRADE_DTO${uid} T
+		WHERE
+		T.`STATUS` = 'TRADE_FINISHED'
+		AND
+		T.BUYER_NICK IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		T.BUYER_NICK
+	</select>
+
+	<select id="getAddItemNum" resultMap="orderTempEntity">
+		SELECT
+		T.BUYER_NICK,
+		SUM(T.NUM) AS 'ADD_ITEM_NUM'
+		FROM
+		CRM_ORDER_DTO${uid} T
+		WHERE
+		T.BUYER_NICK IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		T.BUYER_NICK
+	</select>
+
+	<select id="getCloseTradeAmountCloseItemNum" resultMap="orderTempEntity">
+		SELECT
+		T.BUYER_NICK,
+		SUM(T.PAYMENT) AS 'CLOSE_TRADE_AMOUNT',
+		SUM(T.NUM)
+		AS 'CLOSE_ITEM_NUM'
+		FROM
+		CRM_TRADE_DTO${uid} T
+		WHERE
+		T.`STATUS` IN (
+		'TRADE_CLOSED',
+		'TRADE_CLOSED_BY_TAOBAO'
+		)
+		AND
+		T.BUYER_NICK IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		T.BUYER_NICK
+	</select>
+
+	<select id="getLastTradeTimeFirstPayTimeFirstTradeTimeLastPayTime"
+		resultMap="orderTempEntity">
+		SELECT
+		O.BUYER_NICK,
+		MAX(O.TRADE_CREATED) AS 'LAST_TRADE_TIME',
+		MIN(O.TRADE_PAY_TIME) AS 'FIRST_PAY_TIME',
+		MIN(O.TRADE_CREATED) AS
+		'FIRST_TRADE_TIME',
+		MAX(O.TRADE_PAY_TIME) AS 'LAST_PAY_TIME'
+		FROM
+		CRM_ORDER_DTO${uid} O
+		WHERE
+		O.BUYER_NICK IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		O.BUYER_NICK
+	</select>
+
+	<select id="getFirstTradeFinishTimeLastTradeFinishTime"
+		resultMap="orderTempEntity">
+		SELECT
+		O.BUYER_NICK,
+		MIN(O.TRADE_END_TIME) AS 'FIRST_TRADE_FINISH_TIME',
+		MAX(O.TRADE_END_TIME) AS 'LAST_TRADE_FINISH_TIME'
+		FROM
+		CRM_ORDER_DTO${uid} O
+		WHERE O.`STATUS` = 'TRADE_FINISHED'
+		AND
+		O.BUYER_NICK IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		O.BUYER_NICK
+	</select>
+
+	<select id="getTbrefundStatusTbOrderStatus" resultMap="orderTempEntity">
+		SELECT
+		O.ID,
+		O.REFUND_STATUS AS 'TBREFUND_STATUS',
+		O.`STATUS` AS
+		'TBORDER_STATUS'
+		FROM
+		CRM_ORDER_DTO${uid} O
+		WHERE
+		O.BUYER_NICK IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		O.BUYER_NICK;
+	</select>
+	<insert id="batchUpdateOrderStatus">
+		INSERT INTO CRM_ORDER_DTO${uid}
+		(
+		ID,
+		TBREFUND_STATUS,
+		TBORDER_STATUS
+		)
+		VALUES
+		<foreach collection="orderDTOList" item="order" index="index"
+			separator=",">
+			(
+			#{order.id},
+			#{order.tbrefundStatus},
+			#{order.tborderStatus}
+			)
+		</foreach>
+		ON
+		DUPLICATE KEY UPDATE
+		ID = VALUES(ID),
+		TBREFUND_STATUS =
+		VALUES(TBREFUND_STATUS),
+		TBORDER_STATUS = VALUES(TBORDER_STATUS)
+	</insert>
+
+	<update id="alterTableOrder" parameterType="java.util.Map">
+		DROP INDEX
+		index_buyer_nick ON crm_order_dto${uid};
+		DROP INDEX index_title ON
+		crm_order_dto${uid};
+		alter table crm_order_dto${uid} modify column
+		receiver_name text;
+		alter table crm_order_dto${uid} modify column
+		receiver_address text;
+		alter table crm_order_dto${uid} modify column
+		buyer_nick varchar(1500);
+		alter table crm_order_dto${uid} modify column
+		title text;
+
+		alter table crm_order_dto${uid} add index
+		index_buyer_nick(buyer_nick(255));
+		alter table crm_order_dto${uid} add
+		index index_title(title(255));
+	</update>
+</mapper>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans          
+    http://www.springframework.org/schema/beans/spring-beans.xsd          
+    http://code.alibabatech.com/schema/dubbo          
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 自动生成端口号 -->
+	<bean id="dynamicDubboPortReaderUtil" class="com.kycrm.member.component.DynamicDubboPortReaderUtil"
+		init-method="init" />
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="provider-dubbo" logger="slf4j" />
+
+	<!-- 使用Zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}"
+		file="${dubbo.registry.base.path}/provider-dubbo/dubbo-registry.properties" />
+
+	<!-- 用dubbo协议在20881端口暴露服务 -->
+	<dubbo:protocol name="dubbo" dispatcher="all"
+		threadpool="fixed" threads="2000" />
+
+	<dubbo:provider timeout="1200000" threadpool="fixed"
+		threads="2000" loadbalance="leastactive" delay="-1" retries="1" />
+
+	<!-- 用户服务 -->
+	<dubbo:service interface="com.kycrm.member.service.user.IUserInfoService"
+		ref="userInfoService" />
+	<!-- 会员服务 -->
+	<dubbo:service interface="com.kycrm.member.service.member.IMemberDTOService"
+		ref="memberDTOService" />
+	<!-- 订单服务 -->
+	<dubbo:service interface="com.kycrm.member.service.trade.ITradeDTOService"
+		ref="tradeDTOService" />
+	<!-- 已经反馈服务 -->
+	<dubbo:service interface="com.kycrm.member.service.feedback.IFeedBackService"
+		ref="feedBackService" />
+	<!-- 后台管理 author:jackstraw_yu -->
+	<dubbo:service interface="com.kycrm.member.service.other.IMobileSettingService"
+		ref="mobileSettingService" />
+	<!-- 订单中心author:jackstraw_yu -->
+	<dubbo:service
+		interface="com.kycrm.member.service.tradecenter.ITradeSetupService"
+		ref="tradeSetupService" />
+	<!-- 充值记录服务 -->
+	<dubbo:service
+		interface="com.kycrm.member.service.effect.IMarketingCenterEffectService"
+		ref="marketingCenterEffectService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.effect.ITradeCenterEffectService"
+		ref="tradeCenterEffectService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.item.ICommodityGroupingService"
+		ref="commodityGroupingService" />
+	<dubbo:service interface="com.kycrm.member.service.item.IGroupedGoodsService"
+		ref="groupedGoodsService" />
+	<dubbo:service interface="com.kycrm.member.service.item.IItemService"
+		ref="itemService" />
+	<dubbo:service interface="com.kycrm.member.service.login.ILoginService"
+		ref="loginService" />
+	<dubbo:service interface="com.kycrm.member.service.message.IMsgSendRecordService"
+		ref="msgSendRecordService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.message.IMultithreadBatchSmsService"
+		ref="multithreadBatchSmsService" />
+	<dubbo:service interface="com.kycrm.member.service.message.IPushSmsService"
+		ref="pushSmsService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.message.ISmsBlackListDTOService"
+		ref="smsBlackListDTOService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.message.ISmsReceiveInfoService"
+		ref="smsReceiveInfoService" />
+	<dubbo:service interface="com.kycrm.member.service.message.ISmsRecordDTOService"
+		ref="smsRecordDTOService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.message.ISmsSendInfoScheduleService"
+		ref="smsSendInfoScheduleService" />
+	<dubbo:service interface="com.kycrm.member.service.message.ISmsSendInfoService"
+		ref="smsSendInfoService" />
+	<dubbo:service interface="com.kycrm.member.service.order.IOrderDTOService"
+		ref="orderDTOService" />
+	<dubbo:service interface="com.kycrm.member.service.other.ITaskNodeService"
+		ref="taskNodeService" />
+
+
+	<dubbo:service interface="com.kycrm.member.service.traderate.ITradeRatesService"
+		ref="tradeRatesService" />
+	<dubbo:service interface="com.kycrm.member.service.user.IRechargeMenuService"
+		ref="rechargeMenuService" />
+	<dubbo:service interface="com.kycrm.member.service.user.IUserAccountService"
+		ref="userAccountService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.user.IUserPartitionInfoService"
+		ref="userPartitionInfoService" />
+	<dubbo:service interface="com.kycrm.member.service.user.IUserRechargeService"
+		ref="userRechargeService" />
+	<dubbo:service interface="com.kycrm.member.service.vip.IVipUserService"
+		ref="vipUserService" />
+	<dubbo:service interface="com.kycrm.member.service.redis.ICacheService"
+		ref="cacheService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.message.ISmsSendListImportService"
+		ref="smsSendListImportService" />
+	<dubbo:service interface="com.kycrm.member.service.message.ISmsReportInfoService"
+		ref="smsReportInfoService" />
+	<dubbo:service interface="com.kycrm.member.service.payment.IAlipayService"
+		ref="alipayService" />
+	<dubbo:service interface="com.kycrm.member.service.message.ISmsTemplateService"
+		ref="smsTemplateService" />
+
+	<!-- 用户分组服务 -->
+	<dubbo:service
+		interface="com.kycrm.member.service.usermanagement.ISellerGroupService"
+		ref="sellerGroupService" />
+	<!-- 用户分组规则服务 -->
+	<dubbo:service
+		interface="com.kycrm.member.service.usermanagement.ISellerGroupRuleService"
+		ref="sellerGroupRuleService" />
+	<!-- 用户操作日志服务 -->
+	<dubbo:service interface="com.kycrm.member.service.user.IUserOperationLogService"
+		ref="userOperationLog" />
+	<!-- 会员筛选服务 -->
+	<dubbo:service
+		interface="com.kycrm.member.service.marketing.IMarketingMemberFilterService"
+		ref="marketingMemberFilterService" />
+	<!-- 会员收货地址服务 -->
+	<dubbo:service
+		interface="com.kycrm.member.service.member.IMemberReceiveDetailService"
+		ref="memberReceiveDetailService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.orderimport.IOrderImportRecordService"
+		ref="orderImportRecordService" />
+	<dubbo:service interface="com.kycrm.member.service.itemimport.IItemImportService"
+		ref="itemImportService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.message.ISmsBlackListImportService"
+		ref="smsBlackListImportService" />
+	<dubbo:service interface="com.kycrm.member.service.effect.IItemDetailService"
+		ref="itemDetailService" />
+	<dubbo:service interface="com.kycrm.member.service.message.IMsgTempTradeService"
+		ref="tempTradeService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.util.IMsgTempTradeQueueService"
+		ref="tempTradeQueueService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.message.IMultithreadBatchIndividuationSmsService"
+		ref="multithreadBatchIndividuationSmsService" />
+	<dubbo:service interface="com.kycrm.member.service.message.IMsgSendService"
+		ref="msgSendService" />
+	<dubbo:service interface="com.kycrm.member.service.message.ITradeMsgSendService"
+		ref="tradeMsgSendService" />
+	<dubbo:service interface="com.kycrm.member.service.other.IShortLinkService"
+		ref="shortLinkService" />
+	<dubbo:service interface="com.kycrm.member.service.notice.INoticeService"
+		ref="noticeService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.message.IMsgTempTradeHistoryService"
+		ref="tempTradeHistoryService" />
+	<dubbo:service interface="com.kycrm.member.service.item.IItemTransferService"
+		ref="itemTransferService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.marketing.IPremiumMarketingMemberFilterService"
+		ref="premiumMarketingMemberFilterService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.marketing.IFilterRecordService"
+		ref="filterRecordService" />
+	<dubbo:service interface="com.kycrm.member.service.member.IDnsegAddressService"
+		ref="dnsegAddressService" />
+	<dubbo:service interface="com.kycrm.member.service.member.IDnsegOperatorService"
+		ref="dnsegOperatorService" />
+	<dubbo:service interface="com.kycrm.member.service.member.IAnalyseMobileService"
+		ref="analyseMobileService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.message.IBatchSendMemberMessageService"
+		ref="batchSendMemberMessageService" />
+	<dubbo:service interface="com.kycrm.member.service.message.ISensitiveWordService"
+		ref="sensitiveWordService" />
+	<dubbo:service interface="com.kycrm.member.component.IMessageQueue"
+		ref="messageQueue" />
+
+	<dubbo:service interface="com.kycrm.member.handler.IHandlerRefundInfo"
+		ref="handlerRefundInfo" />
+	<dubbo:service interface="com.kycrm.member.service.syn.IRefundService"
+		ref="refundService" />
+	<dubbo:service interface="com.kycrm.member.service.syn.ITbRefundService"
+		ref="tbRefundService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.effect.IEffectStandardRFMService"
+		ref="effectStandardRFMService" />
+	<dubbo:service interface="com.kycrm.member.service.effect.IRFMDetailChartService"
+		ref="rfmDetailChartService" />
+	<!--同步服务 -->
+	<dubbo:service interface="com.kycrm.member.handler.IItemSysInfoService"
+		ref="itemSysInfoService" />
+	<dubbo:service interface="com.kycrm.member.handler.ITradeSysInfoServiceSyn"
+		ref="tradeSysInfoServiceImpl" />
+	<dubbo:service interface="com.kycrm.member.service.rate.ITradeRatesServiceSyn"
+		ref="tradeRatesServiceImplsyn" />
+	<dubbo:service
+		interface="com.kycrm.member.service.trade.IMongoHistroyTradeService"
+		ref="synServiceProvider" />
+	<dubbo:service
+		interface="com.kycrm.member.service.multishopbinding.IMultiShopBindingService"
+		ref="multiShopBindingService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.multishopbinding.IMultiShopBindingSendMessageRecordService"
+		ref="multiShopBindingSendMessageRecordService" />
+	<dubbo:service
+		interface="com.kycrm.member.service.export.IExportService"
+		ref="exportService" />
+	<dubbo:service interface="com.kycrm.member.service.user.IUserBillInfoService"
+		ref="userBillInfoService" /> 
+	<dubbo:service interface="com.kycrm.member.service.user.IUserBillRecordService"
+		ref="userBillRecordService" />
+	<dubbo:service interface="com.kycrm.member.service.user.IUserPayBillService"
+	    ref="userPayBillService" />
+</beans>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/2002/xmlspec/dtd/2.10/xmlspec.dtd">
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}[%line] - %msg %mdc %n</pattern>
+		</encoder>
+	</appender>
+	
+	
+	
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/disks/kycrm/opt/tomcat-crm-tmc/logs/tmc.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				/disks/kycrm/opt/tomcat-crm-tmc/logs/tmc.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<!-- keep 1 days worth of history -->
+			<MaxHistory>10</MaxHistory>	
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}[%line] - %msg %mdc %n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+    <logger name="druid.sql" level="info" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	
+	
+	
+<!-- 	<logger name="dao" level="INFO">   -->
+    <!--daoFILE为实际定义的appender-->  
+<!--      <appender-ref ref="STDOUT" />   -->
+<!--     </logger>   -->
+
+	<logger name="crm" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration> 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	
+	
+	<bean id="skipPayConfig" class="com.kycrm.member.utils.pay.SkipPayConfig">
+		<property name="app_id">
+			<value>2017110609762911</value> 
+		</property>
+		<property name="merchant_private_key">
+			<value>MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC9gzP/CYC6uFgIEUnM68B6RLWHGA1aU1UYtMzK30B0l1y8TWYQV55HH3VYpnhw8aZPN3+Eh4bFL5FIdutz8n6OuhJ1Umeg440ggtKOzOcJwHn6VBRu8rbyqbMocGqTod/GejhVM++kQ7PGFjMfom1Fk/yjuLWN4LxagvdNM5qosnAVkH1Zg6BZL/p876hYqIlASP31zxhqEmui8aV9hwej+FdTufu3sIK+iJT+nqC1FTj9ZAaz9xt9tWs3omeoJPwnGBCwSuceMF24AkOGxL8u5ZcUMTFQd92B6lgC8UaHFr7trrs5zV5cOwO/4XDTKsuC8wl4xV8zx8sQcuTqkkIDAgMBAAECggEBAJ7CaS7AUT0a7XRkt0SaQvaq1L/FoHoI0YMPA3j4qdCCdMeyt0v9erTuX6nSW5eSeNZoEcV+m6JZBQaFyR2rCeabbpcmX3Xi6vlPXwEOGoaK3iSdhzii0CxdiZ7Y/g+LTiHBhaurBJjBtrq9IjrgIVZmcQDe3glrOZ9Bk9by4h9rWIZ4Vq2Kmp2jwJESjeqhKLecPzE0M+EgJe0CtubWymi0TdAi48Dl5ua8pFSv9fT1obZJXfHPWqbscRv31leoFFC/71Xa8EVWS9NSytojZlUpu8Y5MylBR/IW4Aelpb2hD32gSxRAvWXzfxyT93C+VFQkgtN51j2rVbmKLMhp0uECgYEA+fZEEk6pdteUEezUy3LviUyIcl9v6avlhHTFvBZ1iRZoyBldw1mAcHf5XUWdmnAmMFk/0cBRZxN/vykoRZGtaOQD2mRwD+JXRIThrwv7etgqDmulEdiMrmwoMz2llOh7oO7Y130cGJTqRcORsPwmABvTPR7fd96UHQ9SJi6AsAkCgYEAwhcgCoM2j3237mWfAOhgHpon0uArQILwOZ+gBso9RdFWMdQ2ZUgRnVQJh1bgpuZ5vb8uUvv/P39H2QXwjK7Wfg+SaDyIC+nVyq3VAO7rBhit0hbWhFeterzyIhd+dN2uaCZ4hG9kfH+kpl9fnMDX4H7RIaKDpjkYnowxfhYKTKsCgYEAw09xkPx13a5EvFzZSL7d++IZG4UG5Qazp/O2LWk/HYatCO0JHoLooPidmAu1Qd8vd8fE3hfvgyLxRmTaWsGhRbwkZpjkFwU8OwW5chViwnH1Kp9hs7gI9KD+KEua/edJ8k2ukXHoaiyxgSF2zVu4NY2IWNGuuvLnuG0oOz1KwEECgYEAh2/jp/JQDGlKBE1dWyDMkg44Y+qRw/6a61r8LEDL6QBfCX5wRtS3lfWigJKbSVvi8AmMpdO7FfAXjtWaOlF205jCLYKv3MBbs4cB8BjIYASwpr3RC6CzKcbXn/qM/7gBkCPoTWH92PKpTn+XFKds/PcBsFrbSw7kox5pGvb+UOkCgYAzgJs53XJi3PLUBXzmPkVUezYj1VMeWRL8URhE5s28FRbA+xok8lULeVSRD2S5FwlXZtQa3vCJZbOStRer6tu/gNgPbTxEeY7Zq2cNrD+6DtjQHiIsqYhYUIm6LxJ2o0Oyo56uZdXbrlsUsY76D0fSkyG+DvcJh9iGCa2emMzAbA==</value> 
+		</property>
+		<property name="alipay_public_key">
+			<value>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkrSsnV1ttPOPBfYGIhKeprmzSBDhpa59MalRRcOdFF/fyg2l+wNn8C9fBc+wGQ3FEjiWwBSm4SxVkctFQbNMT5NF2Qwn6QtsxYIYgcUenuopy22DnkqQYP6fFkzP8fJLF1cDNLIuHZmnnAOYZQrJ0d1Y7wMGUP0ArZKS19GDUocM1HMz/fi/j1Jq3ticiIY1yGLSgJ9oeCXwkrEtb4I/GDA7umm/hnxoqCr5rWMuuXKFRmV9wzPScv6z5RXniUF4MY0vVU9w/kjTr6yy+nZVy4uqpLluNWMwxQ+34bRs334uENEccEbp2nqfcL7vtSHqgQebMlO5b8UwxWnuv9c1owIDAQAB</value> 
+		</property>
+		<property name="notify_url">
+			<value>${notify}</value>
+		</property>
+		<property name="return_url">
+			<value></value> 
+		</property>
+		<property name="sign_type">
+			<value>RSA2</value> 
+		</property>
+		<property name="charset">
+			<value>utf-8</value> 
+		</property>
+		<property name="gatewayUrl">
+			<value>https://openapi.alipay.com/gateway.do</value> 
+		</property>
+	</bean>
+	
+</beans>               

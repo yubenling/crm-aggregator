@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kycrm.member.dao.effect.IMarketingCenterEffectDao">
+	<resultMap type="com.kycrm.member.domain.entity.effect.MarketingCenterEffect" id="effectPicture">
+		<result column="uid" property="uid"/>
+		<result column="user_id" property="userId"/>
+		<result column="msg_id" property="msgId"/>
+		<result column="send_time" property="sendTime"/>
+		<result column="trade_from" property="tradeFrom"/>
+		<result column="trade_status" property="tradeStatus"/>
+		<result column="create_amount" property="createAmount"/>
+		<result column="create_buyer_num" property="createBuyerNum"/>
+		<result column="create_trade_num" property="createTradeNum"/>
+		<result column="create_item_num" property="createItemNum"/>
+		<result column="pay_amount" property="payAmount"/>
+		<result column="pay_buyer_num" property="payBuyerNum"/>
+		<result column="pay_trade_num" property="payTradeNum"/>
+		<result column="pay_item_num" property="payItemNum"/>
+		<result column="wait_pay_amount" property="waitPayAmount"/>
+		<result column="wait_pay_buyer_num" property="waitPayBuyerNum"/>
+		<result column="wait_pay_trade_num" property="waitPayTradeNum"/>
+		<result column="wait_pay_item_num" property="waitPayItemNum"/>
+		<result column="refund_amount" property="refundAmount"/>
+		<result column="refund_buyer_num" property="refundBuyerNum"/>
+		<result column="refund_trade_num" property="refundTradeNum"/>
+		<result column="refund_item_num" property="refundItemNum"/>
+		<result column="effect_time" property="effectTime"/>
+		<result column="days" property="days"/>
+	</resultMap>
+	
+	<!-- 查询是否存在表 -->
+	<select id="tableIsExist" parameterType="java.lang.Long" resultType="java.lang.String">
+		show tables like 'crm_marketing_center_effect${uid}'
+	</select>
+	
+	<!-- 创建表 -->
+	<insert id="doCreateTable" parameterType="java.lang.Long">
+		CREATE TABLE `crm_marketing_center_effect${_parameter}` (
+		  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+		  `uid` bigint(20) DEFAULT NULL,
+		  `msg_id` bigint(20) DEFAULT NULL,
+		  `send_time` datetime DEFAULT NULL,
+		  `trade_from` varchar(255) DEFAULT NULL,
+		  `create_amount` decimal(20,2) DEFAULT NULL,
+		  `create_buyer_num` int(10) DEFAULT NULL,
+		  `create_trade_num` int(10) DEFAULT NULL,
+		  `create_item_num` bigint(10) DEFAULT NULL,
+		  `pay_amount` decimal(20,2) DEFAULT NULL,
+		  `pay_buyer_num` int(10) DEFAULT NULL,
+		  `pay_trade_num` int(10) DEFAULT NULL,
+		  `pay_item_num` bigint(10) DEFAULT NULL,
+		  `wait_pay_amount` decimal(20,2) DEFAULT NULL,
+		  `wait_pay_buyer_num` int(10) DEFAULT NULL,
+		  `wait_pay_trade_num` int(10) DEFAULT NULL,
+		  `wait_pay_item_num` bigint(10) DEFAULT NULL,
+		  `refund_amount` decimal(20,2) DEFAULT NULL,
+		  `refund_buyer_num` int(10) DEFAULT NULL,
+		  `refund_trade_num` int(10) DEFAULT NULL,
+		  `refund_item_num` bigint(10) DEFAULT NULL,
+		  `customer_click` int(10) DEFAULT NULL,
+		  `page_click` int(10) DEFAULT NULL,
+		  `link_num` int(10) DEFAULT NULL,
+		  `effect_time` datetime DEFAULT NULL,
+		  `days` int(5) DEFAULT NULL,
+		  `optlock` int(5) DEFAULT '0',
+		  `createdBy` varchar(255) DEFAULT NULL,
+		  `createdDate` datetime DEFAULT NULL,
+		  `lastModifiedBy` varchar(255) DEFAULT NULL,
+		  `lastModifiedDate` datetime DEFAULT NULL,
+		  `trade_status` varchar(255) DEFAULT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+	</insert>
+	
+	<!-- 创建表索引 -->
+	<insert id="addMarketingCenterEffectTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		`crm_marketing_center_effect${_parameter}`
+		ADD INDEX index_msg_id 						(msg_id),
+		ADD INDEX index_trade_from				(trade_from),
+		ADD INDEX index_days							(days);
+	</insert>
+	
+	<!-- 保存单条记录 -->
+	<select id="saveMarktingCenterEffect" parameterType="com.kycrm.member.domain.entity.effect.MarketingCenterEffect">
+		insert into crm_marketing_center_effect${uid} (optlock,createdBy,createdDate,lastModifiedBy,lastModifiedDate,
+				msg_id,send_time,trade_from,effect_time,days,uid,
+				create_amount,create_buyer_num,create_trade_num,create_item_num,
+				pay_amount,pay_buyer_num,pay_trade_num,pay_item_num,
+				wait_pay_amount,wait_pay_buyer_num,wait_pay_trade_num,wait_pay_item_num,
+				refund_amount,refund_buyer_num,refund_trade_num,refund_item_num
+		) 
+		values (0,#{createdBy},#{createdDate},#{lastModifiedBy},#{lastModifiedDate},
+				#{msgId},#{sendTime},#{tradeFrom},#{effectTime},#{days},#{uid},
+				#{createAmount},#{createBuyerNum},#{createTradeNum},#{createItemNum},
+				#{payAmount},#{payBuyerNum},#{payTradeNum},#{payItemNum},
+				#{waitPayAmount},#{waitPayBuyerNum},#{waitPayTradeNum},#{waitPayItemNum},
+				#{refundAmount},#{refundBuyerNum},#{refundTradeNum},#{refundItemNum}
+		)
+	</select>
+	
+	<!-- 更新记录 -->
+	<update id="updateMarktingEffectByParam" parameterType="com.kycrm.member.domain.entity.effect.MarketingCenterEffect">
+	   UPDATE crm_marketing_center_effect${uid} s SET
+	    <if test="createBuyerNum !=null">
+	      	s.`create_buyer_num`= #{createBuyerNum} ,
+	    </if>
+	    <if test="createTradeNum !=null">
+	      	s.`create_trade_num`= #{createTradeNum} ,
+	    </if>
+	    <if test="createItemNum !=null">
+	      	s.`create_item_num`= #{createItemNum} ,
+	    </if>
+	    <if test="payAmount !=null">
+	      	s.`pay_amount`= #{payAmount} ,
+	    </if>
+	    <if test="payBuyerNum !=null">
+	      	s.`pay_buyer_num`= #{payBuyerNum} ,
+	    </if>
+	    <if test="payTradeNum !=null">
+	      	s.`pay_trade_num`= #{payTradeNum} ,
+	    </if>
+	    <if test="payItemNum !=null">
+	      	s.`pay_item_num`= #{payItemNum} ,
+	    </if>
+	    <if test="refundBuyerNum !=null">
+	      	s.`refund_buyer_num`= #{refundBuyerNum} ,
+	    </if>
+	    <if test="refundTradeNum !=null">
+	      	s.`refund_trade_num`= #{refundTradeNum} ,
+	    </if>
+	    <if test="refundItemNum !=null">
+	      	s.`refund_item_num`= #{refundItemNum} ,
+	    </if>
+     	<if test="waitPayBuyerNum !=null">
+      		s.`wait_pay_buyer_num`= #{waitPayBuyerNum} ,
+	    </if>
+	    <if test="waitPayTradeNum !=null">
+	      s.`wait_pay_trade_num`= #{waitPayTradeNum} ,
+	    </if>
+	    <if test="waitPayItemNum !=null">
+	      s.`wait_pay_item_num`= #{waitPayItemNum} ,
+	    </if>
+	     <if test="waitPayAmount !=null">
+	      s.`wait_pay_amount`= #{waitPayAmount} ,
+	    </if>
+	    <if test="refundAmount !=null">
+	      s.`refund_amount`= #{refundAmount} ,
+	    </if>
+	    <if test="createAmount !=null">
+	      s.`create_amount`= #{createAmount} ,
+	    </if>
+	    <if test="effectTime != null ">
+	    	 s.`effect_time`= #{effectTime} ,
+	    </if>
+	    <if test="lastModifiedDate != null">
+	    	s.`lastModifiedDate`= #{lastModifiedDate} ,
+	    </if>
+    	<if test="lastModifiedBy != null">
+    		s.`lastModifiedBy`= #{lastModifiedBy} ,
+		</if>
+   		s.id=#{id} 
+ 		where  1=1   and   id=#{id}  
+	</update>
+  
+  	<!-- 根据userId和msgId查询统计分析数据 (效果分析页面的分析数据) -->
+	<select id="findEffectByParam" parameterType="java.util.Map" resultMap="effectPicture">
+		select *
+		from crm_marketing_center_effect${uid}
+		<where>
+			msg_id = #{msgId} and days = #{days}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and trade_from = #{tradeFrom}
+			</if>
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and trade_status = #{tradeStatus}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 营销中心效果分析汇总数据 -->
+	<select id="findEffectByDays" parameterType="java.util.Map" resultMap="effectPicture">
+		select 
+			create_amount,create_buyer_num,create_trade_num,create_item_num,
+			pay_amount,pay_buyer_num,pay_trade_num,pay_item_num,
+			wait_pay_amount,wait_pay_buyer_num,wait_pay_trade_num,wait_pay_item_num,
+			refund_amount,refund_buyer_num,refund_trade_num,refund_item_num
+		from crm_marketing_center_effect${uid}
+		<where>
+			uid = #{uid} and msg_id = #{msgId}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and trade_from = #{tradeFrom}
+			</if>
+			<if test="days != null">
+				and days = #{days}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询满足条件的真实客户数 -->
+	<!-- <select id="findRealBuyerNum" parameterType="com.kycrm.member.domain.entity.effect.MarketingCenterEffect" resultMap="effectPicture">
+		select
+			MAX(create_buyer_num) create_buyer_num,
+			MAX(pay_buyer_num) pay_buyer_num,
+			MAX(wait_pay_buyer_num) wait_pay_buyer_num,
+			MAX(refund_buyer_num) refund_buyer_num
+		from
+			crm_marketing_center_effect${uid}
+		<where>
+			msg_id = #{msgId} and 
+			#{days} > days and trade_status = #{tradeStatus}
+			
+		</where>	
+	</select> -->
+	
+	<!-- 营销中心效果分析每日数据的集合 -->
+	<select id="listEffectPictures" parameterType="java.util.Map" resultMap="effectPicture">
+		select create_amount,pay_buyer_num,pay_trade_num,pay_item_num,effect_time
+		from crm_marketing_center_effect${uid}
+		<where>
+			uid = #{uid} and msg_id = #{msgId}
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and trade_status = #{tradeStatus}
+			</if>
+			<if test="days != null">
+				and #{days} > days
+			</if>
+			order by effect_time ASC
+		</where>
+	</select>
+	
+	<!-- 首页计算会员营销数据 -->
+	<select id="findSuccessPayFeeByTime" parameterType="java.util.Map" resultType="java.lang.Double">
+		select MAX(create_amount) from crm_marketing_center_effect${uid}
+		<where>
+			uid = #{uid} and trade_status = 'create'
+			<if test="msgId != null">
+				and msg_id = #{msgId}
+			</if>
+			<if test="bTime != null and eTime != null">
+				and effect_time between #{bTime} and #{eTime}
+			</if>
+		</where>
+	</select>
+</mapper>

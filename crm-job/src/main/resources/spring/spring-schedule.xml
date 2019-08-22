@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd"
+	default-lazy-init="false" default-autowire="no">
+	<description>Spring定时任务支持</description>
+	<bean id="myShcedule" class="com.kycrm.job.schdule.MyScheduleMessage"/> 
+	<!-- 基于Spring Schedule XML配置的定时任务列表，适合定义在每台服务器节点执行并且无需日志记录、无需管理界面干预等功能支持的任务 -->
+	<task:scheduler id="springScheduler" pool-size="10" />
+ 	<task:scheduled-tasks scheduler="springScheduler"> 
+		<!-- 每天9点扫描手机号设置开启任务 -->
+		<task:scheduled ref="myShcedule" method="scanOpenMobileSetting" cron="0 0 9 * * ?"/>
+		<!-- 每天0点重置手机号设置余额不足提醒-发送标识 -->
+		<task:scheduled ref="myShcedule" method="resetMobileSettingFlag" cron="0 0 0 * * ?"/>
+		<!-- 每小时定时检查没有等级的用户，并更新用户等级 -->
+		<task:scheduled ref="myShcedule" method="updateUserInfoLevel" cron="0 0 * * * ?"/>
+	</task:scheduled-tasks> 
+</beans>

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.usermanagement.ISellerGroupDao">
+
+	<resultMap type="com.kycrm.member.domain.entity.usermanagement.SellerGroup"
+		id="SellerGroupInfo">
+		<result column="ID" property="id" />
+		<result column="USER_ID" property="userId" />
+		<result column="RULE_ID" property="ruleId" />
+		<result column="GROUP_NAME" property="groupName" />
+		<result column="GROUP_TYPE" property="groupType" />
+		<result column="GROUP_CREATE" property="groupCreate" />
+		<result column="GROUP_MODIFY" property="groupModify" />
+		<result column="STATUS" property="status" />
+		<result column="MEMBER_COUNT" property="memberCount" />
+		<result column="REMARK" property="remark" />
+		<result column="CREATEDBY" property="createdBy" />
+		<result column="CREATEDDATE" property="createdDate" />
+		<result column="LASTMODIFIEDBY" property="lastModifiedBy" />
+		<result column="LASTMODIFIEDDATE" property="lastModifiedDate" />
+	</resultMap>
+	
+	<sql id="table">CRM_GROUPS</sql>
+
+	<!-- 根据卖家编号获取所有分组信息 -->
+	<select id="findAllSellerGroup" parameterType="java.util.Map"
+		resultMap="SellerGroupInfo">
+		SELECT
+			ID,
+			RULE_ID,
+			GROUP_NAME,
+			MEMBER_COUNT,
+			GROUP_TYPE,
+			REMARK,
+			LASTMODIFIEDDATE
+		FROM
+			<include refid="table"/>
+		WHERE
+			STATUS =1
+		AND
+			UID = #{uid}
+		<if test="groupType !=null and groupType != '' and groupType != 0 ">
+			AND
+				GROUP_TYPE = #{groupType}
+		</if>
+		ORDER BY
+			GROUP_CREATE
+		DESC
+		<if test="startRows!=null  and currentRows!=null">
+			LIMIT #{startRows},#{currentRows}
+		</if>
+	</select>
+
+	<!-- 根据卖家编号获取所有分组信息 -->
+	<select id="findAllGroup" resultMap="SellerGroupInfo">
+		SELECT
+			ID,
+			GROUP_NAME
+		FROM
+			<include refid="table"/>
+		WHERE
+			STATUS = 1
+		AND
+			UID = #{uid}
+		ORDER BY
+			ID
+	</select>
+
+	<!-- 根据卖家编号查询所有用户分组数量 -->
+	<select id="findSellerGroupCount" resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			<include refid="table"/>
+		WHERE
+			STATUS =1
+		AND
+			UID = #{uid}
+		<if test="groupType != null and groupType !='' and groupType != 0 ">
+			AND
+				GROUP_TYPE = #{groupType}
+		</if>
+	</select>
+
+	<!-- 根据会员分组编号删除会员分组 -->
+	<delete id="deleteSellerGroup" parameterType="java.util.Map">
+		DELETE FROM
+			<include refid="table"/>
+		WHERE
+			UID = #{uid}
+		AND
+			ID=#{id}
+	</delete>
+
+	<!-- 添加会员分组 -->
+	<insert id="addSellerGroup" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.kycrm.member.domain.entity.usermanagement.SellerGroup">
+		INSERT INTO 
+		<include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uid != null ">
+				UID,
+			</if>
+			<if test="userId != null ">
+				USER_ID,
+			</if>
+			<if test="ruleId != null ">
+				RULE_ID,
+			</if>
+			<if test="groupName != null ">
+				GROUP_NAME,
+			</if>
+			<if test="groupType != null ">
+				GROUP_TYPE,
+			</if>
+			<if test="groupCreate != null ">
+				GROUP_CREATE,
+			</if>
+			<if test="groupModify != null ">
+				GROUP_MODIFY,
+			</if>
+			<if test="status != null ">
+				STATUS,
+			</if>
+			<if test="memberCount != null ">
+				MEMBER_COUNT,
+			</if>
+			<if test="remark != null ">
+				REMARK,
+			</if>
+			<if test="lastModifiedDate != null ">
+				LASTMODIFIEDDATE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uid != null ">
+				#{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null ">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="ruleId != null ">
+				#{ruleId,jdbcType=BIGINT},
+			</if>
+			<if test="groupName != null ">
+				#{groupName,jdbcType=VARCHAR},
+			</if>
+			<if test="groupType != null ">
+				#{groupType,jdbcType=VARCHAR},
+			</if>
+			<if test="groupCreate != null ">
+				#{groupCreate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="groupModify != null ">
+				#{groupModify,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null ">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="memberCount != null ">
+				#{memberCount,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null ">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="lastModifiedDate != null ">
+				#{lastModifiedDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- ZTK查询最近一条数据的主键GroupId -->
+	<select id="findGroupIdLast" resultType="Long">
+		SELECT
+			ID
+		FROM
+			<include refid="table"/>
+		ORDER BY
+			GROUP_CREATE
+		DESC
+	</select>
+
+	<!-- 修改卖家分组信息 -->
+	<update id="updateSellerGroup"
+		parameterType="com.kycrm.member.domain.entity.usermanagement.SellerGroup">
+		UPDATE
+		<include refid="table"/>
+		<set>
+			<if test="uid != null">
+				UID = #{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="ruleId != null">
+				RULE_ID=#{ruleId,jdbcType=INTEGER},
+			</if>
+			<if test="groupName != null">
+				GROUP_NAME=#{groupName,jdbcType=VARCHAR},
+			</if>
+			<if test="groupType != null">
+				GROUP_TYPE=#{groupType,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="groupCreate != null">
+				GROUP_CREATE= #{groupCreate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="memberCount !=null">
+				MEMBER_COUNT=#{memberCount,jdbcType=INTEGER},
+			</if>
+			<if test="lastModifiedDate != null ">
+				LASTMODIFIEDDATE = #{lastModifiedDate,jdbcType=TIMESTAMP}
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- 根据分组编号查询分组信息 -->
+	<select id="findSellerGroup" resultMap="SellerGroupInfo">
+		SELECT
+			ID,
+			GROUP_NAME,
+			GROUP_CREATE,
+			GROUP_MODIFY,
+			STATUS,
+			MEMBER_COUNT,
+			REMARK,
+			USER_ID,
+			RULE_ID,
+			CASE GROUP_TYPE
+			WHEN 1 THEN '默认分组'
+			WHEN 2 THEN
+			'匿名分组'
+			END
+			AS GROUP_TYPE
+		FROM
+			<include refid="table"/>
+		WHERE 
+			UID = #{uid}
+		<if test="groupId !=null and groupId!=''">
+			AND
+				ID= #{groupId}
+		</if>
+	</select>
+
+	<!-- 根据分组编号查询分组信息 -->
+	<select id="findSellerGroupInfo" parameterType="java.util.Map"
+		resultMap="SellerGroupInfo">
+		SELECT
+			ID,
+			GROUP_NAME,
+			GROUP_CREATE,
+			GROUP_MODIFY,
+			STATUS,
+			MEMBER_COUNT,
+			USER_ID,
+			RULE_ID,
+			GROUP_TYPE
+		FROM
+			<include refid="table"/>
+		WHERE
+			1 = 1
+		AND
+			ID= #{groupId}
+	</select>
+	
+	<select id="findSellerGroupListByUid" parameterType="java.util.Map" resultMap="SellerGroupInfo">
+		SELECT
+			ID,
+			GROUP_NAME
+		FROM
+			<include refid="table"/>
+		WHERE
+			UID = #{uid}
+	</select>
+
+	<!-- 根据uid查询该用户的默认分组数量 -->
+	<select id="findDefaultSellerGroupCount" parameterType="java.util.Map" resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			<include refid="table"/>
+		WHERE
+			UID = #{uid}
+		AND
+			GROUP_TYPE = '1'
+	</select>
+
+	<!-- 根据卖家编号查询所有的默认分组 -->
+	<select id="findDefaultSellerGroup" parameterType="java.util.Map" resultMap="SellerGroupInfo">
+		SELECT
+			ID,
+			GROUP_NAME,
+			GROUP_CREATE,
+			GROUP_MODIFY,
+			STATUS,
+			MEMBER_COUNT,
+			REMARK,
+			USER_ID,
+			RULE_ID,
+			GROUP_TYPE
+		FROM
+			<include refid="table"/>
+		WHERE
+			GROUP_TYPE = '1'
+		<if test="uid != null ">
+			AND
+			UID = #{uid,jdbcType=VARCHAR}
+		</if>
+		ORDER BY
+			ID
+	</select>
+
+	<select id="findSellerGroupByGroupId" parameterType="long"
+		resultMap="SellerGroupInfo">
+		SELECT
+			ID,
+			GROUP_NAME,
+			GROUP_CREATE,
+			GROUP_MODIFY,
+			STATUS,
+			MEMBER_COUNT,
+			REMARK,
+			USER_ID,
+			RULE_ID,
+			GROUP_TYPE
+		FROM
+			<include refid="table"/>
+		WHERE
+			ID = #{id}
+	</select>
+
+	<!-- 修改groups的成员数量 -->
+	<update id="updateSellerGroupMemberCount">
+		UPDATE 
+		<include refid="table"/>
+		<set>
+			<if test="memberCount !=null">
+				MEMBER_COUNT=#{memberCount,jdbcType=INTEGER},
+			</if>
+			LASTMODIFIEDDATE = now()
+		</set>
+		WHERE 
+		ID = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateSellerGroupMemberCountByUserId">
+		UPDATE 
+		<include refid="table"/>
+		<set>
+			<if test="memberCount != null ">
+				MEMBER_COUNT = #{memberCount,jdbcType=INTEGER},
+			</if>
+			LASTMODIFIEDDATE = now()
+		</set>
+		WHERE
+		UID = #{uid,jdbcType=VARCHAR}
+		AND
+		GROUP_NAME =
+		#{groupName,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 根据组名和用户名称查询会员分组信息 -->
+	<select id="existenceSellerGroupInfo" parameterType="java.util.Map"
+		resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			<include refid="table"/>
+		WHERE
+			GROUP_NAME = #{groupName}
+		AND
+			UID = #{uid}
+	</select>
+	
+	<!-- 根据组名和用户名称查询会员分组信息 -->
+	<select id="existenceSellerGroupForUpdate" parameterType="java.util.Map"
+		resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			<include refid="table"/>
+		WHERE
+			UID = #{uid}
+		AND
+			ID != #{groupId}
+		AND
+			GROUP_NAME = #{groupName}
+	</select>
+
+</mapper>

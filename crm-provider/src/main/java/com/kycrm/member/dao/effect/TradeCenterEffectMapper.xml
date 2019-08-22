@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kycrm.member.dao.effect.ITradeCenterEffectDao">
+	<resultMap type="com.kycrm.member.domain.entity.effect.TradeCenterEffect" id="tradeCenterEffect">
+		<result column="id" property="id"/>
+		<result column="uid" property="uid"/>
+		<result column="type" property="type"/>
+		<result column="task_id" property="taskId"/>
+		<result column="target_order" property="targetOrder"/>
+		<result column="target_fee" property="targetFee"/>
+		<result column="earning_order" property="earningOrder"/>
+		<result column="earning_fee" property="earningFee"/>
+		<result column="sms_num" property="smsNum"/>
+		<result column="sms_money" property="smsMoney"/>
+		<result column="link_num" property="linkNum"/>
+		<result column="customer_click" property="customerClick"/>
+		<result column="page_click" property="pageClick"/>
+		<result column="effect_time" property="effectTime"/>
+		<result column="effect_time_str" property="effectTimeStr"/>
+		<result column="earning_order_rate" property="earningOrderRate"/>
+		<result column="earning_money_rate" property="earningMoneyRate"/>
+		<result column="click_rate" property="clickRate"/>
+		<result column="roi_value" property="roiValue"/>
+		<result column="optlock" property="version"/>
+		<result column="createdBy" property="createdBy"/>
+		<result column="createdDate" property="createdDate"/>
+		<result column="lastModifiedBy" property="lastModifiedBy"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>
+	</resultMap>
+	
+	<!-- 保存一条记录 -->
+	<insert id="saveTradeCenterEffect" parameterType="com.kycrm.member.domain.vo.effect.TradeCenterEffectVO">
+		insert into crm_trade_center_effect
+		(uid,USER_ID,TYPE,TASK_ID,TARGET_ORDER,TARGET_FEE,EARNING_ORDER,
+		EARNING_FEE,SMS_NUM,SMS_MONEY,LINK_NUM,CUSTOMER_CLICK,PAGE_CLICK,
+		EFFECT_TIME,optlock,createdBy,createdDate,lastModifiedBy,lastModifiedDate) 
+		values
+		(#{uid},#{userId},#{type},#{taskId},#{targetOrder},#{targetFee},#{earningOrder},
+		#{earningFee},#{smsNum},#{smsMoney},#{linkNum},#{customerClick},#{pageClick},
+		#{effectTime},0,#{createdBy},#{createdDate},#{lastModifiedBy},#{lastModifiedDate})
+	</insert>
+	
+	<!-- 更新一条记录 -->
+	<update id="updateTradeCenterEffect" parameterType="com.kycrm.member.domain.vo.effect.TradeCenterEffectVO">
+		update CRM_TRADE_CENTER_EFFECT
+		<set>
+			uid = #{uid},
+			<if test="targetOrder != null">
+				TARGET_ORDER = #{targetOrder},
+			</if>
+			<if test="targetFee != null">
+				TARGET_FEE = #{targetFee},
+			</if>
+			<if test="earningOrder != null">
+				EARNING_ORDER = #{earningOrder},
+			</if>
+			<if test="earningFee != null">
+				EARNING_FEE = #{earningFee},
+			</if>
+			<if test="smsNum != null">
+				SMS_NUM = #{smsNum},
+			</if>
+			<if test="smsMoney != null">
+				SMS_MONEY = #{smsMoney},
+			</if>
+			<if test="linkNum != null">
+				LINK_NUM = #{linkNum},
+			</if>
+			<if test="customerClick != null">
+				CUSTOMER_CLICK = #{customerClick},
+			</if>
+			<if test="pageClick != null">
+				PAGE_CLICK = #{pageClick},
+			</if>
+			<if test="lastModifiedBy != null">
+				lastModifiedBy = #{lastModifiedBy},
+			</if>
+			<if test="lastModifiedDate != null">
+				lastModifiedDate = #{lastModifiedDate}
+			</if>
+			<where>
+				uid = #{uid} and EFFECT_TIME = #{effectTime}
+				<if test="taskId != null">
+					and TASK_ID = #{taskId}
+				</if>
+				<if test="type != null and type != ''">
+					and TYPE = #{type}
+				</if>
+			</where>
+		</set> 
+	</update>
+	
+	<!-- 查询一条记录 -->
+	<select id="queryTradeEffect" parameterType="java.util.Map" resultMap="tradeCenterEffect">
+		select
+		uid,TYPE,TASK_ID,TARGET_ORDER,TARGET_FEE,EARNING_ORDER,
+		EARNING_FEE,SMS_NUM,SMS_MONEY,LINK_NUM,CUSTOMER_CLICK,PAGE_CLICK,
+		EFFECT_TIME 
+		from
+		CRM_TRADE_CENTER_EFFECT
+		<where>
+			uid = #{uid} and to_days(EFFECT_TIME) = to_days(#{effectTime})
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="taskId != null">
+				and task_id = #{taskId}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询多条记录 -->
+	<select id="queryTradeEffectList" parameterType="com.kycrm.member.domain.vo.effect.TradeCenterEffectVO" resultMap="tradeCenterEffect">
+		select
+		uid,TYPE,TASK_ID,TARGET_ORDER,TARGET_FEE,EARNING_ORDER,
+		EARNING_FEE,SMS_NUM,SMS_MONEY,LINK_NUM,CUSTOMER_CLICK,PAGE_CLICK,
+		EFFECT_TIME 
+		from
+		CRM_TRADE_CENTER_EFFECT
+		<where>
+			uid = #{uid} and EFFECT_TIME = #{effectTime}
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="taskId != null">
+				and task_id = #{taskId}
+			</if>
+		</where>
+		order by id ASC
+	</select>
+	
+	<!-- 订单中心效果分析列表聚合查询 -->
+	<select id="aggregateTradeCenterList" parameterType="com.kycrm.member.domain.vo.effect.TradeCenterEffectVO" resultMap="tradeCenterEffect">
+		select sum(TARGET_ORDER) TARGET_ORDER,sum(TARGET_FEE) TARGET_FEE,sum(EARNING_ORDER) EARNING_ORDER,
+			   sum(EARNING_FEE) EARNING_FEE,sum(SMS_NUM) SMS_NUM,sum(SMS_MONEY) SMS_MONEY,sum(LINK_NUM) LINK_NUM,
+			   sum(CUSTOMER_CLICK) CUSTOMER_CLICK,sum(PAGE_CLICK) PAGE_CLICK,left(EFFECT_TIME,10) EFFECT_TIME
+		from CRM_TRADE_CENTER_EFFECT
+		<where>
+			uid = #{uid} and type = #{type} and EFFECT_TIME between #{beginTime} and #{endTime}
+			<if test="taskId != null">
+				and task_id = #{taskId}
+			</if>
+		</where>
+		group by left(effect_time,10)
+		order by EFFECT_TIME DESC
+	</select>
+	
+	<!-- 某一天的效果分析的查询 -->
+	<select id="aggregateTradeCenterEffect" parameterType="com.kycrm.member.domain.vo.effect.TradeCenterEffectVO" resultMap="tradeCenterEffect">
+		select sum(TARGET_ORDER) TARGET_ORDER,sum(TARGET_FEE) TARGET_FEE,sum(EARNING_ORDER) EARNING_ORDER,
+			   sum(EARNING_FEE) EARNING_FEE,sum(SMS_NUM) SMS_NUM,sum(SMS_MONEY) SMS_MONEY,sum(LINK_NUM) LINK_NUM,
+			   sum(CUSTOMER_CLICK) CUSTOMER_CLICK,sum(PAGE_CLICK) PAGE_CLICK
+		from CRM_TRADE_CENTER_EFFECT
+		<where>
+			uid = #{uid} and EFFECT_TIME = #{effectTime}
+			<if test="taskId != null">
+				and task_id = #{taskId}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+		</where>
+		order by id DESC
+	</select>
+	
+	<!-- 首页催付金额聚合查询 -->
+	<select id="aggregateEarningFee" parameterType="com.kycrm.member.domain.vo.effect.TradeCenterEffectVO" resultType="java.lang.Double">
+		select sum(EARNING_FEE) EARNING_FEE
+		from CRM_TRADE_CENTER_EFFECT
+		<where>
+			uid = #{uid} and EFFECT_TIME between #{beginTime} and #{endTime}
+			<if test="typeList != null">
+				and type in
+				<foreach collection="typeList" item="typeList" open="(" separator="," close=")">
+					#{typeList}
+				</foreach>
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.IItemDao">
+	<resultMap type="com.kycrm.member.domain.entity.item.Item"
+		id="Item">
+		<result column="id" property="id" />
+		<result column="uid" property="uid" />
+		<result column="user_name" property="userName" />
+		<result column="num_iid" property="numIid" />
+		<result column="approve_status" property="approveStatus" />
+		<result column="cid" property="cid" />
+		<result column="has_showcase" property="hasShowcase" />
+		<result column="has_discount" property="hasDiscount" />
+		<result column="created" property="created" />
+		<result column="modified" property="modified" />
+		<result column="seller_cids" property="sellerCids" />
+		<result column="props" property="props" />
+		<result column="input_pids" property="inputPids" />
+		<result column="input_str" property="inputStr" />
+		<result column="num" property="num" />
+		<result column="list_time" property="listTime" />
+		<result column="delist_time" property="delistTime" />
+		<result column="stuff_status" property="stuffStatus" />
+		<result column="zip" property="zip" />
+		<result column="address" property="address" />
+		<result column="city" property="city" />
+		<result column="state" property="state" />
+		<result column="country" property="country" />
+		<result column="district" property="district" />
+		<result column="freight_payer" property="freightPayer" />
+		<result column="url" property="url" />
+		<result column="is_3D" property="is3D" />
+		<result column="score" property="score" />
+		<result column="sell_promise" property="sellPromise" />
+		<result column="title" property="title" />
+		<result column="type" property="type" />
+		<result column="item_desc" property="itemDesc" />
+		<result column="sku_id" property="skuId" />
+		<result column="properties" property="properties" />
+		<result column="quantity" property="quantity" />
+		<result column="sku_created" property="skuCreated" />
+		<result column="sku_modified" property="skuModified" />
+		<result column="sku_status" property="skuStatus" />
+		<result column="sku_properties_name" property="skuPropertiesName" />
+		<result column="sku_spec_id" property="skuSpecId" />
+		<result column="sku_with_hold_quantity" property="skuWithHoldQuantity" />
+		<result column="sku_delivery_time" property="skuDeliveryTime" />
+		<result column="sku_price" property="skuPrice" />
+		<result column="sku_created" property="skuCreated" />
+		<result column="sku_modified" property="skuModified" />
+		<result column="sku_status" property="skuStatus" />
+		<result column="sku_properties_name" property="skuPropertiesName" />
+		<result column="sku_spec_id" property="skuSpecId" />
+		<result column="sku_with_hold_quantity" property="skuWithHoldQuantity" />
+		<result column="sku_delivery_time" property="skuDeliveryTime" />
+		<result column="change_prop" property="changeProp" />
+		<result column="props_name" property="propsName" />
+		<result column="promoted_service" property="promotedService" />
+		<result column="is_lightning_consignment" property="isLightningConsignment" />
+		<result column="is_fenxiao" property="isFenxiao" />
+		<result column="auction_point" property="auctionPoint" />
+		<result column="property_alias" property="propertyAlias" />
+		<result column="template_id" property="templateId" />
+		<result column="after_sale_id" property="afterSaleId" />
+		<result column="is_xinpin" property="isXinpin" />
+		<result column="sub_stock" property="subStock" />
+		<result column="features" property="features" />
+		<result column="item_weight" property="itemWeight" />
+		<result column="item_size" property="itemSize" />
+
+		<result column="sell_point" property="sellPoint" />
+		<result column="valid_thru" property="validThru" />
+		<result column="outer_id" property="outerId" />
+		<result column="auto_fill" property="autoFill" />
+		<result column="desc_modules" property="descModules" />
+		<result column="custom_made_type_id" property="customMadeTypeId" />
+		<result column="wireless_desc" property="wirelessDesc" />
+		<result column="barcode" property="barcode" />
+		<result column="newprepay" property="newprepay" />
+		<result column="price" property="price" />
+		<result column="post_fee" property="postFee" />
+		<result column="express_fee" property="expressFee" />
+		<result column="ems_fee" property="emsFee" />
+		<result column="global_stock_type" property="globalStockType" />
+		<result column="global_stock_country" property="globalStockCountry" />
+		<result column="large_screen_image_url" property="largeScreenImageUrl" />
+		<result column="sub_title" property="subTitle" />
+		<result column="optlock" property="version" />
+		<!-- 辅助信息 -->
+		<result column="createdBy" property="createdBy" />
+		<result column="createdDate" property="createdDate" />
+		<result column="lastModifiedBy" property="lastModifiedBy" />
+		<result column="lastModifiedDate" property="lastModifiedDate" />
+	</resultMap>
+
+	<!-- 根据用户uid查询商品信息【迁移数据至分库分表时使用】 -->
+	<select id="findItemsByUid" parameterType="java.util.Map"
+		resultMap="Item">
+		select *
+		from crm_item
+		<where>
+			uid = #{uid}
+		</where>
+		<if test="startRows != null and pageSize != null">
+			limit #{startRows},#{pageSize}
+		</if>
+	</select>
+
+	<select id="getCount" parameterType="java.util.Map" resultType="java.lang.Long">
+		select count(1) from
+		crm_item
+		where 
+			uid = #{uid}
+		and
+			createdDate &gt;= DATE_FORMAT(#{startDate},
+						'%Y-%m-%d %H:%i:%s')
+		and
+			createdDate &lt;= DATE_FORMAT(#{endDate},
+						'%Y-%m-%d %H:%i:%s')
+	</select>
+</mapper>

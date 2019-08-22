@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.traderate.ITradeRatesDao">
+	<resultMap type="com.kycrm.member.domain.entity.traderate.TradeRates" id="tradeRates">
+		<result column="oid" property="oid"/>
+		<result column="tid" property="tid"/>
+		<result column="role" property="role"/>
+		<result column="nick" property="nick"/>
+		<result column="result" property="result"/>
+		<result column="created" property="created"/>
+		<result column="rated_nick" property="ratedNick"/>
+		<result column="item_title" property="itemTitle"/>
+		<result column="item_price" property="itemPrice"/>
+		<result column="content" property="content"/>
+		<result column="reply" property="reply"/>
+		<result column="num_iid" property="numIid"/>
+		<result column="valid_score" property="validScore"/>
+		<result column="rate_type" property="rateType"/>
+		<result column="createdDate" property="createdDate"/>
+		<result column="createdBy" property="createdBy"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>
+		<result column="lastModifiedBy" property="lastModifiedBy"/>
+		<result column="optlock" property="optlock"/>
+	</resultMap>
+	
+	<!-- 保存单条记录 -->
+	<insert id="saveTradeRates" parameterType="com.kycrm.member.domain.entity.traderate.TradeRates">
+		insert into crm_trade_rates(
+			oid,tid,role,nick,result,created,rated_nick,item_title,item_price,content,reply,num_iid,
+			valid_score,rate_type,createdDate,createdBy,lastModifiedDate,lastModifiedBy,optlock
+		)
+		value(
+			#{oid},#{tid},#{role},#{nick},#{result},#{created},#{ratedNick},#{itemTitle},#{itemPrice},#{content},#{reply},
+			#{numIid},#{validScore},#{rateType},#{createdDate},#{createdBy},#{lastModifiedDate},#{lastModifiedBy},0
+		)
+	</insert>
+	
+	<!-- 保存多条记录 -->
+	<insert id="saveTradeRatesList">
+		insert into crm_trade_rates(
+			oid,tid,role,nick,result,created,rated_nick,item_title,item_price,content,reply,num_iid,
+			valid_score,rate_type,createdDate,createdBy,lastModifiedDate,lastModifiedBy,optlock
+		)
+		values
+		<foreach collection="tradeRatesList" item="tradeRates" separator=",">
+		(
+			#{tradeRates.oid},#{tradeRates.tid},#{tradeRates.role},#{tradeRates.nick},#{tradeRates.result},#{tradeRates.created},
+			#{tradeRates.ratedNick},#{tradeRates.itemTitle},#{tradeRates.itemPrice},#{tradeRates.content},#{tradeRates.reply},
+			#{tradeRates.numIid},#{tradeRates.validScore},#{tradeRates.rateType},#{tradeRates.createdDate},#{tradeRates.createdBy},
+			#{tradeRates.lastModifiedDate},#{tradeRates.lastModifiedBy},0
+		)
+		</foreach>
+	</insert>
+	
+	<!-- 保存拉取的淘宝评价实体集合 -->
+	<select id="saveTBTradeRateList">
+		insert into crm_trade_rates(
+			oid,tid,role,nick,result,created,rated_nick,item_title,item_price,content,reply,num_iid,
+			valid_score,rate_type,createdDate,createdBy,lastModifiedDate,lastModifiedBy,optlock
+		)
+		values
+		<foreach collection="tradeRateList" item="tradeRate" separator=",">
+		(
+			#{tradeRate.oid},#{tradeRate.tid},#{tradeRate.role},#{tradeRate.nick},#{tradeRate.result},#{tradeRate.created},
+			#{tradeRate.ratedNick},#{tradeRate.itemTitle},#{tradeRate.itemPrice},#{tradeRate.content},#{tradeRate.reply},
+			#{tradeRate.numIid},#{tradeRate.validScore},#{tradeRate.rateType},#{createdDate},#{createdBy},
+			#{lastModifiedDate},#{lastModifiedBy},0
+		)
+		</foreach>
+	</select>
+	
+	<!-- 更新单条记录 -->
+	<update id="updateTradeRates">
+		
+	</update>
+	
+	<!-- 更新多条记录 -->
+	
+	
+	
+	<!-- 根据条件查询评价订单数(首页查询昨日中差评订单数) -->
+	<select id="countTradeByParam" resultType="java.lang.Long">
+		select count(distinct tid)
+		from crm_trade_rates
+		<where>
+			uid = #{uid}
+			<if test="role != null and role != ''">
+				and role = #{role}
+			</if>
+			<if test="nick != null and nick != ''">
+				and nick = #{nick}
+			</if>
+			<if test="ratedNick != null and ratedNick != ''">
+				and ratedNick = #{ratedNick}
+			</if>
+			<if test="beginTime != null">
+				and created >= #{beginTime}
+			</if>
+			<if test="endTime != null">
+				and #{endTime} >= created
+			</if>
+			<if test="resultList != null">
+				and result in
+				<foreach collection="resultList" item="resultList" open="(" separator="," close=")">
+					#{resultList}
+				</foreach>
+			</if>
+		</where>
+	</select>
+</mapper>

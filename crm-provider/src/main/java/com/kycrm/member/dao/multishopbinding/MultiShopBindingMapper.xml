@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.multishopbinding.IMultiShopBindingDao">
+
+	<resultMap
+		type="com.kycrm.member.domain.entity.multishopbinding.MultiShopBindingDTO"
+		id="multiShopBindingDTO">
+		<result column="ID" property="id" />
+		<result column="CHILD_SHOP_UID" property="childShopUid" />
+		<result column="CHILD_SHOP_MOBILE" property="childShopMobile" />
+		<result column="CHILD_SHOP_NAME" property="childShopName" />
+		<result column="FAMILY_SHOP_UID" property="familyShopUid" />
+		<result column="FAMILY_SHOP_MOBILE" property="familyShopMobile" />
+		<result column="FAMILY_SHOP_NAME" property="familyShopName" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="BINDING_DATE" property="bindingDate" />
+		<result column="UNBINDING_DATE" property="unbindingDate" />
+		<result column="CHILD_SHOP_TOTAL_SEND_MESSAGE_COUNT" property="childShopTotalSendMessageCount" />
+		<result column="CHILD_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT"
+			property="childShopTotalReceiveMessageCount" />
+		<result column="FAMILY_SHOP_TOTAL_SEND_MESSAGE_COUNT" property="familyShopTotalSendMessageCount" />
+		<result column="FAMILY_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT"
+			property="familyShopTotalReceiveMessageCount" />
+		<result column="CHILD_SHOP_APPLY_FLAG" property="childShopApplyFlag" />
+		<result column="FAMILY_SHOP_APPLY_FLAG" property="familyShopApplyFlag" />
+		<result column="BINDING_STATUS" property="bindingStatus" />
+		<result column="STATUS" property="status" />
+	</resultMap>
+
+	<sql id="table">CRM_MULTI_SHOP_BINDING</sql>
+
+	<!-- 分页查询 -->
+	<select id="findBindingList" parameterType="java.util.Map"
+		resultMap="multiShopBindingDTO">
+		SELECT
+		<choose>
+			<when test="menuNumber == 1">
+				ID,
+				CHILD_SHOP_UID,
+				CHILD_SHOP_NAME,
+				FAMILY_SHOP_UID,
+				FAMILY_SHOP_NAME,
+				CREATE_DATE,
+				BINDING_DATE,
+				CHILD_SHOP_TOTAL_SEND_MESSAGE_COUNT,
+				CHILD_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT,
+				FAMILY_SHOP_TOTAL_SEND_MESSAGE_COUNT,
+				FAMILY_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT
+			</when>
+			<when test="menuNumber == 2">
+				ID,
+				FAMILY_SHOP_NAME,
+				CREATE_DATE,
+				BINDING_DATE,
+				UNBINDING_DATE,
+				FAMILY_SHOP_TOTAL_SEND_MESSAGE_COUNT,
+				FAMILY_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT,
+				BINDING_STATUS
+			</when>
+			<when test="menuNumber == 3">
+				ID,
+				CHILD_SHOP_NAME,
+				CREATE_DATE,
+				BINDING_DATE,
+				UNBINDING_DATE,
+				CHILD_SHOP_TOTAL_SEND_MESSAGE_COUNT,
+				CHILD_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT,
+				BINDING_STATUS
+			</when>
+			<otherwise>
+				*
+			</otherwise>
+		</choose>
+		FROM
+		<include refid="table" />
+		WHERE
+		<if test="menuNumber ==1">
+			(
+			CHILD_SHOP_UID = #{uid}
+			AND
+			BINDING_STATUS = 1
+			)
+			OR
+			(
+			FAMILY_SHOP_UID = #{uid}
+			AND
+			BINDING_STATUS = 1
+			)
+		</if>
+		<if test="menuNumber == 2">
+			CHILD_SHOP_UID = #{uid}
+			AND
+			CHILD_SHOP_APPLY_FLAG = 1
+			AND
+			BINDING_STATUS IN (0, 2, 3)
+		</if>
+		<if test="menuNumber == 3">
+			FAMILY_SHOP_UID = #{uid}
+			AND
+			FAMILY_SHOP_APPLY_FLAG = 1
+			AND
+			BINDING_STATUS IN (0, 2, 3)
+		</if>
+		AND
+		STATUS = 1
+		LIMIT #{startRows},#{currentRows}
+	</select>
+
+	<select id="findSingleBinding" resultMap="multiShopBindingDTO">
+		SELECT
+		*
+		FROM
+		<include refid="table" />
+		WHERE
+		ID = #{id}
+	</select>
+
+	<select id="checkIfExist" resultType="int">
+		SELECT
+		COUNT(1)
+		FROM
+		<include refid="table" />
+		WHERE
+		((
+		CHILD_SHOP_NAME = #{childShopName}
+		AND
+		FAMILY_SHOP_NAME =
+		#{familyShopName}
+		)
+		OR
+		(
+		CHILD_SHOP_NAME = #{familyShopName}
+		AND
+		FAMILY_SHOP_NAME =
+		#{childShopName}
+		))
+		<if test="bindingStatusArray != null">
+			AND BINDING_STATUS IN
+			<foreach collection="bindingStatusArray" item="bindingStatus"
+				open="(" close=")" separator=",">
+				#{bindingStatus}
+			</foreach>
+		</if>
+	</select>
+
+	<select id="isAlreadyBinded" resultType="java.lang.Long">
+		SELECT
+		COUNT(1)
+		FROM
+		<include refid="table" />
+		WHERE
+		(
+		(
+		CHILD_SHOP_UID = #{childShopUid}
+		AND
+		FAMILY_SHOP_UID =
+		#{familyShopUid}
+		)
+		OR
+		(
+		CHILD_SHOP_UID = #{familyShopUid}
+		AND
+		FAMILY_SHOP_UID =
+		#{childShopUid}
+		)
+		)
+		AND
+		BINDING_STATUS = 1
+	</select>
+
+	<!-- 查询列表页记录数量 -->
+	<select id="findMultiShopBindingCount" resultType="int">
+		SELECT
+		COUNT(1)
+		FROM
+		<include refid="table" />
+		WHERE
+		<if test="menuNumber ==1">
+			CHILD_SHOP_UID = #{uid}
+			AND
+			BINDING_STATUS = 1
+		</if>
+		<if test="menuNumber == 2">
+			CHILD_SHOP_UID = #{uid}
+			AND
+			CHILD_SHOP_APPLY_FLAG = 1
+		</if>
+		<if test="menuNumber == 3">
+			FAMILY_SHOP_UID = #{uid}
+			AND
+			FAMILY_SHOP_APPLY_FLAG = 1
+		</if>
+		AND
+		STATUS = 1
+	</select>
+
+	<!-- 申请绑定 -->
+	<insert id="addApplyBinding" useGeneratedKeys="true"
+		keyProperty="id"
+		parameterType="com.kycrm.member.domain.entity.multishopbinding.MultiShopBindingDTO">
+		INSERT INTO
+		<include refid="table" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="childShopUid != null">
+				CHILD_SHOP_UID,
+			</if>
+			<if test="childShopMobile != null">
+				CHILD_SHOP_MOBILE,
+			</if>
+			<if test="childShopName != null">
+				CHILD_SHOP_NAME,
+			</if>
+			<if test="familyShopUid != null">
+				FAMILY_SHOP_UID,
+			</if>
+			<if test="familyShopMobile != null">
+				FAMILY_SHOP_MOBILE,
+			</if>
+			<if test="familyShopName != null">
+				FAMILY_SHOP_NAME,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>
+			<if test="bindingDate != null">
+				BINDING_DATE,
+			</if>
+			<if test="unbindingDate != null">
+				UNBINDING_DATE,
+			</if>
+			<if test="childShopTotalSendMessageCount != null">
+				CHILD_SHOP_TOTAL_SEND_MESSAGE_COUNT,
+			</if>
+			<if test="childShopTotalReceiveMessageCount != null">
+				CHILD_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT,
+			</if>
+			<if test="familyShopTotalSendMessageCount != null">
+				FAMILY_SHOP_TOTAL_SEND_MESSAGE_COUNT,
+			</if>
+			<if test="familyShopTotalReceiveMessageCount != null">
+				FAMILY_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT,
+			</if>
+			<if test="childShopApplyFlag != null">
+				CHILD_SHOP_APPLY_FLAG,
+			</if>
+			<if test="familyShopApplyFlag != null">
+				FAMILY_SHOP_APPLY_FLAG,
+			</if>
+			<if test="bindingStatus != null">
+				BINDING_STATUS,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="childShopUid != null">
+				#{childShopUid},
+			</if>
+			<if test="childShopMobile != null">
+				#{childShopMobile},
+			</if>
+			<if test="childShopName != null">
+				#{childShopName},
+			</if>
+			<if test="familyShopUid != null">
+				#{familyShopUid},
+			</if>
+			<if test="familyShopMobile != null">
+				#{familyShopMobile},
+			</if>
+			<if test="familyShopName != null">
+				#{familyShopName},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+			<if test="bindingDate != null">
+				#{bindingDate},
+			</if>
+			<if test="unbindingDate != null">
+				#{unbindingDate},
+			</if>
+			<if test="childShopTotalSendMessageCount != null">
+				#{childShopTotalSendMessageCount},
+			</if>
+			<if test="childShopTotalReceiveMessageCount != null">
+				#{childShopTotalReceiveMessageCount},
+			</if>
+			<if test="familyShopTotalSendMessageCount != null">
+				#{familyShopTotalSendMessageCount},
+			</if>
+			<if test="familyShopTotalReceiveMessageCount != null">
+				#{familyShopTotalReceiveMessageCount},
+			</if>
+			<if test="childShopApplyFlag != null">
+				#{childShopApplyFlag},
+			</if>
+			<if test="familyShopApplyFlag != null">
+				#{familyShopApplyFlag},
+			</if>
+			<if test="bindingStatus != null">
+				#{bindingStatus},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 解除绑定 -->
+	<update id="releaseBinding"
+		parameterType="com.kycrm.member.domain.vo.multishopbinding.MultiShopBindingReleaseBindingVO">
+		UPDATE
+		<include refid="table" />
+		SET BINDING_STATUS = 3,
+		UNBINDING_DATE = NOW()
+		WHERE ID =
+		#{id}
+	</update>
+
+	<!-- 接受或拒绝绑定 -->
+	<update id="confirm"
+		parameterType="com.kycrm.member.domain.vo.multishopbinding.MultiShopBindingConfirmVO">
+		UPDATE
+		<include refid="table" />
+		SET
+		<if test="confirm == 1">
+			BINDING_STATUS = 1,
+			BINDING_DATE = NOW()
+		</if>
+		<if test="confirm == 0">
+			BINDING_STATUS = 2
+		</if>
+		WHERE
+		ID = #{id}
+	</update>
+
+	<!-- 查询绑定记录 -->
+	<select id="findMultiShopBinding" resultMap="multiShopBindingDTO">
+		SELECT
+		ID,
+		CHILD_SHOP_UID,
+		CHILD_SHOP_MOBILE,
+		FAMILY_SHOP_UID,
+		FAMILY_SHOP_MOBILE,
+		CHILD_SHOP_TOTAL_SEND_MESSAGE_COUNT,
+		CHILD_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT,
+		FAMILY_SHOP_TOTAL_SEND_MESSAGE_COUNT,
+		FAMILY_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT
+		FROM
+		<include refid="table" />
+		WHERE
+		ID = #{id}
+		AND
+		BINDING_STATUS = 1
+	</select>
+
+	<!-- 删除记录 -->
+	<update id="deleteRecord"
+		parameterType="com.kycrm.member.domain.vo.multishopbinding.MultiShopBindingDeleteRecordVO">
+		UPDATE
+		<include refid="table" />
+		SET
+		STATUS = 0
+		WHERE
+		ID = #{id}
+	</update>
+
+	<!-- 赠送短信 -->
+	<update id="updateMultiShopBinding"
+		parameterType="com.kycrm.member.domain.entity.multishopbinding.MultiShopBindingDTO">
+		UPDATE
+		<include refid="table" />
+		<set>
+			<if test="childShopTotalSendMessageCount != null">
+				CHILD_SHOP_TOTAL_SEND_MESSAGE_COUNT =
+				#{childShopTotalSendMessageCount},
+			</if>
+			<if test="childShopTotalReceiveMessageCount != null">
+				CHILD_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT =
+				#{childShopTotalReceiveMessageCount},
+			</if>
+			<if test="familyShopTotalSendMessageCount != null">
+				FAMILY_SHOP_TOTAL_SEND_MESSAGE_COUNT =
+				#{familyShopTotalSendMessageCount},
+			</if>
+			<if test="familyShopTotalReceiveMessageCount != null">
+				FAMILY_SHOP_TOTAL_RECEIVE_MESSAGE_COUNT =
+				#{familyShopTotalReceiveMessageCount},
+			</if>
+		</set>
+		WHERE
+		CHILD_SHOP_UID = #{childShopUid}
+		AND
+		FAMILY_SHOP_UID =
+		#{familyShopUid}
+		AND
+		ID = #{id}
+	</update>
+
+</mapper>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.kycrm.member.dao.multishopbinding.IMultiShopBindingSendMessageRecordDao">
+
+	<resultMap
+		type="com.kycrm.member.domain.entity.multishopbinding.MultiShopBindingSendMessageRecordDTO"
+		id="multiShopBindingSendMessageRecordDTO">
+		<result column="ID" property="id" />
+		<result column="MULTI_SHOP_BINDING_ID" property="multiShopBindingId" />
+		<result column="CHILD_SHOP_UID" property="childShopUid" />
+		<result column="FAMILY_SHOP_UID" property="familyShopUid" />
+		<result column="SEND_MESSAGE_COUNT" property="sendMessageCount" />
+		<result column="SEND_DATE" property="sendDate" />
+		<result column="SEND_DATE_STR" property="sendDateStr" jdbcType="VARCHAR" />
+		<result column="SEND_OR_RECEIVE" property="sendOrReceive" />
+	</resultMap>
+
+	<sql id="table">CRM_MULTI_SHOP_BINDING_SEND_MESSAGE_RECORD</sql>
+
+	<select id="findSendMessageRecordList" parameterType="java.util.Map"
+		resultMap="multiShopBindingSendMessageRecordDTO">
+		SELECT
+		SEND_MESSAGE_COUNT,
+		SEND_DATE,
+		SEND_OR_RECEIVE
+		FROM
+		<include refid="table" />
+		WHERE
+		MULTI_SHOP_BINDING_ID = #{multiShopBindingId}
+		AND
+		CHILD_SHOP_UID =
+		#{childShopUid}
+		AND
+		FAMILY_SHOP_UID =
+		#{familyShopUid}
+		LIMIT
+		#{startRows},#{currentRows}
+	</select>
+
+	<select id="findSendMessageRecordCount" resultType="int">
+		SELECT
+		COUNT(1)
+		FROM
+		<include refid="table" />
+		WHERE
+		MULTI_SHOP_BINDING_ID = #{multiShopBindingId}
+		AND
+		CHILD_SHOP_UID =
+		#{childShopUid}
+		AND
+		FAMILY_SHOP_UID =
+		#{familyShopUid}
+	</select>
+
+	<insert id="addSendMessageRecord" useGeneratedKeys="true"
+		keyProperty="id"
+		parameterType="com.kycrm.member.domain.entity.multishopbinding.MultiShopBindingSendMessageRecordDTO">
+		INSERT INTO
+		<include refid="table" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="multiShopBindingId != null">
+				MULTI_SHOP_BINDING_ID,
+			</if>
+			<if test="childShopUid != null">
+				CHILD_SHOP_UID,
+			</if>
+			<if test="familyShopUid != null">
+				FAMILY_SHOP_UID,
+			</if>
+			<if test="sendMessageCount != null">
+				SEND_MESSAGE_COUNT,
+			</if>
+			<if test="sendDate != null">
+				SEND_DATE,
+			</if>
+			<if test="sendOrReceive != null">
+				SEND_OR_RECEIVE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="multiShopBindingId != null">
+				#{multiShopBindingId},
+			</if>
+			<if test="childShopUid != null">
+				#{childShopUid},
+			</if>
+			<if test="familyShopUid != null">
+				#{familyShopUid},
+			</if>
+			<if test="sendMessageCount != null">
+				#{sendMessageCount},
+			</if>
+			<if test="sendDate != null">
+				#{sendDate},
+			</if>
+			<if test="sendOrReceive != null">
+				#{sendOrReceive},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="findSingleSendCount" resultType="java.lang.Long">
+		SELECT
+		IFNULL(sum(send_message_count),0)
+		FROM (
+		SELECT
+		(
+		CASE
+		WHEN 'day' =
+		#{dateType} THEN
+		date_format(send_date,
+		'%Y-%m-%d')
+		WHEN
+		'month' =
+		#{dateType} THEN
+		date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' =
+		#{dateType}
+		THEN
+		date_format(send_date, '%Y')
+		END
+		) AS SEND_DATE_STR,
+		sum(send_message_count) AS send_message_count
+		FROM
+		crm_multi_shop_binding_send_message_record
+		WHERE
+		CHILD_SHOP_UID =
+		#{uid}
+		AND
+		send_or_receive = 1
+		<if test="bTime != null and eTime != null">
+			AND SEND_DATE BETWEEN #{bTime} AND #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			AND #{eTime} >= SEND_DATE
+		</if>
+		<if test="bTime != null and eTime == null">
+			AND SEND_DATE >= #{bTime}
+		</if>
+		GROUP BY
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(send_date, '%Y')
+		END
+		)
+		ORDER BY send_date DESC
+		)T
+	</select>
+
+	<select id="findSingleSendCountByDate" resultMap="multiShopBindingSendMessageRecordDTO">
+		SELECT
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m-%d')
+		WHEN
+		'month' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType}
+		THEN
+		date_format(send_date, '%Y')
+		END
+		)
+		AS SEND_DATE_STR,
+		sum(send_message_count) AS send_message_count
+		FROM
+		crm_multi_shop_binding_send_message_record
+		WHERE
+		CHILD_SHOP_UID =
+		#{uid}
+		AND
+		send_or_receive = 1
+		<if test="bTime != null and eTime != null">
+			AND SEND_DATE BETWEEN #{bTime} AND #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			AND #{eTime} >= SEND_DATE
+		</if>
+		<if test="bTime != null and eTime == null">
+			AND SEND_DATE >= #{bTime}
+		</if>
+		GROUP BY
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(send_date, '%Y')
+		END
+		)
+		ORDER BY send_date DESC
+	</select>
+
+	<select id="findSingleReceiveCount" resultType="java.lang.Long">
+		SELECT
+		IFNULL(sum(send_message_count),0)
+		FROM (
+		SELECT
+		(
+		CASE
+		WHEN 'day' =
+		#{dateType} THEN
+		date_format(send_date,
+		'%Y-%m-%d')
+		WHEN
+		'month' =
+		#{dateType} THEN
+		date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' =
+		#{dateType}
+		THEN
+		date_format(send_date, '%Y')
+		END
+		) AS SEND_DATE_STR,
+		sum(send_message_count) AS send_message_count
+		FROM
+		crm_multi_shop_binding_send_message_record
+		WHERE
+		CHILD_SHOP_UID =
+		#{uid}
+		AND
+		send_or_receive = 2
+		<if test="bTime != null and eTime != null">
+			AND SEND_DATE BETWEEN #{bTime} AND #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			AND #{eTime} >= SEND_DATE
+		</if>
+		<if test="bTime != null and eTime == null">
+			AND SEND_DATE >= #{bTime}
+		</if>
+		GROUP BY
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(send_date, '%Y')
+		END
+		)
+		ORDER BY send_date DESC
+		)T
+	</select>
+
+	<select id="findSingleReceiveCountByDate" resultMap="multiShopBindingSendMessageRecordDTO">
+		SELECT
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m-%d')
+		WHEN
+		'month' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType}
+		THEN
+		date_format(send_date, '%Y')
+		END
+		)
+		AS SEND_DATE_STR,
+		sum(send_message_count) AS send_message_count
+		FROM
+		crm_multi_shop_binding_send_message_record
+		WHERE
+		CHILD_SHOP_UID =
+		#{uid}
+		AND
+		send_or_receive = 2
+		<if test="bTime != null and eTime != null">
+			AND SEND_DATE BETWEEN #{bTime} AND #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			AND #{eTime} >= SEND_DATE
+		</if>
+		<if test="bTime != null and eTime == null">
+			AND SEND_DATE >= #{bTime}
+		</if>
+		GROUP BY
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(send_date, '%Y')
+		END
+		)
+		ORDER BY send_date DESC
+	</select>
+
+</mapper>

@@ -1,0 +1,129 @@
+#jedatebox{
+	width:auto;
+}
+.bsAdminBox{
+    background-color: #fff;
+    min-height: 36.45833333333333vw;
+}
+.smsbillSearchBox{
+    padding: 0.78125vw 2.23958vw;
+
+}
+.smsbillSearchBox label{
+    height: 1.239583vw;
+    float: left;
+    line-height: 1.239583vw;
+}
+.smsbillSearchBox .nice-select{
+    height: 1.239583vw;
+    float: left;
+    line-height: 1.239583vw;
+}
+.smsbillSearchDiv{
+    float: left;
+    margin-right: 1.8229vw;
+}
+.smsbillSearchDivTime{
+    float: left;
+}
+.smsbillSearchDivTime input{
+    height: 1.239583vw;
+    border-radius: 0.260416vw;
+    border: 0.052083vw solid #CAD3DF;
+    padding-left: 0.5vw;
+}
+.smsbillSearchBtn{
+    float: right;
+}
+.smsbillSearchBtn a{
+    display: inline-block;
+    width: 4.9479vw;
+    height: 1.239583vw;
+    line-height:1.239583vw;
+    text-align: center;
+    border-radius: 0.260416vw;
+}
+.smsbillSearchBtn a.cx{
+   
+    background-color: #f9aa5c;
+    color: #fff;
+    
+}
+.smsbillSearchBtn a.dc{
+    border: 1px solid #f9aa5c;
+    color: #f9aa5c;
+    margin-left: 1.1458vw;
+}
+.smsbillSearchTopDiv{
+    padding: 0.78125vw 0;
+}
+.smsbillSearchTopDiv .smsbillSearchIcone{
+    width: 1.30208vw;
+    height: 1.09375vw;
+    float: left;
+    background: url("../images/bgicon2.png") no-repeat 0 -24.2708vw;
+    background-size: 2.60vw 52.083vw;
+}
+.smsbillSearchTopDiv .smsbillNum{
+    float: left;
+    height: 1.239583vw;
+    line-height:1.239583vw;
+    color: #122029;
+    font-size: 0.9375vw;
+}
+.smsbillSearchTopDiv .smsbillNum strong{
+    color: #00a8ff;
+    font-size: 0.9375vw;
+    font-weight: normal;
+}
+.smsbillTableBox{
+
+}
+.smsbillTableBox table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.smsbillTableBox table .trone{
+    height: 2.39583vw;
+    border: 1px solid #eee;
+    border-right:none;
+    border-left: none;
+    background-color: #fafafa;
+}
+.smsbillTableBox table .trone th{
+    font-size: 0.8333vw;
+    font-weight: normal;
+    color: #666;
+}
+.smsbillTableBox table .trone th.thone{width: 15%;}
+.smsbillTableBox table .trone th.thtwo{width: 70%;}
+.smsbillTableBox table .trone th.ththree{width: 15%;}
+.smsbillTableBox table .trtwo{
+    height: 2.6041vw;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+.smsbillTableBox table .trtwo td{
+    text-align: center;
+    color: #122029;
+    font-size: 0.729vw;
+}
+.smsbillTableBox table .trtwo td img{
+	height: 2.6041vw;
+}
+.smsbillTableBox table .trtwo td a{
+    color: #00a8ff;
+    display: inline-block;
+    width: 4.6875vw;
+    height:1.458333333333333vw;
+    line-height: 1.458333333333333vw;
+    border: 1px solid #00a8ff;
+    background-color: #fff;
+    border-radius: 0.2604vw;
+    font-size: 0.729vw;
+    box-sizing: border-box;
+}
+#smsbillTablePage{
+    text-align: center;
+    margin-top: 2.447916666666667vw;
+}

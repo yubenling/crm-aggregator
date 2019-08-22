@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.syn.dao.item.TbItemDao">
+	<resultMap id="BaseResultMap"
+		type="com.kycrm.member.domain.entity.item.TbItem">
+		<id column="num_iid" jdbcType="BIGINT" property="numIid" />
+		<result column="nick" jdbcType="VARCHAR" property="nick" />
+		<result column="approve_status" jdbcType="VARCHAR"
+			property="approveStatus" />
+		<result column="has_showcase" jdbcType="VARCHAR"
+			property="hasShowcase" />
+		<result column="created" jdbcType="TIMESTAMP"
+			property="created" />
+		<result column="modified" jdbcType="TIMESTAMP"
+			property="modified" />
+		<result column="cid" jdbcType="VARCHAR" property="cid" />
+		<result column="has_discount" jdbcType="VARCHAR"
+			property="hasDiscount" />
+		<result column="jdp_hashcode" jdbcType="VARCHAR"
+			property="jdpHashcode" />
+		<result column="jdp_delete" jdbcType="INTEGER"
+			property="jdpDelete" />
+		<result column="jdp_created" jdbcType="TIMESTAMP"
+			property="jdpCreated" />
+		<result column="jdp_modified" jdbcType="TIMESTAMP"
+			property="jdpModified" />
+	</resultMap>
+	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+		type="com.kycrm.member.domain.entity.item.TbItem">
+		<result column="jdp_response" jdbcType="LONGVARCHAR"
+			property="jdpResponse" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		num_iid, nick, approve_status, has_showcase, created, modified, cid,
+		has_discount,
+		jdp_hashcode, jdp_delete, jdp_created, jdp_modified
+	</sql>
+	<sql id="Blob_Column_List">
+		jdp_response
+	</sql>
+	<select id="selectByExampleWithBLOBs"
+		parameterType="com.kycrm.syn.dao.item.example.TbItemExample"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from jdp_tb_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample"
+		parameterType="com.kycrm.syn.dao.item.example.TbItemExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from jdp_tb_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from jdp_tb_item
+		where num_iid = #{numIid,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from jdp_tb_item
+		where num_iid = #{numIid,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.kycrm.syn.dao.item.example.TbItemExample">
+		delete from jdp_tb_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"
+		parameterType="com.kycrm.member.domain.entity.item.TbItem">
+		insert into jdp_tb_item (num_iid, nick, approve_status,
+		has_showcase, created, modified,
+		cid, has_discount, jdp_hashcode,
+		jdp_delete, jdp_created, jdp_modified,
+		jdp_response)
+		values (#{numIid,jdbcType=BIGINT}, #{nick,jdbcType=VARCHAR},
+		#{approveStatus,jdbcType=VARCHAR},
+		#{hasShowcase,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP},
+		#{cid,jdbcType=VARCHAR}, #{hasDiscount,jdbcType=VARCHAR},
+		#{jdpHashcode,jdbcType=VARCHAR},
+		#{jdpDelete,jdbcType=INTEGER}, #{jdpCreated,jdbcType=TIMESTAMP}, #{jdpModified,jdbcType=TIMESTAMP},
+		#{jdpResponse,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.kycrm.member.domain.entity.item.TbItem">
+		insert into jdp_tb_item
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				num_iid,
+			</if>
+			<if test="nick != null">
+				nick,
+			</if>
+			<if test="approveStatus != null">
+				approve_status,
+			</if>
+			<if test="hasShowcase != null">
+				has_showcase,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="modified != null">
+				modified,
+			</if>
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="hasDiscount != null">
+				has_discount,
+			</if>
+			<if test="jdpHashcode != null">
+				jdp_hashcode,
+			</if>
+			<if test="jdpDelete != null">
+				jdp_delete,
+			</if>
+			<if test="jdpCreated != null">
+				jdp_created,
+			</if>
+			<if test="jdpModified != null">
+				jdp_modified,
+			</if>
+			<if test="jdpResponse != null">
+				jdp_response,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="numIid != null">
+				#{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="nick != null">
+				#{nick,jdbcType=VARCHAR},
+			</if>
+			<if test="approveStatus != null">
+				#{approveStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="hasShowcase != null">
+				#{hasShowcase,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modified != null">
+				#{modified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cid != null">
+				#{cid,jdbcType=VARCHAR},
+			</if>
+			<if test="hasDiscount != null">
+				#{hasDiscount,jdbcType=VARCHAR},
+			</if>
+			<if test="jdpHashcode != null">
+				#{jdpHashcode,jdbcType=VARCHAR},
+			</if>
+			<if test="jdpDelete != null">
+				#{jdpDelete,jdbcType=INTEGER},
+			</if>
+			<if test="jdpCreated != null">
+				#{jdpCreated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="jdpModified != null">
+				#{jdpModified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="jdpResponse != null">
+				#{jdpResponse,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.kycrm.syn.dao.item.example.TbItemExample"
+		resultType="java.lang.Long">
+		select count(*) from jdp_tb_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update jdp_tb_item
+		<set>
+			<if test="record.numIid != null">
+				num_iid = #{record.numIid,jdbcType=BIGINT},
+			</if>
+			<if test="record.nick != null">
+				nick = #{record.nick,jdbcType=VARCHAR},
+			</if>
+			<if test="record.approveStatus != null">
+				approve_status = #{record.approveStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="record.hasShowcase != null">
+				has_showcase = #{record.hasShowcase,jdbcType=VARCHAR},
+			</if>
+			<if test="record.created != null">
+				created = #{record.created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.modified != null">
+				modified = #{record.modified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.cid != null">
+				cid = #{record.cid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.hasDiscount != null">
+				has_discount = #{record.hasDiscount,jdbcType=VARCHAR},
+			</if>
+			<if test="record.jdpHashcode != null">
+				jdp_hashcode = #{record.jdpHashcode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.jdpDelete != null">
+				jdp_delete = #{record.jdpDelete,jdbcType=INTEGER},
+			</if>
+			<if test="record.jdpCreated != null">
+				jdp_created = #{record.jdpCreated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.jdpModified != null">
+				jdp_modified = #{record.jdpModified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.jdpResponse != null">
+				jdp_response = #{record.jdpResponse,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update jdp_tb_item
+		set num_iid = #{record.numIid,jdbcType=BIGINT},
+		nick = #{record.nick,jdbcType=VARCHAR},
+		approve_status = #{record.approveStatus,jdbcType=VARCHAR},
+		has_showcase = #{record.hasShowcase,jdbcType=VARCHAR},
+		created = #{record.created,jdbcType=TIMESTAMP},
+		modified = #{record.modified,jdbcType=TIMESTAMP},
+		cid = #{record.cid,jdbcType=VARCHAR},
+		has_discount = #{record.hasDiscount,jdbcType=VARCHAR},
+		jdp_hashcode = #{record.jdpHashcode,jdbcType=VARCHAR},
+		jdp_delete = #{record.jdpDelete,jdbcType=INTEGER},
+		jdp_created = #{record.jdpCreated,jdbcType=TIMESTAMP},
+		jdp_modified = #{record.jdpModified,jdbcType=TIMESTAMP},
+		jdp_response = #{record.jdpResponse,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update jdp_tb_item
+		set num_iid = #{record.numIid,jdbcType=BIGINT},
+		nick = #{record.nick,jdbcType=VARCHAR},
+		approve_status = #{record.approveStatus,jdbcType=VARCHAR},
+		has_showcase = #{record.hasShowcase,jdbcType=VARCHAR},
+		created = #{record.created,jdbcType=TIMESTAMP},
+		modified = #{record.modified,jdbcType=TIMESTAMP},
+		cid = #{record.cid,jdbcType=VARCHAR},
+		has_discount = #{record.hasDiscount,jdbcType=VARCHAR},
+		jdp_hashcode = #{record.jdpHashcode,jdbcType=VARCHAR},
+		jdp_delete = #{record.jdpDelete,jdbcType=INTEGER},
+		jdp_created = #{record.jdpCreated,jdbcType=TIMESTAMP},
+		jdp_modified = #{record.jdpModified,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.kycrm.member.domain.entity.item.TbItem">
+		update jdp_tb_item
+		<set>
+			<if test="nick != null">
+				nick = #{nick,jdbcType=VARCHAR},
+			</if>
+			<if test="approveStatus != null">
+				approve_status = #{approveStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="hasShowcase != null">
+				has_showcase = #{hasShowcase,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modified != null">
+				modified = #{modified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cid != null">
+				cid = #{cid,jdbcType=VARCHAR},
+			</if>
+			<if test="hasDiscount != null">
+				has_discount = #{hasDiscount,jdbcType=VARCHAR},
+			</if>
+			<if test="jdpHashcode != null">
+				jdp_hashcode = #{jdpHashcode,jdbcType=VARCHAR},
+			</if>
+			<if test="jdpDelete != null">
+				jdp_delete = #{jdpDelete,jdbcType=INTEGER},
+			</if>
+			<if test="jdpCreated != null">
+				jdp_created = #{jdpCreated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="jdpModified != null">
+				jdp_modified = #{jdpModified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="jdpResponse != null">
+				jdp_response = #{jdpResponse,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where num_iid = #{numIid,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs"
+		parameterType="com.kycrm.member.domain.entity.item.TbItem">
+		update jdp_tb_item
+		set nick = #{nick,jdbcType=VARCHAR},
+		approve_status = #{approveStatus,jdbcType=VARCHAR},
+		has_showcase = #{hasShowcase,jdbcType=VARCHAR},
+		created = #{created,jdbcType=TIMESTAMP},
+		modified = #{modified,jdbcType=TIMESTAMP},
+		cid = #{cid,jdbcType=VARCHAR},
+		has_discount = #{hasDiscount,jdbcType=VARCHAR},
+		jdp_hashcode = #{jdpHashcode,jdbcType=VARCHAR},
+		jdp_delete = #{jdpDelete,jdbcType=INTEGER},
+		jdp_created = #{jdpCreated,jdbcType=TIMESTAMP},
+		jdp_modified = #{jdpModified,jdbcType=TIMESTAMP},
+		jdp_response = #{jdpResponse,jdbcType=LONGVARCHAR}
+		where num_iid = #{numIid,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.kycrm.member.domain.entity.item.TbItem">
+		update jdp_tb_item
+		set nick = #{nick,jdbcType=VARCHAR},
+		approve_status = #{approveStatus,jdbcType=VARCHAR},
+		has_showcase = #{hasShowcase,jdbcType=VARCHAR},
+		created = #{created,jdbcType=TIMESTAMP},
+		modified = #{modified,jdbcType=TIMESTAMP},
+		cid = #{cid,jdbcType=VARCHAR},
+		has_discount = #{hasDiscount,jdbcType=VARCHAR},
+		jdp_hashcode = #{jdpHashcode,jdbcType=VARCHAR},
+		jdp_delete = #{jdpDelete,jdbcType=INTEGER},
+		jdp_created = #{jdpCreated,jdbcType=TIMESTAMP},
+		jdp_modified = #{jdpModified,jdbcType=TIMESTAMP}
+		where num_iid = #{numIid,jdbcType=BIGINT}
+	</update>
+
+	<!-- 查询间隔时间内的记录总数 -->
+	<select id="findCountBySyn" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM jdp_tb_item
+		WHERE jdp_modified BETWEEN #{beginTime} AND #{endTime}
+	</select>
+	<!-- 分页查询 -->
+	<select id="findItemByLimit" parameterType="java.util.Map"
+		resultMap="ResultMapWithBLOBs">
+		SELECT * FROM jdp_tb_item
+		WHERE jdp_modified BETWEEN #{beginTime} AND #{endTime}	
+	</select>
+
+
+
+</mapper>

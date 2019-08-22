@@ -1,0 +1,38 @@
+<assembly>
+    <id>assembly</id>
+    <formats>
+        <format>tar.gz</format>  <!-- 其他可选格式 gzip/zip/tar.gz/ -->
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+    <fileSets>
+    	<fileSet>
+            <directory>target/classes/com</directory>
+            <outputDirectory>bin/com</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        
+        <fileSet>
+            <directory>src/main/resources/scripts</directory>
+            <outputDirectory>opbin</outputDirectory>
+            <fileMode>0755</fileMode>
+            <filtered>true</filtered>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <includes>
+		        <include>/config/**</include>
+		        <include>/dubbo/**</include>
+		        <include>/spring/**</include>
+		        <include>logback.xml</include>
+		    </includes>
+            <outputDirectory>conf</outputDirectory>
+            <fileMode>0644</fileMode>
+            <filtered>true</filtered>
+        </fileSet>
+    </fileSets>
+</assembly>

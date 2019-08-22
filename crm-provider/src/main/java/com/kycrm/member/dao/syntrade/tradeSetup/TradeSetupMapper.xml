@@ -1,0 +1,1128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.syntrade.tradeSetup.TradeSetupDaosyn">
+	<resultMap id="BaseResultMap"
+		type="com.kycrm.member.domain.entity.tradecenter.TradeSetup">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="uid" jdbcType="BIGINT" property="uid" />
+		<result column="createdBy" jdbcType="VARCHAR"
+			property="createdby" />
+		<result column="createdDate" jdbcType="TIMESTAMP"
+			property="createddate" />
+		<result column="lastModifiedBy" jdbcType="VARCHAR"
+			property="lastmodifiedby" />
+		<result column="lastModifiedDate" jdbcType="TIMESTAMP"
+			property="lastmodifieddate" />
+		<result column="optlock" jdbcType="INTEGER" property="optlock" />
+		<result column="bad_evaluate_inform" jdbcType="INTEGER"
+			property="badEvaluateInform" />
+		<result column="delay_date" jdbcType="INTEGER"
+			property="delayDate" />
+		<result column="delay_evaluate" jdbcType="INTEGER"
+			property="delayEvaluate" />
+		<result column="evaluate_black" jdbcType="INTEGER"
+			property="evaluateBlack" />
+		<result column="evaluate_black_content" jdbcType="VARCHAR"
+			property="evaluateBlackContent" />
+		<result column="evaluate_black_type" jdbcType="VARCHAR"
+			property="evaluateBlackType" />
+		<result column="evaluate_type" jdbcType="VARCHAR"
+			property="evaluateType" />
+		<result column="execute_type" jdbcType="INTEGER"
+			property="executeType" />
+		<result column="filter_black" jdbcType="INTEGER"
+			property="filterBlack" />
+		<result column="filter_hassent" jdbcType="INTEGER"
+			property="filterHassent" />
+		<result column="filter_once" jdbcType="INTEGER"
+			property="filterOnce" />
+		<result column="max_execute_time" jdbcType="TIMESTAMP"
+			property="maxExecuteTime" />
+		<result column="max_inform_time" jdbcType="VARCHAR"
+			property="maxInformTime" />
+		<result column="max_payment" jdbcType="DECIMAL"
+			property="maxPayment" />
+		<result column="max_product_num" jdbcType="INTEGER"
+			property="maxProductNum" />
+		<result column="member_level" jdbcType="VARCHAR"
+			property="memberLevel" />
+		<result column="min_execute_time" jdbcType="TIMESTAMP"
+			property="minExecuteTime" />
+		<result column="min_inform_time" jdbcType="VARCHAR"
+			property="minInformTime" />
+		<result column="min_payment" jdbcType="DECIMAL"
+			property="minPayment" />
+		<result column="min_product_num" jdbcType="INTEGER"
+			property="minProductNum" />
+		<result column="natural_evaluate_inform" jdbcType="INTEGER"
+			property="naturalEvaluateInform" />
+		<result column="product_type" jdbcType="INTEGER"
+			property="productType" />
+		<result column="products" jdbcType="VARCHAR"
+			property="products" />
+		<result column="seller_flag" jdbcType="VARCHAR"
+			property="sellerFlag" />
+		<result column="seller_remark" jdbcType="INTEGER"
+			property="sellerRemark" />
+		<result column="sms_content" jdbcType="VARCHAR"
+			property="smsContent" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="task_level" jdbcType="INTEGER"
+			property="taskLevel" />
+		<result column="task_name" jdbcType="VARCHAR"
+			property="taskName" />
+		<result column="time" jdbcType="INTEGER" property="time" />
+		<result column="time_out_inform" jdbcType="INTEGER"
+			property="timeOutInform" />
+		<result column="trade_from" jdbcType="VARCHAR"
+			property="tradeFrom" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="remind_time" jdbcType="INTEGER"
+			property="remindTime" />
+		<result column="time_type" jdbcType="INTEGER"
+			property="timeType" />
+		<result column="max_middle_inform_time" jdbcType="VARCHAR"
+			property="maxMiddleInformTime" />
+		<result column="max_primary_inform_time" jdbcType="VARCHAR"
+			property="maxPrimaryInformTime" />
+		<result column="max_senior_inform_time" jdbcType="VARCHAR"
+			property="maxSeniorInformTime" />
+		<result column="min_middle_inform_time" jdbcType="VARCHAR"
+			property="minMiddleInformTime" />
+		<result column="min_primary_inform_time" jdbcType="VARCHAR"
+			property="minPrimaryInformTime" />
+		<result column="min_senior_inform_time" jdbcType="VARCHAR"
+			property="minSeniorInformTime" />
+		<result column="inform_mobile" jdbcType="VARCHAR"
+			property="informMobile" />
+		<result column="neutral_evaluate_inform" jdbcType="INTEGER"
+			property="neutralEvaluateInform" />
+		<result column="chosen_time" jdbcType="TIMESTAMP"
+			property="chosenTime" />
+		<result column="city" jdbcType="VARCHAR" property="city" />
+		<result column="province" jdbcType="VARCHAR"
+			property="province" />
+		<result column="trade_block" jdbcType="BIT"
+			property="tradeBlock" />
+		<result column="open_time" jdbcType="TIMESTAMP"
+			property="openTime" />
+		<result column="in_use" jdbcType="INTEGER" property="inUse" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, uid, createdBy, createdDate, lastModifiedBy, lastModifiedDate,
+		optlock, bad_evaluate_inform,
+		delay_date, delay_evaluate, evaluate_black, evaluate_black_content,
+		evaluate_black_type,
+		evaluate_type, execute_type, filter_black, filter_hassent, filter_once,
+		max_execute_time,
+		max_inform_time, max_payment, max_product_num, member_level, min_execute_time,
+		min_inform_time,
+		min_payment, min_product_num, natural_evaluate_inform, product_type, products,
+		seller_flag,
+		seller_remark, sms_content, status, task_level, task_name, time, time_out_inform,
+		trade_from, type, user_id, remind_time, time_type,
+		max_middle_inform_time, max_primary_inform_time,
+		max_senior_inform_time, min_middle_inform_time,
+		min_primary_inform_time, min_senior_inform_time,
+		inform_mobile, neutral_evaluate_inform, chosen_time, city, province, trade_block,
+		open_time, in_use
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.kycrm.member.dao.syntrade.tradeSetup.TradeSetupExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from crm_trade_setup
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from crm_trade_setup
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from crm_trade_setup
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.kycrm.member.dao.syntrade.tradeSetup.TradeSetupExample">
+		delete from crm_trade_setup
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"
+		parameterType="com.kycrm.member.domain.entity.tradecenter.TradeSetup">
+		insert into crm_trade_setup (id, uid, createdBy,
+		createdDate, lastModifiedBy, lastModifiedDate,
+		optlock, bad_evaluate_inform, delay_date,
+		delay_evaluate, evaluate_black, evaluate_black_content,
+		evaluate_black_type, evaluate_type, execute_type,
+		filter_black, filter_hassent, filter_once,
+		max_execute_time, max_inform_time, max_payment,
+		max_product_num, member_level, min_execute_time,
+		min_inform_time, min_payment, min_product_num,
+		natural_evaluate_inform, product_type, products,
+		seller_flag, seller_remark, sms_content,
+		status, task_level, task_name,
+		time, time_out_inform, trade_from,
+		type, user_id, remind_time,
+		time_type, max_middle_inform_time, max_primary_inform_time,
+		max_senior_inform_time, min_middle_inform_time,
+		min_primary_inform_time, min_senior_inform_time,
+		inform_mobile, neutral_evaluate_inform, chosen_time,
+		city, province, trade_block,
+		open_time, in_use)
+		values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},
+		#{createdby,jdbcType=VARCHAR},
+		#{createddate,jdbcType=TIMESTAMP}, #{lastmodifiedby,jdbcType=VARCHAR},
+		#{lastmodifieddate,jdbcType=TIMESTAMP},
+		#{optlock,jdbcType=INTEGER}, #{badEvaluateInform,jdbcType=INTEGER}, #{delayDate,jdbcType=INTEGER},
+		#{delayEvaluate,jdbcType=INTEGER}, #{evaluateBlack,jdbcType=INTEGER},
+		#{evaluateBlackContent,jdbcType=VARCHAR},
+		#{evaluateBlackType,jdbcType=VARCHAR},
+		#{evaluateType,jdbcType=VARCHAR}, #{executeType,jdbcType=INTEGER},
+		#{filterBlack,jdbcType=INTEGER}, #{filterHassent,jdbcType=INTEGER},
+		#{filterOnce,jdbcType=INTEGER},
+		#{maxExecuteTime,jdbcType=TIMESTAMP}, #{maxInformTime,jdbcType=VARCHAR}, #{maxPayment,jdbcType=DECIMAL},
+		#{maxProductNum,jdbcType=INTEGER}, #{memberLevel,jdbcType=VARCHAR},
+		#{minExecuteTime,jdbcType=TIMESTAMP},
+		#{minInformTime,jdbcType=VARCHAR}, #{minPayment,jdbcType=DECIMAL},
+		#{minProductNum,jdbcType=INTEGER},
+		#{naturalEvaluateInform,jdbcType=INTEGER},
+		#{productType,jdbcType=INTEGER}, #{products,jdbcType=VARCHAR},
+		#{sellerFlag,jdbcType=VARCHAR}, #{sellerRemark,jdbcType=INTEGER},
+		#{smsContent,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER}, #{taskLevel,jdbcType=INTEGER}, #{taskName,jdbcType=VARCHAR},
+		#{time,jdbcType=INTEGER}, #{timeOutInform,jdbcType=INTEGER},
+		#{tradeFrom,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{remindTime,jdbcType=INTEGER},
+		#{timeType,jdbcType=INTEGER}, #{maxMiddleInformTime,jdbcType=VARCHAR},
+		#{maxPrimaryInformTime,jdbcType=VARCHAR},
+		#{maxSeniorInformTime,jdbcType=VARCHAR},
+		#{minMiddleInformTime,jdbcType=VARCHAR},
+		#{minPrimaryInformTime,jdbcType=VARCHAR},
+		#{minSeniorInformTime,jdbcType=VARCHAR},
+		#{informMobile,jdbcType=VARCHAR},
+		#{neutralEvaluateInform,jdbcType=INTEGER},
+		#{chosenTime,jdbcType=TIMESTAMP},
+		#{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{tradeBlock,jdbcType=BIT},
+		#{openTime,jdbcType=TIMESTAMP}, #{inUse,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.kycrm.member.domain.entity.tradecenter.TradeSetup">
+		insert into crm_trade_setup
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="createdby != null">
+				createdBy,
+			</if>
+			<if test="createddate != null">
+				createdDate,
+			</if>
+			<if test="lastmodifiedby != null">
+				lastModifiedBy,
+			</if>
+			<if test="lastmodifieddate != null">
+				lastModifiedDate,
+			</if>
+			<if test="optlock != null">
+				optlock,
+			</if>
+			<if test="badEvaluateInform != null">
+				bad_evaluate_inform,
+			</if>
+			<if test="delayDate != null">
+				delay_date,
+			</if>
+			<if test="delayEvaluate != null">
+				delay_evaluate,
+			</if>
+			<if test="evaluateBlack != null">
+				evaluate_black,
+			</if>
+			<if test="evaluateBlackContent != null">
+				evaluate_black_content,
+			</if>
+			<if test="evaluateBlackType != null">
+				evaluate_black_type,
+			</if>
+			<if test="evaluateType != null">
+				evaluate_type,
+			</if>
+			<if test="executeType != null">
+				execute_type,
+			</if>
+			<if test="filterBlack != null">
+				filter_black,
+			</if>
+			<if test="filterHassent != null">
+				filter_hassent,
+			</if>
+			<if test="filterOnce != null">
+				filter_once,
+			</if>
+			<if test="maxExecuteTime != null">
+				max_execute_time,
+			</if>
+			<if test="maxInformTime != null">
+				max_inform_time,
+			</if>
+			<if test="maxPayment != null">
+				max_payment,
+			</if>
+			<if test="maxProductNum != null">
+				max_product_num,
+			</if>
+			<if test="memberLevel != null">
+				member_level,
+			</if>
+			<if test="minExecuteTime != null">
+				min_execute_time,
+			</if>
+			<if test="minInformTime != null">
+				min_inform_time,
+			</if>
+			<if test="minPayment != null">
+				min_payment,
+			</if>
+			<if test="minProductNum != null">
+				min_product_num,
+			</if>
+			<if test="naturalEvaluateInform != null">
+				natural_evaluate_inform,
+			</if>
+			<if test="productType != null">
+				product_type,
+			</if>
+			<if test="products != null">
+				products,
+			</if>
+			<if test="sellerFlag != null">
+				seller_flag,
+			</if>
+			<if test="sellerRemark != null">
+				seller_remark,
+			</if>
+			<if test="smsContent != null">
+				sms_content,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="taskLevel != null">
+				task_level,
+			</if>
+			<if test="taskName != null">
+				task_name,
+			</if>
+			<if test="time != null">
+				time,
+			</if>
+			<if test="timeOutInform != null">
+				time_out_inform,
+			</if>
+			<if test="tradeFrom != null">
+				trade_from,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="remindTime != null">
+				remind_time,
+			</if>
+			<if test="timeType != null">
+				time_type,
+			</if>
+			<if test="maxMiddleInformTime != null">
+				max_middle_inform_time,
+			</if>
+			<if test="maxPrimaryInformTime != null">
+				max_primary_inform_time,
+			</if>
+			<if test="maxSeniorInformTime != null">
+				max_senior_inform_time,
+			</if>
+			<if test="minMiddleInformTime != null">
+				min_middle_inform_time,
+			</if>
+			<if test="minPrimaryInformTime != null">
+				min_primary_inform_time,
+			</if>
+			<if test="minSeniorInformTime != null">
+				min_senior_inform_time,
+			</if>
+			<if test="informMobile != null">
+				inform_mobile,
+			</if>
+			<if test="neutralEvaluateInform != null">
+				neutral_evaluate_inform,
+			</if>
+			<if test="chosenTime != null">
+				chosen_time,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="tradeBlock != null">
+				trade_block,
+			</if>
+			<if test="openTime != null">
+				open_time,
+			</if>
+			<if test="inUse != null">
+				in_use,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=BIGINT},
+			</if>
+			<if test="createdby != null">
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createddate != null">
+				#{createddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodifiedby != null">
+				#{lastmodifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="lastmodifieddate != null">
+				#{lastmodifieddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="optlock != null">
+				#{optlock,jdbcType=INTEGER},
+			</if>
+			<if test="badEvaluateInform != null">
+				#{badEvaluateInform,jdbcType=INTEGER},
+			</if>
+			<if test="delayDate != null">
+				#{delayDate,jdbcType=INTEGER},
+			</if>
+			<if test="delayEvaluate != null">
+				#{delayEvaluate,jdbcType=INTEGER},
+			</if>
+			<if test="evaluateBlack != null">
+				#{evaluateBlack,jdbcType=INTEGER},
+			</if>
+			<if test="evaluateBlackContent != null">
+				#{evaluateBlackContent,jdbcType=VARCHAR},
+			</if>
+			<if test="evaluateBlackType != null">
+				#{evaluateBlackType,jdbcType=VARCHAR},
+			</if>
+			<if test="evaluateType != null">
+				#{evaluateType,jdbcType=VARCHAR},
+			</if>
+			<if test="executeType != null">
+				#{executeType,jdbcType=INTEGER},
+			</if>
+			<if test="filterBlack != null">
+				#{filterBlack,jdbcType=INTEGER},
+			</if>
+			<if test="filterHassent != null">
+				#{filterHassent,jdbcType=INTEGER},
+			</if>
+			<if test="filterOnce != null">
+				#{filterOnce,jdbcType=INTEGER},
+			</if>
+			<if test="maxExecuteTime != null">
+				#{maxExecuteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="maxInformTime != null">
+				#{maxInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="maxPayment != null">
+				#{maxPayment,jdbcType=DECIMAL},
+			</if>
+			<if test="maxProductNum != null">
+				#{maxProductNum,jdbcType=INTEGER},
+			</if>
+			<if test="memberLevel != null">
+				#{memberLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="minExecuteTime != null">
+				#{minExecuteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="minInformTime != null">
+				#{minInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="minPayment != null">
+				#{minPayment,jdbcType=DECIMAL},
+			</if>
+			<if test="minProductNum != null">
+				#{minProductNum,jdbcType=INTEGER},
+			</if>
+			<if test="naturalEvaluateInform != null">
+				#{naturalEvaluateInform,jdbcType=INTEGER},
+			</if>
+			<if test="productType != null">
+				#{productType,jdbcType=INTEGER},
+			</if>
+			<if test="products != null">
+				#{products,jdbcType=VARCHAR},
+			</if>
+			<if test="sellerFlag != null">
+				#{sellerFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="sellerRemark != null">
+				#{sellerRemark,jdbcType=INTEGER},
+			</if>
+			<if test="smsContent != null">
+				#{smsContent,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="taskLevel != null">
+				#{taskLevel,jdbcType=INTEGER},
+			</if>
+			<if test="taskName != null">
+				#{taskName,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				#{time,jdbcType=INTEGER},
+			</if>
+			<if test="timeOutInform != null">
+				#{timeOutInform,jdbcType=INTEGER},
+			</if>
+			<if test="tradeFrom != null">
+				#{tradeFrom,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="remindTime != null">
+				#{remindTime,jdbcType=INTEGER},
+			</if>
+			<if test="timeType != null">
+				#{timeType,jdbcType=INTEGER},
+			</if>
+			<if test="maxMiddleInformTime != null">
+				#{maxMiddleInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="maxPrimaryInformTime != null">
+				#{maxPrimaryInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="maxSeniorInformTime != null">
+				#{maxSeniorInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="minMiddleInformTime != null">
+				#{minMiddleInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="minPrimaryInformTime != null">
+				#{minPrimaryInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="minSeniorInformTime != null">
+				#{minSeniorInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="informMobile != null">
+				#{informMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="neutralEvaluateInform != null">
+				#{neutralEvaluateInform,jdbcType=INTEGER},
+			</if>
+			<if test="chosenTime != null">
+				#{chosenTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeBlock != null">
+				#{tradeBlock,jdbcType=BIT},
+			</if>
+			<if test="openTime != null">
+				#{openTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inUse != null">
+				#{inUse,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.kycrm.member.dao.syntrade.tradeSetup.TradeSetupExample"
+		resultType="java.lang.Long">
+		select count(*) from crm_trade_setup
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update crm_trade_setup
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.uid != null">
+				uid = #{record.uid,jdbcType=BIGINT},
+			</if>
+			<if test="record.createdby != null">
+				createdBy = #{record.createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createddate != null">
+				createdDate = #{record.createddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.lastmodifiedby != null">
+				lastModifiedBy = #{record.lastmodifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="record.lastmodifieddate != null">
+				lastModifiedDate = #{record.lastmodifieddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.optlock != null">
+				optlock = #{record.optlock,jdbcType=INTEGER},
+			</if>
+			<if test="record.badEvaluateInform != null">
+				bad_evaluate_inform = #{record.badEvaluateInform,jdbcType=INTEGER},
+			</if>
+			<if test="record.delayDate != null">
+				delay_date = #{record.delayDate,jdbcType=INTEGER},
+			</if>
+			<if test="record.delayEvaluate != null">
+				delay_evaluate = #{record.delayEvaluate,jdbcType=INTEGER},
+			</if>
+			<if test="record.evaluateBlack != null">
+				evaluate_black = #{record.evaluateBlack,jdbcType=INTEGER},
+			</if>
+			<if test="record.evaluateBlackContent != null">
+				evaluate_black_content = #{record.evaluateBlackContent,jdbcType=VARCHAR},
+			</if>
+			<if test="record.evaluateBlackType != null">
+				evaluate_black_type = #{record.evaluateBlackType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.evaluateType != null">
+				evaluate_type = #{record.evaluateType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.executeType != null">
+				execute_type = #{record.executeType,jdbcType=INTEGER},
+			</if>
+			<if test="record.filterBlack != null">
+				filter_black = #{record.filterBlack,jdbcType=INTEGER},
+			</if>
+			<if test="record.filterHassent != null">
+				filter_hassent = #{record.filterHassent,jdbcType=INTEGER},
+			</if>
+			<if test="record.filterOnce != null">
+				filter_once = #{record.filterOnce,jdbcType=INTEGER},
+			</if>
+			<if test="record.maxExecuteTime != null">
+				max_execute_time = #{record.maxExecuteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.maxInformTime != null">
+				max_inform_time = #{record.maxInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.maxPayment != null">
+				max_payment = #{record.maxPayment,jdbcType=DECIMAL},
+			</if>
+			<if test="record.maxProductNum != null">
+				max_product_num = #{record.maxProductNum,jdbcType=INTEGER},
+			</if>
+			<if test="record.memberLevel != null">
+				member_level = #{record.memberLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="record.minExecuteTime != null">
+				min_execute_time = #{record.minExecuteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.minInformTime != null">
+				min_inform_time = #{record.minInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.minPayment != null">
+				min_payment = #{record.minPayment,jdbcType=DECIMAL},
+			</if>
+			<if test="record.minProductNum != null">
+				min_product_num = #{record.minProductNum,jdbcType=INTEGER},
+			</if>
+			<if test="record.naturalEvaluateInform != null">
+				natural_evaluate_inform = #{record.naturalEvaluateInform,jdbcType=INTEGER},
+			</if>
+			<if test="record.productType != null">
+				product_type = #{record.productType,jdbcType=INTEGER},
+			</if>
+			<if test="record.products != null">
+				products = #{record.products,jdbcType=VARCHAR},
+			</if>
+			<if test="record.sellerFlag != null">
+				seller_flag = #{record.sellerFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="record.sellerRemark != null">
+				seller_remark = #{record.sellerRemark,jdbcType=INTEGER},
+			</if>
+			<if test="record.smsContent != null">
+				sms_content = #{record.smsContent,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.taskLevel != null">
+				task_level = #{record.taskLevel,jdbcType=INTEGER},
+			</if>
+			<if test="record.taskName != null">
+				task_name = #{record.taskName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.time != null">
+				time = #{record.time,jdbcType=INTEGER},
+			</if>
+			<if test="record.timeOutInform != null">
+				time_out_inform = #{record.timeOutInform,jdbcType=INTEGER},
+			</if>
+			<if test="record.tradeFrom != null">
+				trade_from = #{record.tradeFrom,jdbcType=VARCHAR},
+			</if>
+			<if test="record.type != null">
+				type = #{record.type,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.remindTime != null">
+				remind_time = #{record.remindTime,jdbcType=INTEGER},
+			</if>
+			<if test="record.timeType != null">
+				time_type = #{record.timeType,jdbcType=INTEGER},
+			</if>
+			<if test="record.maxMiddleInformTime != null">
+				max_middle_inform_time = #{record.maxMiddleInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.maxPrimaryInformTime != null">
+				max_primary_inform_time = #{record.maxPrimaryInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.maxSeniorInformTime != null">
+				max_senior_inform_time = #{record.maxSeniorInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.minMiddleInformTime != null">
+				min_middle_inform_time = #{record.minMiddleInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.minPrimaryInformTime != null">
+				min_primary_inform_time = #{record.minPrimaryInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.minSeniorInformTime != null">
+				min_senior_inform_time = #{record.minSeniorInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.informMobile != null">
+				inform_mobile = #{record.informMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="record.neutralEvaluateInform != null">
+				neutral_evaluate_inform = #{record.neutralEvaluateInform,jdbcType=INTEGER},
+			</if>
+			<if test="record.chosenTime != null">
+				chosen_time = #{record.chosenTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.city != null">
+				city = #{record.city,jdbcType=VARCHAR},
+			</if>
+			<if test="record.province != null">
+				province = #{record.province,jdbcType=VARCHAR},
+			</if>
+			<if test="record.tradeBlock != null">
+				trade_block = #{record.tradeBlock,jdbcType=BIT},
+			</if>
+			<if test="record.openTime != null">
+				open_time = #{record.openTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.inUse != null">
+				in_use = #{record.inUse,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update crm_trade_setup
+		set id = #{record.id,jdbcType=BIGINT},
+		uid = #{record.uid,jdbcType=BIGINT},
+		createdBy = #{record.createdby,jdbcType=VARCHAR},
+		createdDate = #{record.createddate,jdbcType=TIMESTAMP},
+		lastModifiedBy = #{record.lastmodifiedby,jdbcType=VARCHAR},
+		lastModifiedDate = #{record.lastmodifieddate,jdbcType=TIMESTAMP},
+		optlock = #{record.optlock,jdbcType=INTEGER},
+		bad_evaluate_inform = #{record.badEvaluateInform,jdbcType=INTEGER},
+		delay_date = #{record.delayDate,jdbcType=INTEGER},
+		delay_evaluate = #{record.delayEvaluate,jdbcType=INTEGER},
+		evaluate_black = #{record.evaluateBlack,jdbcType=INTEGER},
+		evaluate_black_content = #{record.evaluateBlackContent,jdbcType=VARCHAR},
+		evaluate_black_type = #{record.evaluateBlackType,jdbcType=VARCHAR},
+		evaluate_type = #{record.evaluateType,jdbcType=VARCHAR},
+		execute_type = #{record.executeType,jdbcType=INTEGER},
+		filter_black = #{record.filterBlack,jdbcType=INTEGER},
+		filter_hassent = #{record.filterHassent,jdbcType=INTEGER},
+		filter_once = #{record.filterOnce,jdbcType=INTEGER},
+		max_execute_time = #{record.maxExecuteTime,jdbcType=TIMESTAMP},
+		max_inform_time = #{record.maxInformTime,jdbcType=VARCHAR},
+		max_payment = #{record.maxPayment,jdbcType=DECIMAL},
+		max_product_num = #{record.maxProductNum,jdbcType=INTEGER},
+		member_level = #{record.memberLevel,jdbcType=VARCHAR},
+		min_execute_time = #{record.minExecuteTime,jdbcType=TIMESTAMP},
+		min_inform_time = #{record.minInformTime,jdbcType=VARCHAR},
+		min_payment = #{record.minPayment,jdbcType=DECIMAL},
+		min_product_num = #{record.minProductNum,jdbcType=INTEGER},
+		natural_evaluate_inform = #{record.naturalEvaluateInform,jdbcType=INTEGER},
+		product_type = #{record.productType,jdbcType=INTEGER},
+		products = #{record.products,jdbcType=VARCHAR},
+		seller_flag = #{record.sellerFlag,jdbcType=VARCHAR},
+		seller_remark = #{record.sellerRemark,jdbcType=INTEGER},
+		sms_content = #{record.smsContent,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=INTEGER},
+		task_level = #{record.taskLevel,jdbcType=INTEGER},
+		task_name = #{record.taskName,jdbcType=VARCHAR},
+		time = #{record.time,jdbcType=INTEGER},
+		time_out_inform = #{record.timeOutInform,jdbcType=INTEGER},
+		trade_from = #{record.tradeFrom,jdbcType=VARCHAR},
+		type = #{record.type,jdbcType=VARCHAR},
+		user_id = #{record.userId,jdbcType=VARCHAR},
+		remind_time = #{record.remindTime,jdbcType=INTEGER},
+		time_type = #{record.timeType,jdbcType=INTEGER},
+		max_middle_inform_time = #{record.maxMiddleInformTime,jdbcType=VARCHAR},
+		max_primary_inform_time =
+		#{record.maxPrimaryInformTime,jdbcType=VARCHAR},
+		max_senior_inform_time =
+		#{record.maxSeniorInformTime,jdbcType=VARCHAR},
+		min_middle_inform_time = #{record.minMiddleInformTime,jdbcType=VARCHAR},
+		min_primary_inform_time =
+		#{record.minPrimaryInformTime,jdbcType=VARCHAR},
+		min_senior_inform_time =
+		#{record.minSeniorInformTime,jdbcType=VARCHAR},
+		inform_mobile = #{record.informMobile,jdbcType=VARCHAR},
+		neutral_evaluate_inform = #{record.neutralEvaluateInform,jdbcType=INTEGER},
+		chosen_time = #{record.chosenTime,jdbcType=TIMESTAMP},
+		city = #{record.city,jdbcType=VARCHAR},
+		province = #{record.province,jdbcType=VARCHAR},
+		trade_block = #{record.tradeBlock,jdbcType=BIT},
+		open_time = #{record.openTime,jdbcType=TIMESTAMP},
+		in_use = #{record.inUse,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.kycrm.member.domain.entity.tradecenter.TradeSetup">
+		update crm_trade_setup
+		<set>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=BIGINT},
+			</if>
+			<if test="createdby != null">
+				createdBy = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createddate != null">
+				createdDate = #{createddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodifiedby != null">
+				lastModifiedBy = #{lastmodifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="lastmodifieddate != null">
+				lastModifiedDate = #{lastmodifieddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="optlock != null">
+				optlock = #{optlock,jdbcType=INTEGER},
+			</if>
+			<if test="badEvaluateInform != null">
+				bad_evaluate_inform = #{badEvaluateInform,jdbcType=INTEGER},
+			</if>
+			<if test="delayDate != null">
+				delay_date = #{delayDate,jdbcType=INTEGER},
+			</if>
+			<if test="delayEvaluate != null">
+				delay_evaluate = #{delayEvaluate,jdbcType=INTEGER},
+			</if>
+			<if test="evaluateBlack != null">
+				evaluate_black = #{evaluateBlack,jdbcType=INTEGER},
+			</if>
+			<if test="evaluateBlackContent != null">
+				evaluate_black_content = #{evaluateBlackContent,jdbcType=VARCHAR},
+			</if>
+			<if test="evaluateBlackType != null">
+				evaluate_black_type = #{evaluateBlackType,jdbcType=VARCHAR},
+			</if>
+			<if test="evaluateType != null">
+				evaluate_type = #{evaluateType,jdbcType=VARCHAR},
+			</if>
+			<if test="executeType != null">
+				execute_type = #{executeType,jdbcType=INTEGER},
+			</if>
+			<if test="filterBlack != null">
+				filter_black = #{filterBlack,jdbcType=INTEGER},
+			</if>
+			<if test="filterHassent != null">
+				filter_hassent = #{filterHassent,jdbcType=INTEGER},
+			</if>
+			<if test="filterOnce != null">
+				filter_once = #{filterOnce,jdbcType=INTEGER},
+			</if>
+			<if test="maxExecuteTime != null">
+				max_execute_time = #{maxExecuteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="maxInformTime != null">
+				max_inform_time = #{maxInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="maxPayment != null">
+				max_payment = #{maxPayment,jdbcType=DECIMAL},
+			</if>
+			<if test="maxProductNum != null">
+				max_product_num = #{maxProductNum,jdbcType=INTEGER},
+			</if>
+			<if test="memberLevel != null">
+				member_level = #{memberLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="minExecuteTime != null">
+				min_execute_time = #{minExecuteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="minInformTime != null">
+				min_inform_time = #{minInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="minPayment != null">
+				min_payment = #{minPayment,jdbcType=DECIMAL},
+			</if>
+			<if test="minProductNum != null">
+				min_product_num = #{minProductNum,jdbcType=INTEGER},
+			</if>
+			<if test="naturalEvaluateInform != null">
+				natural_evaluate_inform = #{naturalEvaluateInform,jdbcType=INTEGER},
+			</if>
+			<if test="productType != null">
+				product_type = #{productType,jdbcType=INTEGER},
+			</if>
+			<if test="products != null">
+				products = #{products,jdbcType=VARCHAR},
+			</if>
+			<if test="sellerFlag != null">
+				seller_flag = #{sellerFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="sellerRemark != null">
+				seller_remark = #{sellerRemark,jdbcType=INTEGER},
+			</if>
+			<if test="smsContent != null">
+				sms_content = #{smsContent,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="taskLevel != null">
+				task_level = #{taskLevel,jdbcType=INTEGER},
+			</if>
+			<if test="taskName != null">
+				task_name = #{taskName,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				time = #{time,jdbcType=INTEGER},
+			</if>
+			<if test="timeOutInform != null">
+				time_out_inform = #{timeOutInform,jdbcType=INTEGER},
+			</if>
+			<if test="tradeFrom != null">
+				trade_from = #{tradeFrom,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="remindTime != null">
+				remind_time = #{remindTime,jdbcType=INTEGER},
+			</if>
+			<if test="timeType != null">
+				time_type = #{timeType,jdbcType=INTEGER},
+			</if>
+			<if test="maxMiddleInformTime != null">
+				max_middle_inform_time = #{maxMiddleInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="maxPrimaryInformTime != null">
+				max_primary_inform_time = #{maxPrimaryInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="maxSeniorInformTime != null">
+				max_senior_inform_time = #{maxSeniorInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="minMiddleInformTime != null">
+				min_middle_inform_time = #{minMiddleInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="minPrimaryInformTime != null">
+				min_primary_inform_time = #{minPrimaryInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="minSeniorInformTime != null">
+				min_senior_inform_time = #{minSeniorInformTime,jdbcType=VARCHAR},
+			</if>
+			<if test="informMobile != null">
+				inform_mobile = #{informMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="neutralEvaluateInform != null">
+				neutral_evaluate_inform = #{neutralEvaluateInform,jdbcType=INTEGER},
+			</if>
+			<if test="chosenTime != null">
+				chosen_time = #{chosenTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeBlock != null">
+				trade_block = #{tradeBlock,jdbcType=BIT},
+			</if>
+			<if test="openTime != null">
+				open_time = #{openTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inUse != null">
+				in_use = #{inUse,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.kycrm.member.domain.entity.tradecenter.TradeSetup">
+		update crm_trade_setup
+		set uid = #{uid,jdbcType=BIGINT},
+		createdBy = #{createdby,jdbcType=VARCHAR},
+		createdDate = #{createddate,jdbcType=TIMESTAMP},
+		lastModifiedBy = #{lastmodifiedby,jdbcType=VARCHAR},
+		lastModifiedDate = #{lastmodifieddate,jdbcType=TIMESTAMP},
+		optlock = #{optlock,jdbcType=INTEGER},
+		bad_evaluate_inform = #{badEvaluateInform,jdbcType=INTEGER},
+		delay_date = #{delayDate,jdbcType=INTEGER},
+		delay_evaluate = #{delayEvaluate,jdbcType=INTEGER},
+		evaluate_black = #{evaluateBlack,jdbcType=INTEGER},
+		evaluate_black_content = #{evaluateBlackContent,jdbcType=VARCHAR},
+		evaluate_black_type = #{evaluateBlackType,jdbcType=VARCHAR},
+		evaluate_type = #{evaluateType,jdbcType=VARCHAR},
+		execute_type = #{executeType,jdbcType=INTEGER},
+		filter_black = #{filterBlack,jdbcType=INTEGER},
+		filter_hassent = #{filterHassent,jdbcType=INTEGER},
+		filter_once = #{filterOnce,jdbcType=INTEGER},
+		max_execute_time = #{maxExecuteTime,jdbcType=TIMESTAMP},
+		max_inform_time = #{maxInformTime,jdbcType=VARCHAR},
+		max_payment = #{maxPayment,jdbcType=DECIMAL},
+		max_product_num = #{maxProductNum,jdbcType=INTEGER},
+		member_level = #{memberLevel,jdbcType=VARCHAR},
+		min_execute_time = #{minExecuteTime,jdbcType=TIMESTAMP},
+		min_inform_time = #{minInformTime,jdbcType=VARCHAR},
+		min_payment = #{minPayment,jdbcType=DECIMAL},
+		min_product_num = #{minProductNum,jdbcType=INTEGER},
+		natural_evaluate_inform = #{naturalEvaluateInform,jdbcType=INTEGER},
+		product_type = #{productType,jdbcType=INTEGER},
+		products = #{products,jdbcType=VARCHAR},
+		seller_flag = #{sellerFlag,jdbcType=VARCHAR},
+		seller_remark = #{sellerRemark,jdbcType=INTEGER},
+		sms_content = #{smsContent,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		task_level = #{taskLevel,jdbcType=INTEGER},
+		task_name = #{taskName,jdbcType=VARCHAR},
+		time = #{time,jdbcType=INTEGER},
+		time_out_inform = #{timeOutInform,jdbcType=INTEGER},
+		trade_from = #{tradeFrom,jdbcType=VARCHAR},
+		type = #{type,jdbcType=VARCHAR},
+		user_id = #{userId,jdbcType=VARCHAR},
+		remind_time = #{remindTime,jdbcType=INTEGER},
+		time_type = #{timeType,jdbcType=INTEGER},
+		max_middle_inform_time = #{maxMiddleInformTime,jdbcType=VARCHAR},
+		max_primary_inform_time = #{maxPrimaryInformTime,jdbcType=VARCHAR},
+		max_senior_inform_time = #{maxSeniorInformTime,jdbcType=VARCHAR},
+		min_middle_inform_time = #{minMiddleInformTime,jdbcType=VARCHAR},
+		min_primary_inform_time = #{minPrimaryInformTime,jdbcType=VARCHAR},
+		min_senior_inform_time = #{minSeniorInformTime,jdbcType=VARCHAR},
+		inform_mobile = #{informMobile,jdbcType=VARCHAR},
+		neutral_evaluate_inform = #{neutralEvaluateInform,jdbcType=INTEGER},
+		chosen_time = #{chosenTime,jdbcType=TIMESTAMP},
+		city = #{city,jdbcType=VARCHAR},
+		province = #{province,jdbcType=VARCHAR},
+		trade_block = #{tradeBlock,jdbcType=BIT},
+		open_time = #{openTime,jdbcType=TIMESTAMP},
+		in_use = #{inUse,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

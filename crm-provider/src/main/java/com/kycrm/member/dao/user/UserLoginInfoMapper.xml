@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.user.IUserLoginInfoDao">
+	<!-- 创建用户登录日志 -->
+	<insert id="doCreateInfoByLogin" parameterType="com.kycrm.member.domain.entity.user.UserLoginInfo">
+		INSERT INTO crm_user_login_info(uid,seller_nick,login_time,ip_address,createdDate,lastModifiedDate)
+		VALUE (#{uid},#{sellerNick},#{loginTime},#{ipAddress},now(),now())
+	</insert>
+</mapper>

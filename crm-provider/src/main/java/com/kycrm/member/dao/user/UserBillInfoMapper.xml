@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.user.IUserBillInfoDao">
+  
+   <resultMap type="com.kycrm.member.domain.entity.user.UserBillInfo" id="billinfoMap">
+          <result column="id" property="id"/>
+          <result column="uid" property="uid"/>
+          <result column="optlock" property="optlock"/>
+          <result column="createdBy" property="createdBy"/>
+          <result column="createdDate" property="createdDate"/>
+          <result column="lastModifiedBy" property="lastModifiedBy"/>
+          <result column="lastModifiedDate" property="lastModifiedDate"/>
+          <result column="bill_head" property="billHead"/>
+          <result column="company_duty_num" property="companyDutyNum"/>
+          <result column="register_address" property="registerAddress"/>
+          <result column="company_phone" property="companyPhone"/>
+          <result column="company_bank" property="companyBank"/>
+          <result column="company_card" property="companyCard"/>
+          <result column="receiver_name" property="receiverName"/>
+          <result column="receiver_phone" property="receiverPhone"/>
+          <result column="receiver_address" property="receiverAddress"/>
+   </resultMap>
+   <!--查询发票信息  -->
+   <select id="selcetBillInfo" parameterType="java.util.Map" resultMap="billinfoMap">
+          select * from crm_user_bill_info where uid=#{uid}  
+   </select>
+   <!--保存一条发票信息  -->
+   <insert id="saveBillInfo" parameterType="com.kycrm.member.domain.vo.user.UserBillInfoVO">
+       insert into crm_user_bill_info 
+       (uid,optlock,createdBy,createdDate,lastModifiedBy,lastModifiedDate,bill_head,
+        company_duty_num,register_address,company_phone,company_bank,company_card,
+        receiver_name,receiver_phone,receiver_address)
+       VALUES
+       (#{uid},0,#{userName},NOW(),#{userName},NOW(),#{billHead},
+        #{companyDutyNum},#{registerAddress},#{companyPhone},#{companyBank},#{companyCard},
+        #{receiverName},#{receiverPhone},#{receiverAddress}) 
+   </insert>
+   <!--修改发票信息  -->
+   <update id="updateBillInfo" parameterType="com.kycrm.member.domain.vo.user.UserBillInfoVO">
+        UPDATE crm_user_bill_info
+        <set>
+            <if test="billHead!=null">
+                 bill_head=#{billHead} ,
+            </if>
+            <if test="companyDutyNum!=null">
+                company_duty_num=#{companyDutyNum} ,
+            </if>
+            <if test="registerAddress!=null">
+                register_address=#{registerAddress} ,
+            </if>
+            <if test="companyPhone!=null">
+                company_phone=#{companyPhone} ,
+            </if>
+            <if test="companyBank!=null">
+                company_bank=#{companyBank} ,
+            </if>
+            <if test="companyCard!=null">
+                company_card=#{companyCard},
+            </if>
+            <if test="receiverName!=null">
+                receiver_name=#{receiverName},
+            </if>
+            <if test="receiverPhone!=null">
+                receiver_phone=#{receiverPhone},
+            </if>
+            <if test="receiverAddress!=null">
+                receiver_address=#{receiverAddress},
+            </if>
+            optlock=optlock+1,
+            lastModifiedDate=NOW()
+        </set>
+         WHERE id=#{id}
+   </update>
+</mapper>

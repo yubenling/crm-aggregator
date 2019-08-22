@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd"
+	default-lazy-init="false" default-autowire="no">
+	<description>Spring定时任务支持</description>
+	<bean id="mySendSmsShcedule" class="com.kycrm.tmc.schdule.MyScheduleSendMessage"/> 
+	<!-- 基于Spring Schedule XML配置的定时任务列表，适合定义在每台服务器节点执行并且无需日志记录、无需管理界面干预等功能支持的任务 -->
+	<task:scheduler id="springScheduler" pool-size="10" />
+ 	<task:scheduled-tasks scheduler="springScheduler"> 
+		<!-- 晚上凌晨一点删除过期的订单短信 --> 
+		<task:scheduled ref="mySendSmsShcedule" method="removeOldSms" cron="0 * 1 * * ?"/> 
+		<task:scheduled ref="mySendSmsShcedule" method="synMarketingData" cron="0 0 0/1 * * ?"/> 
+		<task:scheduled ref="mySendSmsShcedule" method="synTradeCenterData" cron="0 0 0/1 * * ?"/> 
+		<task:scheduled ref="mySendSmsShcedule" method="synchToMarketingCenter" cron="0 0 0/1 * * ?"/> 
+		<task:scheduled ref="mySendSmsShcedule" method="synYesterdayData" cron="0 30 1 0/1 * ?"/>
+		<task:scheduled ref="mySendSmsShcedule" method="standardRFMJob" cron="0 0/5 * * * ?"/>
+		<!-- <task:scheduled ref="mySendSmsShcedule" method="singleSynchEffectData" cron="0 0 22 27 9 ?"/>  -->
+	</task:scheduled-tasks> 
+	
+	<!--使用quartz扫描每分钟定时短信  -->
+	<bean id="job" class="com.kycrm.tmc.schdule.MyScheduleSendMessage"/>
+    <bean id="oceanJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+       <property name="targetObject" ref="job"/> 
+       <property name="targetMethod" value="runJob"/> 
+       <!--false表示等上一个任务执行完后再开启新的任务,这里和上一遍博客中的注解@DisallowConcurrentExecution一个道理--> 
+       <property name="concurrent" value="true"/> 
+    </bean> 
+     <!--配置触发器  -->
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">  
+        <property name="jobDetail" ref="oceanJob" />  
+        <property name="startDelay" value="10000" /><!-- 调度工厂实例化后，经过0秒开始执行调度 -->  
+        <property name="repeatInterval" value="60000" /><!-- 每1分调度一次 -->  
+    </bean> 
+    <!--配置调度器  -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="overwriteExistingJobs" value="true" />       
+        <!-- 管理trigger -->
+        <property name="triggers">
+            <list>         
+                <ref bean="simpleTrigger" />
+            </list>
+        </property>
+    </bean>
+</beans>

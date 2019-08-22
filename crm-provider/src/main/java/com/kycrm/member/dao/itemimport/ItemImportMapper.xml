@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.itemimport.IItemImportDao">
+	<insert id="insertItemImportList" parameterType="java.util.List">  
+		 insert into crm_item
+		    (uid,nick,num_iid,title,price,approve_status,url,createdBy,lastModifiedBy,createdDate,lastModifiedDate,optlock) 
+		 values  
+	    	<foreach collection="list" item="item" index="index"  
+	       	 	separator=",">  
+	        	(#{item.uid},#{item.nick},#{item.numIid},#{item.title},#{item.price},#{item.approveStatus},#{item.url},#{item.createdBy},#{item.lastModifiedBy},now(),now(),0)  
+	    	</foreach>  
+    </insert> 
+    
+    <!-- 通过uid查询商品id和标题 -->
+	<select id="findItemTitleAndItemid" resultType="com.kycrm.member.domain.entity.item.ItemImport" parameterType="java.util.Map">
+	  	SELECT num_iid AS numIid,title FROM crm_item
+		WHERE uid = #{uid}
+		AND title IN
+		<foreach collection="list" item="item" index="index"
+		      open="(" separator="," close=")">  
+		        #{item} 
+	   </foreach>
+		GROUP BY title
+	</select>
+	
+	<!-- 批量删除导入商品 -->
+	<delete id="batchDeleteImportItems" parameterType="java.util.List">
+		DELETE FROM crm_item WHERE num_iid IN
+		<foreach collection="list" item="item" index="index"
+	      open="(" separator="," close=")">  
+	        #{item} 
+		</foreach>
+	</delete>
+	
+	<!-- 商品查询只查导入的商品 -->
+	<select id="listItemOnlyImport" parameterType="java.util.Map" resultType="com.kycrm.member.domain.entity.item.ItemImport">
+		select id,num_iid,title,price,url,sub_title
+		from crm_item_import
+		<where>
+			uid = #{uid}
+			<if test="numIid != null">
+				and num_iid = #{numIid}
+			</if>
+			<if test="minPrice != null">
+				and price >= #{minPrice}
+			</if>
+			<if test="maxPrice != null">
+				and #{maxPrice} >= price
+			</if>
+			<if test="title != null and title != ''">
+				and title like '%${title}%'
+			</if>
+			<if test="groupId != null">
+				and num_iid in (select num_iid from crm_grouped_goods where group_id = #{groupId})
+			</if>
+			<if test="approveStatusStr != null and approveStatusStr != ''">
+				and approve_status = #{approveStatusStr}
+			</if>
+			<if test="startRows != null and pageSize != null">
+				limit #{startRows},#{pageSize}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 只查询itemImport表中的数量 -->
+	<select id="countItemOnlyImport" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*)
+		from crm_item_import
+		<where>
+			uid = #{uid}
+			<if test="numIid != null">
+				and num_iid = #{numIid}
+			</if>
+			<if test="minPrice != null">
+				and price >= #{minPrice}
+			</if>
+			<if test="maxPrice != null">
+				and #{maxPrice} >= price
+			</if>
+			<if test="title != null and title != ''">
+				and title like '%${title}%'
+			</if>
+			<if test="groupId != null">
+				and num_iid in (select num_iid from crm_grouped_goods where group_id = #{groupId})
+			</if>
+			<if test="approveStatusStr != null and approveStatusStr != ''">
+				and approve_status = #{approveStatusStr}
+			</if>
+		</where>
+	</select>
+</mapper>

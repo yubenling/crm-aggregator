@@ -1,0 +1,304 @@
+
+#xuanzeshangpinBox{
+	width:64.0625vw ;
+	height: 36.4583vw;
+	box-sizing: border-box;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-left: -32.03125vw;
+	margin-top: -18.22915vw;
+	background-color: #fff;
+	border-radius: 10px;
+	display: none;
+	z-index: 63;
+}
+#xuanzeshangpinBox label{color: #384856;}
+#xuanzeshangpinBox h3{
+	width: 100%;
+	height: 3.125vw;
+	background-color: #00a0e9;
+	border-radius: 10px 10px 0 0;
+}
+#xuanzeshangpinBox h3 i{
+	width: 1.197vw;
+	height: 1.302vw;
+	background: url(../images/newbgIcon.png) no-repeat 0 -18vw;
+	float: left;
+	background-size: 3.229vw 31.25vw;
+	margin: 0.88vw 1.041666vw 0 1.4583vw;
+}
+#xuanzeshangpinBox h3 span{
+	float: left;
+	height: 3.125vw;
+	line-height: 3.125vw;
+	color: #fff;
+	font-size: 0.9375vw;
+}
+.xuanzeshangpinsearchBox{
+	height: 2.2916vw;
+	padding:1.04vw 0 ;
+}
+.xuanzeshangpinSearchDiv{
+	float: left;
+	margin-right:2.08vw ;
+}
+.SearchRightDiv{
+	float: right;
+}
+.xuanzeshangpinSearchDiv label{float: left; height: 2.2916vw;line-height: 2.2916vw; margin-right:0.5208vw ;}
+.xuanzeshangpinSearchDiv input{float: left; width: 7.27vw; height:1.4583vw ;line-height: 1.4583vw;border: 1px solid #b3c3d0; border-radius: 0.26vw;margin-top: 0.35vw; outline: none; padding-left: 0.5vw;}
+.xuanzeshangpinBox{
+	padding: 0 3.64583vw 0 2.0833vw;
+}
+.xuanzeshangpinSearchRightDiv{
+	float: left;
+	height: 2.2916vw;
+	margin-right: 1.04vw;
+}
+.xuanzeshangpinSearchRightDiv i{
+	position: relative;
+	cursor: pointer;
+	float: left;
+	width: 0.833vw;
+	height: 0.833vw;
+	border: 1px solid #b3c3d0;
+	border-radius:0.26vw ;
+	margin-top: 0.7vw;
+	margin-right: 0.5208vw;
+	transition: border-color .2s ease-in-out,background-color .2s ease-in-out;
+}
+.xuanzeshangpinSearchRightDiv i:after{
+	content: "";
+    display: table;
+    width: 0.208vw;
+    height: 0.4166vw;
+    position: absolute;
+    top: 0.1vw;
+    left: 0.2604vw;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    transform: rotate(45deg) scale(0);
+    transition: all .2s ease-in-out;
+}
+.xuanzeshangpinSearchRightDiv i.on{
+	border-color: #2d8cf0;
+    background-color: #2d8cf0;
+}
+.xuanzeshangpinSearchRightDiv i.on:after{
+	content: "";
+    display: table;
+    width: 0.208vw;
+    height: 0.4166vw;
+    position: absolute;
+    top: 0.1vw;
+    left: 0.2604vw;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    transform: rotate(45deg) scale(1);
+    transition: all .2s ease-in-out;
+}
+.xuanzeshangpinSearchRightDiv label{
+	height: 2.2916vw;
+	line-height: 2.2916vw;
+	float: left;
+	font-size: 0.729vw;
+}
+.SearchRightDiv{
+	margin-right: 0.52083vw;
+}
+#xuanzeshangpinSearch{
+	height: 2.2916vw;
+	line-height: 2.2916vw;
+	float: left;
+	width: 5.2083vw;
+	border-radius: 0.3208vw;
+	text-align: center;
+	background-color: #00a0e9;
+	color: #fff;
+}
+.xuanzeshangpinTableBox>div{
+	width: 48%;
+	float: left;
+}
+.xuanzeshangpinLeftTable{
+	margin-right: 2%;
+}
+.xuanzeshangpinLeftTable{
+	box-shadow: 1px 1px 5px #888;
+}
+.xuanzeshangpinTableBox table{
+	width: 100%;
+	border-collapse: collapse;
+}
+.xuanzeshangpinTableBox tr.trone{
+	height: 2.0833vw;
+	background-color: #dae2eb;
+}
+.xuanzeshangpinTableBox tr td{
+	text-align: center;
+	color: #384856;
+}
+.xuanzeshangpinTableBox tr td.tdone{
+	font-size:0.729vw ;
+}
+.xuanzeshangpinTableBox tr td.tdone i{
+	position: relative;
+	cursor: pointer;
+	float: left;
+	width: 0.833vw;
+	height: 0.833vw;
+	border: 1px solid #b3c3d0;
+	border-radius:0.26vw ;
+	
+	transition: border-color .2s ease-in-out,background-color .2s ease-in-out;
+	margin: 0.1vw 0.2vw 0 0.5vw;
+}
+.xuanzeshangpinTableBox tr td.tdone i.on{
+	border-color: #2d8cf0;
+    background-color: #2d8cf0;
+}
+.xuanzeshangpinTableBox tr td.tdone i.on:after{
+	content: "";
+    display: table;
+    width: 0.208vw;
+    height: 0.4166vw;
+    position: absolute;
+    top: 0.1vw;
+    left: 0.2604vw;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    transform: rotate(45deg) scale(1);
+    transition: all .2s ease-in-out;
+}
+.tableLeftHead tr td.tdone span{
+	float: left;
+}
+.xuanzeshangpinTableBox tr td{font-size: 0.83vw;}
+.xuanzeshangpinTableBox tr .tdone{width: 15%;}
+.xuanzeshangpinTableBox tr .tdtwo{width: 27%;}
+.xuanzeshangpinTableBox tr .tdthree{width: 14%;}
+.xuanzeshangpinTableBox tr .tdfour{width: 33%;}
+.xuanzeshangpinTableBox tr .tdfive{width: 11%;}
+.xuanzeshangpinTableBox .trtwo{
+	height: 3.6458vw;
+	border-bottom: 1px solid #eeeeee;
+}
+.xuanzeshangpinTableBox .trtwo td img{
+	width:2.604vw ;
+	height:2.604vw ;
+}
+.tableLeftBody{
+	height: 23.4375vw;
+	overflow-y: auto;
+}
+.laypageskin_molv a, .laypageskin_molv span {
+    padding: 0 0.625vw;
+    border-radius: 0.104vw;
+}
+.laypage_main a, .laypage_main span{
+	margin: 0 0.15625vw 0.3125vw;
+    padding: 0 0.5208vw;
+}
+.laypage_main a, .laypage_main input, .laypage_main span {
+    height: 1.35416vw;
+    line-height: 1.35416vw;
+}
+.laypage_main * {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 0.625vw;
+}
+.laypage_main input {
+    width: 2.08vw;
+    margin: 0 0.26vw;
+    padding: 0 0.26vw;
+}
+.laypageskin_molv button {
+    height: 1.35416vw;
+    line-height: 1.35416vw;
+}
+.laypage_main button {
+    height: 1.458vw;
+    line-height: 1.458vw;;
+    margin-left: 0.26vw;
+    padding: 0 0.5208vw;
+    color: #666;
+}
+.xuanzeshangpinTableBox>div.xuanzeshangpinRightTable{
+	float: right;
+	box-shadow: 1px 1px 5px #888;
+}
+.RightTableTop{
+	height: 2.08vw;
+	
+}
+.yxDiv{
+	height: 2.08vw;
+	line-height: 2.08vw;
+	float: left;
+	padding-left: 0.83vw;
+}
+.yxDiv span{
+	color: #00a0e9;
+	font-size: 0.9375vw;
+}
+#removesp{
+	float: right;
+	height: 2.08vw;
+	line-height: 2.08vw;
+	margin-right: 0.83vw;
+	color: #f05050;
+	text-decoration: underline;
+}
+#xuanzeshangpinpage{
+	text-align: right;
+	padding: 1vw 0;
+}
+.laypage_main a, .laypage_main span{
+	margin: 0 0.15625vw 0.3125vw;
+	padding: 0 0.5208vw;
+}
+#xuanzeshangpinpage .laypage_total{
+	display: none;
+}
+.rightTableBody{
+	height: 21.3542vw;
+	overflow-y: auto;
+}
+#xuanzeshangpinBox .btn{
+	height: 2.1875vw;
+	text-align: center;
+	margin-top: 0.5vw;
+}
+#xuanzeshangpinBox .btn a{
+	display: inline-block;
+	width: 5.208vw;
+	height: 2.1875vw;
+	line-height:2.1875vw;
+	border-radius: 0.208vw;
+	font-size: 0.9375vw;
+	margin: 0 3.125vw;
+	box-sizing: border-box;
+}
+#xuanzeshangpinBox .btn a.qd{
+	background-color: #00a0e9;
+	color: #fff;
+	border: 0.05208vw solid #00a0e9;
+}
+#xuanzeshangpinBox .btn a.qx{
+	background-color: #fff;
+	border: 0.05208vw solid #384856;
+	color: #384856;
+	
+}
+.xuanzeshangpinTableBox tr td.tdone i.dx{
+	margin-left: 1.5625vw;
+}
+.xuanzeshangpinTableBox tr td.tdone i.dx:after,.xuanzeshangpinTableBox tr td.tdone i.qx:after{
+	width: 0.308vw;
+	height:0.5166vw;
+}

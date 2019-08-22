@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.tradecenter.ITradeSetupDao">
+	<resultMap type="com.kycrm.member.domain.entity.tradecenter.TradeSetup" id="tradeSetup">
+		<result column="id" property="id"/>	
+		<result column="user_id" property="userId"/>
+		<result column="uid" property="uid"/>
+		<result column="type" property="type"/>
+		<result column="task_level" property="taskLevel"/>
+		<result column="task_name" property="taskName"/>
+		<result column="status" property="status"/>
+		<!-- 软删除  此字段默认值为true,只有用户删除操作时赋值为false,其他情况不做任何赋值,一般的sql最好添加上条件in_use=true-->
+		<result column="in_use" property="inUse"/>
+		<result column="execute_type" property="executeType"/>
+		<result column="min_execute_time" property="minExecuteTime"/>
+		<result column="max_execute_time" property="maxExecuteTime"/>
+		<result column="min_inform_time" property="minInformTime"/>
+		<result column="max_inform_time" property="maxInformTime"/>
+		<result column="min_primary_inform_time" property="minPrimaryInformTime"/>
+		<result column="max_primary_inform_time" property="maxPrimaryInformTime"/>
+		<result column="min_middle_inform_time" property="minMiddleInformTime"/>
+		<result column="max_middle_inform_time" property="maxMiddleInformTime"/>
+		<result column="min_senior_inform_time" property="minSeniorInformTime"/>
+		<result column="max_senior_inform_time" property="maxSeniorInformTime"/>
+		<result column="time_out_inform" property="timeOutInform"/>
+		<result column="time_type" property="timeType"/>
+		<result column="remind_time" property="remindTime"/>
+		<result column="filter_once" property="filterOnce"/>
+		<result column="filter_black" property="filterBlack"/>
+		<result column="filter_hassent" property="filterHassent"/>
+		<!-- 订单发送范围 -->
+		<result column="trade_block" property="tradeBlock"/>
+		<result column="chosen_time" property="chosenTime"/>
+		<!-- 订单发送范围 -->
+		<result column="seller_flag" property="sellerFlag"/>
+		<result column="trade_from" property="tradeFrom"/>
+		<result column="member_level" property="memberLevel"/>
+		<result column="min_product_num" property="minProductNum"/>
+		<result column="max_product_num" property="maxProductNum"/>
+		<result column="min_payment" property="minPayment"/>
+		<result column="max_payment" property="maxPayment"/>
+		<result column="province" property="province"/>
+		<result column="city" property="city"/>
+		<result column="product_type" property="productType"/>
+		<result column="products" property="products"/>
+		<result column="sms_content" property="smsContent"/>
+		<result column="delay_evaluate" property="delayEvaluate"/>
+		<result column="delay_date" property="delayDate"/>
+		<result column="evaluate_type" property="evaluateType"/>
+		<result column="evaluate_black" property="evaluateBlack"/>
+		<result column="evaluate_black_type" property="evaluateBlackType"/>
+		<result column="evaluate_black_content" property="evaluateBlackContent"/>
+		<result column="neutral_evaluate_inform" property="neutralEvaluateInform"/>
+		<result column="bad_evaluate_inform" property="badEvaluateInform"/>
+		<result column="inform_mobile" property="informMobile"/>
+		<result column="createdBy" property="createdBy"/>
+		<result column="createdDate" property="createdDate"/>
+		<result column="lastModifiedBy" property="lastModifiedBy"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>		
+		<!-- 锁optlock -->
+		<result column="optlock" property="version"/>		
+	</resultMap>
+	<!-- 查询开启的设置  为了动态监听tmc author:wy -->
+	<select id="findTypeOpenBySellerNick" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT type
+		FROM CRM_TRADE_SETUP
+		WHERE uid = #{uid} AND STATUS = 1 AND in_use = true
+	</select>
+    <!-- 展示各种订单中心的设置是否开启或者关闭  该sql先废弃与产品逻辑不符合  author:jackstraw_yu-->
+    <select id="showSetupMenuASC"  resultMap="tradeSetup" parameterType="Map">
+   		SELECT TYPE,STATUS FROM CRM_TRADE_SETUP 
+   		<where> 
+	   		uid = #{uid}  
+   			<if test="type != null and type != '' ">
+   				AND type = #{type}
+   				AND in_use = true
+   			</if>
+   			<if test="type == null or type == ''">
+   				AND type IN
+			   		(
+						SELECT DISTINCT(TYPE)  FROM CRM_TRADE_SETUP
+						WHERE user_id = #{userId}  AND in_use = true
+					)
+   			</if>
+		</where>
+    </select>
+    <!-- 展示各种订单中心的设置是否开启或者关闭  author:jackstraw_yu-->
+    <select id="querySetupsByStatus"  resultMap="tradeSetup" parameterType="Map">
+   		SELECT TYPE,STATUS FROM CRM_TRADE_SETUP 
+   		<where> 
+	   		uid = #{uid}  
+	   		AND 
+	   		status = #{status} 
+	   		AND 
+	   		in_use = true
+	   		group by type
+		</where>
+    </select>
+    
+    
+    <!-- 订单中心保存基本设置  author:jackstraw_yu-->
+   	<insert id="saveTradeSetup" parameterType="com.kycrm.member.domain.entity.tradecenter.TradeSetup" 
+   			useGeneratedKeys="true" keyProperty="id">
+   		insert into CRM_TRADE_SETUP
+   		(user_id,type,task_level,task_name,status,in_use,execute_type,min_execute_time,max_execute_time,
+		min_inform_time,max_inform_time,min_primary_inform_time,max_primary_inform_time,min_middle_inform_time,
+		max_middle_inform_time,min_senior_inform_time,max_senior_inform_time,time_out_inform,
+		time_type,remind_time,filter_once,filter_black,filter_hassent,trade_block,chosen_time,seller_flag,
+		trade_from,member_level,min_product_num,max_product_num,min_payment,max_payment,
+		province,city,product_type,products,sms_content,delay_evaluate,delay_date,evaluate_type,
+		evaluate_black,evaluate_black_type,evaluate_black_content,neutral_evaluate_inform,
+		bad_evaluate_inform,inform_mobile,createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock,uid)
+   		 values(
+   		 #{userId},#{type},#{taskLevel},#{taskName},#{status},#{inUse},#{executeType},#{minExecuteTime},#{ maxExecuteTime},
+   		 #{minInformTime},#{maxInformTime},#{minPrimaryInformTime},#{maxPrimaryInformTime},#{minMiddleInformTime},
+   		 #{maxMiddleInformTime},#{minSeniorInformTime},#{maxSeniorInformTime},#{timeOutInform},
+   		 #{timeType},#{remindTime},#{filterOnce},#{filterBlack},#{filterHassent},#{tradeBlock},#{chosenTime},#{sellerFlag},
+   		 #{tradeFrom},#{memberLevel},#{minProductNum},#{maxProductNum},#{minPayment},#{maxPayment},
+   		 #{province},#{city},#{productType}, #{products},#{smsContent},#{delayEvaluate},#{delayDate},#{evaluateType},
+   		 #{evaluateBlack},#{evaluateBlackType},#{evaluateBlackContent},#{neutralEvaluateInform},
+   		 #{badEvaluateInform},#{informMobile},#{createdBy},#{createdDate},#{lastModifiedBy},#{lastModifiedDate},0,#{uid}
+   		 )
+	</insert>
+	
+	
+    <!-- 根据买家昵称和设置类型查询 该类型设置总条数  author:jackstraw_yu-->
+    <select id="queryTradeSetupCount"  resultType="Long" parameterType="Map">
+   		select count(1) 
+   		from CRM_TRADE_SETUP
+   			where
+   			uid = #{uid}
+   			and 
+   			type = #{type}
+   			and 
+   			in_use = true
+   			<if test="status != null">
+   			and	status = #{status}
+   			</if>
+    </select>
+    
+    <!-- 根据买家昵称和设置类型查询 该类型设置总条数 author:jackstraw_yu-->
+    <select id="queryTradeSetupByTaskName"  resultMap="tradeSetup" parameterType="com.kycrm.member.domain.vo.tradecenter.TradeSetupVO">
+   		select * 
+   		from CRM_TRADE_SETUP
+   		where
+   			uid = #{uid}
+   			and 
+   			type = #{type}
+   			and 
+   			task_name = #{taskName}
+   			and 
+   			in_use = true
+    </select>
+    
+    <!-- 订单中心筛选用户的设置集合  author:jackstraw_yu-->
+    <select id="queryTradeSetupTable"  resultMap="tradeSetup" parameterType="com.kycrm.member.domain.vo.tradecenter.TradeSetupVO">
+   		select * from CRM_TRADE_SETUP
+   			<where>
+   				uid = #{uid}
+	   			AND  
+	   			type = #{type}
+	   			AND 
+	   			in_use = true
+   				<if test="taskName != null  and taskName != ''">
+   					and task_name like CONCAT('%',#{taskName},'%')
+   				</if>
+   				<if test="status !=null">
+   					and status = #{status}
+   				</if>
+	   			order by task_level asc,lastModifiedDate desc
+	   		</where> 
+    </select>
+    
+    <!-- 订单中心根据条件筛选任务名称列表 author:ztk -->
+    <select id="queryTradeSetupTaskNames" resultMap="tradeSetup" parameterType="com.kycrm.member.domain.vo.tradecenter.OrderReminderEffectVo">
+    	select id,task_name from CRM_TRADE_SETUP
+    	<where>
+    		uid = #{uid} and type = #{type} and in_use = true
+    	</where>
+    </select>
+    
+    <!-- 订单中心根据任务名称查询任务Id author:ztk-->
+    <select id="queryTradeSetupId" resultType="java.lang.Long" parameterType="com.kycrm.member.domain.vo.tradecenter.OrderReminderEffectVo">
+    	select id from CRM_TRADE_SETUP
+    	<where>
+    		uid = #{uid} and type = #{type} and task_name = #{taskName} and in_use = true
+    	</where>
+    </select>
+    
+    <!-- 订单中心筛选用户单个的设置 author:jackstraw_yu -->
+    <select id="querySingleTradeSetup"  resultMap="tradeSetup" parameterType="com.kycrm.member.domain.vo.tradecenter.TradeSetupVO">
+   		select * from CRM_TRADE_SETUP
+   			<where>
+	   			uid = #{uid}
+	   			and  
+	   			type = #{type}
+	   			and 
+	   			in_use = true
+	   			<if test="id !=null ">
+	   			 	and id = #{id}
+	   			</if>
+	   		</where> 
+    </select>
+    
+    <!-- 删除订单中心用户的设置 -->
+    <update id="deleteTradeSetup"  parameterType="com.kycrm.member.domain.vo.tradecenter.TradeSetupVO">
+    	UPDATE  CRM_TRADE_SETUP
+    		SET 
+    		in_use = false,
+    		lastModifiedDate = NOW()
+   			<where>
+   				id = #{id}
+   				AND 
+	   			uid = #{uid}
+	   			AND  
+	   			type = #{type}
+   			</where>
+    </update>
+    
+    <!-- 打开或者关闭订单中心用户的设置 -->
+    <update id="switchTradeSetup" parameterType="com.kycrm.member.domain.vo.tradecenter.TradeSetupVO">
+    	update CRM_TRADE_SETUP
+ 			set 
+	 			status = #{status},
+	 			lastModifiedBy = #{userId},
+				lastModifiedDate = NOW(),	
+				optlock = optlock + 1
+   			<where>
+	   			id = #{id}
+	   			and 
+	   			uid = #{uid}
+	   			and  
+	   			type = #{type}
+	   			and
+	   			in_use = true
+   			</where>
+    </update>
+    
+    <update id="updateTradeSetup" parameterType="com.kycrm.member.domain.entity.tradecenter.TradeSetup">
+    	update CRM_TRADE_SETUP
+ 			<set>
+				<!-- task_level = #{taskLevel}, -->
+				<if test="taskLevel !=null ">
+					task_level = #{taskLevel},
+				</if>
+				<if test="chosenTime !=null ">
+					chosen_time = #{chosenTime},
+				</if>
+				task_name = #{taskName},
+				status = #{status},
+				execute_type = #{executeType},
+				min_execute_time = #{minExecuteTime},
+				max_execute_time = #{maxExecuteTime},
+				min_inform_time = #{minInformTime},
+				max_inform_time = #{maxInformTime},
+				min_primary_inform_time = #{minPrimaryInformTime},
+				max_primary_inform_time = #{maxPrimaryInformTime},
+				min_middle_inform_time =  #{minMiddleInformTime},
+				max_middle_inform_time =  #{maxMiddleInformTime},
+				min_senior_inform_time =  #{minSeniorInformTime},
+				max_senior_inform_time =  #{maxSeniorInformTime},
+				time_out_inform = #{timeOutInform},
+				time_type = #{timeType},
+				remind_time = #{remindTime},
+				filter_once = #{filterOnce},
+				filter_black = #{filterBlack},
+				filter_hassent = #{filterHassent},
+				<!-- 配合chosenTime使用 -->
+				trade_block = #{tradeBlock},
+				seller_flag = #{sellerFlag},
+				trade_from = #{tradeFrom},
+				member_level = #{memberLevel},
+				min_product_num = #{minProductNum},
+				max_product_num = #{maxProductNum},
+				min_payment = #{minPayment},
+				max_payment = #{maxPayment},
+				province = #{province},
+				city = #{city},
+				product_type = #{productType},
+				products = #{products},
+				sms_content = #{smsContent},
+				delay_evaluate = #{delayEvaluate},
+				delay_date = #{delayDate},
+				evaluate_type = #{evaluateType},
+				evaluate_black = #{evaluateBlack},
+				evaluate_black_type = #{evaluateBlackType},
+				evaluate_black_content = #{evaluateBlackContent},
+				neutral_evaluate_inform = #{neutralEvaluateInform},
+				bad_evaluate_inform = #{badEvaluateInform},
+				inform_mobile = #{informMobile},
+				lastModifiedBy = #{lastModifiedBy},
+				lastModifiedDate = #{lastModifiedDate},
+				optlock = optlock + 1
+ 			</set>
+   			<where>
+   				id = #{id}
+   				and 
+	   			uid = #{uid}
+	   			and  
+	   			type = #{type}
+	   			and
+	   			in_use = true
+   			</where>
+    </update>
+    
+    <!-- 修改订单中心用户的设置 级别  author:jackstraw_yu-->
+    <update id="resetTradeSetupLevel" parameterType="com.kycrm.member.domain.vo.tradecenter.TradeSetupVO">
+    	update CRM_TRADE_SETUP
+ 			set task_level = #{taskLevel},  	
+ 			lastModifiedBy = #{userId},
+			lastModifiedDate = NOW(),	
+			optlock = optlock+1
+   			<where>
+	   			id = #{id}
+	   			and 
+	   			uid = #{uid}
+	   			and  
+	   			type = #{type}
+	   			and
+	   			in_use = true
+   			</where>
+    </update>
+    
+    <!-- 根据买家昵称和设置类型查询 该类型设置最大任务级别 author:jackstraw_yu-->
+    <select id="queryMaxTaskLevelByType"  resultType="Integer" parameterType="com.kycrm.member.domain.entity.tradecenter.TradeSetup">
+   		select MAX(task_level) 
+   		from CRM_TRADE_SETUP
+   		where
+  			uid = #{uid}
+  			and 
+  			type = #{type}
+  			and
+  			in_use = true
+    </select>
+    
+    <!-- 通过id查询设置 author:ztk-->
+    <select id="queryTradeSetupById"  resultMap="tradeSetup" parameterType="String">
+   		SELECT * from CRM_TRADE_SETUP
+   		<where> 
+	   		id = #{id}
+		</where>
+    </select>
+    
+    <!-- 查询taskName对应的id author:ztk-->
+    <select id="queryIdByTaskName" resultType="java.lang.Long">
+    	SELECT id from CRM_TRADE_SETUP where uid = #{uid} and type = #{type}
+    	and task_name = #{taskName} and in_use = true
+    </select>
+    
+	<!-- 根据用户查询设置的任务(需要效果分析的类型中'2','3','4','6','7','8','9','12','14','37') -->
+	<select id="queryTaskIdInUse" parameterType="com.kycrm.member.domain.entity.tradecenter.TradeSetup"
+				resultType="java.lang.Long">
+		select id
+		from CRM_TRADE_SETUP
+		<where>
+			uid = #{uid} and type in ('2','3','4','6','7','8','9','12','14','37')
+			<if test="inUse != null">
+				and in_use = #{inUse}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询中差评监控是否开启 -->
+	<select id="queryStatusIsOpen">
+		select status from crm_trade_setup where uid = #{uid} and type = '20'
+	</select>
+	<!--查询所有的订单中心的设置  -->
+	<select id="listAllTradeStep" resultMap="tradeSetup">
+	    select * from crm_trade_setup where in_use =true and  status=true and uid is not null
+	</select>
+	
+</mapper>

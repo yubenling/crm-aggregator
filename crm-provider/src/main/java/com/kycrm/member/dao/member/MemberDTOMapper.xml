@@ -1,0 +1,1575 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.member.IMemberDTODao">
+	<resultMap id="memberInfoMap"
+		type="com.kycrm.member.domain.entity.member.MemberInfoDTO">
+		<result column="id" property="id" jdbcType="BIGINT" />
+		<result column="uid" property="uid" jdbcType="BIGINT" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="buyer_id" property="buyerId" jdbcType="VARCHAR" />
+		<result column="grade_id" property="gradeId" jdbcType="BIGINT" />
+		<result column="buyer_nick" property="buyerNick" jdbcType="VARCHAR" />
+		<result column="buyer_email" property="buyerEmail" jdbcType="VARCHAR" />
+		<result column="buyer_alipay_no" property="buyerAlipayNo"
+			jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="trade_num" property="tradeNum" jdbcType="BIGINT" />
+		<result column="close_trade_num" property="closeTradeNum"
+			jdbcType="BIGINT" />
+		<result column="trade_amount" property="tradeAmount" jdbcType="DOUBLE" />
+		<result column="close_trade_amount" property="closeTradeAmount"
+			jdbcType="DOUBLE" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="item_num" property="itemNum" jdbcType="BIGINT" />
+		<result column="close_item_num" property="closeItemNum"
+			jdbcType="BIGINT" />
+		<result column="avg_trade_price" property="avgTradePrice"
+			jdbcType="DOUBLE" />
+		<result column="relation_source" property="relationSource"
+			jdbcType="INTEGER" />
+		<result column="last_trade_time" property="lastTradeTime"
+			 />
+		<result column="gender" property="gender" jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="INTEGER" />
+		<result column="occupation" property="occupation" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="VARCHAR" />
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="we_chat" property="weChat" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="register_date" property="registerDate"
+			jdbcType="TIME" />
+		<result column="score" property="score" jdbcType="VARCHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="cur_grade_name" property="curGradeName"
+			jdbcType="VARCHAR" />
+		<result column="refund_flag" property="refundFlag" />
+		<result column="neutral_bad_rate" property="neutralBadRate"
+			jdbcType="INTEGER" />
+		<!-- 后续添加 -->
+		<result column="unsubscribe" property="unsubscribe" jdbcType="INTEGER" />
+		<result column="receiver_name" property="receiverName"
+			jdbcType="VARCHAR" />
+		<result column="receiver_info_str" property="receiverInfoStr"
+			jdbcType="VARCHAR" />
+		<result column="last_send_time" property="lastSendTime" />
+		<result column="horoscope" property="horoscope" />
+		<result column="zodiac" property="zodiac" />
+		<result column="blood_type" property="bloodType" />
+		<result column="emotional_state" property="emotionalState" />
+		<result column="pay_item_num" property="payItemNum" />
+		<result column="add_item_num" property="addItemNum" />
+		<result column="avg_goods_price" property="avgGoodsPrice" />
+		<result column="first_pay_time" property="firstPayTime" />
+		<result column="second_pay_time" property="secondPayTime" />
+		<result column="last_pay_time" property="lastPayTime" />
+		<result column="buy_number" property="buyNumber" />
+		<result column="add_number" property="addNumber" />
+		<result column="add_not_pay_number" property="addNotPayNumber" />
+		<result column="total_pay_fee" property="totalPayFee" />
+		<result column="first_pay_item" property="firstPayItem" />
+		<result column="last_pay_item" property="lastPayItem" />
+		<result column="refund_number" property="refundNumber" />
+		<result column="refund_fee" property="refundFee" />
+		<result column="refund_scale" property="refundScale" />
+		<result column="refund_order_num" property="refundOrderNum" />
+		<result column="neutral_bad_rate_num" property="neutralBadRateNum" />
+		<result column="last_marketing_time" property="lastMarketingTime" />
+		<result column="marketing_sms_number" property="marketingSmsNumber" />
+		<result column="credit_rank" property="creditRank" />
+		<result column="remark_str_time" property="remarkStrTime" />
+		<result column="first_trade_time" property="firstTradeTime" />
+		<result column="first_trade_finish_time" property="firstTradeFinishTime" />
+		<result column="last_trade_finish_time" property="lastTradeFinishTime" />
+
+		<!-- 辅助信息 -->
+		<result column="createdBy" property="createdBy" jdbcType="VARCHAR" />
+		<result column="createdDate" property="createdDate" jdbcType="TIME" />
+		<result column="lastModifiedBy" property="lastModifiedBy"
+			jdbcType="VARCHAR" />
+		<result column="lastModifiedDate" property="lastModifiedDate"
+			jdbcType="TIME" />
+		<!-- 锁optlock -->
+		<result column="optlock" property="version" jdbcType="BIGINT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,uid,user_name,buyer_id,grade_id,buyer_nick,buyer_email,buyer_alipay_no,status,
+		trade_num,close_trade_num,trade_amount,close_trade_amount,province,city,item_num,
+		close_item_num,avg_trade_price,relation_source,last_trade_time,gender,age,occupation,
+		birthday,qq,we_chat,mobile,register_date,score,remarks,cur_grade_name,refund_flag,
+		neutral_bad_rate,unsubscribe,receiver_name,remarks_modify_date,receiver_infos
+		createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock,
+	</sql>
+
+	<!-- 是否存在表 -->
+	<select id="isExistsTable" parameterType="java.lang.Long"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_member_info_dto${uid}'
+	</select>
+
+	<!-- 自动创建卖家会员表 -->
+	<insert id="doCreateTableByNewUser" parameterType="java.lang.Long">
+		create table
+		crm_member_info_dto${uid}(
+		id bigint(20) not null AUTO_INCREMENT comment '主键id',
+		uid bigint(20) comment '分库分表实体对应用户表的主键id',
+		user_name varchar(255) comment '所属卖家昵称',
+		buyer_id varchar(255) comment '买家会员ID',
+		grade_id bigint(20) comment '会员等级id',
+		grade_name varchar(255) comment '会员等级名称',
+		buyer_nick varchar(1500) comment '买家昵称',
+		receiver_name text comment '买家名称/签收人名称（可能会随订单发生变化）',
+		buyer_email varchar(255) comment '买家邮箱',
+		buyer_alipay_no varchar(255) comment '买家支付宝证号',
+		status varchar(255) comment '会员状态 1-正常 2-黑名单',
+		trade_num bigint(20) comment '交易成功笔数',
+		close_trade_num bigint(20) comment '关闭交易笔数',
+		trade_amount decimal(20,2) comment '交易成功金额',
+		close_trade_amount decimal(20,2) comment '交易关闭金额',
+		province varchar(255) comment '省份',
+		city varchar(255) comment '城市',
+		item_num bigint(20) comment '购买宝贝件数',
+		close_item_num bigint(20) comment '关闭交易宝贝笔数',
+		avg_trade_price decimal(20,2) comment '平均客单价',
+		relation_source int(2) comment '关系来源 1-交易成功 2-未成交 3-卖家主动吸纳',
+		last_trade_time datetime comment '最后交易时间',
+		gender varchar(2) comment '性别 1-男 2-女',
+		age int(5) comment '年龄',
+		occupation varchar(255) comment '职业',
+		birthday varchar(255) comment '生日',
+		qq varchar(255) comment 'qq',
+		we_chat varchar(255) comment '微信',
+		mobile varchar(255) comment '手机号',
+		register_date datetime comment '注册时间',
+		score varchar(255) comment '评价得分',
+		remarks varchar(255) comment '备注',
+		remark_str_time varchar(255) comment '备注时间',
+		cur_grade_name varchar(255) comment '会员等级名称',
+		refund_flag tinyint(2) comment '是否退过款',
+		neutral_bad_rate tinyint(2) comment '是否给过中差评',
+		unsubscribe tinyint(2) comment '是否回过N',
+		receiver_info_str text comment '收货人名称,收货人地址,手机号',
+		last_send_time datetime comment '最后发送时间',
+		optlock int(20) comment '版本号',
+		createdBy varchar(255) comment '创建者',
+		createdDate datetime comment '创建时间',
+		lastModifiedBy varchar(255) comment '最后修改者',
+		lastModifiedDate datetime comment '最后修改时间',
+		last_marketing_time datetime comment '最后发送营销短信时间',
+		marketing_sms_number int(10) comment '营销短信发送次数',
+		credit_rank varchar(255) comment '信用等级',
+		horoscope varchar(20) comment '星座',
+		zodiac varchar(20) comment '生肖',
+		blood_type varchar(20) comment '血型',
+		emotional_state varchar(20) comment '情感状态',
+		pay_item_num bigint(10) comment '付款商品数量',
+		add_item_num bigint(10) comment '拍下商品数量',
+		avg_goods_price decimal(20,2) comment '货单价',
+		first_pay_time datetime comment '首次付款时间/上次付款时间',
+		second_pay_time datetime comment '二次付款时间',
+		last_pay_time datetime comment '最后付款时间/上次付款时间',
+		buy_number int(10) comment '总购买次数',
+		add_number int(10) comment '总拍下次数',
+		add_not_pay_number int(10) comment '拍下未付款次数',
+		total_pay_fee decimal(20,2) comment '总付款金额',
+		first_pay_item bigint(20) comment '首次购买商品',
+		last_pay_item bigint(20) comment '最后一次购买商品',
+		refund_number int(10) comment '退款次数',
+		refund_fee decimal(20,2) comment '退款金额',
+		refund_scale varchar(20) comment '退款比例',
+		refund_order_num int(10) comment '退款子订单数',
+		neutral_bad_rate_num int(10) comment '中差评次数',
+		dnseg_three varchar(255) comment '号码号段前三位',
+		operator varchar(255) comment '运营商',
+		dnseg_province varchar(255) comment '运营商所在省',
+		dnseg_city varchar(255) comment '运营商所在市',
+		first_trade_time datetime comment '首次交易时间',
+		first_trade_finish_time datetime comment '首次交易完成时间',
+		last_trade_finish_time datetime comment '末次交易完成时间',
+		primary key (id)
+		);
+	</insert>
+
+	<!-- 是否存在卖家的会员购买统计表 -->
+	<select id="isExistsMemberItemAmountTable" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_member_item_amount${_parameter}'
+	</select>
+
+	<!-- 自动创建卖家会员表 -->
+	<insert id="doCreateMemberItemAmountTableByNewUser"
+		parameterType="java.lang.String">
+		CREATE TABLE `crm_member_item_amount${_parameter}` (
+		`mid` bigint(20) NOT NULL COMMENT '会员id',
+		`item_id` bigint(20) NULL DEFAULT NULL COMMENT '商品id',
+		`num` int(11) NOT NULL DEFAULT 0 COMMENT '购买数量',
+		`last_buy_time` datetime(0) NULL DEFAULT NULL COMMENT '最后购买时间',
+		PRIMARY KEY (`mid`) USING BTREE
+		) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE
+		= utf8_general_ci ROW_FORMAT = Compact;
+	</insert>
+
+	<!-- 是否存在卖家短信黑名单 -->
+	<select id="isExistsSmsBlacklistTable" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_blacklist_dto${_parameter}'
+	</select>
+
+	<!-- 自动创建卖家短信黑名单 -->
+	<insert id="doCreateSmsBlacklistTableByNewUser" parameterType="java.lang.String">
+		CREATE TABLE `crm_blacklist_dto${_parameter}` (
+		`id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+		`uid` bigint(20) NOT NULL COMMENT '用户表的主键id',
+		`nick_or_phone` varchar(255) DEFAULT NULL COMMENT '客户昵称/手机号码',
+		`nick` varchar(255) DEFAULT NULL COMMENT '客户昵称',
+		`phone` varchar(255) DEFAULT NULL COMMENT '手机号码',
+		`add_source` varchar(1) DEFAULT NULL COMMENT '添加来源 1-单个添加 2-批量添加 3-退订回N/TD',
+		`type` varchar(1) DEFAULT NULL COMMENT '黑名单类型 1-手机号 2-客户昵称',
+		`createdBy` varchar(255) DEFAULT NULL,
+		`createdDate` datetime DEFAULT NULL,
+		`lastModifiedBy` varchar(255) DEFAULT NULL,
+		`lastModifiedDate` datetime DEFAULT NULL,
+		`optlock` int(11) NOT NULL DEFAULT '0',
+		PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8
+	</insert>
+
+	<!-- 是否存在卖家 评论表 -->
+	<select id="isExistsTradeRatesTable" parameterType="java.lang.Long"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_trade_rates${_parameter}'
+	</select>
+
+	<!-- 自动创建卖家 评论表 -->
+	<insert id="doCreateTradeRatesTableByNewUser" parameterType="java.lang.Long">
+		CREATE TABLE `crm_trade_rates${_parameter}` (
+		`oid` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+		COMMENT '子订单ID',
+		`tid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+		COMMENT '交易ID',
+		`role` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '评价者角色.可选值:seller(卖家),buyer(买家)',
+		`nick` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '评价者昵称',
+		`result` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '评价结果,可选值:good(好评),neutral(中评),bad(差评)',
+		`created` datetime(0) NULL DEFAULT NULL COMMENT '评价创建时间,格式:yyyy-MM-dd
+		HH:mm:ss',
+		`rated_nick` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '被评价者昵称',
+		`item_title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '商品标题',
+		`item_price` decimal(10, 0) NULL DEFAULT NULL COMMENT
+		'商品价格,精确到2位小数;单位:元.如:200.07，表示:200元7分',
+		`content` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '评价内容,最大长度:500个汉字',
+		`reply` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '评价解释,最大长度:500个汉字',
+		`num_iid` bigint(20) NULL DEFAULT NULL COMMENT '商品的数字ID',
+		`valid_score` tinyint(1) NULL DEFAULT NULL COMMENT '评价信息是否用于记分，
+		可取值：true(参与记分)和false(不参与记分)',
+		`id` bigint(20) NOT NULL AUTO_INCREMENT,
+		`createdBy` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL,
+		`createdDate` datetime(0) NULL DEFAULT NULL,
+		`lastModifiedBy` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL,
+		`lastModifiedDate` datetime(0) NULL DEFAULT NULL,
+		`optlock` int(11) NOT NULL,
+		`rate_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '评价方式 自动评价和批量评价两种',
+		PRIMARY KEY (`id`) USING BTREE
+		) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER
+		SET = utf8 COLLATE = utf8_general_ci COMMENT = '评价列表' ROW_FORMAT =
+		Compact;
+	</insert>
+	<!-- 会员同步用 -->
+	<!-- 通过会员昵称查询找到会员 -->
+	<select id="queryMemberByBuyerNick" resultMap="memberInfoMap">
+		SELECT *
+		FROM crm_member_info_dto#{0}
+		WHERE buyer_nick = #{1}
+	</select>
+	<!-- 批量保存会员信息 author:jackstraw_yu -->
+	<insert id="batchSaveMemberData" parameterType="com.kycrm.member.domain.entity.base.BaseListEntity">
+		INSERT INTO crm_member_info_dto${uid}
+		(
+		uid,user_name,buyer_id,grade_id,buyer_nick,buyer_email,
+		buyer_alipay_no,status,trade_num,close_trade_num,trade_amount,
+		close_trade_amount,province,city,item_num,close_item_num,
+		avg_trade_price,relation_source,last_trade_time,gender,
+		age,occupation,birthday,qq,we_chat,mobile,register_date,score,
+		remarks,remark_str_time,cur_grade_name,refund_flag,neutral_bad_rate,unsubscribe,receiver_name,
+		receiver_info_str,last_send_time,horoscope,zodiac,blood_type,
+		emotional_state,pay_item_num,add_item_num,avg_goods_price,first_pay_time,second_pay_time,
+		last_pay_time,buy_number,add_number,add_not_pay_number,
+		total_pay_fee,first_pay_item,last_pay_item,refund_number,refund_fee,refund_scale,
+		refund_order_num,neutral_bad_rate_num,last_marketing_time,marketing_sms_number,
+		credit_rank,createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock
+		)
+		VALUES
+		<foreach collection="entityList" item="member" index="index"
+			separator=",">
+			(
+			#{member.uid},#{member.userName},#{member.buyerId},#{member.gradeId},#{member.buyerNick},#{member.buyerEmail},
+			#{member.buyerAlipayNo},#{member.status},#{member.tradeNum},#{member.closeTradeNum},#{member.tradeAmount},
+			#{member.closeTradeAmount},#{member.province},#{member.city},#{member.itemNum},#{member.closeItemNum},
+			#{member.avgTradePrice},#{member.relationSource},#{member.lastTradeTime},#{member.gender},
+			#{member.age},#{member.occupation},#{member.birthday},#{member.qq},#{member.weChat},#{member.mobile},#{member.registerDate},#{member.score},
+			#{member.remarks},#{member.remarkStrTime},#{member.curGradeName},#{member.refundFlag},#{member.neutralBadRate},#{member.unsubscribe},#{member.receiverName},
+			#{member.receiverInfoStr},#{member.lastSendTime},#{member.horoscope},#{member.zodiac},#{member.bloodType},
+			#{member.emotionalState},#{member.payItemNum},#{member.addItemNum},#{member.avgGoodsPrice},#{member.firstPayTime},#{member.secondPayTime},
+			#{member.lastPayTime},#{member.buyNumber},#{member.addNumber},#{member.addNotPayNumber},
+			#{member.totalPayFee},#{member.firstPayItem},#{member.lastPayItem},#{member.refundNumber},#{member.refundFee},#{member.refundScale},
+			#{member.refundOrderNum},#{member.neutralBadRateNum},#{member.lastMarketingTime},#{member.marketingSmsNumber},
+			#{member.creditRank},#{member.userName}, NOW(), #{member.userName},
+			NOW(), 0
+			)
+		</foreach>
+	</insert>
+	<!-- 批量更新同步的会员 author:jackstraw_yu -->
+	<update id="batchUpdateMemberData" parameterType="com.kycrm.member.domain.entity.base.BaseListEntity">
+		<foreach collection="entityList" item="member" index="index"
+			separator=";" open="" close="">
+			UPDATE crm_member_info_dto${uid}
+			<set>
+				<!-- <if test="member.uid != null and member.uid != ''"></if> -->
+				<!-- <if test="member.userName != null and member.userName != ''"></if> -->
+				<!-- <if test="member.buyerId != null and member.buyerId != ''"></if> -->
+				<!-- <if test="member.buyerNick != null and member.buyerNick != ''"></if> -->
+				<!-- <if test="member.buyerEmail != null and member.buyerEmail != ''"></if> -->
+				<!-- <if test="member.buyerAlipayNo != null and member.buyerAlipayNo 
+					!= ''"></if> -->
+				<!-- <if test="member.gender != null and member.gender != ''"></if> -->
+				<!-- <if test="member.age != null and member.age != ''"></if> -->
+				<!-- <if test="member.occupation != null and member.occupation != ''"></if> -->
+				<!-- <if test="member.birthday != null and member.birthday != ''"></if> -->
+				<!-- <if test="member.qq != null and member.qq != ''"></if> -->
+				<!-- <if test="member.weChat != null and member.weChat != ''"></if> -->
+				<!-- <if test="member.mobile != null and member.mobile != ''"></if> -->
+				<!-- <if test="member.registerDate != null and member.registerDate != 
+					''"></if> -->
+				<!-- <if test="member.score != null and member.score != ''"></if> -->
+				<!-- <if test="member.status != null and member.status != ''"></if> -->
+				<!-- <if test="member.remarks != null and member.remarks != ''"></if> -->
+				<!-- <if test="member.curGradeName != null and member.curGradeName != 
+					''"></if> -->
+				<!-- <if test="member.isRefund != null and member.isRefund != ''"></if> -->
+				<!-- <if test="member.neutralBadRate != null and member.neutralBadRate 
+					!= ''"></if> -->
+				<!-- <if test="member.unsubscribe != null and member.unsubscribe != ''"></if> -->
+				<if test="member.receiverName != null and member.receiverName != ''">
+					receiver_name = #{member.receiverName},
+				</if>
+				<if test="member.gradeId != null">
+					grade_id = #{member.gradeId},
+				</if>
+				<!-- 数值计算 -->
+				<if test="member.tradeNum != null">
+					trade_num = IFNULL(trade_num,0)+#{member.tradeNum},
+				</if>
+				<if test="member.closeTradeNum != null">
+					close_trade_num =
+					IFNULL(close_trade_num,0)+#{member.closeTradeNum},
+				</if>
+				<if test="member.tradeAmount != null">
+					trade_amount =
+					IFNULL(trade_amount,0)+#{member.tradeAmount},
+				</if>
+				<if test="member.closeTradeAmount != null">
+					close_trade_amount =
+					IFNULL(close_trade_amount,0)+#{member.closeTradeAmount},
+				</if>
+				<if test="member.itemNum != null">
+					item_num = IFNULL(item_num,0)+#{member.itemNum},
+				</if>
+				<if test="member.closeItemNum != null">
+					close_item_num =
+					IFNULL(close_item_num,0)+#{member.closeItemNum},
+				</if>
+				<if test="member.avgTradePrice != nul">
+					avg_trade_price =
+					IFNULL(avg_trade_price,0)+#{member.avgTradePrice},
+				</if>
+				<!-- 数值计算 -->
+				<if test="member.province != null and member.province != ''">
+					province = #{member.province},
+				</if>
+				<if test="member.city != null and member.city != ''">
+					city = #{member.city},
+				</if>
+				<if test="member.relationSource != null">
+					relation_source = #{member.relationSource},
+				</if>
+				<if test="member.lastTradeTime != null">
+					last_trade_time = #{member.lastTradeTime},
+				</if>
+				<if test="member.remarkStrTime != null">
+					remark_str_time = #{member.remarkStrTime},
+				</if>
+				lastModifiedBy = #{member.userName},
+				lastModifiedDate = NOW(),
+				optlock = optlock+1
+			</set>
+			WHERE buyer_nick = #{member.buyer_nick}
+		</foreach>
+	</update>
+	<!-- 会员同步用 -->
+	<!-- ####################################provider方法写在此线下面#################################### -->
+
+	<!-- 统计会员个数(首页) -->
+	<select id="countMemberByParam" parameterType="com.kycrm.member.domain.vo.member.MemberInfoVO"
+		resultType="java.lang.Long">
+		select count(*)
+		from crm_member_info_dto${uid}
+		<where>
+			<if test="beginTime != null">
+				and createdDate >= #{beginTime}
+			</if>
+			<if test="endTime != null">
+				and #{endTime} >= createdDate
+			</if>
+		</where>
+	</select>
+
+
+
+	<!-- 客户信息页,查询会员列表 author:jackstraw_yu -->
+	<select id="queryMemberLimitList" parameterType="com.kycrm.member.domain.vo.member.MemberCriteria"
+		resultMap="memberInfoMap">
+		SELECT *
+		FROM crm_member_info_dto${uid}
+		<where>
+			<if test="buyerNick != null and buyerNick !='' ">
+				buyer_nick = #{buyerNick}
+			</if>
+			<if test="relationSource != null and relationSource !='' ">
+				and relation_source = #{relationSource},
+			</if>
+			<if test="mobile != null and mobile !='' ">
+				and mobile like CONCAT(CONCAT("%",#{mobile}),"%")
+				<!-- mobile like "%${mobile}%" -->
+			</if>
+			<!-- 订单量 -->
+			<if test="minTradeNum != null">
+				and trade_num &gt;= #{minTradeNum},
+			</if>
+			<if test="maxTradeNum != null ">
+				and trade_num &lt;= #{maxTradeNum},
+			</if>
+			<!-- 金额 -->
+			<if test="minTradeAmount != null ">
+				and trade_amount &gt;= #{minTradeAmount},
+			</if>
+			<if test="maxTradeAmount != null ">
+				and trade_amount &lt;= #{maxTradeAmount},
+			</if>
+			<!-- 平均价 -->
+			<if test="minAvgTradePrice != null ">
+				and avg_trade_price &gt;= #{minAvgTradePrice},
+			</if>
+			<if test="maxAvgTradePrice != null ">
+				and avg_trade_price &lt;= #{maxAvgTradePrice},
+			</if>
+			<!-- 最后交易时间 -->
+			<if test="minLastTradeTime != null ">
+				and last_trade_time &gt;= #{minLastTradeTime},
+			</if>
+			<if test="maxLastTradeTime != null ">
+				and last_trade_time &lt;= #{maxLastTradeTime},
+			</if>
+			<!-- 未交易时间 --><!-- 为交易时间大于最大未交易时间;者小于最小未交易时间 -->
+			<if test="minNoneTradeTime != null ">
+				and last_trade_time &lt;= #{minNoneTradeTime},
+			</if>
+			<if test="maxNoneTradeTime != null ">
+				and last_trade_time &gt;= #{maxNoneTradeTime},
+			</if>
+		</where>
+		limit (#{pageNo}-1)*(#{pageSize}),#{pageSize}
+		order by createdDate desc
+	</select>
+
+	<!-- 会员信息页,查询会员数量 author:jackstraw_yu -->
+	<select id="queryMemberCount" parameterType="com.kycrm.member.domain.vo.member.MemberCriteria"
+		resultType="java.lang.Long">
+		SELECT COUNT(1)
+		FROM crm_member_info_dto${uid}
+		<where>
+			<if test="buyerNick != null and buyerNick !='' ">
+				buyer_nick = #{buyerNick}
+			</if>
+			<if test="relationSource != null and relationSource !='' ">
+				and relation_source = #{relationSource},
+			</if>
+			<if test="mobile != null and mobile !='' ">
+				and mobile like CONCAT(CONCAT("%",#{mobile}),"%")
+				<!-- mobile like "%${mobile}%" -->
+			</if>
+			<!-- 订单量 -->
+			<if test="minTradeNum != null">
+				and trade_num &gt;= #{minTradeNum},
+			</if>
+			<if test="maxTradeNum != null ">
+				and trade_num &lt;= #{maxTradeNum},
+			</if>
+			<!-- 金额 -->
+			<if test="minTradeAmount != null ">
+				and trade_amount &gt;= #{minTradeAmount},
+			</if>
+			<if test="maxTradeAmount != null ">
+				and trade_amount &lt;= #{maxTradeAmount},
+			</if>
+			<!-- 平均价 -->
+			<if test="minAvgTradePrice != null ">
+				and avg_trade_price &gt;= #{minAvgTradePrice},
+			</if>
+			<if test="maxAvgTradePrice != null ">
+				and avg_trade_price &lt;= #{maxAvgTradePrice},
+			</if>
+			<!-- 最后交易时间 -->
+			<if test="minLastTradeTime != null ">
+				and last_trade_time &gt;= #{minLastTradeTime},
+			</if>
+			<if test="maxLastTradeTime != null ">
+				and last_trade_time &lt;= #{maxLastTradeTime},
+			</if>
+			<!-- 未交易时间 --><!-- 为交易时间大于最大未交易时间;者小于最小未交易时间 -->
+			<if test="minNoneTradeTime != null ">
+				and last_trade_time &lt;= #{minNoneTradeTime},
+			</if>
+			<if test="maxNoneTradeTime != null ">
+				and last_trade_time &gt;= #{maxNoneTradeTime},
+			</if>
+		</where>
+	</select>
+
+	<!-- 客户信息页,查询单个会员信息 author:jackstraw_yu -->
+	<select id="queryMemberInfo" parameterType="com.kycrm.member.domain.vo.member.MemberCriteria"
+		resultMap="memberInfoMap">
+		SELECT *
+		FROM crm_member_info_dto${uid}
+		<where>
+			<if test="buyerNick != null and buyerNick !='' ">
+				buyer_nick = #{buyerNick}
+			</if>
+			<if test="id != null ">
+				and id = #{id},
+			</if>
+		</where>
+	</select>
+
+
+	<!-- 修改会员信息 author:jackstraw_yu -->
+	<update id="updateMembeInfo" parameterType="com.kycrm.member.domain.entity.member.MemberInfoDTO">
+		UPDATE crm_member_info_dto${uid}
+		<set>
+			<if test="buyerEmail != null and buyerEmail != ''">
+				buyer_email = #{buyerEmail},
+			</if>
+			<if test="gender != null and gender != ''">
+				gender = #{gender},
+			</if>
+			<if test="birthday != null and birthday != ''">
+				birthday = #{birthday},
+			</if>
+			<if test="age != null ">
+				age = #{age},
+			</if>
+			<if test="weChat != null and weChat != ''">
+				we_chat = #{weChat},
+			</if>
+			<if test="qq != null and qq != ''">
+				qq = #{qq},
+			</if>
+			<if test="occupation != null and occupation != ''">
+				occupation = #{occupation},
+			</if>
+			<if test="lastSendTime!=null">
+				last_send_time=#{lastSendTime},
+			</if>
+			<if test="lastMarketingTime!=null">
+				last_marketing_time=#{lastMarketingTime},
+			</if>
+			<if test="status!=null and status!=''">
+				status=#{status},
+			</if>
+			<!-- lastModifiedBy = #{userName}, -->
+			lastModifiedDate = NOW(),
+			optlock = optlock+1
+		</set>
+		WHERE buyer_nick = #{buyerNick}
+	</update>
+
+	<!-- 修改会员备注 author:jackstraw_yu -->
+	<update id="updateMembeRemarks" parameterType="com.kycrm.member.domain.entity.member.MemberInfoDTO">
+		UPDATE crm_member_info_dto${uid}
+		<set>
+			<if test="remarks != null and remarks != ''">
+				remarks = #{remarks},
+			</if>
+			lastModifiedBy = #{userName},
+			lastModifiedDate = NOW(),
+			optlock =
+			optlock+1
+		</set>
+		WHERE buyer_nick = #{buyer_nick}
+	</update>
+
+	<!-- 会员短信群发,查询会员信息,不需要和tradeDTO联查，只查member -->
+	<select id="listMemberByInfo" parameterType="com.kycrm.member.domain.vo.member.MemberMsgCriteria"
+		resultType="java.lang.Long">
+		SELECT
+		buyer_nick,grade_name,last_trade_time,trade_num,trade_amount,avg_trade_price
+		FROM crm_member_info_dto${uid}
+		<where>
+			<!-- 地区筛选 -->
+			<if test="booprovinceSend == true and provinceList != null">
+				and (province in
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				or city in
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				)
+			</if>
+			<if test="booprovinceSend == false and provinceList != null">
+				and (province nin
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				or city nin
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				)
+			</if>
+			<!-- 黑名单 -->
+			<if test="filterBlack != null">
+				and status = #{filterBlack}
+			</if>
+			<!-- 中差评 -->
+			<if test="filterneutral != null">
+				and neutralBadRate = #{filterneutral}
+			</if>
+			<!-- 交易成功次数 -->
+			<choose>
+				<when test="tradeNum != null">
+					and trade_num = #{tradeNum}
+				</when>
+				<when test="minTradeNum != null and maxTradeNum != null">
+					and trade_num beween #{minTradeNum} and
+					#{maxTradeNum}
+				</when>
+				<when test="minTradeNum != null">
+					and trade_num >= #{minTradeNum}
+				</when>
+				<when test="maxTradeNum != null">
+					and #{maxTradeNum} > trade_num
+				</when>
+			</choose>
+			<!-- 累计消费金额 -->
+			<choose>
+				<when test="minTradeAmount != null and maxTradeAmount != null">
+					and trade_amount between #{minTradeAmount} and
+					#{maxTradeAmount}
+				</when>
+				<when test="minTradeAmount != null">
+					and trade_amount >= #{minTradeAmount}
+				</when>
+				<when test="maxTradeAmount != null">
+					and #{maxTradeAmount} > trade_amount
+				</when>
+			</choose>
+			<!-- 平均客单价 -->
+			<choose>
+				<when test="minAvgPrice != null and maxAvgPrice != null">
+					and avg_trade_price between #{minAvgPrice} and
+					#{maxAvgPrice}
+				</when>
+				<when test="minAvgPrice != null">
+					and avg_trade_price >= #{minAvgPrice}
+				</when>
+				<when test="maxAvgPrice != null">
+					and #{maxAvgPrice} > avg_trade_price
+				</when>
+			</choose>
+			<!-- 关闭交易次数 -->
+			<choose>
+				<when test="closeTradeNum != null">
+					and close_trade_num = #{closeTradeNum}
+				</when>
+				<when test="minCloseTradeNum != null and maxCloseTradeNum != null">
+					and close_trade_num between #{minCloseTradeNum} and
+					#{maxCloseTradeNum}
+				</when>
+				<when test="minCloseTradeNum != null">
+					and close_trade_num >= #{minCloseTradeNum}
+				</when>
+				<when test="maxCloseTradeNum != null">
+					and #{maxCloseTradeNum} > close_trade_num
+				</when>
+			</choose>
+			<!-- 参与营销短信次数 -->
+
+			<!-- 已发送过滤天数 -->
+			<choose>
+				<when test="minSendTime != null and maxSendTime != null">
+					and last_send_time between #{minSendTime} and
+					#{maxSendTime}
+				</when>
+				<when test="minSendTime != null">
+					and last_send_time >= #{minSendTime}
+				</when>
+				<when test="maxSendTime != null">
+					and #{maxSendTime} > last_send_time
+				</when>
+			</choose>
+
+		</where>
+	</select>
+
+
+	<!-- 会员短信群发,查询会员信息,需要和tradeDTO联查 -->
+	<select id="listMemberByTrade" parameterType="com.kycrm.member.domain.vo.member.MemberMsgCriteria"
+		resultType="java.lang.Long">
+		SELECT
+		m.buyer_nick,m.grade_name,m.last_trade_time,m.trade_num,m.trade_amount,m.avg_trade_price
+		FROM crm_member_info_dto${uid} m left join crm_order_dto${uid} o
+		on
+		m.buyer_nick = o.buyer_nick
+		<where>
+			<!-- 订单来源 -->
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and o.trade_from like '%${tradeFrom}%'
+			</if>
+			<!-- 订单状态 -->
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and o.status = #{tradeStatus}
+			</if>
+			<if test="refundStatus != null and refundStatus != ''">
+				and o.refund_status = #{refundStatus}
+			</if>
+			<!-- 指定商品 -->
+			<if test="booitemSend == true and itemIdList != null">
+				and o.num_iid in
+				<foreach collection="itemIdList" item="itemId" open="("
+					separator="," close=")">
+					#{itemId}
+				</foreach>
+			</if>
+			<if test="booitemSend == false and itemIdList != null">
+				and o.num_iid nin
+				<foreach collection="itemIdList" item="itemId" open="("
+					separator="," close=")">
+					#{itemId}
+				</foreach>
+			</if>
+			<!-- 地区筛选 -->
+			<if test="booprovinceSend == true and provinceList != null">
+				and (province in
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				or city in
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				)
+			</if>
+			<if test="booprovinceSend == false and provinceList != null">
+				and (m.province nin
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				or m.city nin
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				)
+			</if>
+			<!-- 卖家标记 -->
+			<if test="sellerFlagList != null">
+				and o.seller_flag in
+				<foreach collection="sellerFlagList" item="sellerFlag" open="("
+					separator="," close=")">
+					#{sellerFlag}
+				</foreach>
+			</if>
+			<!-- 黑名单 -->
+			<if test="filterBlack != null">
+				and m.status = #{filterBlack}
+			</if>
+			<!-- 中差评 -->
+			<if test="filterneutral != null">
+				and m.neutralBadRate = #{filterneutral}
+			</if>
+			<!-- 未交易时间 -->
+			<choose>
+				<when test="minNoneTradeTime != null and maxNoneTradeTime != null">
+					and o.tradeCreated NOT BETWEEN #{minNoneTradeTime}
+					and #{maxNoneTradeTime}
+				</when>
+				<when test="minNoneTradeTime != null">
+					and o.tradeCreated >= #{minNoneTradeTime}
+				</when>
+				<when test="maxNoneTradeTime != null">
+					and #{maxNoneTradeTime} > o.tradeCreated
+				</when>
+			</choose>
+			<!-- 交易时间 -->
+			<choose>
+				<when test="minTradeTime != null and maxTradeTime != null">
+					and o.tradeCreated BETWEEN #{minTradeTime} and
+					#{maxTradeTime}
+				</when>
+				<when test="minTradeTime != null">
+					and o.tradeCreated >= #{minTradeTime}
+				</when>
+				<when test="maxTradeTime != null">
+					and #{maxTradeTime} > o.tradeCreated
+				</when>
+			</choose>
+			<!-- 交易成功次数 -->
+			<choose>
+				<when test="tradeNum != null">
+					and m.trade_num = #{tradeNum}
+				</when>
+				<when test="minTradeNum != null and maxTradeNum != null">
+					and m.trade_num beween #{minTradeNum} and
+					#{maxTradeNum}
+				</when>
+				<when test="minTradeNum != null">
+					and m.trade_num >= #{minTradeNum}
+				</when>
+				<when test="maxTradeNum != null">
+					and #{maxTradeNum} > m.trade_num
+				</when>
+			</choose>
+			<!-- 累计消费金额 -->
+			<choose>
+				<when test="minTradeAmount != null and maxTradeAmount != null">
+					and m.trade_amount between #{minTradeAmount} and
+					#{maxTradeAmount}
+				</when>
+				<when test="minTradeAmount != null">
+					and m.trade_amount >= #{minTradeAmount}
+				</when>
+				<when test="maxTradeAmount != null">
+					and #{maxTradeAmount} > m.trade_amount
+				</when>
+			</choose>
+			<!-- 平均客单价 -->
+			<choose>
+				<when test="minAvgPrice != null and maxAvgPrice != null">
+					and m.avg_trade_price between #{minAvgPrice} and
+					#{maxAvgPrice}
+				</when>
+				<when test="minAvgPrice != null">
+					and m.avg_trade_price >= #{minAvgPrice}
+				</when>
+				<when test="maxAvgPrice != null">
+					and #{maxAvgPrice} > m.avg_trade_price
+				</when>
+			</choose>
+			<!-- 关闭交易次数 -->
+			<choose>
+				<when test="closeTradeNum != null">
+					and m.close_trade_num = #{closeTradeNum}
+				</when>
+				<when test="minCloseTradeNum != null and maxCloseTradeNum != null">
+					and m.close_trade_num between #{minCloseTradeNum}
+					and #{maxCloseTradeNum}
+				</when>
+				<when test="minCloseTradeNum != null">
+					and m.close_trade_num >= #{minCloseTradeNum}
+				</when>
+				<when test="maxCloseTradeNum != null">
+					and #{maxCloseTradeNum} > m.close_trade_num
+				</when>
+			</choose>
+			<!-- 拍下订单时间段 -->
+
+
+
+			<!-- 参与营销短信次数 -->
+
+
+			<!-- 已发送过滤天数 -->
+			<choose>
+				<when test="minSendTime != null and maxSendTime != null">
+					and m.lastSendTime between #{minSendTime} and
+					#{maxSendTime}
+				</when>
+				<when test="minSendTime != null">
+					and m.lastSendTime >= #{minSendTime}
+				</when>
+				<when test="maxSendTime != null">
+					and #{maxSendTime} > m.lastSendTime
+				</when>
+			</choose>
+		</where>
+	</select>
+
+	<!-- 会员短信群发,查询会员数量,不需要和tradeDTO联查，只查member -->
+	<select id="countMemberByInfo" parameterType="com.kycrm.member.domain.vo.member.MemberMsgCriteria"
+		resultType="java.lang.Integer">
+		SELECT COUNT(1)
+		FROM crm_member_info_dto${uid}
+		<where>
+			<!-- 地区筛选 -->
+			<if test="booprovinceSend == true and provinceList != null">
+				and (m.province in
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				or m.city in
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				)
+			</if>
+			<if test="booprovinceSend == false and provinceList != null">
+				and (m.province nin
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				or m.city nin
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				)
+			</if>
+			<!-- 黑名单 -->
+			<if test="filterBlack != null">
+				and m.status = #{filterBlack}
+			</if>
+			<!-- 中差评 -->
+			<if test="filterneutral != null">
+				and m.neutralBadRate = #{filterneutral}
+			</if>
+			<!-- 交易成功次数 -->
+			<choose>
+				<when test="tradeNum != null">
+					and m.trade_num = #{tradeNum}
+				</when>
+				<when test="minTradeNum != null and maxTradeNum != null">
+					and m.trade_num beween #{minTradeNum} and
+					#{maxTradeNum}
+				</when>
+				<when test="minTradeNum != null">
+					and m.trade_num >= #{minTradeNum}
+				</when>
+				<when test="maxTradeNum != null">
+					and #{maxTradeNum} > m.trade_num
+				</when>
+			</choose>
+			<!-- 累计消费金额 -->
+			<choose>
+				<when test="minTradeAmount != null and maxTradeAmount != null">
+					and m.trade_amount between #{minTradeAmount} and
+					#{maxTradeAmount}
+				</when>
+				<when test="minTradeAmount != null">
+					and m.trade_amount >= #{minTradeAmount}
+				</when>
+				<when test="maxTradeAmount != null">
+					and #{maxTradeAmount} > m.trade_amount
+				</when>
+			</choose>
+			<!-- 平均客单价 -->
+			<choose>
+				<when test="minAvgPrice != null and maxAvgPrice != null">
+					and m.avg_trade_price between #{minAvgPrice} and
+					#{maxAvgPrice}
+				</when>
+				<when test="minAvgPrice != null">
+					and m.avg_trade_price >= #{minAvgPrice}
+				</when>
+				<when test="maxAvgPrice != null">
+					and #{maxAvgPrice} > m.avg_trade_price
+				</when>
+			</choose>
+			<!-- 关闭交易次数 -->
+			<choose>
+				<when test="closeTradeNum != null">
+					and m.close_trade_num = #{closeTradeNum}
+				</when>
+				<when test="minCloseTradeNum != null and maxCloseTradeNum != null">
+					and m.close_trade_num between #{minCloseTradeNum}
+					and #{maxCloseTradeNum}
+				</when>
+				<when test="minCloseTradeNum != null">
+					and m.close_trade_num >= #{minCloseTradeNum}
+				</when>
+				<when test="maxCloseTradeNum != null">
+					and #{maxCloseTradeNum} > m.close_trade_num
+				</when>
+			</choose>
+			<!-- 参与营销短信次数 -->
+
+			<!-- 已发送过滤天数 -->
+			<choose>
+				<when test="minSendTime != null and maxSendTime != null">
+					and m.lastSendTime between #{minSendTime} and
+					#{maxSendTime}
+				</when>
+				<when test="minSendTime != null">
+					and m.lastSendTime >= #{minSendTime}
+				</when>
+				<when test="maxSendTime != null">
+					and #{maxSendTime} > m.lastSendTime
+				</when>
+			</choose>
+
+		</where>
+	</select>
+
+
+	<!-- 会员短信群发,查询会员数量,需要和tradeDTO联查 -->
+	<select id="countMemberByTrade" parameterType="com.kycrm.member.domain.vo.member.MemberMsgCriteria"
+		resultType="java.lang.Integer">
+		SELECT COUNT(1)
+		FROM crm_member_info_dto${uid} m left join
+		crm_order_dto${uid} o
+		on m.buyer_nick = o.buyer_nick
+		<where>
+			<!-- 订单来源 -->
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and o.trade_from like '%${tradeFrom}%'
+			</if>
+			<!-- 订单状态 -->
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and o.status = #{tradeStatus}
+			</if>
+			<if test="refundStatus != null and refundStatus != ''">
+				and o.refund_status = #{refundStatus}
+			</if>
+			<!-- 指定商品 -->
+			<if test="booitemSend == true and itemIdList != null">
+				and o.num_iid in
+				<foreach collection="itemIdList" item="itemId" open="("
+					separator="," close=")">
+					#{itemId}
+				</foreach>
+			</if>
+			<if test="booitemSend == false and itemIdList != null">
+				and o.num_iid nin
+				<foreach collection="itemIdList" item="itemId" open="("
+					separator="," close=")">
+					#{itemId}
+				</foreach>
+			</if>
+			<!-- 地区筛选 -->
+			<if test="booprovinceSend == true and provinceList != null">
+				and (province in
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				or city in
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				)
+			</if>
+			<if test="booprovinceSend == false and provinceList != null">
+				and (province nin
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				or city nin
+				<foreach collection="provinceList" item="province" open="("
+					separator="," close=")">
+					#{province}
+				</foreach>
+				)
+			</if>
+			<!-- 卖家标记 -->
+			<if test="sellerFlagList != null">
+				and o.seller_flag in
+				<foreach collection="sellerFlagList" item="sellerFlag" open="("
+					separator="," close=")">
+					#{sellerFlag}
+				</foreach>
+			</if>
+			<!-- 黑名单 -->
+			<if test="filterBlack != null">
+				and status = #{filterBlack}
+			</if>
+			<!-- 中差评 -->
+			<if test="filterneutral != null">
+				and neutralBadRate = #{filterneutral}
+			</if>
+			<!-- 未交易时间 -->
+			<choose>
+				<when test="minNoneTradeTime != null and maxNoneTradeTime != null">
+					and o.tradeCreated NOT BETWEEN #{minNoneTradeTime}
+					and #{maxNoneTradeTime}
+				</when>
+				<when test="minNoneTradeTime != null">
+					and o.tradeCreated >= #{minNoneTradeTime}
+				</when>
+				<when test="maxNoneTradeTime != null">
+					and #{maxNoneTradeTime} > o.tradeCreated
+				</when>
+			</choose>
+			<!-- 交易时间 -->
+			<choose>
+				<when test="minTradeTime != null and maxTradeTime != null">
+					and o.tradeCreated BETWEEN #{minTradeTime} and
+					#{maxTradeTime}
+				</when>
+				<when test="minTradeTime != null">
+					and o.tradeCreated >= #{minTradeTime}
+				</when>
+				<when test="maxTradeTime != null">
+					and #{maxTradeTime} > o.tradeCreated
+				</when>
+			</choose>
+			<!-- 交易成功次数 -->
+			<choose>
+				<when test="tradeNum != null">
+					and trade_num = #{tradeNum}
+				</when>
+				<when test="minTradeNum != null and maxTradeNum != null">
+					and trade_num beween #{minTradeNum} and
+					#{maxTradeNum}
+				</when>
+				<when test="minTradeNum != null">
+					and trade_num >= #{minTradeNum}
+				</when>
+				<when test="maxTradeNum != null">
+					and #{maxTradeNum} > trade_num
+				</when>
+			</choose>
+			<!-- 累计消费金额 -->
+			<choose>
+				<when test="minTradeAmount != null and maxTradeAmount != null">
+					and trade_amount between #{minTradeAmount} and
+					#{maxTradeAmount}
+				</when>
+				<when test="minTradeAmount != null">
+					and trade_amount >= #{minTradeAmount}
+				</when>
+				<when test="maxTradeAmount != null">
+					and #{maxTradeAmount} > trade_amount
+				</when>
+			</choose>
+			<!-- 平均客单价 -->
+			<choose>
+				<when test="minAvgPrice != null and maxAvgPrice != null">
+					and avg_trade_price between #{minAvgPrice} and
+					#{maxAvgPrice}
+				</when>
+				<when test="minAvgPrice != null">
+					and avg_trade_price >= #{minAvgPrice}
+				</when>
+				<when test="maxAvgPrice != null">
+					and #{maxAvgPrice} > avg_trade_price
+				</when>
+			</choose>
+			<!-- 关闭交易次数 -->
+			<choose>
+				<when test="closeTradeNum != null">
+					and close_trade_num = #{closeTradeNum}
+				</when>
+				<when test="minCloseTradeNum != null and maxCloseTradeNum != null">
+					and close_trade_num between #{minCloseTradeNum} and
+					#{maxCloseTradeNum}
+				</when>
+				<when test="minCloseTradeNum != null">
+					and close_trade_num >= #{minCloseTradeNum}
+				</when>
+				<when test="maxCloseTradeNum != null">
+					and #{maxCloseTradeNum} > close_trade_num
+				</when>
+			</choose>
+			<!-- 拍下订单时间段 -->
+
+
+
+			<!-- 参与营销短信次数 -->
+
+
+			<!-- 已发送过滤天数 -->
+			<choose>
+				<when test="minSendTime != null and maxSendTime != null">
+					and last_send_time between #{minSendTime} and
+					#{maxSendTime}
+				</when>
+				<when test="minSendTime != null">
+					and last_send_time >= #{minSendTime}
+				</when>
+				<when test="maxSendTime != null">
+					and #{maxSendTime} > last_send_time
+				</when>
+			</choose>
+		</where>
+	</select>
+	<select id="findPhoneBybuyerNick" parameterType="java.util.Map"
+		resultType="java.lang.String">
+		SELECT mobile
+		FROM crm_member_info_dto${uid}
+		WHERE buyer_nick = #{buyerNick}
+	</select>
+
+	<update id="batchUpdateMemberStatus">
+		UPDATE crm_member_info_dto${uid}
+		SET status = ${status}
+		WHERE buyer_nick
+		IN
+		<foreach collection="buyerNicks" item="item" index="index"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<!-- 手机号查询会员 -->
+	<select id="listMemberByPhone" resultMap="memberInfoMap">
+		select
+		id,mobile,buyer_nick
+		from crm_member_info_dto${uid}
+		where mobile =
+		#{mobile}
+	</select>
+
+	<!-- 更新会员状态为正常或黑名单 -->
+	<update id="updateMemberStatus">
+		update crm_member_info_dto${uid}
+		set status =
+		#{status}
+		where buyer_nick = #{buyerNick}
+	</update>
+
+	<!-- 更新会员通过手机号 -->
+	<update id="updateMembeInfoListByPhone" parameterType="java.util.Map">
+		update crm_member_info_dto${uid}
+		set last_send_time=NOW(),
+		last_marketing_time=NOW(),
+		marketing_sms_number=IFNULL(marketing_sms_number,0)+1,
+		optlock = optlock+1
+		where mobile in
+		<foreach collection="list" item="mobile" open="(" separator=","
+			close=")">
+			#{mobile}
+		</foreach>
+	</update>
+
+	<select id="isExistsMemberReceiveDetailTable" parameterType="java.lang.Long"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_member_receive_detail${_parameter}'
+	</select>
+
+	<insert id="doCreateMemberReceiveDetailTableByNewUser"
+		parameterType="java.lang.Long">
+		CREATE TABLE `crm_member_receive_detail${_parameter}` (
+		`id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+		`uid`
+		bigint(20) NULL DEFAULT NULL COMMENT '用户主键id',
+		`member_id` bigint(20)
+		NULL DEFAULT NULL COMMENT '会员id',
+		`buyer_nick` varchar(1500) comment
+		'买家昵称',
+		`receiver_name` text CHARACTER SET utf8 COLLATE
+		utf8_general_ci NULL DEFAULT
+		NULL COMMENT '收货人姓名',
+		`receiver_address`
+		text CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '收货地址',
+		`receiver_mobile` varchar(255) CHARACTER SET utf8
+		COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '收货人手机号',
+		`remark`
+		varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '备注内容',
+		`optlock` int(10) NULL DEFAULT NULL COMMENT '版本号',
+		`createdBy` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci
+		NULL DEFAULT
+		NULL COMMENT '创建者',
+		`createdDate` datetime NULL DEFAULT
+		NULL COMMENT '创建时间',
+		`lastModifiedBy` varchar(255) CHARACTER SET utf8
+		COLLATE utf8_general_ci NULL DEFAULT
+		NULL COMMENT '最后修改者',
+		`lastModifiedDate` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
+		PRIMARY KEY (`id`) USING BTREE,
+		UNIQUE KEY `id` (`id`) USING BTREE
+		)
+		ENGINE = InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT =
+		'会员收货人详情表';
+	</insert>
+
+	<!-- 多地址表添加索引 -->
+	<insert id="addMemberReceiveDetailTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		`crm_member_receive_detail${_parameter}`
+		ADD INDEX
+		index_member_id (member_id),
+		ADD KEY index_buyer_nick
+		(buyer_nick(255)),
+		ADD INDEX index_receiver_address
+		(receiver_address(255)),
+		ADD INDEX index_receiver_mobile
+		(receiver_mobile);
+	</insert>
+
+	<!-- member添加索引 -->
+	<insert id="addMemberTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		`crm_member_info_dto${_parameter}`
+		ADD INDEX index_last_trade_time
+		(last_trade_time),
+		ADD INDEX index_trade_num (trade_num),
+		ADD INDEX
+		index_trade_amount (trade_amount),
+		ADD INDEX index_avg_trade_price
+		(avg_trade_price),
+		ADD INDEX index_close_trade_num (close_trade_num),
+		ADD INDEX index_item_num (item_num),
+		ADD INDEX
+		index_marketing_sms_number (marketing_sms_number),
+		ADD INDEX
+		index_last_marketing_time (last_marketing_time),
+		ADD KEY
+		index_buyer_nick (buyer_nick(255)),
+		ADD INDEX index_province
+		(province),
+		ADD INDEX index_city (city),
+		ADD INDEX index_mobile
+		(mobile),
+		ADD INDEX index_refund_flag (refund_flag),
+		ADD INDEX
+		index_neutral_bad_rate (neutral_bad_rate),
+		ADD INDEX index_unsubscribe
+		(unsubscribe),
+		ADD INDEX index_pay_item_num (pay_item_num),
+		ADD INDEX
+		index_add_item_num (add_item_num),
+		ADD INDEX index_avg_goods_price
+		(avg_goods_price),
+		ADD INDEX index_buy_number (buy_number),
+		ADD INDEX
+		index_last_pay_item (last_pay_item),
+		ADD INDEX index_refund_number
+		(refund_number),
+		ADD INDEX index_dnseg_three (dnseg_three),
+		ADD INDEX
+		index_operator (operator),
+		ADD INDEX index_dnseg_province
+		(dnseg_province),
+		ADD INDEX index_first_trade_time
+		(first_trade_time),
+		ADD INDEX index_first_trade_finish_time
+		(first_trade_finish_time),
+		ADD INDEX index_last_trade_finish_time
+		(last_trade_finish_time),
+		ADD INDEX index_dnseg_city (dnseg_city);
+	</insert>
+	
+	<!-- 评论表添加索引 -->
+	<insert id="addTradeRatesTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		`crm_trade_rates${_parameter}`
+		ADD INDEX index_tid (tid),
+		ADD INDEX
+		index_oid (oid),
+		ADD KEY index_nick (nick(255)),
+		ADD INDEX index_result
+		(result),
+		ADD INDEX index_created (created),
+		ADD INDEX index_num_iid
+		(num_iid);
+	</insert>
+
+	<!-- 黑名单表添加索引 -->
+	<insert id="addSmsBlacklistTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		`crm_blacklist_dto${_parameter}`
+		ADD INDEX index_phone (phone),
+		ADD KEY
+		index_nick (nick(255)),
+		ADD INDEX index_add_source (add_source),
+		ADD
+		INDEX index_type (type);
+	</insert>
+
+	<!-- 卖家会员表添加索引 -->
+	<insert id="addMemberItemAmountTableIndex" parameterType="java.lang.Long">
+		ALTER
+		TABLE
+		`crm_member_item_amount${_parameter}`
+		ADD INDEX index_mid (mid),
+		ADD INDEX index_item_id (item_id),
+		ADD INDEX index_num (num),
+		ADD INDEX
+		index_last_buy_time (last_buy_time);
+	</insert>
+
+	<!-- 校验高级会员筛选历史记录表是否存在 -->
+	<select id="isExistsPremiumFilterRecordTable" parameterType="java.lang.Long"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_premium_filter_record${uid}'
+	</select>
+
+	<!-- 创建高级会员筛选历史记录表 -->
+	<insert id="doCreatePremiumFilterRecordTable" parameterType="java.lang.Long">
+		create table crm_premium_filter_record${uid}
+		(
+		id bigint not null AUTO_INCREMENT comment '主键',
+		uid bigint not null comment '分库分表用户唯一ID',
+		filter_type varchar(2) comment '存储类型(1：基础筛选 2：高级筛选)',
+		parameter longtext comment '高级会员筛选入参(JSON格式)',
+		uuid varchar(50) comment '筛选时绑定的uuid(方便查询错误)',
+		createdBy varchar(255) comment '创建者',
+		createdDate datetime comment '创建时间',
+		primary key (id)
+		)ENGINE = InnoDB CHARACTER
+		SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT=FIXED COMMENT = '高级会员筛选历史记录表';
+	</insert>
+	
+	<!-- 查询RFM标准分析时间段内购买次数对应的的会员数 -->
+	<select id="countMemberAmountByTimes" parameterType="java.util.Map" resultType="java.lang.Long">
+		select count(*)
+		from crm_member_info_dto${uid}
+		<where>
+			<if test="buyTimes != null">
+				<choose>
+					<when test="buyTimes == 5">
+						and trade_num >= #{buyTimes}
+					</when>
+					<otherwise>
+						and trade_num = #{buyTimes}
+					</otherwise>
+				</choose>
+			</if>
+			<if test="bTime != null and eTime == null">
+				and last_trade_time > #{bTime}
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} > last_trade_time
+			</if>
+			<if test="bTime != null and eTime != null">
+				and last_trade_time between #{bTime} and #{eTime}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询RFM标准分析时间段内购买次数对应的累计消费金额 -->
+	<select id="sumPaidAmountByTimes" parameterType="java.util.Map" resultType="java.math.BigDecimal">
+		select sum(trade_amount)
+		from crm_member_info_dto${uid}
+		<where>
+			<if test="buyTimes != null">
+				<choose>
+					<when test="buyTimes == 5">
+						and trade_num >= #{buyTimes}
+					</when>
+					<otherwise>
+						and trade_num = #{buyTimes}
+					</otherwise>
+				</choose>
+			</if>
+			<if test="bTime != null and eTime == null">
+				and last_trade_time > #{bTime}
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} > last_trade_time
+			</if>
+			<if test="bTime != null and eTime != null">
+				and last_trade_time between #{bTime} and #{eTime}
+			</if>
+		</where>
+	</select>
+	
+	<!-- RFM详情查询成交会员总数 -->
+	<select id="countDistinctMemberCount" parameterType="java.util.Map" resultType="java.lang.Long">
+		select count(buyer_nick)
+		from crm_member_info_dto${uid}
+		<where>
+			<if test="tradeNum != null">
+				<choose>
+					<when test="tradeNum == 0">
+						trade_num = 0
+					</when>
+					<when test="tradeNum == 1">
+						trade_num = 1
+					</when>
+					<when test="tradeNum == 2">
+						trade_num > 1
+					</when>
+					<otherwise>
+						trade_num >= 1
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</select>
+	
+	<!-- RFM详情查询成交会员累计消费金额 -->
+	<select id="sumMemberPaidAmount" parameterType="java.util.Map" resultType="java.math.BigDecimal">
+		select sum(trade_amount)
+		from crm_member_info_dto${uid}
+		<where>
+			<if test="tradeNum != null">
+				<choose>
+					<when test="tradeNum == 0">
+						trade_num = 0
+					</when>
+					<when test="tradeNum == 1">
+						trade_num = 1
+					</when>
+					<when test="tradeNum == 2">
+						trade_num > 1
+					</when>
+					<otherwise>
+						trade_num >= 1
+					</otherwise>
+				</choose>
+			</if>	
+		</where>
+	</select>
+	
+	<select id="queryStandardRFM" parameterType="java.util.Map" resultMap="memberInfoMap">
+		select sum(trade_amount) trade_amount,count(buyer_nick) buyer_nick
+		from crm_member_info_dto${uid}
+		<where>
+			<if test="tradeNum != null">
+				<choose>
+					<when test="tradeNum == 5">
+						and trade_num >= #{tradeNum}
+					</when>
+					<otherwise>
+						and trade_num = #{tradeNum}
+					</otherwise>
+				</choose>
+			</if>
+			<if test="bTime != null">
+				and last_trade_finish_time > #{bTime}
+			</if>
+			<if test="eTime != null">
+				and #{eTime} >= last_trade_finish_time
+			</if>
+		</where>
+	</select>
+	
+</mapper>

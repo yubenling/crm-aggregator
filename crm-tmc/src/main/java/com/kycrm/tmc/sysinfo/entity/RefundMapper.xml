@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.tmc.sysinfo.entity.Refund">
+	<resultMap type="com.kycrm.tmc.sysinfo.entity.Refund" id="Refund">
+		<result column="tid" property="tid"/>
+		<result column="oid" property="oid"/>
+		<result column="status" property="status"/>
+		<result column="refund_id" property="refund_id"/>
+		<result column="seller_nick" property="seller_nick"/>
+		<result column="buyer_nick" property="buyer_nick"/>
+		<result column="created" property="created"/>
+		<result column="modified" property="modified"/>
+		<result column="jdp_hashcode" property="jdp_hashcode"/>
+		<result column="jdp_response" property="jdp_response"/>
+		<result column="jdp_created" property="jdp_created"/>
+		<result column="jdp_modified" property="jdp_modified"/>
+	</resultMap>
+	
+	<select id="getRefundNumber" resultType="String" parameterType="java.util.Map" flushCache="true" useCache="false">
+		select status from jdp_tb_refund
+		where seller_nick = #{userId} and jdp_modified BETWEEN #{bTime} and #{eTime}
+	</select> 
+	
+	
+	<!-- 根据tid替代查询对应的退款信息 -->
+	<select id="findRefundByTid" parameterType="java.util.Map" resultType="java.util.Map" flushCache="true" useCache="false">
+		SELECT DISTINCT tid,oid
+		FROM jdp_tb_refund
+		WHERE tid = #{tid} and jdp_modified BETWEEN #{startTime} and #{endTime}
+	</select>
+	
+</mapper>

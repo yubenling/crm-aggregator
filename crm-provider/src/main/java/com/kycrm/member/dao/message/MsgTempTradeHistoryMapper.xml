@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.kycrm.member.dao.message.IMsgTempTradeHistoryDao">
+ 	<resultMap type="com.kycrm.member.domain.entity.trade.MsgTempTradeHistory" id="msgTempTradeHistory">
+ 		<result column="id" property="id"/>
+		<result column="uid" property="uid"/>
+		<result column="msg_id" property="msgId"/>
+		<result column="tid" property="tid"/>
+		<result column="num_iid_str" property="numIidStr"/>
+		<result column="buyer_nick" property="buyerNick"/>
+		<result column="refund_flag" property="refundFlag"/>
+		<result column="payment" property="payment"/>
+		<result column="trade_from" property="tradeFrom"/>
+		<result column="item_num" property="itemNum"/>
+		<result column="created" property="created"/>
+		<result column="end_time" property="endTime"/>
+		<result column="modified_time" property="modifiedTime"/>
+		<result column="pay_time" property="payTime"/>
+		<result column="msg_created" property="msgCreated"/>
+		<result column="trade_status" property="tradeStatus"/>
+		<result column="receiver_address" property="receiverAddress"/>
+		<result column="receiver_mobile" property="receiverMobile"/>
+		<result column="receiver_name" property="receiverName"/>
+		<result column="step_trade_status" property="stepTradeStatus"/>
+		<result column="front" property="front"/>
+		<result column="tail" property="tail"/>
+		<result column="front_pay_time" property="frontPayTime"/>
+		<!-- <result column="createdDate" property="createdDate"/>
+		<result column="createdBy" property="createdBy"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>
+		<result column="lastModifiedBy" property="lastModifiedBy"/> -->
+ 	</resultMap>
+ 	
+ 	<!-- 是否存在该用户的表 -->
+ 	<select id="tableIsExist" parameterType="java.lang.Long" resultType="java.lang.String">
+ 		show tables like 'crm_msg_temp_trade_history${uid}'
+ 	</select>
+ 	
+ 	<!-- 创建表 -->
+ 	<insert id="doCreateTable" parameterType="java.lang.Long">
+ 		CREATE TABLE `crm_msg_temp_trade_history${uid}` (
+		  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+		  `msg_id` bigint(20) DEFAULT NULL,
+		  `uid` bigint(20) DEFAULT NULL,
+		  `tid` bigint(20) DEFAULT NULL,
+		  `buyer_nick` varchar(1000) DEFAULT NULL,
+		  `refund_flag` tinyint(5) DEFAULT NULL,
+		  `payment` decimal(20,2) DEFAULT NULL,
+		  `trade_from` varchar(255) DEFAULT NULL,
+		  `item_num` int(10) DEFAULT NULL,
+		  `created` datetime DEFAULT NULL,
+		  `end_time` datetime DEFAULT NULL,
+		  `modified_time` datetime DEFAULT NULL,
+		  `pay_time` datetime DEFAULT NULL,
+		  `msg_created` datetime DEFAULT NULL,
+		  `trade_status` varchar(255) DEFAULT NULL,
+		  `receiver_address` varchar(2000) DEFAULT NULL,
+		  `receiver_mobile` varchar(255) DEFAULT NULL,
+		  `receiver_name` varchar(1000) DEFAULT NULL,
+		  `optlock` int(10) NOT NULL DEFAULT '0',
+		  `num_iid_str` varchar(255) DEFAULT NULL,
+		  `step_trade_status` varchar(255) DEFAULT NULL,
+		  `front` varchar(255) DEFAULT NULL,
+		  `tail` varchar(255) DEFAULT NULL,
+		  `front_pay_time` datetime DEFAULT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+ 	</insert>
+ 	<insert id="addMsgTempTradeHistoryTableIndex" parameterType="java.lang.Long">
+ 		ALTER TABLE
+		`crm_msg_temp_trade_history${_parameter}`
+		ADD INDEX index_msg_id 						(msg_id),
+		ADD INDEX index_tid 								(tid),
+		ADD KEY      index_buyer_nick				(buyer_nick(255)),
+		ADD INDEX index_refund_flag				(refund_flag),
+		ADD INDEX index_created						(created),
+		ADD INDEX index_end_time					(end_time),
+		ADD INDEX index_modified_time		(modified_time),
+		ADD INDEX index_pay_time					(pay_time),
+		ADD INDEX index_trade_status			(trade_status);
+ 	</insert>
+ 	
+ 	<!-- 添加一条记录 -->
+ 	<insert id="saveMsgTempTradeHistory" parameterType="com.kycrm.member.domain.entity.trade.MsgTempTrade">
+ 		<selectKey resultType="java.lang.Long" keyProperty="id">
+ 			select LAST_INSERT_ID()
+ 		</selectKey>
+ 		insert into crm_msg_temp_trade_history${uid}(uid,msg_id,tid,num_iid_str,buyer_nick,refund_flag,payment,
+ 		trade_from,item_num,created,end_time,modified_time,pay_time,receiver_address,
+ 		receiver_mobile,receiver_name,step_trade_status,front,tail,front_pay_time)
+ 		value(#{uid},#{msgId},#{tid},#{numIidStr},#{buyerNick},#{refundFlag},#{payment},#{tradeFrom},
+ 		#{itemNum},#{created},#{endTime},#{modifiedTime},#{payTime},#{receiverAddress},
+ 		#{receiverMobile},#{receiverName},#{stepTradeStatus},#{front},#{tail},#{frontPayTime})
+ 	</insert>
+ 	
+ 	<!-- 添加多条记录 -->
+ 	<insert id="saveMsgTempTradeHistoryList" parameterType="com.kycrm.member.domain.entity.base.BaseListEntity">
+ 		insert into crm_msg_temp_trade_history${uid}(uid,msg_id,tid,num_iid_str,buyer_nick,refund_flag,payment,
+ 		trade_from,item_num,created,end_time,modified_time,pay_time,receiver_address,
+ 		receiver_mobile,receiver_name,msg_created,trade_status,step_trade_status,front,tail,front_pay_time)
+ 		values
+ 		<foreach collection="entityList" item="trade" index="index" separator="," close=";">
+ 			(#{uid},#{trade.msgId},#{trade.tid},#{trade.numIidStr},#{trade.buyerNick},#{trade.refundFlag},
+ 			#{trade.payment},#{trade.tradeFrom},#{trade.itemNum},#{trade.created},#{trade.endTime},
+ 			#{trade.modifiedTime},#{trade.payTime},#{trade.receiverAddress},
+	 		#{trade.receiverMobile},#{trade.receiverName},#{trade.msgCreated},#{trade.tradeStatus},
+	 		#{trade.stepTradeStatus},#{trade.front},#{trade.tail},#{trade.frontPayTime})
+ 		</foreach>
+ 	</insert>
+ 	
+ 	<!-- 根据订单来源和订单状态查询效果分析数据 -->
+ 	<select id="aggregateDataByStatus" parameterType="java.util.Map" resultMap="msgTempTradeHistory">
+ 		select count(tid) tid,sum(payment) payment,sum(item_num) item_num,count(distinct buyer_nick) buyer_nick
+ 		from crm_msg_temp_trade_history${uid} t1
+ 		<where>
+ 			t1.msg_id = #{msgId} and t1.created between #{bTime} and #{eTime}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and t1.trade_from = #{tradeFrom}
+			</if>
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and t1.trade_status = #{tradeStatus}
+			</if>
+			<choose>
+				<when test="payType != null and payType != ''">
+					and t1.pay_time between #{bTime} and #{eTime}
+				</when>
+				<when test="waitType != null and waitType != ''">
+					and not EXISTS
+				(select 1 from crm_msg_temp_trade_history${uid} t2 where
+				t2.tid=t1.tid and t2.trade_status='success' and t2.created between #{bTime} and #{eTime} and #{eTime} > t2.pay_time)
+				</when>
+				<when test="refundType != null and refundType != ''">
+					and t1.modified_time between #{bTime} and #{eTime}
+				</when>
+			</choose>
+ 		</where>
+ 	</select>
+ 	
+ 	<!-- 计算用户选择时间段内每天成交数据 -->
+ 	<select id="listPayData" parameterType="java.util.Map" resultType="java.util.Map">
+ 		select DATE_FORMAT(pay_time,'%Y-%m-%d') payTime,count(tid) tids,sum(payment) successMoney,sum(item_num) itemNum,count(distinct buyer_nick) customerNum
+ 		from crm_msg_temp_trade_history${uid}
+ 		<where>
+ 			msg_id = #{msgId}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and trade_from = #{tradeFrom}
+			</if>
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and trade_status = #{tradeStatus}
+			</if>
+			<if test="bTime != null and eTime != null">
+				and pay_time between #{bTime} and #{eTime}
+			</if>
+ 		</where>
+ 		group by DATE_FORMAT(pay_time,'%Y-%m-%d')
+ 		order by id  DESC
+ 	</select>
+ 	
+ 	<!-- 根据发送总记录id查询符合的临时订单 -->
+ 	<select id="listTempTradeByMsgId" parameterType="java.util.Map" resultMap="msgTempTradeHistory">
+ 		select tid,trade_from,trade_status,item_num,buyer_nick,refund_flag,payment,created,end_time,
+ 			   modified_time,pay_time
+ 		from crm_msg_temp_trade_history${uid}
+ 		where msg_id = #{msgId}
+ 	</select>
+ 	
+ 	<!-- 客户详情查询group_name, -->
+ 	<select id="listCustomerDetail" parameterType="java.util.Map" resultMap="msgTempTradeHistory">
+ 		select buyer_nick,receiver_name,receiver_mobile,sum(payment) payment,count(distinct tid) tid,
+ 			   sum(item_num) item_num,receiver_address
+ 		from crm_msg_temp_trade_history${uid} t1
+ 		<where>
+ 			t1.msg_id = #{msgId}
+ 			<if test="tradeFrom != null and tradeFrom != ''">
+ 				and t1.trade_from like '%${tradeFrom}%'
+ 			</if>
+ 			<if test="tradeStatus != null and tradeStatus != ''">
+ 				<choose>
+ 					<when test="tradeStatus == 'waitPay'">
+ 						and t1.trade_status = 'waitPay' and not exists
+ 						(select 1 from crm_msg_temp_trade_history${uid} t2 where t1.tid = t2.tid and t2.trade_status = 'success')
+ 					</when>
+ 					<otherwise>
+		 				and t1.trade_status = #{tradeStatus}
+ 					</otherwise>
+ 				</choose>
+ 			</if>
+ 			<if test="bTime != null and eTime != null">
+ 				and t1.pay_time between #{bTime} and #{eTime}
+ 			</if>
+ 			<if test="buyerNick != null and buyerNick != ''">
+ 				and t1.buyer_nick = #{buyerNick}
+ 			</if>
+ 			<if test="receiverMobile != null and receiverMobile != ''">
+ 				and t1.receiver_mobile = #{receiverMobile}
+ 			</if>
+ 			<if test="tids != null">
+ 				and t1.tid in
+ 				<foreach collection="tids" item="tid" open="(" separator="," close=")">
+ 					#{tid}
+ 				</foreach>
+ 			</if>
+ 		</where>
+ 		group by t1.buyer_nick
+ 		<if test="payment != null and payment != '' and sortType != null">
+			order by t1.payment asc
+ 		</if>
+ 		<if test="payment != null and payment != '' and sortType == null">
+			order by t1.payment desc
+ 		</if>
+ 		<if test="tradeNum != null and tradeNum != '' and sortType != null">
+			order by count(distinct t1.tid) asc
+ 		</if>
+ 		<if test="tradeNum != null and tradeNum != '' and sortType == null">
+			order by count(distinct t1.tid) desc
+ 		</if>
+ 		<if test="itemNum != null and itemNum != '' and sortType != null">
+			order by sum(t1.item_num) asc
+ 		</if>
+ 		<if test="itemNum != null and itemNum != '' and sortType == null">
+			order by sum(t1.item_num) desc
+ 		</if>
+ 		<if test="startRows != null and pageSize != null">
+ 			limit #{startRows},#{pageSize}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- 客户详情查询count -->
+ 	<select id="countCustomerDetail" parameterType="java.util.Map" resultType="java.lang.Integer">
+ 		select count(distinct buyer_nick)
+ 		from crm_msg_temp_trade_history${uid} t1
+ 		<where>
+ 			t1.msg_id = #{msgId}
+ 			<if test="tradeFrom != null and tradeFrom != ''">
+ 				and t1.trade_from like '%${tradeFrom}%'
+ 			</if>
+ 			<if test="tradeStatus != null and tradeStatus != ''">
+ 				<choose>
+ 					<when test="tradeStatus == 'waitPay'">
+ 						and t1.trade_status = 'waitPay' and not exists
+ 						(select 1 from crm_msg_temp_trade_history${uid} t2 where t1.tid = t2.tid and t2.trade_status = 'success')
+ 					</when>
+ 					<otherwise>
+		 				and t1.trade_status = #{tradeStatus}
+ 					</otherwise>
+ 				</choose>
+ 			</if>
+ 			<if test="bTime != null and eTime != null">
+ 				and t1.created between #{bTime} and #{eTime}
+ 			</if>
+ 			<if test="buyerNick != null and buyerNick != ''">
+ 				and t1.buyer_nick = #{buyerNick}
+ 			</if>
+ 			<if test="receiverMobile != null and receiverMobile != ''">
+ 				and t1.receiver_mobile = #{receiverMobile}
+ 			</if>
+ 			<if test="tids != null">
+ 				and t1.tid in
+ 				<foreach collection="tids" item="tid" open="(" separator="," close=")">
+ 					#{tid}
+ 				</foreach>
+ 			</if>
+ 		</where>
+ 	</select>
+ 	
+<!-- 以下为预售 --> 	
+ 	<!-- 预售效果分析  根据订单来源和订单状态查询效果分析数据 -->
+ 	<select id="aggregateStepDataByStatus" parameterType="java.util.Map" resultMap="msgTempTradeHistory">
+ 		select count(tid) tid,sum(front) front,sum(tail) tail,sum(payment) payment,sum(item_num) item_num,count(distinct buyer_nick) buyer_nick
+ 		from crm_msg_temp_trade_history${uid} t1
+ 		<where>
+ 			t1.msg_id = #{msgId}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and t1.trade_from = #{tradeFrom}
+			</if>
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and t1.trade_status = #{tradeStatus}
+			</if>
+			<if test="stepTradeStatus != null and stepTradeStatus != ''">
+				and t1.step_trade_status = #{stepTradeStatus}
+			</if>
+			<if test="stepStatusList != null">
+				and t1.step_trade_status in
+				<foreach collection="stepStatusList" item="stepStatus" open="(" separator="," close=")">
+					#{stepStatus}
+				</foreach>
+			</if>
+			<if test="tradeStatusList != null">
+				and t1.trade_status in
+				<foreach collection="tradeStatusList" item="status" open="(" separator="," close=")">
+					#{status}
+				</foreach>
+			</if>
+			<choose>
+				<when test="createType != null and createType != ''">
+					and not EXISTS
+					(select 1 from crm_msg_temp_trade_history${uid} t2 where
+					t2.tid=t1.tid and (t2.trade_status='refund' or t2.trade_status='closed'))
+				</when>
+				<when test="payType != null and payType != ''">
+					<!-- and t1.pay_time between #{bTime} and #{eTime} -->
+					and not EXISTS
+					(select 1 from crm_msg_temp_trade_history${uid} t2 where
+					t2.tid=t1.tid and t2.trade_status='refund')
+				</when>
+				<when test="waitType != null and waitType != ''">
+					and not EXISTS
+				(select 1 from crm_msg_temp_trade_history${uid} t2 where
+				t2.tid=t1.tid and t2.trade_status='refund')
+				</when>
+				<when test="refundType != null and refundType != ''">
+					and t1.modified_time between #{bTime} and #{eTime}
+				</when>
+			</choose>
+ 		</where>
+ 	</select>
+ 	
+ 	<!-- 预售效果分析  计算用户选择时间段内每天成交数据 -->
+ 	<select id="listStepPayData" parameterType="java.util.Map" resultType="java.util.Map">
+ 		select DATE_FORMAT(pay_time,'%Y-%m-%d') payTime,count(tid) paidTailTrade,sum(tail) paidTailFee,sum(item_num) itemNum,count(distinct buyer_nick) customerNum
+ 		from crm_msg_temp_trade_history${uid} t1
+ 		<where>
+ 			t1.msg_id = #{msgId}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and t1.trade_from = #{tradeFrom}
+			</if>
+			<if test="tradeStatusList != null">
+				and t1.trade_status in
+				<foreach collection="tradeStatusList" item="tradeStatus" open="(" separator="," close=")">
+					#{tradeStatus}
+				</foreach>
+				and not EXISTS
+				(select 1 from crm_msg_temp_trade_history${uid} t2 where
+				t2.tid=t1.tid and t2.trade_status='refund')
+			</if>
+			<if test="bTime != null and eTime != null">
+				and t1.pay_time between #{bTime} and #{eTime}
+			</if>
+			<if test="stepTradeStatus != null and stepTradeStatus != ''">
+				and t1.step_trade_status = #{stepTradeStatus}
+			</if>
+ 		</where>
+ 		group by DATE_FORMAT(pay_time,'%Y-%m-%d')
+ 		order by id  DESC
+ 	</select>
+ 	
+ 	<!-- 客户详情查询group_name, -->
+ 	<select id="listStepCustomerDetail" parameterType="java.util.Map" resultMap="msgTempTradeHistory">
+ 		select buyer_nick,receiver_name,receiver_mobile,sum(payment) payment,count(distinct tid) tid,
+ 			   sum(item_num) item_num,receiver_address
+ 		from crm_msg_temp_trade_history${uid} t1
+ 		<where>
+ 			t1.msg_id = #{msgId}
+ 			<if test="tradeFrom != null and tradeFrom != ''">
+ 				and t1.trade_from like '%${tradeFrom}%'
+ 			</if>
+ 			<if test="tradeStatus != null and tradeStatus != ''">
+ 				and t1.trade_status = #{tradeStatus}
+ 			</if>
+ 			<if test="noStatusList != null">
+ 				and not exists(select 1 from crm_msg_temp_trade_history${uid} t2 where 
+ 				t1.tid = t2.tid and t2.trade_status in 
+ 				<foreach collection="noStatusList" item="noStatus" open="(" separator="," close=")">
+ 					#{noStatus}
+ 				</foreach>)
+ 			</if>
+ 			<if test="bTime != null and eTime != null">
+ 				and t1.created between #{bTime} and #{eTime}
+ 			</if>
+ 			<if test="buyerNick != null and buyerNick != ''">
+ 				and t1.buyer_nick = #{buyerNick}
+ 			</if>
+ 			<if test="receiverMobile != null and receiverMobile != ''">
+ 				and t1.receiver_mobile = #{receiverMobile}
+ 			</if>
+ 			<if test="tids != null">
+ 				and t1.tid in
+ 				<foreach collection="tids" item="tid" open="(" separator="," close=")">
+ 					#{tid}
+ 				</foreach>
+ 			</if>
+ 		</where>
+ 		group by buyer_nick
+ 		<if test="payment != null and payment != '' and sortType != null">
+			order by payment asc
+ 		</if>
+ 		<if test="payment != null and payment != '' and sortType == null">
+			order by payment desc
+ 		</if>
+ 		<if test="tradeNum != null and tradeNum != '' and sortType != null">
+			order by count(distinct tid) asc
+ 		</if>
+ 		<if test="tradeNum != null and tradeNum != '' and sortType == null">
+			order by count(distinct tid) desc
+ 		</if>
+ 		<if test="itemNum != null and itemNum != '' and sortType != null">
+			order by sum(item_num) asc
+ 		</if>
+ 		<if test="itemNum != null and itemNum != '' and sortType == null">
+			order by sum(item_num) desc
+ 		</if>
+ 		<if test="startRows != null and pageSize != null">
+ 			limit #{startRows},#{pageSize}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- 客户详情查询count -->
+ 	<select id="countStepCustomerDetail" parameterType="java.util.Map" resultType="java.lang.Integer">
+ 		select count(distinct buyer_nick)
+ 		from crm_msg_temp_trade_history${uid} t1
+ 		<where>
+ 			t1.msg_id = #{msgId}
+ 			<if test="tradeFrom != null and tradeFrom != ''">
+ 				and t1.trade_from like '%${tradeFrom}%'
+ 			</if>
+ 			<if test="tradeStatus != null and tradeStatus != ''">
+ 				and t1.trade_status = #{tradeStatus}
+ 			</if>
+ 			<if test="noStatusList != null">
+ 				and not exists(select 1 from crm_msg_temp_trade_history${uid} t2 where 
+ 				t1.tid = t2.tid and t2.trade_status in 
+ 				<foreach collection="noStatusList" item="noStatus" open="(" separator="," close=")">
+ 					#{noStatus}
+ 				</foreach>)
+ 			</if>
+ 			<if test="bTime != null and eTime != null">
+ 				and t1.created between #{bTime} and #{eTime}
+ 			</if>
+ 			<if test="buyerNick != null and buyerNick != ''">
+ 				and t1.buyer_nick = #{buyerNick}
+ 			</if>
+ 			<if test="receiverMobile != null and receiverMobile != ''">
+ 				and t1.receiver_mobile = #{receiverMobile}
+ 			</if>
+ 			<if test="tids != null">
+ 				and t1.tid in
+ 				<foreach collection="tids" item="tid" open="(" separator="," close=")">
+ 					#{tid}
+ 				</foreach>
+ 			</if>
+ 		</where>
+ 	</select>
+ 	
+ 	<!-- 预售效果分析  计算用户选择时间段内每天成交数据 -->
+ 	<select id="listStepPayFrontData" parameterType="java.util.Map" resultType="java.util.Map">
+ 		select DATE_FORMAT(pay_time,'%Y-%m-%d') payTime,sum(front) paidFrontFee,count(tid) paidFrontTrade
+ 		from crm_msg_temp_trade_history${uid} t1
+ 		<where>
+ 			t1.msg_id = #{msgId}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and t1.trade_from = #{tradeFrom}
+			</if>
+			<if test="tradeStatusList != null">
+				and t1.trade_status in
+				<foreach collection="tradeStatusList" item="tradeStatus" open="(" separator="," close=")">
+					#{tradeStatus}
+				</foreach>
+				and not EXISTS
+				(select 1 from crm_msg_temp_trade_history${uid} t2 where
+				t2.tid=t1.tid and t2.trade_status='refund')
+			</if>
+			<if test="bTime != null and eTime != null">
+				and t1.front_pay_time between #{bTime} and #{eTime}
+				and EXISTS (
+					select 1 from crm_msg_temp_trade_history${uid} t2 where t1.tid = t2.tid and 
+					t2.front_pay_time between #{bTime} and #{eTime} and t2.trade_status = 'waitPay'
+				)
+			</if>
+			<if test="stepTradeStatus != null and stepTradeStatus != ''">
+				and t1.step_trade_status = #{stepTradeStatus}
+			</if>
+ 		</where>
+ 		group by DATE_FORMAT(pay_time,'%Y-%m-%d')
+ 		order by id  DESC
+ 	</select>
+ </mapper>

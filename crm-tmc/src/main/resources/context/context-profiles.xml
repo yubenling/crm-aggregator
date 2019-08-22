@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 自动扫描controller包下的所有类，如果@Controller注入为bean -->
+	<context:component-scan base-package="com.kycrm" />
+	<!-- 缺省PropertyPlaceholder定义 -->
+	<bean id="extPropertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+			<property name="locations">
+				<list>  
+					<value>classpath*:/application.properties</value>
+					<value>classpath*:/redis.properties</value>
+					<value>classpath*:/rabbitmq.properties</value>
+			</list>
+		</property>
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+	</bean>
+	<import resource="dubbo-consumer.xml"/>
+	
+	<!-- JDBC连接池  https://github.com/alibaba/druid/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98 -->
+	<bean id="sysinfoDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+           <!-- 创建MySQL UTF-8编码数据库脚本：CREATE DATABASE s2jh DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; -->
+		<property name="url" value="${sysinfo_jdbc_url}" />
+		<property name="username" value="${sysinfo_jdbc_username}" />
+		<property name="password" value="${sysinfo_jdbc_password}" />
+		
+           <!-- 由外部事务管理器处理提交 -->
+		<property name="defaultAutoCommit" value="false" />
+
+           <!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		<property name="maxActive" value="100" />
+
+           <!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="60000" />
+
+           <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+           <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+
+           <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="false" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+	</bean>
+	
+	
+	<!-- Multi-db vendor support -->
+	<bean id="sysDatabaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+		<property name="properties">
+			<bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+				<property name="properties">
+					<props>
+						<prop key="SQL Server">sqlserver</prop>
+						<prop key="DB2">db2</prop>
+						<prop key="Oracle">oracle</prop>
+						<prop key="MySQL">mysql</prop>
+						<prop key="H2">h2</prop>
+					</props>
+				</property>
+			</bean>
+		</property>
+	</bean> 
+	<!--引入其他的文件  --> 
+    <import resource="spring-context.xml"/>
+    <import resource="mybatis-config.xml"/>
+    <import resource="spring-link.xml"/>
+    <import resource="spring-mybatis.xml"/>
+    <import resource="spring-redis.xml"/>
+    <import resource="spring-schedule.xml"/>
+    <import resource="spring-taobao-log.xml"/>
+    <import resource="spring-tmc-handler.xml"/>
+</beans>

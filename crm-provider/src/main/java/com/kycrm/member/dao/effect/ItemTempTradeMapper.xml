@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kycrm.member.dao.effect.IItemTempTradeDao">
+	<resultMap type="com.kycrm.member.domain.entity.effect.ItemTempTrade" id="itemTempTrade">
+		<result column="id" property="id"/>
+		<result column="uid" property="uid"/>
+		<result column="msg_id" property="msgId"/>
+		<result column="item_id" property="itemId"/>
+		<result column="title" property="title"/>
+		<result column="price" property="price"/>
+		<result column="payment" property="payment"/>
+		<result column="num" property="num"/>
+		<result column="trade_from" property="tradeFrom"/>
+		<result column="trade_status" property="tradeStatus"/>
+		<result column="created" property="created"/>
+		<result column="tid" property="tid"/>
+		<result column="msg_created" property="msgCreated"/>
+		<result column="buyer_nick" property="buyerNick"/>
+		<result column="step_trade_status" property="stepTradeStatus"/>
+	</resultMap>
+	
+	<!-- 是否存在表 -->
+	<select id="tableIsExist" parameterType="java.lang.Long" resultType="java.lang.String">
+		show tables like 'crm_item_temp_trade${_parameter}'
+	</select>
+	
+	<!-- 创建表 -->
+	<insert id="doCreateTable" parameterType="java.lang.Long">
+		CREATE TABLE `crm_item_temp_trade${_parameter}` (
+		  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+		  `uid` bigint(20) DEFAULT NULL,
+		  `tid` bigint(20) DEFAULT NULL,
+		  `msg_id` bigint(20) DEFAULT NULL,
+		  `item_id` bigint(20) DEFAULT NULL,
+		  `title` varchar(255) DEFAULT NULL,
+		  `price` decimal(20,2) DEFAULT NULL,
+		  `payment` decimal(20,2) DEFAULT NULL,
+		  `buyer_nick` varchar(1000) DEFAULT NULL,
+		  `num` bigint(10) DEFAULT NULL,
+		  `trade_from` varchar(255) DEFAULT NULL,
+		  `trade_status` varchar(255) DEFAULT NULL,
+		  `created` datetime DEFAULT NULL,
+		  `optlock` int(10) DEFAULT 0,
+		  `msg_created` datetime DEFAULT NULL,
+		  `step_trade_status` varchar(255) DEFAULT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+	</insert>
+	
+	<!-- 创建表索引 -->
+	<insert id="addItemTempTradeTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		`crm_item_temp_trade${_parameter}`
+		ADD INDEX index_tid								(tid),
+		ADD INDEX index_msg_id 						(msg_id),
+		ADD INDEX index_item_id						(item_id),
+		ADD INDEX index_title							(title),
+		ADD KEY      index_buyer_nick				(buyer_nick(255)),
+		ADD INDEX index_trade_from				(trade_from),
+		ADD INDEX index_trade_status			(trade_status),
+		ADD INDEX index_created 					(created);
+	</insert>
+
+	<!-- 保存一条数据 -->
+	<insert id="saveItemDetail" parameterType="com.kycrm.member.domain.entity.effect.ItemTempTrade">
+		insert into crm_item_temp_trade${uid}(uid,msg_id,title,price,payment,num,trade_from,
+		trade_status,created,optlock,step_trade_status)
+		value(#{uid},#{msgId},#{title},#{price},#{payment},#{num},#{tradeFrom},#{tradeStatus},
+		#{created},0,#{stepTradeStatus})
+	</insert>
+
+	<!-- 保存多条数据数据 -->
+	<insert id="saveItemDetails" parameterType="com.kycrm.member.domain.entity.base.BaseListEntity">
+		insert into crm_item_temp_trade${uid}(uid,msg_id,title,price,tid,payment,num,trade_from,
+		trade_status,created,optlock,msg_created,buyer_nick,item_id,step_trade_status)
+		values
+		<foreach collection="entityList" item="itemDetail" index="index" separator="," close=";">
+			(#{itemDetail.uid},#{itemDetail.msgId},#{itemDetail.title},#{itemDetail.price},#{itemDetail.tid},
+			#{itemDetail.payment},#{itemDetail.num},#{itemDetail.tradeFrom},#{itemDetail.tradeStatus},
+			#{itemDetail.created},0,#{itemDetail.msgCreated},#{itemDetail.buyerNick},#{itemDetail.itemId},
+			#{itemDetail.stepTradeStatus})
+		</foreach>
+	</insert>
+	
+	<!-- 查询是否存在记录 -->
+	<select id="isExistItemTrade" parameterType="java.util.Map" resultType="java.lang.Long">
+		select id
+		from crm_item_temp_trade${uid}
+		where msg_id = #{msgId} and item_id = #{itemId} and tid = #{tid} and trade_status = #{tradeStatus}
+	</select>
+	
+	<!-- 商品详情查询 -->
+	<select id="listItemDetail" parameterType="java.util.Map" resultMap="itemTempTrade">
+		select title,price,count(distinct buyer_nick) buyer_nick,count(distinct tid) tid,
+		sum(payment) payment,sum(num) num,item_id
+		from crm_item_temp_trade${uid} i1
+		<where>
+			i1.msg_id = #{msgId}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and i1.trade_from like '%${tradeFrom}%'
+			</if>
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and i1.trade_status = #{tradeStatus}
+				<choose>
+					<when test="tradeStatus == 'waitPay'">
+						and not exists (
+						select 1 from crm_item_temp_trade${uid} i2 where i1.tid = i2.tid and i2.trade_status = 'success')
+					</when>				
+				</choose>
+			</if>
+			<if test="bTime != null and eTime != null">
+				and i1.pay_time between #{bTime} and #{eTime}
+			</if>
+			<if test="itemId != null">
+				and i1.item_id = #{itemId}
+			</if>
+		</where>
+		group by i1.item_id
+		<if test="price != null and price != '' and sortType != null">
+			order by i1.price asc
+		</if>
+		<if test="price != null and price != '' and sortType == null">
+			order by i1.price desc
+		</if>
+		<if test="buyerNum != null and buyerNum != '' and sortType != null">
+			order by count(distinct i1.buyer_nick) asc
+		</if>
+		<if test="buyerNum != null and buyerNum != '' and sortType == null">
+			order by count(distinct i1.buyer_nick) desc
+		</if>
+		<if test="payment != null and payment != '' and sortType != null">
+			order by sum(i1.payment) asc
+ 		</if>
+ 		<if test="payment != null and payment != '' and sortType == null">
+			order by sum(i1.payment) desc
+ 		</if>
+ 		<if test="tradeNum != null and tradeNum != '' and sortType != null">
+			order by count(distinct i1.tid) asc
+ 		</if>
+ 		<if test="tradeNum != null and tradeNum != '' and sortType == null">
+			order by count(distinct i1.tid) desc
+ 		</if>
+ 		<if test="itemNum != null and itemNum != '' and sortType != null">
+			order by sum(i1.num) asc
+ 		</if>
+ 		<if test="itemNum != null and itemNum != '' and sortType == null">
+			order by sum(i1.num) desc
+ 		</if>
+		limit #{startRows},#{pageSize}
+	</select>
+	
+	<!-- 商品详情count查询 -->
+	<select id="countItemDetail" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*)
+		from (select count(*)
+		from crm_item_temp_trade${uid} i1
+		<where>
+			i1.msg_id = #{msgId}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and i1.trade_from like '%${tradeFrom}%'
+			</if>
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and i1.trade_status = #{tradeStatus}
+				<choose>
+					<when test="tradeStatus == 'waitPay'">
+						and not exists (
+						select 1 from crm_item_temp_trade${uid} i2 where i1.tid = i2.tid and i2.trade_status = 'success')
+					</when>				
+				</choose>
+			</if>
+			<if test="bTime != null and eTime != null">
+				and i1.created between #{bTime} and #{eTime}
+			</if>
+			<if test="itemId != null">
+				and i1.item_id = #{itemId}
+			</if>
+		</where>
+		group by i1.item_id) i
+	</select>
+	
+	<!-- 每天定时清理15天之前的数据 -->
+	<!-- 1、查询15天之前最大的id -->
+	<select id="findMaxIdByTime" parameterType="java.util.Map" resultType="java.lang.Long">
+		select max(id) from crm_item_temp_trade${uid} where #{fifteenAgoDate} > msg_created
+ 	</select>
+	<!-- 2、删除，每次10000 -->
+	<delete id="deleteDataById" parameterType="java.util.Map">
+		delete from crm_item_temp_trade${uid} where #{maxId} > id limit 10000
+	</delete>
+	
+	<!-- 根据msgId删除记录 -->
+	<delete id="deleteDataByMsgId">
+		delete from crm_item_temp_trade${uid} where msg_id = #{msgId}
+	</delete>
+	
+	<!-- 根据商品id查询tid -->
+	<select id="listTidByItemId" resultType="java.lang.Long">
+		select tid from crm_item_temp_trade${uid} where item_id = #{itemId}
+	</select>
+	
+	<!-- 商品详情查询 -->
+	<select id="listStepItemDetail" parameterType="java.util.Map" resultMap="itemTempTrade">
+		select title,price,count(distinct buyer_nick) buyer_nick,count(distinct tid) tid,
+		sum(payment) payment,sum(num) num,item_id
+		from crm_item_temp_trade${uid} t1
+		<where>
+			t1.msg_id = #{msgId}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and t1.trade_from like '%${tradeFrom}%'
+			</if>
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and t1.trade_status = #{tradeStatus}
+			</if>
+			<if test="noStatusList != null">
+ 				and not exists(select 1 from crm_item_temp_trade${uid} t2 where 
+ 				t1.tid = t2.tid and t2.trade_status in 
+ 				<foreach collection="noStatusList" item="noStatus" open="(" separator="," close=")">
+ 					#{noStatus}
+ 				</foreach>)
+ 			</if>
+			<if test="eTime != null">
+				and #{eTime} > t1.created
+			</if>
+			<if test="itemId != null">
+				and t1.item_id = #{itemId}
+			</if>
+			<if test="stepTradeStatus != null and stepTradeStatus != ''">
+				and t1.step_trade_status = #{stepTradeStatus}
+			</if>
+		</where>
+		group by item_id
+		<if test="price != null and price != '' and sortType != null">
+			order by price asc
+		</if>
+		<if test="price != null and price != '' and sortType == null">
+			order by price desc
+		</if>
+		<if test="buyerNum != null and buyerNum != '' and sortType != null">
+			order by count(distinct buyer_nick) asc
+		</if>
+		<if test="buyerNum != null and buyerNum != '' and sortType == null">
+			order by count(distinct buyer_nick) desc
+		</if>
+		<if test="payment != null and payment != '' and sortType != null">
+			order by sum(payment) asc
+ 		</if>
+ 		<if test="payment != null and payment != '' and sortType == null">
+			order by sum(payment) desc
+ 		</if>
+ 		<if test="tradeNum != null and tradeNum != '' and sortType != null">
+			order by count(distinct tid) asc
+ 		</if>
+ 		<if test="tradeNum != null and tradeNum != '' and sortType == null">
+			order by count(distinct tid) desc
+ 		</if>
+ 		<if test="itemNum != null and itemNum != '' and sortType != null">
+			order by sum(num) asc
+ 		</if>
+ 		<if test="itemNum != null and itemNum != '' and sortType == null">
+			order by sum(num) desc
+ 		</if>
+		limit #{startRows},#{pageSize}
+	</select>
+	
+	<!-- 商品详情count查询 -->
+	<select id="countStepItemDetail" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*)
+		from (select count(*)
+		from crm_item_temp_trade${uid} t1
+		<where>
+			t1.msg_id = #{msgId}
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and t1.trade_from like '%${tradeFrom}%'
+			</if>
+			<if test="tradeStatus != null and tradeStatus != ''">
+				and t1.trade_status = #{tradeStatus}
+			</if>
+			<if test="noStatusList != null">
+ 				and not exists(select 1 from crm_item_temp_trade${uid} t2 where 
+ 				t1.tid = t2.tid and t2.trade_status in 
+ 				<foreach collection="noStatusList" item="noStatus" open="(" separator="," close=")">
+ 					#{noStatus}
+ 				</foreach>)
+ 			</if>
+			<if test="eTime != null">
+				and #{eTime} > t1.created
+			</if>
+			<if test="itemId != null">
+				and t1.item_id = #{itemId}
+			</if>
+			<if test="stepTradeStatus != null and stepTradeStatus != ''">
+				and t1.step_trade_status = #{stepTradeStatus}
+			</if>
+		</where>
+		group by item_id) i
+	</select>
+</mapper>

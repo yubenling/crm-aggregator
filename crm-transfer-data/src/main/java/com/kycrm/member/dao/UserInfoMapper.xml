@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.IUserInfoDao">
+	<resultMap
+		type="com.kycrm.member.domain.entity.user.UserInfo" id="userInfo">
+		<result column="id" property="id" />
+		<result column="taobao_user_nick" property="taobaoUserNick" />
+		<result column="last_login_date" property="lastLoginDate" />
+		<result column="create_time" property="createTime" />
+		<result column="access_token" property="accessToken" />
+		<result column="shop_name" property="shopName" />
+		<result column="status" property="status" />
+		<result column="expiration_time" property="expirationTime" />
+		<result column="appkey" property="appkey" />
+		<result column="taobao_user_id" property="taobaoUserId" />
+		<result column="sub_taobao_user_id" property="subtaobaoUserId" />
+		<result column="sub_taobao_user_nick"
+			property="subtaobaoUserNick" />
+		<result column="modify_time" property="modifyTime" />
+		<result column="email_num" property="emailNum" />
+		<result column="qq_num" property="qqNum" />
+		<result column="mobile" property="mobile" />
+		<result column="has_provide" property="hasProvide" />
+		<result column="level" property="level" />
+		<!-- 超类中的属性 -->
+		<result column="createdBy" property="createdBy" />
+		<result column="createdDate" property="createdDate" />
+		<result column="lastModifiedBy" property="lastModifiedBy" />
+		<result column="lastModifiedDate" property="lastModifiedDate" />
+		<result column="optlock" property="version" />
+	</resultMap>
+
+	<!-- 查询活跃用户信息 -->
+	<select id="findActiveUser"
+		parameterType="java.lang.String" resultMap="userInfo">
+		SELECT 
+			id, 
+			access_token,
+			taobao_user_nick
+		FROM 
+			crm_user
+		ORDER BY
+			id
+	</select>
+
+</mapper>

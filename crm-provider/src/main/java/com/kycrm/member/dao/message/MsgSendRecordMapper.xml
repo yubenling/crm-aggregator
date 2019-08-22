@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.message.IMsgSendRecordDao">
+	<resultMap type="com.kycrm.member.domain.entity.message.MsgSendRecord"
+		id="msgSendRecord">
+		<result column="ID" property="id" />
+		<result column="uid" property="uid" />
+		<result column="user_id" property="userId" />
+		<result column="total_count" property="totalCount" />
+		<result column="succeed_count" property="succeedCount" />
+		<result column="failed_count" property="failedCount" />
+		<result column="wrong_count" property="wrongCount" />
+		<result column="repeat_count" property="repeatCount" />
+		<result column="black_count" property="blackCount" />
+		<result column="sheild_count" property="sheildCount" />
+		<result column="status" property="status" />
+		<result column="template_content" property="templateContent" />
+		<result column="activity_name" property="activityName" />
+		<result column="send_creat" property="sendCreat" />
+		<result column="type" property="type" />
+		<result column="is_show" property="isShow" />
+		<result column="is_sent" property="isSent" />
+		<result column="roi_value" property="roiValue" />
+		<result column="marketing_type" property="marketingType" />
+		<result column="query_param_id" property="queryParamId" />
+		<result column="step_type" property="stepType" />
+		<result column="effect_is_show" property="effectIsShow" />
+		<result column="taobao_short_link_id" property="taoBaoShortLinkId" />
+		<result column="short_link_type" property="shortLinkType" />
+		<result column="success_payment" property="successPayment" />
+		<result column="createdDate" property="createdDate" />
+		<result column="lastModifiedDate " property="lastModifiedDate " />
+	</resultMap>
+
+	<!-- 根据msgId更新总记录 -->
+	<update id="updateMsgRecordByMsgId"
+		parameterType="com.kycrm.member.domain.entity.message.MsgSendRecord">
+		update CRM_MSGRECORD
+		<set>
+			<if test="totalCount != null">
+				total_count = #{totalCount},
+			</if>
+			<if test="succeedCount != null">
+				succeed_count =IFNULL(succeed_count,0)+#{succeedCount},
+			</if>
+			<if test="failedCount != null">
+				failed_count = IFNULL(failed_count,0)+#{failedCount},
+			</if>
+			<if test="sheildCount != null">
+				sheild_count = IFNULL(sheild_count,0)+#{sheildCount},
+			</if>
+			<if test="blackCount != null">
+				black_count =IFNULL(black_count,0)+#{blackCount},
+			</if>
+			<if test="repeatCount != null">
+				repeat_count = IFNULL(repeat_count,0)+#{repeatCount},
+			</if>
+			<if test="wrongCount != null">
+				wrong_count = IFNULL(wrong_count,0)+#{wrongCount},
+			</if>
+			<if test="isSent != null">
+				is_sent = #{isSent},
+			</if>
+			<if test="status != null and status != ''">
+				status = #{status},
+			</if>
+			lastModifiedDate = now()
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateMsgRecordForBatchSend"
+		parameterType="com.kycrm.member.domain.entity.message.MsgSendRecord">
+		update CRM_MSGRECORD
+		<set>
+			<if test="totalCount != null">
+				total_count = IFNULL(total_count,0)+#{totalCount},
+			</if>
+			<if test="succeedCount != null">
+				succeed_count =IFNULL(succeed_count,0)+#{succeedCount},
+			</if>
+			<if test="failedCount != null">
+				failed_count = IFNULL(failed_count,0)+#{failedCount},
+			</if>
+			<if test="sheildCount != null">
+				sheild_count = IFNULL(sheild_count,0)+#{sheildCount},
+			</if>
+			<if test="blackCount != null">
+				black_count =IFNULL(black_count,0)+#{blackCount},
+			</if>
+			<if test="repeatCount != null">
+				repeat_count = IFNULL(repeat_count,0)+#{repeatCount},
+			</if>
+			<if test="wrongCount != null">
+				wrong_count = IFNULL(wrong_count,0)+#{wrongCount},
+			</if>
+			<if test="isSent != null">
+				is_sent = #{isSent},
+			</if>
+			<if test="status != null and status != ''">
+				status = #{status},
+			</if>
+			lastModifiedDate = now()
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 根据id查询发送总记录 -->
+	<select id="queryRecordById" parameterType="java.lang.Long"
+		resultMap="msgSendRecord">
+		select
+		id,total_count,succeed_count,failed_count,sheild_count,black_count,repeat_count,wrong_count,
+		status,template_content,send_creat,step_type,type,taobao_short_link_id,short_link_type
+		from
+		CRM_MSGRECORD
+		where id
+		= #{msgId}
+	</select>
+	<!-- 保存总记录并返回id -->
+	<insert id="saveMsgSendRecord"
+		parameterType="com.kycrm.member.domain.entity.message.MsgSendRecord"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO CRM_MSGRECORD(uid,
+		user_id, total_count, succeed_count,
+		failed_count, wrong_count,
+		repeat_count, black_count, sheild_count,
+		status, template_content,
+		activity_name, send_creat, type, is_show,effect_is_show,
+		is_sent,marketing_type,roi_value,query_param_id,step_type,taobao_short_link_id,short_link_type,
+		createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock)
+		VALUES(#{uid}, #{userId}, #{totalCount}, #{succeedCount},
+		#{failedCount}, #{wrongCount}, #{repeatCount}, #{blackCount},
+		#{sheildCount},
+		#{status}, #{templateContent}, #{activityName},
+		#{sendCreat}, #{type},
+		#{isShow},#{effectIsShow},
+		#{isSent},#{marketingType},#{roiValue},#{queryParamId},#{stepType},#{taoBaoShortLinkId},#{shortLinkType},
+		#{createdBy},NOW(),#{lastModifiedBy},NOW(),0)
+	</insert>
+
+	<!-- 根据时间查询发送总记录的list -->
+	<select id="listMsgId" parameterType="java.util.Map" resultType="java.lang.Long">
+		select id
+		from CRM_MSGRECORD
+		<where>
+			uid = #{uid} and status = 5 and is_show = true and send_creat
+			between
+			#{beginTime} and #{endTime}
+			<if test="marketingType != null and marketingType != ''">
+				and marketing_type = #{marketingType}
+			</if>
+		</where>
+
+	</select>
+
+	<!-- 查询时间段内的msgId -->
+	<select id="queryMsgIdByTime" parameterType="java.util.Map"
+		resultMap="msgSendRecord">
+		select
+		id,uid,type,send_creat,succeed_count,step_type,effect_is_show,taobao_short_link_id
+		from CRM_MSGRECORD
+		<where>
+			succeed_count > 1 and is_show = true
+			<if test="msgId != null">
+				and id > #{msgId}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="uid != null">
+				and uid = #{uid}
+			</if>
+			<if test="status != null and status != ''">
+				and status = #{status}
+			</if>
+			<if test="beginTime != null and endTime != null">
+				and send_creat BETWEEN #{beginTime} and #{endTime}
+			</if>
+			<if test="marketingType != null and marketingType != ''">
+				and marketing_type = #{marketingType}
+			</if>
+		</where>
+	</select>
+
+	<!-- 发送记录查询(营销中心效果分析) -->
+	<select id="listMsgRecord" parameterType="java.util.Map"
+		resultMap="msgSendRecord">
+		select
+		id,activity_name,createdDate,send_creat,template_content,status,type,
+		succeed_count,marketing_type,roi_value,step_type,effect_is_show,query_param_id,
+		taobao_short_link_id,short_link_type,success_payment
+		from CRM_MSGRECORD
+		<where>
+			uid = #{uid} and is_show = true
+			<if test="activityName != null and activityName != ''">
+				and activity_name = #{activityName}
+			</if>
+			<if test="status != null and status != ''">
+				and status = #{status}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="beginTime != null">
+				and send_creat >= #{beginTime}
+			</if>
+			<if test="endTime != null">
+				and #{endTime} >= send_creat
+			</if>
+			<if test="isSent != null">
+				and is_sent = #{isSent}
+			</if>
+			<if test="stepType != null">
+				and step_type = #{stepType}
+			</if>
+			<if test="marketingType != null and marketingType != ''">
+				and marketing_type = #{marketingType}
+			</if>
+			order by send_creat DESC
+			<if test="startRows != null and pageSize != null">
+				limit #{startRows},#{pageSize}
+			</if>
+		</where>
+	</select>
+
+	<!-- 发送记录查询总条数(营销中心效果分析) -->
+	<select id="countMsgRecord" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(1)
+		from CRM_MSGRECORD
+		<where>
+			uid = #{uid} and is_show = true
+			<if test="activityName != null and activityName != ''">
+				and activity_name = #{activityName}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="beginTime != null">
+				and send_creat >= #{beginTime}
+			</if>
+			<if test="endTime != null">
+				and #{endTime} >= send_creat
+			</if>
+			<if test="isSent != null">
+				and is_sent = #{isSent}
+			</if>
+			<if test="marketingType != null and marketingType != ''">
+				and marketing_type = #{marketingType}
+			</if>
+			<if test="stepType != null">
+				and step_type = #{stepType}
+			</if>
+		</where>
+	</select>
+
+	<!-- 更新msg记录isShow为false，不显示 -->
+	<update id="updateMsgIsShow" parameterType="java.util.Map">
+		update CRM_MSGRECORD
+		set is_show = #{isShow},lastModifiedDate = now()
+		where id = #{msgId}
+	</update>
+
+	<!-- 查询时间段内发送过营销短信的uid -->
+	<select id="listUidBySendCreate" resultType="java.lang.Long">
+		select distinct uid
+		from CRM_MSGRECORD
+		<where>
+			<if test="bTime != null and eTime != null">
+				send_creat between #{bTime} and #{eTime}
+			</if>
+			<if test="maxUid != null">
+				and uid >= #{maxUid}
+			</if>
+		</where>
+		order by uid ASC
+	</select>
+
+	<!-- 更新ROI -->
+	<update id="updateMsgROIByid" parameterType="java.util.Map">
+		update CRM_MSGRECORD
+		<set>
+			<if test="successPayment != null ">
+				success_payment =
+				IFNULL(success_payment,0)+#{successPayment},
+			</if>
+			<if test="queryParamId != null and queryParamId != ''">
+				query_param_id = #{queryParamId}
+			</if>
+			lastModifiedDate = now()
+		</set>
+		<where>
+			id = #{msgId}
+		</where>
+	</update>
+	<!--更新定时定时记录发送时间 -->
+	<update id="updateMsgBeginSendCreat" parameterType="java.util.Map">
+		update CRM_MSGRECORD
+		<set>
+			<if test="sendCreat != null">
+				send_creat = #{sendCreat},
+			</if>
+			lastModifiedDate = now()
+		</set>
+		<where>
+			id = #{msgId}
+		</where>
+	</update>
+
+</mapper>

@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.item.IItemDao">
+	<resultMap type="com.kycrm.member.domain.entity.item.Item"
+		id="Item">
+		<result column="id" property="id" />
+		<result column="uid" property="uid" />
+		<result column="user_name" property="userName" />
+		<result column="num_iid" property="numIid" />
+		<result column="approve_status" property="approveStatus" />
+		<result column="cid" property="cid" />
+		<result column="has_showcase" property="hasShowcase" />
+		<result column="has_discount" property="hasDiscount" />
+		<result column="created" property="created" />
+		<result column="modified" property="modified" />
+		<result column="seller_cids" property="sellerCids" />
+		<result column="props" property="props" />
+		<result column="input_pids" property="inputPids" />
+		<result column="input_str" property="inputStr" />
+		<result column="num" property="num" />
+		<result column="list_time" property="listTime" />
+		<result column="delist_time" property="delistTime" />
+		<result column="stuff_status" property="stuffStatus" />
+		<result column="zip" property="zip" />
+		<result column="address" property="address" />
+		<result column="city" property="city" />
+		<result column="state" property="state" />
+		<result column="country" property="country" />
+		<result column="district" property="district" />
+		<result column="freight_payer" property="freightPayer" />
+		<result column="url" property="url" />
+		<result column="is_3D" property="is3D" />
+		<result column="score" property="score" />
+		<result column="sell_promise" property="sellPromise" />
+		<result column="title" property="title" />
+		<result column="type" property="type" />
+		<result column="item_desc" property="itemDesc" />
+		<result column="sku_id" property="sku_id" />
+		<result column="properties" property="properties" />
+		<result column="quantity" property="quantity" />
+		<result column="sku_created" property="skuCreated" />
+		<result column="sku_modified" property="skuModified" />
+		<result column="sku_status" property="skuStatus" />
+		<result column="sku_properties_name" property="skuPropertiesName" />
+		<result column="sku_spec_id" property="skuSpecId" />
+		<result column="sku_with_hold_quantity" property="skuWithHoldQuantity" />
+		<result column="sku_delivery_time" property="skuDeliveryTime" />
+		<result column="sku_price" property="skuPrice" />
+		<result column="sku_created" property="skuCreated" />
+		<result column="sku_modified" property="skuModified" />
+		<result column="sku_status" property="skuStatus" />
+		<result column="sku_properties_name" property="skuPropertiesName" />
+		<result column="sku_spec_id" property="skuSpecId" />
+		<result column="sku_with_hold_quantity" property="skuWithHoldQuantity" />
+		<result column="sku_delivery_time" property="skuDeliveryTime" />
+		<result column="change_prop" property="changeProp" />
+		<result column="props_name" property="propsName" />
+		<result column="promoted_service" property="promotedService" />
+		<result column="is_lightning_consignment" property="isLightningConsignment" />
+		<result column="is_fenxiao" property="isFenxiao" />
+		<result column="auction_point" property="auctionPoint" />
+		<result column="property_alias" property="propertyAlias" />
+		<result column="template_id" property="templateId" />
+		<result column="after_sale_id" property="afterSaleId" />
+		<result column="is_xinpin" property="isXinpin" />
+		<result column="sub_stock" property="subStock" />
+		<result column="features" property="features" />
+		<result column="item_weight" property="itemWeight" />
+		<result column="item_size" property="itemSize" />
+
+		<result column="sell_point" property="sellPoint" />
+		<result column="valid_thru" property="validThru" />
+		<result column="outer_id" property="outerId" />
+		<result column="auto_fill" property="autoFill" />
+		<result column="desc_modules" property="descModules" />
+		<result column="custom_made_type_id" property="customMadeTypeId" />
+		<result column="wireless_desc" property="wirelessDesc" />
+		<result column="barcode" property="barcode" />
+		<result column="newprepay" property="newprepay" />
+		<result column="price" property="price" />
+		<result column="post_fee" property="postFee" />
+		<result column="express_fee" property="expressFee" />
+		<result column="ems_fee" property="emsFee" />
+		<result column="global_stock_type" property="globalStockType" />
+		<result column="global_stock_country" property="globalStockCountry" />
+		<result column="large_screen_image_url" property="largeScreenImageUrl" />
+		<result column="sub_title" property="subTitle" />
+		<result column="optlock" property="version" />
+		<!-- 辅助信息 -->
+		<result column="createdBy" property="createdBy" />
+		<result column="createdDate" property="createdDate" />
+		<result column="lastModifiedBy" property="lastModifiedBy" />
+		<result column="lastModifiedDate" property="lastModifiedDate" />
+	</resultMap>
+
+	<!-- 根据用户id查询item表是否存在 -->
+	<select id="tableIsExists" resultType="java.lang.String">
+		show tables like
+		'crm_item${uid}'
+	</select>
+
+	<!-- 创建item表 -->
+	<insert id="createItemTable">
+		CREATE TABLE `crm_item${uid}` (
+		`id` bigint(20) NOT
+		NULL AUTO_INCREMENT,
+		`uid` bigint(20) DEFAULT NULL,
+		`createdBy`
+		varchar(100) DEFAULT NULL,
+		`createdDate` datetime DEFAULT NULL,
+		`lastModifiedBy` varchar(100) DEFAULT NULL,
+		`lastModifiedDate` datetime
+		DEFAULT NULL,
+		`optlock` int(2) DEFAULT '0',
+		`address` varchar(255)
+		DEFAULT NULL COMMENT '详细地址，最大256个字节（128个中文）',
+		`after_sale_id`
+		bigint(20) DEFAULT NULL COMMENT
+		'售后服务ID,该字段仅在taobao.item.get接口中返回',
+		`approve_status` varchar(255) DEFAULT NULL COMMENT
+		'商品上传后的状态。onsale出售中，instock库中',
+		`auction_point` int(11) DEFAULT NULL
+		COMMENT
+		'商品的积分返点比例。如:5,表示:返点比例0.5%商品的积分返点比例。如:5,表示:返点比例0.5%',
+		`auto_fill` varchar(255) DEFAULT NULL COMMENT
+		'代充商品类型。在代充商品的类目下，不传表示不标记商品类型（交易搜索中就不能通过标记搜到相关的交易了）。可选类型：
+		no_mark(不做类型标记) time_card(点卡软件代充) fee_card(话费软件代充)',
+		`barcode`
+		varchar(255) DEFAULT NULL COMMENT '商品级别的条形码',
+		`change_prop`
+		varchar(255) DEFAULT NULL COMMENT '基础色数据',
+		`cid` varchar(255) DEFAULT
+		NULL COMMENT '商品类目ID',
+		`city` varchar(255) DEFAULT NULL COMMENT
+		'所在城市（中文名称）',
+		`country` varchar(255) DEFAULT NULL COMMENT '国家名称',
+		`created` datetime DEFAULT NULL,
+		`custom_made_type_id` varchar(255)
+		DEFAULT NULL COMMENT '定制工具Id',
+		`delist_time` datetime DEFAULT NULL
+		COMMENT '下架时间',
+		`desc_modules` text COMMENT
+		'商品描述模块化，模块列表，由List转化成jsonArray存入，后端逻辑验证通过，拼装成模块内容+锚点导航后存入desc中。数据结构具体参见Item_Desc_Module',
+		`district` varchar(255) DEFAULT NULL COMMENT '区/县（只适用于物流API',
+		`ems_fee` varchar(255) DEFAULT NULL COMMENT
+		'ems费用,格式：5.00；单位：元；精确到：分',
+		`express_fee` varchar(255) DEFAULT NULL
+		COMMENT '快递费用,格式：5.00；单位：元；精确到：分',
+		`features` varchar(255) DEFAULT NULL
+		COMMENT
+		'宝贝特征值，只有在Top支持的特征值才能保存到宝贝上',
+		`freight_payer` varchar(255)
+		DEFAULT NULL COMMENT '运费承担方式,seller（卖家承担），buyer（买家承担）',
+		`global_stock_country` varchar(255) DEFAULT NULL COMMENT
+		'全球购商品采购地信息（地区/国家），代表全球购商品的产地信息。',
+		`global_stock_type` varchar(255)
+		DEFAULT NULL COMMENT
+		'全球购商品采购地信息（库存类型），有两种库存类型：现货和代购;参数值为1时代表现货，值为2时代表代购',
+		`has_discount`
+		varchar(255) DEFAULT NULL COMMENT '支持会员打折,true/false',
+		`has_showcase`
+		varchar(255) DEFAULT NULL COMMENT '橱窗推荐,true/false',
+		`input_pids`
+		varchar(1000) DEFAULT NULL COMMENT
+		'用户自行输入的类目属性ID串。结构：''pid1,pid2,pid3''，如：''20000''（表示品牌）
+		注：通常一个类目下用户可输入的关键属性不超过1个。',
+		`input_str` text COMMENT
+		'用户自行输入的子属性名和属性值，结构:''父属性值;一级子属性名;一级子属性值;二级子属性名;自定义输入值,....'',如：''耐克;耐克系列;科比系列;科比系列;2K5''，input_str需要与input_pids一一对应，注：通常一个类目下用户可输入的关键属性不超过1个。所有属性别名加起来不能超过
+		3999字节。',
+		`is_3D` bit(1) DEFAULT NULL COMMENT '是否是3D淘宝的商品',
+		`is_fenxiao` int(11) DEFAULT NULL COMMENT '非分销商品：0，代销：1，经销：2',
+		`is_lightning_consignment` bit(1) DEFAULT NULL COMMENT '是否24小时闪电发货',
+		`is_xinpin` bit(1) DEFAULT NULL COMMENT
+		'标示商品是否为新品。值含义：true-是，false-否。',
+		`item_desc` varchar(255) DEFAULT NULL
+		COMMENT '商品描述, 字数要大于5个字符，小于25000个字符',
+		`item_size` varchar(255) DEFAULT
+		NULL COMMENT
+		'表示商品的体积，用于按体积计费的运费模板。该值的单位为立方米（m3）。该值支持两种格式的设置：格式1：bulk:3,单位为立方米(m3),表示直接设置为商品的体积。格式2：weight:10;breadth:10;height:10，单位为米（m）',
+		`item_weight` varchar(255) DEFAULT NULL COMMENT
+		'商品的重量，用于按重量计费的运费模板。注意：单位为kg',
+		`large_screen_image_url` varchar(255)
+		DEFAULT NULL COMMENT '门店大屏图',
+		`list_time` datetime DEFAULT NULL COMMENT
+		'上架时间',
+		`modified` datetime DEFAULT NULL COMMENT '修改时间',
+		`newprepay`
+		varchar(255) DEFAULT NULL COMMENT '是否为新消保法中的7天无理由退货',
+		`nick`
+		varchar(255) DEFAULT NULL COMMENT '卖家昵称',
+		`num` int(11) DEFAULT NULL
+		COMMENT '商品数量',
+		`num_iid` bigint(20) DEFAULT NULL COMMENT '商品数字id',
+		`outer_id` varchar(255) DEFAULT NULL COMMENT
+		'商家外部编码(可与商家外部系统对接)。需要授权才能获取',
+		`post_fee` varchar(255) DEFAULT NULL
+		COMMENT
+		'平邮费用,格式：5.00；单位：元；精确到：分',
+		`price` varchar(255) DEFAULT NULL
+		COMMENT '商品价格，格式：5.00；单位：元；精确到：分',
+		`promoted_service` varchar(255)
+		DEFAULT NULL COMMENT
+		'消保类型，多个类型以,分割。可取以下值：2：假一赔三；4：7天无理由退换货',
+		`properties` varchar(255) DEFAULT NULL COMMENT
+		'ku的销售属性组合字符串（颜色，大小，等等，可通过类目API获取某类目下的销售属性）,格式是p1:v1;p2:v2',
+		`property_alias` varchar(2000) DEFAULT NULL COMMENT
+		'属性值别名,比如颜色的自定义名称',
+		`props` text COMMENT '商品属性 格式：pid:vid;pid:vid',
+		`props_name` text COMMENT
+		'商品属性名称。标识着props内容里面的pid和vid所对应的名称。格式为：pid1:vid1:pid_name1:vid_name1;pid2:vid2:pid_name2:vid_name2……',
+		`quantity` int(11) DEFAULT NULL COMMENT '属于这个sku的商品的数量',
+		`score`
+		int(11) DEFAULT NULL COMMENT
+		'商品所属卖家的信用等级数，1表示1心，2表示2心……，只有调用商品搜索:taobao.items.get和taobao.items.search的时候才能返回',
+		`sell_point` varchar(255) DEFAULT NULL COMMENT
+		'商品卖点信息，天猫商家使用字段，最长150个字符',
+		`sell_promise` bit(1) DEFAULT NULL COMMENT
+		'是否承诺退换货服务!',
+		`seller_cids` varchar(255) DEFAULT NULL COMMENT
+		'商品所属的店铺内卖家自定义类目列表',
+		`sku_created` varchar(255) DEFAULT NULL COMMENT
+		'sku创建日期 时间格式：yyyy-MM-dd HH:mm:ss',
+		`sku_delivery_time` varchar(255)
+		DEFAULT NULL COMMENT 'sku级别发货时间',
+		`sku_id` bigint(20) DEFAULT NULL
+		COMMENT 'sku的id',
+		`sku_modified` varchar(255) DEFAULT NULL COMMENT
+		'sku最后修改日期 时间格式：yyyy-MM-dd
+		HH:mm:ss',
+		`sku_price` varchar(255) DEFAULT
+		NULL COMMENT '属于这个sku的商品的价格
+		取值范围:0-100000000;精确到2位小数;单位:元。如:200.07，表示:200元7分。',
+		`sku_properties_name` varchar(255) DEFAULT NULL COMMENT
+		'sku所对应的销售属性的中文名字串，格式如：pid1:vid1:pid_name1:vid_name1;pid2:vid2:pid_name2:vid_name2……',
+		`sku_spec_id` int(11) DEFAULT NULL COMMENT '表示SKu上的产品规格信息',
+		`sku_status` varchar(255) DEFAULT NULL COMMENT 'sku状态。 normal:正常
+		；delete:删除',
+		`sku_with_hold_quantity` int(11) DEFAULT NULL COMMENT
+		'商品在付款减库存的状态下，该sku上未付款的订单数量',
+		`state` varchar(255) DEFAULT NULL COMMENT
+		'所在省份（中文名称）',
+		`stuff_status` varchar(255) DEFAULT NULL COMMENT
+		'商品新旧程度(全新:new，闲置:unused，二手：second)',
+		`sub_stock` int(11) DEFAULT NULL
+		COMMENT '商品是否支持拍下减库存:1支持;2取消支持(付款减库存);0(默认)不更改
+		集市卖家默认拍下减库存;
+		商城卖家默认付款减库存',
+		`template_id` varchar(255) DEFAULT NULL COMMENT '页面模板id',
+		`title` varchar(500) DEFAULT NULL COMMENT '商品标题,不能超过60字节',
+		`type`
+		varchar(255) DEFAULT NULL COMMENT '商品类型(fixed:一口价;auction:拍卖)注：取消团购',
+		`url` varchar(255) DEFAULT NULL COMMENT '图片路径',
+		`valid_thru` int(11)
+		DEFAULT NULL COMMENT '有效期,7或者14（默认是7天）',
+		`wireless_desc` text COMMENT
+		'无线的宝贝描述',
+		`with_hold_quantity` int(11) DEFAULT NULL COMMENT
+		'预扣库存，即付款减库存的商品现在有多少处于未付款状态的订单',
+		`zip` varchar(255) DEFAULT NULL
+		COMMENT '邮政编码',
+		`itemCount` int(11) DEFAULT NULL,
+		`sub_title`
+		varchar(255) DEFAULT NULL COMMENT '商品缩写',
+		`user_name` varchar(255)
+		DEFAULT NULL,
+		PRIMARY KEY (`id`),
+		KEY `num_iid` (`num_iid`) USING BTREE,
+		KEY `user_id` (`nick`) USING BTREE,
+		KEY `approve_status`
+		(`approve_status`) USING BTREE,
+		KEY `title` (`title`(255)) USING BTREE
+		) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+	</insert>
+
+	<!-- 订单中心分页查询商品（商品缩写） -->
+	<select id="limitItemList" parameterType="java.util.Map"
+		resultMap="Item">
+		select id,num_iid,title,price,url,sub_title
+		from crm_item${uid}
+		<where>
+			1 = 1
+			<if test="numIid != null">
+				and num_iid = #{numIid}
+			</if>
+			<if test="minPrice != null">
+				and price >= #{minPrice}
+			</if>
+			<if test="maxPrice != null">
+				and #{maxPrice} >= price
+			</if>
+			<if test="title != null and title != ''">
+				and title like '%${title}%'
+			</if>
+			<if test="numIids != null">
+				and num_iid in
+				<foreach collection="numIids" item="numIid" open="(" close=")" separator=",">
+					#{numIid}
+				</foreach>
+			</if>
+			<if test="approveStatusList != null">
+				and approve_status in
+				<foreach collection="approveStatusList" item="approveStatus"
+					open="(" separator="," close=")">
+					#{approveStatus}
+				</foreach>
+			</if>
+			order by num_iid ASC
+		</where>
+		<if test="startRows != null and pageSize != null">
+			limit #{startRows},#{pageSize}
+		</if>
+	</select>
+
+	<!-- 根据商品名称查询商品总数（订单中心商品缩写） -->
+	<select id="countItemByTitle" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(*)
+		from crm_item${uid}
+		<where>
+			1 = 1
+			<if test="title != null and title != ''">
+				and title like '%${title}%'
+			</if>
+			<if test="minPrice != null">
+				and price >= #{minPrice}
+			</if>
+			<if test="maxPrice != null">
+				and #{maxPrice} >= price
+			</if>
+			<if test="numIid != null">
+				and num_iid = #{numIid}
+			</if>
+			<if test="numIids != null">
+				and num_iid in
+				<foreach collection="numIids" item="numIid" open="(" close=")" separator=",">
+					#{numIid}
+				</foreach>
+			</if>
+			<if test="approveStatusList != null">
+				and approve_status in
+				<foreach collection="approveStatusList" item="approveStatus"
+					open="(" separator="," close=")">
+					#{approveStatus}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<!-- 更改缩写 -->
+	<update id="updateSubtitleById" parameterType="java.util.Map">
+		update crm_item${uid}
+		<set>
+			sub_title = #{subTitle}
+		</set>
+		<where>
+			id = #{itemId}
+		</where>
+	</update>
+
+	<!-- 商品id查询所有商品 -->
+	<select id="listItemByIds" parameterType="java.util.Map"
+		resultMap="Item">
+		select num_iid,title,price,approve_status,url
+		from crm_item${uid}
+		<where>
+			1 = 1
+			<if test="numIids != null">
+				and num_iid in
+				<foreach collection="numIids" item="numIid" open="("
+					separator="," close=")">
+					#{numIid}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<!--根据商品id,查询宝贝昵称 -->
+	<select id="findSubtitleById" resultMap="Item">
+		select sub_title,title
+		from crm_item${uid} where num_iid = #{itemId} limit 0,1
+	</select>
+
+	<!-- 批量存储商品信息 -->
+	<insert id="batchSaveItemsByUid" parameterType="java.util.Map">
+		insert into crm_item${uid}(
+		uid,
+		user_name,
+		num_iid,
+		approve_status,
+		cid,
+		has_showcase,
+		has_discount,
+		created,
+		modified,
+		seller_cids,
+		props,
+		input_pids,
+		input_str,
+		num,
+		list_time,
+		delist_time,
+		stuff_status,
+		zip,
+		address,
+		city,
+		state,
+		country,
+		district,
+		freight_payer,
+		url,
+		is_3D,
+		score,
+		sell_promise,
+		title,
+		type,
+		item_desc,
+		sku_id,
+		properties,
+		quantity,
+		sku_price,
+		sku_created,
+		sku_modified,
+		sku_status,
+		sku_properties_name,
+		sku_spec_id,
+		sku_with_hold_quantity,
+		sku_delivery_time,
+		change_prop,
+		props_name,
+		promoted_service,
+		is_lightning_consignment,
+		is_fenxiao,
+		auction_point,
+		property_alias,
+		template_id,
+		after_sale_id,
+		is_xinpin,
+		sub_stock,
+		features,
+		item_weight,
+		item_size,
+		sell_point,
+		valid_thru,
+		auto_fill,
+		desc_modules,
+		custom_made_type_id,
+		wireless_desc,
+		barcode,
+		newprepay,
+		price,
+		post_fee,
+		express_fee,
+		ems_fee,
+		global_stock_type,
+		global_stock_country,
+		large_screen_image_url,
+		optlock,
+		createdBy,
+		createdDate,
+		lastModifiedBy,
+		lastModifiedDate,
+		sub_title
+		)
+		values
+		<foreach collection="itemList" item="item" separator=",">
+			(
+			#{item.uid,jdbcType=BIGINT},
+			#{item.userName,jdbcType=VARCHAR},
+			#{item.numIid,jdbcType=BIGINT},
+			#{item.approveStatus,jdbcType=VARCHAR},
+			#{item.cid,jdbcType=VARCHAR},
+			#{item.hasShowcase,jdbcType=VARCHAR},
+			#{item.hasDiscount,jdbcType=VARCHAR},
+			#{item.created,jdbcType=TIMESTAMP},
+			#{item.modified,jdbcType=TIMESTAMP},
+			#{item.sellerCids,jdbcType=VARCHAR},
+			#{item.props,jdbcType=VARCHAR},
+			#{item.inputPids,jdbcType=VARCHAR},
+			#{item.inputStr,jdbcType=VARCHAR},
+			#{item.num,jdbcType=INTEGER},
+			#{item.listTime,jdbcType=TIMESTAMP},
+			#{item.delistTime,jdbcType=TIMESTAMP},
+			#{item.stuffStatus,jdbcType=TIMESTAMP},
+			#{item.zip,jdbcType=VARCHAR},
+			#{item.address,jdbcType=VARCHAR},
+			#{item.city,jdbcType=VARCHAR},
+			#{item.state,jdbcType=VARCHAR},
+			#{item.country,jdbcType=VARCHAR},
+			#{item.district,jdbcType=VARCHAR},
+			#{item.freightPayer,jdbcType=VARCHAR},
+			#{item.url,jdbcType=VARCHAR},
+			#{item.is3D,jdbcType=TINYINT},
+			#{item.score,jdbcType=INTEGER},
+			#{item.sellPromise,jdbcType=TINYINT},
+			#{item.title,jdbcType=VARCHAR},
+			#{item.type,jdbcType=VARCHAR},
+			#{item.itemDesc,jdbcType=VARCHAR},
+			#{item.skuId,jdbcType=BIGINT},
+			#{item.properties,jdbcType=VARCHAR},
+			#{item.quantity,jdbcType=INTEGER},
+			#{item.skuPrice,jdbcType=VARCHAR},
+			#{item.skuCreated,jdbcType=VARCHAR},
+			#{item.skuModified,jdbcType=VARCHAR},
+			#{item.skuStatus,jdbcType=VARCHAR},
+			#{item.skuPropertiesName,jdbcType=VARCHAR},
+			#{item.skuSpecId,jdbcType=INTEGER},
+			#{item.skuWithHoldQuantity,jdbcType=INTEGER},
+			#{item.skuDeliveryTime,jdbcType=VARCHAR},
+			#{item.changeProp,jdbcType=VARCHAR},
+			#{item.propsName,jdbcType=VARCHAR},
+			#{item.promotedService,jdbcType=VARCHAR},
+			#{item.isLightningConsignment,jdbcType=TINYINT},
+			#{item.isFenxiao,jdbcType=INTEGER},
+			#{item.auctionPoint,jdbcType=INTEGER},
+			#{item.propertyAlias,jdbcType=VARCHAR},
+			#{item.templateId,jdbcType=VARCHAR},
+			#{item.afterSaleId,jdbcType=BIGINT},
+			#{item.isXinpin,jdbcType=TINYINT},
+			#{item.subStock,jdbcType=INTEGER},
+			#{item.features,jdbcType=VARCHAR},
+			#{item.itemWeight,jdbcType=VARCHAR},
+			#{item.itemSize,jdbcType=VARCHAR},
+			#{item.sellPoint,jdbcType=VARCHAR},
+			#{item.validThru,jdbcType=INTEGER},
+			#{item.autoFill,jdbcType=VARCHAR},
+			#{item.descModules,jdbcType=VARCHAR},
+			#{item.customMadeTypeId,jdbcType=VARCHAR},
+			#{item.wirelessDesc,jdbcType=VARCHAR},
+			#{item.barcode,jdbcType=VARCHAR},
+			#{item.newprepay,jdbcType=VARCHAR},
+			#{item.price,jdbcType=VARCHAR},
+			#{item.postFee,jdbcType=VARCHAR},
+			#{item.expressFee,jdbcType=VARCHAR},
+			#{item.emsFee,jdbcType=VARCHAR},
+			#{item.globalStockType,jdbcType=VARCHAR},
+			#{item.globalStockCountry,jdbcType=VARCHAR},
+			#{item.largeScreenImageUrl,jdbcType=VARCHAR},
+			#{item.version,jdbcType=INTEGER},
+			#{item.createdBy,jdbcType=VARCHAR},
+			#{item.createdDate,jdbcType=TIMESTAMP},
+			#{item.lastModifiedBy,jdbcType=VARCHAR},
+			#{item.lastModifiedDate,jdbcType=TIMESTAMP},
+			#{item.subTitle,jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+
+
+	 <!-- 通过uid查询商品id和标题 -->
+	<select id="findItemTitleAndItemid" resultType="com.kycrm.member.domain.entity.item.ItemImport" parameterType="java.util.Map">
+	  	SELECT num_iid AS numIid,title 
+	  	FROM crm_item#{uid}
+		WHERE title IN
+		<foreach collection="list" item="item" index="index"
+		      open="(" separator="," close=")">  
+		        #{item} 
+	   </foreach>
+		GROUP BY title
+	</select>
+	
+	<!-- 批量删除导入商品 -->
+	<delete id="batchDeleteImportItems" parameterType="java.util.Map">
+		DELETE FROM crm_item#{uid} WHERE num_iid IN
+		<foreach collection="list" item="item" index="index"
+	      open="(" separator="," close=")">  
+	        #{item} 
+		</foreach>
+	</delete>
+	
+	<!-- 批量添加导入商品 -->
+	<insert id="insertItemImportList" parameterType="java.util.Map">  
+		 insert into crm_item#{uid}
+		    (uid,nick,num_iid,title,price,approve_status,url,createdBy,lastModifiedBy,createdDate,lastModifiedDate,optlock) 
+		 values  
+	    	<foreach collection="list" item="item" index="index"  
+	       	 	separator=",">  
+	        	(#{item.uid},#{item.nick},#{item.numIid},#{item.title},#{item.price},#{item.approveStatus},#{item.url},#{item.createdBy},#{item.lastModifiedBy},now(),now(),0)  
+	    	</foreach>  
+    </insert> 
+    
+    <!-- 清空商品表 -->
+    <insert id="trancateTable" parameterType="java.lang.Long">
+    	truncate table crm_item${uid}
+    </insert>
+    
+    
+    <!--  -->
+    <select id="listAllItemIdByTitle" parameterType="java.util.Map" resultType="java.lang.Long">
+    	select num_iid
+    	from crm_item${uid}
+    	where title like '%${title}%'
+    </select>
+    
+    <select id="fuzzilyFindNumIidByGoodsKeyCode" resultType="java.lang.Long">
+    	SELECT NUM_IID FROM CRM_ITEM${uid} WHERE TITLE LIKE "%"#{goodsKeyCode}"%"
+    </select>
+</mapper>

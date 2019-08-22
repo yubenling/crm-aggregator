@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.kycrm.member.dao.message.ISmsTemplateDao">
+ 	<resultMap type="com.kycrm.member.domain.entity.message.SmsTemplate" id="smsTemplate">
+ 		<result column="content" property="content"/>
+ 		<result column="type" property="type"/>
+ 		<result column="customer_type" property="customerType"/>
+ 		<result column="create_date" property="createDate"/>
+ 		<result column="fashion" property="fashion"/>
+ 		<result column="name" property="name"/>
+ 		<result column="user_nick" property="userNick"/>
+ 		<result column="uid" property="uid"/>
+ 		<result column="id" property="id"/>
+ 		<result column="sub_type" property="subType"/>
+ 	</resultMap>
+ 	
+ 	<!-- 添加一条记录 -->
+ 	<insert id="saveSmsTemplate" parameterType="com.kycrm.member.domain.entity.message.SmsTemplate">
+ 		insert into crm_sms_template(content,type,customer_type,create_date,fashion,name,user_nick,uid,
+ 		optlock)
+ 		value(#{content},#{type},#{customerType},#{createDate},#{fashion},#{name},#{userNick},#{uid},0)
+ 	</insert>
+ 	
+ 	<!-- 查询所有符合条件的模板 -->
+ 	<select id="listSmsTemplate" parameterType="java.util.Map" resultMap="smsTemplate">
+ 		select id,name,content
+ 		from crm_sms_template
+ 		<where>
+ 			<if test="uid != null">
+ 				and uid = #{uid}
+ 			</if>
+ 			<if test="type != null and type != ''">
+ 				and type = #{type}
+ 			</if>
+ 			<if test="subType!=null and subType!=''">
+ 			    and sub_type=#{subType}
+ 			</if>
+ 			<if test="customerType != null and customerType != ''">
+ 				and customer_type = #{customerType}
+ 			</if>
+ 		</where>
+ 	</select>
+ 	
+ 	<!-- 删除短语库 -->
+ 	<delete id="deleteTemplateById" parameterType="java.lang.Long">
+ 		delete from crm_sms_template where id = #{id}
+ 	</delete>
+ 	
+ 	<!--通过模板名称查询模板  -->
+ 	<select id="findSmsTemName" resultType="int" parameterType="com.kycrm.member.domain.entity.message.SmsTemplate">
+ 	      select count(*) from crm_sms_template where uid=#{uid} and name=#{name}
+ 	</select>
+ 	
+ 	<!--通过短信类型查询模板  -->
+ 	<select id="findSmsSubTpye"  resultMap="smsTemplate" parameterType="java.lang.String">
+ 	      SELECT * FROM crm_sms_template where sub_type IS NOT NULL and type=#{type}
+ 	</select>
+ 	
+ </mapper>

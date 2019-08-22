@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.user.IUserOperationLogDao">
+	<!-- 保存用户的账户操作日志 -->
+	<insert id="doCreateUserOperationLog" parameterType="com.kycrm.member.domain.entity.user.UserOperationLog" >
+	   INSERT INTO CRM_OPERATION_LOG 
+	   (
+		   	UID,
+		   	OPERATOR,
+		   	FUNCTIONS,
+		   	TYPE,
+		   	DATE,
+		   	STATE,
+		   	IP_ADD,
+		   	REMARK,
+		   	USER_ID,
+		   	FUNCTIONGENS,
+		   	createdBy,
+		   	createdDate,
+		   	lastModifiedBy,
+		   	lastModifiedDate,
+		   	optlock
+	   	)
+	   VALUES
+	   (  
+		   #{uid},
+		   #{operator},
+		   #{functions},
+		   #{type},
+		   now(),
+		   #{state},
+		   #{ipAdd},
+		   #{remark},
+		   #{userId},
+		   #{functionGens},
+		   #{createdBy},
+		   now(),
+		   #{lastModifiedBy},
+		   now(),
+		   0
+	   )
+	</insert>	
+</mapper>

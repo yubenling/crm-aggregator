@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.syn.dao.trade.ITradeErrorMessageDao">
+
+	<insert id="doCreateTradeErrorMessage"
+		parameterType="com.kycrm.member.domain.entity.trade.TradeErrorMessage">
+		INSERT INTO
+		crm_trade_error_message(createdDate,jdpResponse,isTrade,errorMessage,type)
+		VALUE(now(),#{jdpResponse},#{isTrade},#{errorMessage},#{type})
+	</insert>
+</mapper> 

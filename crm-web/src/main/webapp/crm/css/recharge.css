@@ -1,0 +1,267 @@
+em,span,strong{font-style: normal; font-weight: normal;}
+.recharge>.title{
+	color:#ff4e4e ;
+	font-size: 0.72vw;
+	margin:2.0833vw 0 1.40625vw 0;
+}
+.recharge .rechargeTable{
+	width: 64.322vw;
+	border-collapse: collapse;
+	border: 1px  solid #b3c3d0;
+}
+.recharge .rechargeTable tr.trone{
+	height: 3.0208vw;
+	background-color: #e3e7f0;
+	border-bottom: 1px solid #b3c3d0;
+}
+.recharge .rechargeTable tr.trone th{width: 25%;color: #384856;}
+.recharge .rechargeTable tr.trtwo{
+	height:2.08333vw ;
+}
+.recharge .rechargeTable tr.trtwo td{text-align: center;border: 1px  solid #b3c3d0;color: #384856;}
+.recharge .rechargeTable tr.trtwo td span{font-size: 1.041vw;color: #384856;}
+.recharge .rechargeTable tr.trtwo td a{
+	display: inline-block;
+	width: 3.125vw;
+	height: 1.3541vw;
+	line-height: 1.3541vw;
+	border: 1px solid #00a0e9;
+	color: #00a0e9;
+	text-decoration: none;
+	border-radius: 5px;
+}
+.customRecharge{
+	margin-top: 2.0833vw;
+}
+.customRecharge h3{
+	
+	margin-bottom:1.4583vw ;
+}
+.customRecharge h3 strong{
+	font-size: 0.9375vw;
+	color: #384856;
+	float:left;
+}
+.customRecharge h3>div{position:relative;}
+.customRecharge h3>div>span{
+	float:left;
+	margin-left: 1vw;
+	width:0.9375vw;
+	height:0.9375vw;
+	background:url(../images/newIconbg2.png) 0 -1.666vw;
+	background-size:1.5625vw 10.417vw;
+	margin-top:0.19vw;
+	cursor:pointer;
+}
+.customRecharge h3>div .jfgzBox{
+	position:absolute;
+	width:17.708vw;
+	height:16.14583vw;
+	z-index:32;
+	background-color:#fff;
+	left:2.3vw;
+	top:-8vw;
+	display:none;
+}
+.customRecharge h3>div .jfgzBox img{
+	width:100%;
+	height:100%;
+}
+.customRechargeDiv{float: left;height: 2.1875vw;margin-right: 8.333vw;}
+.customRechargeDiv label{
+	float: left;
+	height:2.1875vw ;
+	line-height: 2.1875vw;
+	padding: 0 1.0416vw;
+	color: #384856;
+	font-size: 0.83vw;
+}
+.customRechargeDiv p{float:left;height: 2.1875vw;
+	line-height: 2.1875vw;}
+.customRechargeDiv input{
+	width: 10.572vw;
+	height: 2.1875vw;
+	line-height: 2.1875vw;
+	box-sizing: border-box;
+	border: 1px solid #cad3df;
+	border-radius: 5px;
+	outline: none;
+	padding-left: 0.5vw;
+	float: left;
+}
+.customRechargeDiv span{
+	float: left;
+	height:2.1875vw;
+	line-height: 2.1875vw;
+	padding: 0 0.5vw;
+	color: #384856;
+	font-size: 0.83vw;
+}
+.customRechargeCz{
+	width: 7.291vw;
+	height:2.1875vw;
+	line-height: 2.1875vw;
+	background-color: #00a0e9;
+	color: #fff;
+	border-radius: 5px;
+	font-size: 0.83vw;
+	float: left;
+	text-align: center;
+}
+#customRechargeBox{
+	width: 34.375vw;
+	height: 20.9895vw;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-left: -17.1875vw;
+	margin-top: -10.49475vw;
+	background-color: #fff;
+	z-index: 50;
+	border-radius: 8px;
+	display: none;
+}
+.customRechargeBox{
+	position:relative;
+	z-index:30;
+	padding-bottom:3vw;
+	background-color:#fff;
+	border-radius: 8px 8px 0 0;
+}
+#customRechargeBox .title{
+	height: 3.125vw;
+	background-color: #00a0e9;
+	border-radius: 8px 8px 0 0;
+}
+#customRechargeBox .title img{float: left;width:1.40625vw;height: 1.30208vw;margin-left: 1.4583vw; margin-top: 0.9375vw;}
+#customRechargeBox .title span{float: left;height: 3.125vw; line-height:3.125vw;font-size: 0.9375vw;color: #fff; margin-left: 0.83vw;}
+#customRechargeBox .content{
+	padding-left:2.08333vw;
+	padding-top: 1vw;
+}
+#customRechargeBox .contentDiv{
+	padding: 0.7vw 0;
+}
+#customRechargeBox .contentDiv label{
+	float: left;
+	height: 1.5625vw;
+	line-height: 1.5625vw;
+	width: 6.875vw;
+}
+#customRechargeBox .contentDiv p{
+	float: left;
+	height: 1.5625vw;
+	line-height: 1.5625vw;
+	font-size: 0.7291vw;
+}
+#customRechargeBox .contentDiv p span{
+	font-size: 1.0416vw;
+}
+#customRechargeBox .contentDiv p strong{margin-left: 1vw;}
+#customRechargeBox .contentDiv ul{
+	float: left;
+}
+#customRechargeBox .contentDiv ul li{
+	float: left;
+	height: 1.5625vw;
+	line-height: 1.5625vw;
+	text-align: center;
+	border: 1px solid #00a0e9;
+	color: #00a0e9;
+	background-color: #caefff;
+	box-sizing: border-box;
+	border-radius: 5px;
+	margin-right: 1.302vw;
+	width: 5.729vw;
+	cursor: pointer;
+}
+#customRechargeBox .contentDiv ul li.on{
+	background-color: #00a0e9;
+	color: #fff;
+}
+#customRechargeBox .btn{
+	text-align: center;
+	margin-top: 5vw;
+}
+#customRechargeBox .btn a{
+	display: inline-block;
+	width: 5.208vw;
+	height: 2.08vw;
+	line-height: 2.08vw;
+	text-align: center;
+	border-radius: 5px;
+	margin: 0 2vw;
+}
+#customRechargeBox .btn a.zf{
+	background-color: #00a0e9;
+	color: #fff;
+	border: 1px solid #00a0e9;
+}
+#customRechargeBox .btn a.qx{
+	background-color: #fff;
+	color: #384856;
+	border: 1px solid #000;
+	
+}
+#error{
+	position: fixed;
+	width: 320px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	color: #fff;
+	background-color: #000;
+	border-radius: 5px;
+	top: 50%;
+	left: 50%;
+	margin-left: -160px;
+	margin-top: -30px;
+	display: none;
+}
+.zfberweimaBox{
+	width:13.54vw;
+	height:20.9895vw;
+	background-color:#fff;
+	position:absolute;
+	top:0;
+	right:0vw;
+	border-radius:8px;
+	z-index:29;
+	transition:all 1s;
+	-moz-transition:all 1s;
+	-webkit-transition:all 1s;
+	-ms--transition:all 1s;
+}
+.zfberweimaBox.active{
+
+	right:-14vw;
+
+}
+.zfberweimaBox h3{
+	margin:3.125vw 0 1.0416vw 0;
+	font-size:1.0416vw;
+	text-align:center;
+}
+.zfberweimaBox p{
+	margin-bottom:1.8229vw;
+	text-align:center;
+}
+.zfberweimaBox .ewmBox{
+	width:10.4166vw;
+	height:10.4166vw;
+	margin:0 auto;
+	text-align:center;
+}
+.zfberweimaBox .ewmBox img{
+	width:100%;
+	height:100%;
+}
+.czTable{
+	width:80vw;
+}
+.czTable .trone th{width:25%;}
+.czTable .trtwo td{text-align:center;}
+.czTable .trone,.czTable .trtwo{
+	height:2.864583vw;
+}
+.czTable .trtwo{background-color:#fafafa}

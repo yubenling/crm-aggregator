@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.orderimport.IOrderImportRecordDao">
+	<!-- 保存数据 -->
+	<insert id="insertOrderImportRecord" parameterType="com.kycrm.member.domain.entity.orderimport.OrderImportRecord" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO 
+		CRM_ORDER_HISTORY_IMPORT(
+				uid,user_id,order_name,order_number,commodity_name,commodity_number,
+				state,createdBy,lastModifiedBy,createdDate,lastModifiedDate,optlock) 
+		VALUE(
+				#{uid},#{userId},#{orderName},#{orderNumber},#{commodityName},#{commodityNumber},
+				#{state},#{createdBy},#{lastModifiedBy},now(),now(),0);
+	</insert>
+	
+	<!-- 更新历史订单导入的处理状态  -->
+	<update id="updateOrderImportRecordState" parameterType="java.lang.Long">
+		update CRM_ORDER_HISTORY_IMPORT
+		SET state=0
+		where id = #{id} 
+	</update>
+	
+	
+	<select id="findOrderImportRecordList" parameterType="com.kycrm.member.domain.vo.orderimport.OrderImportRecordVO" resultType="com.kycrm.member.domain.entity.orderimport.OrderImportRecord">
+		SELECT * FROM(
+			SELECT id,createdDate,order_name AS orderName,order_number AS orderNumber,
+					commodity_name AS commodityName,commodity_number AS commodityNumber,state
+			FROM CRM_ORDER_HISTORY_IMPORT
+			WHERE uid = #{uid}
+			<if test="fileName != null and fileName != ''">
+				AND order_name = #{fileName}
+			</if>
+			UNION ALL
+			SELECT id,createdDate,order_name AS orderName,order_number AS orderNumber,
+					commodity_name AS commodityName,commodity_number AS commodityNumber,state
+			FROM CRM_ORDER_HISTORY_IMPORT
+			WHERE uid = #{uid}
+			<if test="fileName != null and fileName != ''">
+				AND commodity_name = #{fileName}
+			</if>
+		)CRM_ORDER_HISTORY_IMPORT
+		<where>
+			<if test="beginTime != null">
+				AND DATE_FORMAT(createdDate,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{beginTime},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="endTime != null">
+				AND DATE_FORMAT(#{endTime},'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(createdDate,'%Y/%m/%d %H:%i:%s')
+			</if>
+		</where>
+		GROUP BY id
+		ORDER BY createdDate DESC
+		limit #{startRows},#{currentRows}
+	</select>
+	
+	
+	<select id="findOrderImportRecordCount" parameterType="com.kycrm.member.domain.vo.orderimport.OrderImportRecordVO" resultType="java.lang.Long">
+		
+		SELECT COUNT(id) FROM(
+			SELECT * FROM(
+				SELECT id,createdDate,order_name AS orderName,order_number AS orderNumber,
+						commodity_name AS commodityName,commodity_number AS commodityNumber,state
+				FROM CRM_ORDER_HISTORY_IMPORT
+				WHERE uid = #{uid}
+				<if test="fileName != null and fileName != ''">
+					AND order_name = #{fileName}
+				</if>
+				UNION ALL
+				SELECT id,createdDate,order_name AS orderName,order_number AS orderNumber,
+						commodity_name AS commodityName,commodity_number AS commodityNumber,state
+				FROM CRM_ORDER_HISTORY_IMPORT
+				WHERE uid = #{uid}
+				<if test="fileName != null and fileName != ''">
+					AND commodity_name = #{fileName}
+				</if>
+			)CRM_ORDER_HISTORY_IMPORT1
+			<where>
+				<if test="beginTime != null">
+					AND DATE_FORMAT(createdDate,'%Y/%m/%d %H:%i:%s') >=
+					DATE_FORMAT(#{beginTime},'%Y/%m/%d %H:%i:%s')
+				</if>
+				<if test="endTime != null">
+					AND DATE_FORMAT(#{endTime},'%Y/%m/%d %H:%i:%s') >=
+					DATE_FORMAT(createdDate,'%Y/%m/%d %H:%i:%s')
+				</if>
+			</where>
+			GROUP BY id
+		)CRM_ORDER_HISTORY_IMPORT2
+	</select>
+	
+	
+	 <delete id="deleteOrderImportRecord" parameterType="java.lang.Long">
+    	DELETE FROM CRM_ORDER_HISTORY_IMPORT
+    	WHERE id = #{id} AND uid = #{uid}
+    </delete>
+</mapper>

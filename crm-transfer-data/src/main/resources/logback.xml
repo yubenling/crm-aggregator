@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	
+	<property name="BASE_LOG_HOME" value="E:/LOGS/kycrm-logs" />
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS}[%thread] %logger{36}[%line] - %msg %mdc %n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+          <level>DEBUG</level>
+        </filter>
+		<file>${BASE_LOG_HOME}/crm-transfer-data.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${BASE_LOG_HOME}/%d{yyyy/MM/dd,aux}/crm-transfer-data-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy	class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoding>UTF-8</encoding>
+		<encoder>
+			<pattern>--|%X{traceId}|%X{hostIP}|%date{yyyy-MM-dd	HH:mm:ss}[%level][%thread]%logger{60}-%msg%n</pattern>
+		</encoder>
+	</appender>
+		
+	<logger name="org.apache" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="com.kycrm" level="DEBUG">
+		<appender-ref ref="ALL"/>
+	</logger>
+	
+	<!-- Root Logger -->
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ALL"/>
+	</root>
+	
+</configuration> 

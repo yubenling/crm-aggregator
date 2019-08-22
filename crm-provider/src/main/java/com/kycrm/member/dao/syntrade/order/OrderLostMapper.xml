@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.syntrade.order.IOrderLostDaosyn">
+
+	<!-- 查有Order没有Trade的tid -->
+	<select id="getHasOrderButNotFoundTradeList" parameterType="java.lang.Long"
+		resultType="java.lang.Long">
+		SELECT
+			O.TID
+		FROM
+			CRM_ORDER_DTO${uid} O
+		WHERE
+			NOT EXISTS (
+				SELECT
+					1
+				FROM
+					CRM_TRADE_DTO${uid} T
+				WHERE
+					O.TID = T.TID
+			);
+	</select>
+
+	<!-- 查有Order没有Member的tid -->
+	<select id="getHasOrderButNotFoundMemberList" parameterType="java.lang.Long"
+		resultType="java.lang.Long">
+		SELECT
+			O.TID
+		FROM
+			CRM_ORDER_DTO${uid} O
+		WHERE
+			NOT EXISTS (
+				SELECT
+					1
+				FROM
+					CRM_MEMBER_INFO_DTO${uid} M
+				WHERE
+					M.BUYER_NICK = O.BUYER_NICK
+			);
+	</select>
+
+</mapper>

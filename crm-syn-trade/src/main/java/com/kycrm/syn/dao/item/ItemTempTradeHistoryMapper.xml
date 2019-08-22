@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kycrm.syn.dao.item.IItemTempTradeHistoryDao">
+	<resultMap type="com.kycrm.member.domain.entity.effect.ItemTempTradeHistory" id="itemTempTrade">
+		<result column="uid" property="uid"/>
+		<result column="msg_id" property="msgId"/>
+		<result column="item_id" property="itemId"/>
+		<result column="title" property="title"/>
+		<result column="price" property="price"/>
+		<result column="payment" property="payment"/>
+		<result column="num" property="num"/>
+		<result column="trade_from" property="tradeFrom"/>
+		<result column="trade_status" property="tradeStatus"/>
+		<result column="tid" property="tid"/>
+		<result column="created" property="created"/>
+	</resultMap>
+
+	<!-- 是否存在该用户的表 -->
+	<select id="tableIsExist" parameterType="java.lang.Long" resultType="java.lang.String">
+		show tables like 'crm_item_temp_trade_history${_parameter}'
+	</select>
+	
+	<!-- 创建该用户的表 -->
+	<insert id="doCreateTable" parameterType="java.lang.Long">
+		CREATE TABLE `crm_item_temp_trade_history${_parameter}` (
+		  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+		  `uid` bigint(20) DEFAULT NULL,
+		  `tid` bigint(20) DEFAULT NULL,
+		  `msg_id` bigint(20) DEFAULT NULL,
+		  `item_id` bigint(20) DEFAULT NULL,
+		  `title` varchar(255) DEFAULT NULL,
+		  `price` decimal(20,2) DEFAULT NULL,
+		  `payment` decimal(20,2) DEFAULT NULL,
+		  `buyer_nick` varchar(1000) DEFAULT NULL,
+		  `num` bigint(10) DEFAULT NULL,
+		  `trade_from` varchar(255) DEFAULT NULL,
+		  `trade_status` varchar(255) DEFAULT NULL,
+		  `created` datetime DEFAULT NULL,
+		  `optlock` int(10) DEFAULT NULL,
+		  `msg_created` datetime DEFAULT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+	</insert>
+	<!-- 创建表索引 -->
+	<insert id="addItemTempTradeHistoryTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		`crm_item_temp_trade_history${_parameter}`
+		ADD INDEX index_tid								(tid),
+		ADD INDEX index_msg_id 						(msg_id),
+		ADD INDEX index_item_id						(item_id),
+		ADD INDEX index_title							(title),
+		ADD KEY      index_buyer_nick				(buyer_nick(255)),
+		ADD INDEX index_trade_from				(trade_from),
+		ADD INDEX index_trade_status			(trade_status),
+		ADD INDEX index_created 					(created);
+	</insert>
+	
+</mapper>

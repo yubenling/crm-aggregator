@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.notice.INoticeDao">
+	<select id="findNoticeContent" resultType="java.lang.String" parameterType="java.lang.Long">
+		SELECT content FROM crm_notice
+		WHERE id = #{id}
+	</select>
+	
+	<select id="findNoticeTitle" resultType="com.kycrm.member.domain.entity.notice.Notice" >
+		SELECT id,title,createdDate FROM crm_notice
+		ORDER BY createdDate DESC
+	</select>
+</mapper>

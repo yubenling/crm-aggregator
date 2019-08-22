@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd ">
+
+	<!-- 扫描controller包 -->
+	<context:component-scan base-package="com.kycrm.member" />
+
+	<!-- 对资源放行 **代表子文件夹 -->
+	<mvc:resources location="/crm/js/" mapping="/js/**" />
+	<mvc:resources location="/crm/css/" mapping="/css/**" />
+	<mvc:resources location="/crm/images/" mapping="/images/**" />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/**/*.css" />
+			<mvc:exclude-mapping path="/**/*.js" />
+			<mvc:exclude-mapping path="/**/*.png" />
+			<mvc:exclude-mapping path="/**/*.gif" />
+			<mvc:exclude-mapping path="/**/*.jpg" />
+			<mvc:exclude-mapping path="/**/*.jpeg" />
+			<mvc:exclude-mapping path="/backstage/payNotify" />
+			<mvc:exclude-mapping path="/receiver/refund" />
+			<!-- 线下测试的时候打开 -->
+<!-- 			<mvc:exclude-mapping path="/login/*" /> -->
+<!-- 			<mvc:exclude-mapping path="/home/*" /> -->
+			<mvc:exclude-mapping path="login/testLogin"/>
+			<bean class="com.kycrm.member.commons.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- @author:Jackstraw_yu -->
+	<!-- 通过:annotation-driven的conversion-service属性来装配自定义的类型转换器 -->
+	<mvc:annotation-driven conversion-service="conversionServiceFactoryBean">
+		<!-- 处理中文乱码转换器 -->
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
+			
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" >
+				<property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                            <value>application/json</value>
+                        </list>
+                    </property>
+                    
+				</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 配置Converter转换器工厂 -->
+	<bean id="conversionServiceFactoryBean"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<!--自定义转换器 -->
+				<bean class="com.kycrm.member.commons.conversion.StringConvertor" />
+				
+			</set>
+		</property>
+	</bean>
+	<!-- @author:Jackstraw_yu -->
+
+
+	<!-- 配置静态资源，直接映射到对应的文件夹，DispatcherServlet 不处理 -->
+	<mvc:resources mapping="/tradeSetup/static/**" location="/WEB-INF/pages/order/static/" />
+	<mvc:resources mapping="/shopData/static/**" location="/WEB-INF/pages/bsAdmin/static/" />
+	<mvc:resources mapping="/msgSend/static/**" location="/WEB-INF/pages/marketingCenter/static/" />
+	<mvc:resources mapping="/member/static/**" location="/WEB-INF/pages/ctManagement/static/" />
+	<mvc:resources mapping="/analysis/static/**" location="/WEB-INF/pages/dataAnalysis/static/" />
+
+	<!-- 内部资源视图解析器，suffix为空，方便跟参数 url?id=xxx -->
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件的最大尺寸为100MB -->
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+	</bean>
+	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL -->
+	<mvc:default-servlet-handler />
+
+	<!-- 输入JSON -->
+	<!-- <mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+		<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+			
+		</mvc:message-converters>
+	</mvc:annotation-driven> -->
+</beans>	

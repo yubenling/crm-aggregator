@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.kycrm.member.dao.syntrade.trade.ITbTransactionOrderDaosyn">
+	<resultMap
+		type="com.kycrm.member.domain.entity.trade.TbTrade" id="tbTrade">
+		<result column="id" property="id" />
+		<result column="tid" property="tid" />
+		<result column="status" property="status" />
+		<result column="type" property="type" />
+		<result column="seller_nick" property="sellerNick" />
+		<result column="buyer_nick" property="buyerNick" />
+		<result column="created" property="created" />
+		<result column="modified" property="modified" />
+		<result column="jdp_hashcode" property="jdpHashcode" />
+		<result column="jdp_response" property="jdpResponse" />
+		<result column="jdp_created" property="jdpCreated" />
+		<result column="jdp_modified" property="jdpModified" />
+	</resultMap>
+
+	<!-- 查询间隔时间内的记录总数 -->
+	<select id="findCountBySyn" parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT  COUNT(tid)
+		FROM 	jdp_tb_trade 
+		WHERE	jdp_modified BETWEEN #{beginTime} AND #{endTime} 
+	</select>
+
+	<!-- 分页查询订单记录 -->
+	<select id="findTradeListBySyn" parameterType="java.util.Map" resultMap="tbTrade">
+				SELECT      *
+				FROM 		jdp_tb_trade
+				WHERE 		jdp_modified BETWEEN #{beginTime} AND #{endTime} 
+	</select>
+</mapper> 

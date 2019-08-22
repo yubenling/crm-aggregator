@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.message.ISmsSendInfoScheduleDao">
+	<resultMap type="com.kycrm.member.domain.entity.message.SmsSendInfo" id="smsSendInfoSchedulue">
+		<result column="ID" property="id"/>
+		<result column="phone" property="phone"/>
+		<result column="nickname" property="nickname"/>
+		<result column="content" property="content"/>
+		<result column="user_id" property="userId"/>
+		<result column="uid" property="uid"/>
+		<result column="send_time" property="sendTime"/>
+		<result column="createdBy" property="createdBy"/>
+		<result column="createdDate" property="createdDate"/>
+		<result column="lastModifiedBy" property="lastModifiedBy"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>
+		<result column="status" property="status"/>
+		<result column="actual_deduction" property="actualDeduction"/>
+		<result column="channel" property="channel"/>
+		<result column="startSend" property="startSend"/>
+		<result column="endSend" property="endSend"/>
+		<result column="tid" property="tid"/>
+		<result column="oid" property="oid"/>
+		<result column="msg_id" property="msgId"/>
+		<result column="inform_Mobile" property="informMobile"/>
+		<result column="filter_hassent" property="filterHassent"/>
+		<result column="filter_once" property="filterOnce"/>
+		<result column="rate_type" property="rateType"/>
+		<result column="delayDate" property="delayDate"/>
+		<result column="taskId" property="taskId"/>
+		<result column="shield_day" property="shieldDay"/>
+		<result column="member_filter_type" property="memberFilterType"/>
+		<result column="member_filter_condition" property="memberFilterCondition"/>
+	</resultMap>
+	<!-- 自动创建评价消息  特殊！ -->
+	<insert id="doCreateByRate" parameterType="com.kycrm.member.domain.entity.message.SmsSendInfo">
+		INSERT INTO crm_sms_send_schedule(user_id,PHONE,NICKNAME,CONTENT,type,status,startSend,flag,createdDate,oid,lastModifiedDate,tid,taskId,uid,shield_day) 
+		VALUE(#{userId},#{phone},#{nickname},#{content},#{type},6,#{startSend},0,now(),#{oid},now(),#{tid},#{taskId},#{uid},#{shieldDay});
+	</insert>
+	<!-- 自动创建定时任务短信 -->
+	<insert id="doCreateByScheduleSend" parameterType="com.kycrm.member.domain.entity.message.SmsSendInfo">
+		INSERT INTO crm_sms_send_schedule(user_id,PHONE,NICKNAME,CONTENT,type,send_time,status,actual_deduction,channel,startSend,endSend,flag,createdDate,lastModifiedDate,tid,msg_id,oid,rate_Type,filter_once,filter_hassent,inform_Mobile,delayDate,taskId,uid,shield_day,member_filter_type,member_filter_condition) 
+		VALUE(#{userId},#{phone},#{nickname},#{content},#{type},now(),6,#{actualDeduction},#{channel},#{startSend},#{endSend},0,now(),now(),#{tid},#{msgId},#{oid},#{rateType},#{filterOnce},#{filterHassent},#{informMobile},#{delayDate},#{taskId},#{uid},#{shieldDay},#{memberFilterType},#{memberFilterCondition});
+	</insert>
+	<!--Tomcat查找要一小时内未发送的短信 -->
+	<select id="findBySendMessageOneHour" resultMap="smsSendInfoSchedulue">
+		SELECT * FROM crm_sms_send_schedule WHERE status = 6 AND flag &lt;5  AND startSend BETWEEN date_sub(now(),interval 30 MINUTE) AND date_sub(now(),interval 3 MINUTE)
+	</select>
+	<!-- 每分钟检测要发送的短信 -->
+	<select id="findBySendMessage" parameterType="java.util.Map" resultMap="smsSendInfoSchedulue">
+		SELECT * 
+		FROM crm_sms_send_schedule 
+		WHERE flag &lt;5  AND startSend > #{startTime} AND  #{endTime} >= startSend 
+		ORDER BY id DESC limit #{satrtRow},#{pageSize}
+	</select>
+	<!-- <select id="findBySendMessage" parameterType="java.util.Map" resultMap="smsSendInfoSchedulue">
+		SELECT * 
+		FROM crm_sms_send_schedule 
+		WHERE flag &lt;5  AND startSend > #{startTime} AND  #{endTime} >= startSend 
+		ORDER BY user_id,content
+	</select> -->
+	<!-- 如果本地短信发送失败，延后发送 -->
+	<update id="doUpdateEndTimeBySendError" parameterType="com.kycrm.member.domain.entity.message.SmsSendInfo">
+		UPDATE crm_sms_send_schedule SET startSend=#{startSend},endSend=#{endSend},flag=flag+1,lastModifiedDate=now() WHERE ID=#{id}
+	</update>
+	<!-- 根据主键ID删除短信 -->
+	<delete id="doRemoveMessageBySendSuccess" parameterType="java.lang.Long">
+		DELETE FROM crm_sms_send_schedule WHERE ID=#{id}
+	</delete>
+	<!-- 根据主键ID来批量删除定时任务短信 -->
+	<delete id="doRemoveSms" parameterType="java.util.Map">
+		DELETE FROM crm_sms_send_schedule WHERE  id in
+			<foreach collection="delList" item="item" open="(" separator="," close=")" index="index">
+				#{item}
+			</foreach>
+	</delete>
+	<!-- 插入前先查询     -->
+	<select id="findMessageByAdd" parameterType="com.kycrm.member.domain.entity.message.SmsSendInfo" resultType="java.lang.Integer">
+		SELECT COUNT(*) 
+		FROM crm_sms_send_schedule 
+		WHERE type=#{type}  AND  tid=#{tid}
+	</select>
+	<select id="findSmsBySellerNickAndPhone" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT count(*) FROM crm_sms_send_schedule WHERE type=#{type} AND phone=#{phone} AND user_id=#{sellerNick}
+	</select>
+	
+	<!-- 根据替代和类型查询具体的定时短信 -->
+	<select id="findByTidAndType" parameterType="java.util.Map" resultType="java.util.Date">
+		SELECT startSend
+		FROM crm_sms_send_schedule 
+		WHERE tid=#{tid} AND type=#{type}
+	</select>
+	
+	<!-- 删除msgId的定时 -->
+	<delete id="removeInfoByMsgId">
+		delete from crm_sms_send_schedule where msg_id = #{msgId}
+	</delete>
+	<!--查询指定时间段内定时短信个数  -->
+	<select id="findBysendMessageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+	    SELECT count(*)
+		FROM crm_sms_send_schedule 
+		WHERE flag &lt;5  AND startSend > #{startTime} AND  #{endTime} >= startSend 
+	</select>
+	<!--修改定时发送时间  -->
+	<update id="updateSmsSendScheduleStrartTime" parameterType="java.util.Map">
+	    update crm_sms_send_schedule set startSend=#{startSend} where msg_id = #{msgId}
+	</update>
+	
+</mapper>

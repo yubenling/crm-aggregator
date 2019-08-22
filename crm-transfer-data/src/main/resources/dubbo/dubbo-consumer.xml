@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans          
+    http://www.springframework.org/schema/beans/spring-beans.xsd          
+    http://code.alibabatech.com/schema/dubbo          
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!--消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="crm-transfer-data" />
+
+	<!--zookeeper注册中心 -->
+	<dubbo:registry protocol="zookeeper" address="${dbo.registry.address}"
+		file="${dubbo.registry.base.path}/crm-transfer-data/dubbo-registry.properties" />
+
+	<!-- 协议 -->
+	<dubbo:protocol name="dubbo" port="${dbo.protocol.port}" />
+
+	<!-- 迁移短信记录 -->
+	<dubbo:reference id="smsRecordDTOService"
+		interface="com.kycrm.member.service.message.ISmsRecordDTOService"
+		check="false" />
+
+	<!-- 迁移订单记录 -->
+	<dubbo:reference id="synServiceProvider"
+		interface="com.kycrm.member.service.trade.IMongoHistroyTradeService"
+		check="false" />
+
+	<!-- 迁移黑名单 -->
+	<dubbo:reference id="smsBlackListDTOService"
+		interface="com.kycrm.member.service.message.ISmsBlackListDTOService"
+		check="false" />
+
+	<!-- 用户信息 -->
+	<dubbo:reference id="userInfoService"
+		interface="com.kycrm.member.service.user.IUserInfoService" check="false" />
+
+	<!-- 缓存服务 -->
+	<dubbo:reference id="cacheService"
+		interface="com.kycrm.member.service.redis.ICacheService" check="false" />
+
+	<!-- 查询主库商品信息服务 -->
+	<dubbo:reference id="itemService"
+		interface="com.kycrm.member.service.item.IItemService" check="false" />
+
+	<!-- 分库分表存储uid对应用户商品表服务 -->
+	<dubbo:reference id="itemTransferService"
+		interface="com.kycrm.member.service.item.IItemTransferService" check="false" />
+
+</beans>

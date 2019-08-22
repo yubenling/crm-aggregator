@@ -1,0 +1,1347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.trade.ITradeDTODao">
+	<resultMap type="com.kycrm.member.domain.entity.trade.TradeDTO"
+		id="trade">
+		<result column="id" property="id" />
+		<result column="uid" property="uid" />
+		<result column="tid" property="tid" />
+		<result column="tid_str" property="tidStr" />
+		<result column="refund_flag" property="refundFlag" />
+		<result column="buyer_nick" property="buyerNick" />
+		<result column="buyer_rate" property="buyerRate" />
+		<result column="consign_time" property="consignTime" />
+		<result column="created" property="created" />
+		<result column="end_time" property="endTime" />
+		<result column="modified" property="modified" />
+		<result column="pay_time" property="payTime" />
+		<result column="payment" property="payment" />
+		<result column="receiver_address" property="receiverAddress" />
+		<result column="receiver_city" property="receiverCity" />
+		<result column="receiver_district" property="receiverDistrict" />
+		<result column="receiver_mobile" property="receiverMobile" />
+		<result column="receiver_name" property="receiverName" />
+		<result column="receiver_state" property="receiverState" />
+		<result column="seller_flag" property="sellerFlag" />
+		<result column="seller_mobile" property="sellerMobile" />
+		<result column="seller_name" property="sellerName" />
+		<result column="seller_nick" property="sellerNick" />
+		<result column="seller_phone" property="sellerPhone" />
+		<result column="seller_rate" property="sellerRate" />
+		<result column="status" property="status" />
+		<result column="num" property="num" />
+		<result column="title" property="title" />
+		<result column="trade_from" property="tradeFrom" />
+		<result column="msg_id" property="msgId" />
+		<result column="front" property="front" />
+		<result column="tail" property="tail" />
+		<result column="step_trade_status" property="stepTradeStatus" />
+
+		<result column="createdDate" property="createdDate" />
+		<result column="createdBy" property="createdBy" />
+		<result column="lastModifiedDate" property="lastModifiedDate" />
+		<result column="lastModifiedBy" property="lastModifiedBy" />
+		<result column="optlock" property="optlock" />
+		<!-- <collection property="orders" column="tid" -->
+		<!-- ofType="com.kycrm.member.domain.entity.order.OrderDTO"> -->
+		<!-- <result column="tid" property="tid" /> -->
+		<!-- <result column="oid" property="oid" /> -->
+		<!-- <result column="pic_o_path" property="picPath" /> -->
+		<!-- <result column="num_iid" property="numIid" /> -->
+		<!-- <result column="o_title" property="title" /> -->
+		<!-- <result column="o_price" property="price" /> -->
+		<!-- <result column="o_num" property="num" /> -->
+		<!-- <result column="o_payment" property="payment" /> -->
+		<!-- <result column="refund_o_status" property="refundStatus" /> -->
+		<!-- </collection> -->
+	</resultMap>
+
+	<!-- 订单表的所有字段 -->
+	<sql id="tradeDTOAllSqlField">
+		id,tid,createdDate,lastModifiedDate,adjust_fee,alipay_id,alipay_no,alipay_point,
+		available_confirm_fee,buyer_alipay_no,buyer_area,buyer_cod_fee,cod_status,
+		commission_fee,consign_time,created,discount_fee,end_time,has_post_fee,is_3D,
+		is_brand_sale,is_daixiao,is_force_wlb,is_force_wlb,is_lgtype,is_part_consign,is_wt,
+		modified,pay_time,payment,pcc_af,point_fee,post_fee,promotion_details,real_point_fee,
+		received_payment,receiver_address,receiver_city,receiver_district,receiver_mobile,
+		receiver_name,receiver_state,receiver_zip,seller_alipay_no,seller_can_rate,
+		seller_cod_fee,seller_email,seller_flag,seller_mobile,seller_name,seller_nick,
+		seller_phone,seller_rate,service_tags,shipping_type,snapshot_url,status,title,total_fee,
+		trade_from,type,lastSendSmsTime,msgId,tradeSource,step_trade_status,step_paid_fee
+	</sql>
+	<select id="isExistsTable" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_trade_dto${_parameter}'
+	</select>
+
+	<!-- 自动创建用户主订单表 -->
+	<insert id="doCreateTableByNewUser" parameterType="java.lang.String">
+		CREATE TABLE
+		`crm_trade_dto${_parameter}` (
+		`id` bigint(20) NOT NULL AUTO_INCREMENT
+		COMMENT '主键id',
+		`tid` bigint(50) NOT NULL,
+		`tid_str` varchar(20) comment
+		'主订单id（字符串类型）',
+		`uid` bigint(20) comment '用户主键id',
+		`buyer_nick`
+		varchar(1500) DEFAULT NULL,
+		`buyer_rate` tinyint(1) DEFAULT NULL,
+		`consign_time` datetime DEFAULT NULL,
+		`created` datetime DEFAULT NULL,
+		`end_time` datetime DEFAULT NULL,
+		`modified` datetime DEFAULT NULL,
+		`pay_time` datetime DEFAULT NULL,
+		`payment` double(15,2) DEFAULT NULL,
+		`receiver_address` text DEFAULT NULL,
+		`receiver_city`
+		varchar(50) DEFAULT NULL,
+		`receiver_district` varchar(50) DEFAULT NULL,
+		`receiver_mobile` varchar(200) DEFAULT NULL,
+		`receiver_phone`
+		varchar(200) DEFAULT NULL,
+		`receiver_name` text DEFAULT NULL,
+		`receiver_state` varchar(50) DEFAULT NULL,
+		`receiver_zip` varchar(20)
+		DEFAULT NULL,
+		`seller_flag` int(10) DEFAULT NULL,
+		`seller_mobile`
+		varchar(50) DEFAULT NULL,
+		`seller_name` varchar(255) DEFAULT NULL,
+		`seller_nick` varchar(255) DEFAULT NULL,
+		`seller_phone` varchar(50)
+		DEFAULT NULL,
+		`seller_rate` tinyint(1) DEFAULT NULL,
+		`status`
+		varchar(50) DEFAULT NULL,
+		`title` varchar(255) DEFAULT NULL,
+		`total_fee` double(15,2) DEFAULT NULL,
+		`trade_from` varchar(50) DEFAULT
+		NULL,
+		`type` varchar(100) DEFAULT NULL,
+		`msg_id` bigint(20) DEFAULT
+		NULL,
+		`last_send_sms_time` datetime DEFAULT NULL,
+		`trade_source`
+		varchar(255) NOT NULL,
+		`receiver_country` varchar(50) DEFAULT NULL,
+		`receiver_town` varchar(300) DEFAULT NULL,
+		`num` bigint(20) DEFAULT
+		NULL,
+		`buyer_flag` int(10) DEFAULT NULL,
+		`refund_flag` tinyint(1)
+		DEFAULT NULL,
+		`adjust_fee` double(10,2) DEFAULT NULL COMMENT
+		'卖家手工调整金额',
+		`alipay_id` bigint(20) DEFAULT NULL COMMENT '买家的支付宝id号',
+		`alipay_no` varchar(100) DEFAULT NULL COMMENT '买家的支付宝账号',
+		`alipay_point` int(11) DEFAULT NULL COMMENT '付款时使用的支付宝积分的额度,单位分',
+		`available_confirm_fee` double(10,2) DEFAULT NULL,
+		`buyer_alipay_no`
+		varchar(255) DEFAULT NULL,
+		`buyer_area` varchar(100) DEFAULT NULL,
+		`buyer_cod_fee` varchar(50) DEFAULT NULL,
+		`buyer_email` varchar(500)
+		DEFAULT NULL,
+		`buyer_obtain_point_fee` bigint(20) DEFAULT NULL,
+		`cod_fee` double(10,2) DEFAULT NULL,
+		`cod_status` varchar(50) DEFAULT
+		NULL,
+		`commission_fee` double(10,2) DEFAULT NULL,
+		`discount_fee`
+		double(10,2) DEFAULT NULL,
+		`has_post_fee` tinyint(1) DEFAULT NULL,
+		`is_3D` tinyint(1) DEFAULT NULL,
+		`is_brand_sale` tinyint(1) DEFAULT
+		NULL,
+		`is_daixiao` tinyint(1) DEFAULT NULL,
+		`is_force_wlb` tinyint(1)
+		DEFAULT NULL,
+		`is_lgtype` tinyint(1) DEFAULT NULL,
+		`is_part_consign`
+		tinyint(1) DEFAULT NULL,
+		`is_wt` tinyint(1) DEFAULT NULL,
+		`pcc_af`
+		bigint(20) DEFAULT NULL,
+		`point_fee` bigint(20) DEFAULT NULL,
+		`post_fee` double(10,2) DEFAULT NULL,
+		`real_point_fee` bigint(20)
+		DEFAULT NULL,
+		`received_payment` double(15,2) DEFAULT NULL,
+		`seller_alipay_no` varchar(255) DEFAULT NULL,
+		`seller_can_rate`
+		tinyint(1) DEFAULT NULL,
+		`seller_cod_fee` double(10,2) DEFAULT NULL,
+		`shipping_type` varchar(20) DEFAULT NULL,
+		`snapshot_url` varchar(255)
+		DEFAULT NULL,
+		`step_trade_status` varchar(255) DEFAULT NULL,
+		`step_paid_fee` varchar(255) DEFAULT NULL,
+		`service_tags` text DEFAULT
+		NULL,
+		`promotion_details` text,
+		`shop_pick` varchar(50) DEFAULT NULL,
+		`seller_email` varchar(255) DEFAULT NULL,
+		`createdDate` datetime
+		DEFAULT NULL COMMENT '创建时间',
+		`lastModifiedDate` datetime DEFAULT NULL
+		COMMENT '最后修改时间',
+		`front` varchar(255) DEFAULT NULL,
+		`tail` varchar(255)
+		DEFAULT NULL,
+		`optlock` int(11) NOT NULL DEFAULT '0' COMMENT '版本',
+		PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8
+		ROW_FORMAT=FIXED
+		COMMENT='主订单';
+	</insert>
+
+	<insert id="addTradeTableIndex" parameterType="java.lang.String">
+		ALTER TABLE
+		`crm_trade_dto${_parameter}`
+		ADD INDEX index_tid (tid),
+		ADD INDEX
+		index_payment (payment),
+		ADD INDEX index_created (created),
+		ADD INDEX
+		index_consign_time (consign_time),
+		ADD INDEX index_end_time (end_time),
+		ADD INDEX index_msg_id (msg_id),
+		ADD INDEX index_status (status),
+		ADD
+		INDEX index_last_send_sms_time (last_send_sms_time),
+		ADD INDEX
+		index_refund_flag (refund_flag),
+		ADD INDEX index_lastModifiedDate
+		(lastModifiedDate),
+		ADD INDEX index_buyer_nick (buyer_nick(255)),
+		ADD
+		INDEX index_pay_time (pay_time),
+		ADD INDEX index_receiver_mobile
+		(receiver_mobile),
+		ADD INDEX index_trade_from (trade_from);
+	</insert>
+
+	<!-- 订单短信群发查询 -->
+	<select id="listMarketingCenterOrder" parameterType="com.kycrm.member.domain.vo.trade.TradeVO"
+		resultType="com.kycrm.member.domain.entity.order.OrderDTO">
+		select tid,trade_created,trade_from,pic_path,title,
+		price,num,buyer_nick,receiver_mobile,trade_payment,
+		trade_num,trade_status
+		from CRM_ORDER_DTO${uid}
+		where tid in (select tid
+		from (select tid from CRM_TRADE_DTO${uid}
+		<where>
+			<!-- 买家昵称 -->
+			<if test="buyerNick != null and buyerNick != ''">
+				and buyer_nick = #{buyerNick}
+			</if>
+			<!-- 订单id -->
+			<if test="tid != null and tid != ''">
+				and tid = #{tid}
+			</if>
+			<!-- 订单金额 -->
+			<if test="minPayment != null">
+				and payment >= #{minPayment}
+			</if>
+			<if test="maxPayment != null">
+				and #{maxPayment} >= payment
+			</if>
+			<!-- 买家是否已评价 -->
+			<if test="buyerRate != null">
+				and buyer_rate = #{buyerRate}
+			</if>
+			<if test="sellerRate != null">
+				and seller_rate = #{sellerRate}
+			</if>
+			<!-- 下单时间 -->
+			<if test="minCreatedTime != null  ">
+				and created >= #{minCreatedTime}
+			</if>
+			<if test="maxCreatedTime != null ">
+				and #{maxCreatedTime} >= created
+			</if>
+			<!-- 订单来源 -->
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and trade_from = #{tradeFrom}
+			</if>
+			<!-- 发货时间 -->
+			<if test="minConsignTime != null">
+				and consign_time >= #{minConsignTime}
+			</if>
+			<!-- 发货时间 -->
+			<if test="maxConsignTime != null">
+				and #{maxConsignTime} >= consign_time
+			</if>
+			<!-- 确认时间 -->
+			<if test="minEndTime != null">
+				and end_time >= #{minEndTime}
+			</if>
+			<if test="maxEndTime != null">
+				and #{maxEndTime} >= end_time
+			</if>
+			<choose>
+				<when test="tradeStatusList != null">
+					and status in
+					<foreach collection="tradeStatusList" item="statusList"
+						open="(" separator="," close=")">
+						#{statusList}
+					</foreach>
+				</when>
+				<when test="tradeStatus != null and tradeStatus != ''">
+					and status = #{tradeStatus}
+				</when>
+			</choose>
+			<if test="sellerFlagList != null">
+				and seller_flag IN
+				<foreach collection="sellerFlagList" item="sellerFlagList"
+					open="(" separator="," close=")">
+					#{sellerFlagList}
+				</foreach>
+			</if>
+			<if test="stateList != null and stateIsSend != null">
+				<if test="stateIsSend == 0">
+					and receiver_state NIN
+					<foreach collection="stateList" item="stateList" open="("
+						separator="," close=")">
+						#{stateList}
+					</foreach>
+				</if>
+				<if test="stateIsSend == 1">
+					and receiver_state IN
+					<foreach collection="stateList" item="stateList" open="("
+						separator="," close=")">
+						#{stateList}
+					</foreach>
+				</if>
+			</if>
+			<if test="cityList != null and stateIsSend != null">
+				<if test="stateIsSend == 0">
+					and receiver_city NIN
+					<foreach collection="cityList" item="city" open="("
+						separator="," close=")">
+						#{city}
+					</foreach>
+				</if>
+				<if test="stateIsSend == 1">
+					and receiver_city IN
+					<foreach collection="cityList" item="city" open="("
+						separator="," close=")">
+						#{city}
+					</foreach>
+				</if>
+			</if>
+			<!-- 最近发送的订单 -->
+			<if test="msgIdList != null">
+				and msg_id not in
+				<foreach collection="msgIdList" item="msgIdList" open="("
+					separator="," close=")">
+					#{msgIdList}
+				</foreach>
+			</if>
+		</where>
+		order by created DESC
+		<if test="startRows != null and pageSize != null">
+			limit #{startRows},#{pageSize}
+		</if>
+		) as t)
+	</select>
+
+	<!-- 订单短信群发筛选结果总条数 -->
+	<select id="countMarketingCenterOrder" parameterType="com.kycrm.member.domain.vo.trade.TradeVO"
+		resultType="java.lang.Long">
+		select count(*)
+		from CRM_TRADE_DTO${uid}
+		<where>
+			<!-- 买家昵称 -->
+			<if test="buyerNick != null and buyerNick != ''">
+				and buyer_nick = #{buyerNick}
+			</if>
+			<!-- 订单id -->
+			<if test="tid != null and tid != ''">
+				and tid = #{tid}
+			</if>
+			<!-- 订单金额 -->
+			<if test="minPayment != null">
+				and payment >= #{minPayment}
+			</if>
+			<if test="maxPayment != null">
+				and #{maxPayment} >= payment
+			</if>
+			<!-- 评价状态 -->
+			<!-- 买家是否已评价 -->
+			<if test="buyerRate != null">
+				and buyer_rate = #{buyerRate}
+			</if>
+			<!-- 买家是否已评价 -->
+			<if test="sellerRate != null">
+				and seller_rate = #{sellerRate}
+			</if>
+			<!-- 下单时间 -->
+			<if test="minCreatedTime != null  ">
+				and created >= #{minCreatedTime}
+			</if>
+			<if test="maxCreatedTime != null ">
+				and #{maxCreatedTime} >= created
+			</if>
+			<!-- 订单来源 -->
+			<if test="tradeFrom != null and tradeFrom != ''">
+				and trade_from = #{tradeFrom}
+			</if>
+			<!-- 发货时间 -->
+			<if test="minConsignTime != null">
+				and consign_time >= #{minConsignTime}
+			</if>
+			<!-- 发货时间 -->
+			<if test="maxConsignTime != null">
+				and #{maxConsignTime} >= consign_time
+			</if>
+			<!-- 确认时间 -->
+			<if test="minEndTime != null">
+				and end_time >= #{minEndTime}
+			</if>
+			<if test="maxEndTime != null">
+				and #{maxEndTime} >= end_time
+			</if>
+			<choose>
+				<when test="tradeStatusList != null">
+					and status in
+					<foreach collection="tradeStatusList" item="statusList"
+						open="(" separator="," close=")">
+						#{statusList}
+					</foreach>
+				</when>
+				<when test="tradeStatus != null and tradeStatus != ''">
+					and status = #{tradeStatus}
+				</when>
+			</choose>
+			<if test="sellerFlagList != null">
+				and seller_flag IN
+				<foreach collection="sellerFlagList" item="sellerFlagList"
+					open="(" separator="," close=")">
+					#{sellerFlagList}
+				</foreach>
+			</if>
+			<if test="stateList != null and stateIsSend != null">
+				<if test="stateIsSend == 0">
+					and receiver_state NIN
+					<foreach collection="stateList" item="stateList" open="("
+						separator="," close=")">
+						#{stateList}
+					</foreach>
+				</if>
+				<if test="stateIsSend == 1">
+					and receiver_state IN
+					<foreach collection="stateList" item="stateList" open="("
+						separator="," close=")">
+						#{stateList}
+					</foreach>
+				</if>
+			</if>
+			<if test="cityList != null and stateIsSend != null">
+				<if test="stateIsSend == 0">
+					and receiver_city NIN
+					<foreach collection="cityList" item="city" open="("
+						separator="," close=")">
+						#{city}
+					</foreach>
+				</if>
+				<if test="stateIsSend == 1">
+					and receiver_city IN
+					<foreach collection="cityList" item="city" open="("
+						separator="," close=")">
+						#{city}
+					</foreach>
+				</if>
+			</if>
+			<!-- 最近发送的订单 -->
+			<if test="msgIdList != null">
+				and msg_id not in
+				<foreach collection="msgIdList" item="msgIdList" open="("
+					separator="," close=")">
+					#{msgIdList}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	<!-- 批量保存订单 -->
+	<insert id="doCreateTradeDTOByList" parameterType="java.util.Map">
+		INSERT INTO
+		crm_trade_dto${uid}(tid,createdDate,lastModifiedDate,adjust_fee,alipay_id,alipay_no,alipay_point,
+		available_confirm_fee,buyer_alipay_no,buyer_area,buyer_cod_fee,cod_status,
+		commission_fee,consign_time,created,discount_fee,end_time,has_post_fee,is_3D,
+		is_brand_sale,is_daixiao,is_force_wlb,is_lgtype,is_part_consign,is_wt,
+		modified,pay_time,payment,pcc_af,point_fee,post_fee,promotion_details,real_point_fee,
+		received_payment,receiver_address,receiver_city,receiver_district,receiver_mobile,
+		receiver_name,receiver_state,receiver_zip,seller_alipay_no,seller_can_rate,
+		seller_cod_fee,seller_email,seller_flag,seller_mobile,seller_name,seller_nick,
+		seller_phone,seller_rate,service_tags,shipping_type,snapshot_url,status,title,total_fee,
+		trade_from,type,last_send_sms_time,msg_id,trade_source,step_trade_status,step_paid_fee,buyer_email,
+		buyer_nick,buyer_obtain_point_fee,buyer_rate,cod_fee,receiver_phone,refund_flag,
+		receiver_country,receiver_town,shop_pick,num,buyer_flag)
+		VALUES
+		<foreach collection="list" item="trade" index="index"
+			separator=",">
+			(#{trade.tid},now(),now(),#{trade.adjustFee},#{trade.alipayId},#{trade.alipayNo},
+			#{trade.alipayPoint},#{trade.availableConfirmFee},#{trade.buyerAlipayNo},#{trade.buyerArea},#{trade.buyerCodFee},
+			#{trade.codStatus},#{trade.commissionFee},#{trade.consignTime},#{trade.created},#{trade.discountFee},#{trade.endTime},
+			#{trade.hasPostFee},#{trade.is3D},#{trade.isBrandSale},#{trade.isDaixiao},#{trade.isForceWlb},
+			#{trade.isLgtype},#{trade.isPartConsign},#{trade.isWt},#{trade.modified},#{trade.payTime},#{trade.payment},#{trade.pccAf},
+			#{trade.pointFee},#{trade.postFee},#{trade.promotionDetails},#{trade.realPointFee},#{trade.receivedPayment},
+			#{trade.receiverAddress},#{trade.receiverCity},#{trade.receiverDistrict},#{trade.receiverMobile},#{trade.receiverName},
+			#{trade.receiverState},#{trade.receiverZip},#{trade.sellerAlipayNo},#{trade.sellerCanRate},#{trade.sellerCodFee},
+			#{trade.sellerEmail},#{trade.sellerFlag},#{trade.sellerMobile},#{trade.sellerName},#{trade.sellerNick},#{trade.sellerPhone},
+			#{trade.sellerRate},#{trade.serviceTags},#{trade.shippingType},#{trade.snapshotUrl},#{trade.status},#{trade.title},
+			#{trade.totalFee},#{trade.tradeFrom},#{trade.type},#{trade.lastSendSmsTime},#{trade.msgId},1,
+			#{trade.stepTradeStatus},#{trade.stepPaidFee},#{trade.buyerEmail},#{trade.buyerNick},#{trade.buyerObtainPointFee},
+			#{trade.buyerRate},#{trade.codFee},#{trade.receiverPhone},#{trade.refundFlag},#{trade.receiverCountry},
+			#{trade.receiverTown},#{trade.shopPick},#{trade.num},#{trade.buyerFlag})
+		</foreach>
+	</insert>
+
+	<!-- 保存单条订单记录 -->
+	<insert id="doCreateTradeDTOByBySingle" parameterType="com.kycrm.member.domain.entity.trade.TradeDTO">
+		INSERT
+		INTO
+		crm_trade_dto${uid}(tid,createdDate,lastModifiedDate,adjust_fee,alipay_id,alipay_no,alipay_point,
+		available_confirm_fee,buyer_alipay_no,buyer_area,buyer_cod_fee,cod_status,
+		commission_fee,consign_time,created,discount_fee,end_time,has_post_fee,is_3D,
+		is_brand_sale,is_daixiao,is_force_wlb,is_lgtype,is_part_consign,is_wt,
+		modified,pay_time,payment,pcc_af,point_fee,post_fee,promotion_details,real_point_fee,
+		received_payment,receiver_address,receiver_city,receiver_district,receiver_mobile,
+		receiver_name,receiver_state,receiver_zip,seller_alipay_no,seller_can_rate,
+		seller_cod_fee,seller_email,seller_flag,seller_mobile,seller_name,seller_nick,
+		seller_phone,seller_rate,service_tags,shipping_type,snapshot_url,status,title,total_fee,
+		trade_from,type,last_send_sms_time,msg_id,trade_source,step_trade_status,step_paid_fee,buyer_email,
+		buyer_nick,buyer_obtain_point_fee,buyer_rate,cod_fee,receiver_phone,refund_flag,
+		receiver_country,receiver_town,shop_pick,num,buyer_flag)
+		VALUE(#{tid},now(),now(),#{adjustFee},#{alipayId},#{alipayNo},#{alipayPoint},#{availableConfirmFee},
+		#{buyerAlipayNo},#{buyerArea},#{buyerCodFee},#{codStatus},#{commissionFee},#{consignTime},#{created},#{discountFee},
+		#{endTime},#{hasPostFee},#{is3D},#{isBrandSale},#{isDaixiao},#{isForceWlb},#{isLgtype},#{isPartConsign},
+		#{isWt},#{modified},#{payTime},#{payment},#{pccAf},#{pointFee},#{postFee},#{promotionDetails},#{realPointFee},
+		#{receivedPayment},#{receiverAddress},#{receiverCity},#{receiverDistrict},#{receiverMobile},#{receiverName},#{receiverState},
+		#{receiverZip},#{sellerAlipayNo},#{sellerCanRate},#{sellerCodFee},#{sellerEmail},#{sellerFlag},#{sellerMobile},#{sellerName},
+		#{sellerNick},#{sellerPhone},#{sellerRate},#{serviceTags},#{shippingType},#{snapshotUrl},#{status},#{title},#{totalFee},
+		#{tradeFrom},#{type},#{lastSendSmsTime},#{msgId},1,#{stepTradeStatus},#{stepPaidFee},#{buyerEmail},
+		#{buyerNick},#{buyerObtainPointFee},#{buyerRate},#{codFee},#{receiverPhone},#{refundFlag},#{receiverCountry},
+		#{receiverTown},#{shopPick},#{num},#{buyerFlag})
+	</insert>
+
+	<!-- 批量更新订单 -->
+	<update id="doUpdateTradeDTOByList" parameterType="java.util.Map">
+		<foreach collection="list" item="trade" index="index"
+			separator=";" open="" close="">
+			UPDATE crm_trade_dto${uid}
+			<set>
+				lastModifiedDate = now(),optlock=optlock+1
+				<if test="trade.alipayId != null">
+					,alipay_id = #{trade.alipayId}
+				</if>
+				<if test="trade.alipayNo != null">
+					,alipay_no = #{trade.alipayNo}
+				</if>
+				<if test="trade.alipayPoint != null">
+					,alipay_point = #{trade.alipayPoint}
+				</if>
+				<if test="trade.adjustFee != null">
+					,available_confirm_fee = #{trade.availableConfirmFee}
+				</if>
+				<if test="trade.buyerAlipayNo != null">
+					,buyer_alipay_no = #{trade.buyerAlipayNo}
+				</if>
+				<if test="trade.buyerCodFee != null">
+					,buyer_cod_fee = #{trade.buyerCodFee}
+				</if>
+				<if test="trade.buyerObtainPointFee != null">
+					,buyer_obtain_point_fee = #{trade.buyerObtainPointFee}
+				</if>
+				<if test="trade.buyerRate != null">
+					,buyer_rate = #{trade.buyerRate}
+				</if>
+				<if test="trade.codFee != null">
+					,cod_fee = #{trade.codFee}
+				</if>
+				<if test="trade.codStatus != null">
+					,cod_status = #{trade.codStatus}
+				</if>
+				<if test="trade.commissionFee != null">
+					,commission_fee = #{trade.commissionFee}
+				</if>
+				<if test="trade.consignTime != null">
+					,consign_time = #{trade.consignTime}
+				</if>
+				<if test="trade.discountFee != null">
+					,discount_fee = #{trade.discountFee}
+				</if>
+				<if test="trade.endTime != null">
+					,end_time = #{trade.endTime}
+				</if>
+				<if test="trade.hasPostFee != null">
+					,has_post_fee = #{trade.hasPostFee}
+				</if>
+				<if test="trade.isForceWlb != null">
+					,is_force_wlb = #{trade.isForceWlb}
+				</if>
+				<if test="trade.isLgtype != null">
+					,is_lgtype = #{trade.isLgtype}
+				</if>
+				<if test="trade.isPartConsign != null">
+					,is_part_consign = #{trade.isPartConsign}
+				</if>
+				<if test="trade.modified != null">
+					,modified = #{trade.modified}
+				</if>
+				<if test="trade.payTime != null">
+					,pay_time = #{trade.payTime}
+				</if>
+				<if test="trade.payment != null">
+					,payment = #{trade.payment}
+				</if>
+				<if test="trade.pccAf != null">
+					,pcc_af = #{trade.pccAf}
+				</if>
+				<if test="trade.postFee != null">
+					,post_fee = #{trade.postFee}
+				</if>
+				<if test="trade.realPointFee != null">
+					,real_point_fee = #{trade.realPointFee}
+				</if>
+				<if test="trade.receivedPayment != null">
+					,received_payment = #{trade.receivedPayment}
+				</if>
+				<if test="trade.sellerAlipayNo != null">
+					,seller_alipay_no = #{trade.sellerAlipayNo}
+				</if>
+				<if test="trade.sellerCanRate != null">
+					,seller_can_rate = #{trade.sellerCanRate}
+				</if>
+				<if test="trade.sellerCodFee != null">
+					,seller_cod_fee = #{trade.sellerCodFee}
+				</if>
+				<if test="trade.sellerFlag != null">
+					,seller_flag = #{trade.sellerFlag}
+				</if>
+				<if test="trade.sellerRate != null">
+					,seller_rate = #{trade.sellerRate}
+				</if>
+				<if test="trade.shippingType != null">
+					,shipping_type = #{trade.shippingType}
+				</if>
+				<if test="trade.status != null">
+					,status = #{trade.status}
+				</if>
+				<if test="trade.type != null">
+					,type = #{trade.type}
+				</if>
+				<if test="trade.stepTradeStatus != null">
+					,step_trade_status = #{trade.stepTradeStatus}
+				</if>
+				<if test="trade.stepPaidFee != null">
+					,step_paid_fee = #{trade.stepPaidFee}
+				</if>
+				<if test="trade.serviceTags != null">
+					,service_tags = #{trade.serviceTags}
+				</if>
+				<if test="trade.promotionDetails != null">
+					,promotion_details = #{trade.promotionDetails}
+				</if>
+				<if test="trade.msgId != null">
+					,msgId = #{trade.msgId}
+				</if>
+				<if test="trade.lastSendSmsTime != null">
+					,lastSendSmsTime = #{trade.lastSendSmsTime}
+				</if>
+				<if test="trade.created != null">
+					,created = #{trade.created}
+				</if>
+				<if test="trade.tradeFrom != null">
+					,trade_from = #{trade.tradeFrom}
+				</if>
+				<if test="trade.refundFlag != null">
+					,refundFlag = #{trade.refundFlag}
+				</if>
+				<if test="trade.num != null">
+					,num = #{trade.num}
+				</if>
+				<if test="trade.buyerFlag != null">
+					,buyer_flag = #{trade.buyerFlag}
+				</if>
+			</set>
+			WHERE tid = #{trade.tid}
+		</foreach>
+	</update>
+
+	<!-- 更新单个订单信息 -->
+	<update id="doUpdateTradeDTOBySingle" parameterType="com.kycrm.member.domain.entity.trade.TradeDTO">
+		UPDATE crm_trade_dto${uid}
+		<set>
+			lastModifiedDate = now(),optlock=optlock+1
+			<if test="alipayId != null">
+				,alipay_id = #{alipayId}
+			</if>
+			<if test="alipayNo != null">
+				,alipay_no = #{alipayNo}
+			</if>
+			<if test="alipayPoint != null">
+				,alipay_point = #{alipayPoint}
+			</if>
+			<if test="adjustFee != null">
+				,available_confirm_fee = #{availableConfirmFee}
+			</if>
+			<if test="buyerAlipayNo != null">
+				,buyer_alipay_no = #{buyerAlipayNo}
+			</if>
+			<if test="buyerCodFee != null">
+				,buyer_cod_fee = #{buyerCodFee}
+			</if>
+			<if test="buyerObtainPointFee != null">
+				,buyer_obtain_point_fee = #{buyerObtainPointFee}
+			</if>
+			<if test="buyerRate != null">
+				,buyer_rate = #{buyerRate}
+			</if>
+			<if test="codFee != null">
+				,cod_fee = #{codFee}
+			</if>
+			<if test="codStatus != null">
+				,cod_status = #{codStatus}
+			</if>
+			<if test="commissionFee != null">
+				,commission_fee = #{commissionFee}
+			</if>
+			<if test="consignTime != null">
+				,consign_time = #{consignTime}
+			</if>
+			<if test="discountFee != null">
+				,discount_fee = #{discountFee}
+			</if>
+			<if test="endTime != null">
+				,end_time = #{endTime}
+			</if>
+			<if test="hasPostFee != null">
+				,has_post_fee = #{hasPostFee}
+			</if>
+			<if test="isForceWlb != null">
+				,is_force_wlb = #{isForceWlb}
+			</if>
+			<if test="isLgtype != null">
+				,is_lgtype = #{isLgtype}
+			</if>
+			<if test="isPartConsign != null">
+				,is_part_consign = #{isPartConsign}
+			</if>
+			<if test="modified != null">
+				,modified = #{modified}
+			</if>
+			<if test="payTime != null">
+				,pay_time = #{payTime}
+			</if>
+			<if test="payment != null">
+				,payment = #{payment}
+			</if>
+			<if test="pccAf != null">
+				,pcc_af = #{pccAf}
+			</if>
+			<if test="postFee != null">
+				,post_fee = #{postFee}
+			</if>
+			<if test="realPointFee != null">
+				,real_point_fee = #{realPointFee}
+			</if>
+			<if test="receivedPayment != null">
+				,received_payment = #{receivedPayment}
+			</if>
+			<if test="sellerAlipayNo != null">
+				,seller_alipay_no = #{sellerAlipayNo}
+			</if>
+			<if test="sellerCanRate != null">
+				,seller_can_rate = #{sellerCanRate}
+			</if>
+			<if test="sellerCodFee != null">
+				,seller_cod_fee = #{sellerCodFee}
+			</if>
+			<if test="sellerFlag != null">
+				,seller_flag = #{sellerFlag}
+			</if>
+			<if test="sellerRate != null">
+				,seller_rate = #{sellerRate}
+			</if>
+			<if test="shippingType != null">
+				,shipping_type = #{shippingType}
+			</if>
+			<if test="status != null">
+				,status = #{status}
+			</if>
+			<if test="type != null">
+				,type = #{type}
+			</if>
+			<if test="stepTradeStatus != null">
+				,step_trade_status = #{stepTradeStatus}
+			</if>
+			<if test="stepPaidFee != null">
+				,step_paid_fee = #{stepPaidFee}
+			</if>
+			<if test="serviceTags != null">
+				,service_tags = #{serviceTags}
+			</if>
+			<if test="promotionDetails != null">
+				,promotion_details = #{promotionDetails}
+			</if>
+			<if test="msgId != null">
+				,msgId = #{msgId}
+			</if>
+			<if test="lastSendSmsTime != null">
+				,lastSendSmsTime = #{lastSendSmsTime}
+			</if>
+			<if test="created != null">
+				,created = #{created}
+			</if>
+			<if test="tradeFrom != null">
+				,trade_from = #{tradeFrom}
+			</if>
+			<if test="refundFlag != null">
+				,refundFlag = #{refundFlag}
+			</if>
+			<if test="num != null">
+				,num = #{num}
+			</if>
+			<if test="buyerFlag != null">
+				,buyer_flag = #{buyerFlag}
+			</if>
+		</set>
+		WHERE tid = #{tid}
+	</update>
+	<!-- 通过tid找到主订单 -->
+	<select id="findStatusByTid" parameterType="java.util.Map"
+		resultType="java.lang.String" useCache="false" flushCache="true">
+		SELECT
+		status
+		FROM crm_trade_dto${uid}
+		WHERE tid = #{tid}
+	</select>
+
+	<!-- 查询时间段内每天的下单金额(首页) -->
+	<select id="listDaysPayment" parameterType="com.kycrm.member.domain.vo.trade.TradeVO"
+		resultType="com.kycrm.member.domain.vo.trade.TradeVO">
+		select sum(payment)
+		minPayment,DATE_FORMAT(created,'%Y-%m-%d') minCreatedTimeStr
+		from
+		crm_trade_dto${uid}
+		where created between #{minCreatedTime} and
+		#{maxCreatedTime}
+		group by minCreatedTimeStr
+		order by
+		minCreatedTimeStr
+		ASC
+	</select>
+
+	<!-- 订单中心效果分析查询状态变化的主订单(订单中心效果分析) -->
+	<select id="listTradeByStatus" parameterType="com.kycrm.member.domain.vo.trade.TradeVO"
+		resultMap="trade">
+		select tid,receiver_mobile,buyer_nick,payment,pay_time
+		from
+		crm_trade_dto${uid}
+		<where>
+			<if test="payTimeBegin != null">
+				and pay_time >= #{payTimeBegin}
+			</if>
+			<if test="payTimeEnd != null">
+				and #{payTimeEnd} >= pay_time
+			</if>
+			<if test="minEndTime != null">
+				and end_time >= #{minEndTime}
+			</if>
+			<if test="maxEndTime != null">
+				and #{maxEndTime} >= end_time
+			</if>
+			<if test="tidList != null">
+				and tid in
+				<foreach collection="tidList" item="tidList" open="("
+					separator="," close=")">
+					#{tidList}
+				</foreach>
+			</if>
+			<if test="tradeStatusList != null">
+				and status in
+				<foreach collection="tradeStatusList" item="tradeStatusList"
+					open="(" separator="," close=")">
+					#{tradeStatusList}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<!-- 通过tid找到主订单 -->
+	<select id="findOneTradeDTOByTid" parameterType="java.util.Map"
+		resultType="java.lang.Integer" useCache="false" flushCache="true">
+		SELECT
+		count(id)
+		FROM crm_trade_dto${uid}
+		WHERE tid = #{tid}
+	</select>
+
+	<!-- 通过订单号匹配订单 -->
+	<select id="listTradeByTids" resultMap="trade">
+		select *
+		from crm_trade_dto${uid}
+		where tid in
+		<foreach collection="tidList" item="tid" open="(" separator=","
+			close=")">
+			#{tid}
+		</foreach>
+	</select>
+
+	<!-- 根据用户昵称查询主订单信息 -->
+	<select id="findMemberTradeByConditionAndPagination"
+		parameterType="java.util.Map" resultMap="trade">
+		SELECT
+		TRADE.TID,
+		TRADE.CREATED,
+		TRADE.STATUS
+		FROM
+		CRM_TRADE_DTO${uid} TRADE, (
+		SELECT
+		ID
+		FROM
+		CRM_TRADE_DTO${uid} T
+		WHERE
+		T.UID = #{uid}
+		<if test="buyerNick != null">
+			AND
+			T.BUYER_NICK = #{buyerNick}
+		</if>
+		<if test="minTradeTime != null ">
+			AND
+			T.CREATED &gt; #{minTradeTime}
+		</if>
+		<if test="maxTradeTime != null ">
+			AND
+			T.CREATED &lt; #{maxTradeTime}
+		</if>
+		<if test="statusArray != null">
+			AND T.STATUS IN
+			<foreach collection="statusArray" item="status" open="("
+				close=")" separator=",">
+				#{status}
+			</foreach>
+		</if>
+		<if test="startRows !=null  and currentRows != null ">
+			LIMIT #{startRows},#{currentRows}
+		</if>
+		) T1
+		WHERE
+		TRADE.ID = T1.ID
+	</select>
+	<select id="findMemberTradeCount" parameterType="java.util.Map"
+		resultType="int">
+		SELECT
+		COUNT(1)
+		FROM
+		CRM_TRADE_DTO${uid} T
+		WHERE
+		UID = #{uid}
+		<if test="buyerNick != null">
+			AND
+			T.BUYER_NICK = #{buyerNick}
+		</if>
+		<if test="minTradeTime != null ">
+			AND
+			T.CREATED &gt; #{minTradeTime}
+		</if>
+		<if test="maxTradeTime != null ">
+			AND
+			T.CREATED &lt; #{maxTradeTime}
+		</if>
+		<if test="statusArray != null">
+			AND T.STATUS IN
+			<foreach collection="statusArray" item="status" open="("
+				close=")" separator=",">
+				#{status}
+			</foreach>
+		</if>
+	</select>
+
+	<!-- 根据手机号查询订单，不需要加解密refund_flag,msg_id,,last_send_sms_time -->
+	<select id="listTradeByPhones" parameterType="java.util.Map"
+		resultMap="trade">
+		select
+		buyer_nick,consign_time,created,end_time,modified,pay_time,payment,receiver_address,
+		receiver_mobile,receiver_name,seller_flag,status,tid,trade_from,num,step_trade_status,refund_flag
+		from
+		crm_trade_dto${uid}
+		<where>
+			<if test="phones != null">
+				receiver_mobile in
+				<foreach collection="phones" item="phone" open="("
+					separator="," close=")">
+					#{phone}
+				</foreach>
+				<if test="bTime != null and eTime != null">
+					and lastModifiedDate between #{bTime} and #{eTime}
+				</if>
+			</if>
+		</where>
+	</select>
+
+
+	<!-- 根据订单号查询订单，不需要加解密refund_flag,msg_id,,last_send_sms_time -->
+	<select id="listStepTradeByTids" parameterType="java.util.Map"
+		resultMap="trade">
+		select
+		buyer_nick,consign_time,created,end_time,modified,pay_time,payment,receiver_address,refund_flag,
+		receiver_mobile,receiver_name,seller_flag,status,tid,trade_from,num,front,tail,step_trade_status
+		from
+		crm_trade_dto${uid}
+		<where>
+			<if test="tids != null">
+				tid in
+				<foreach collection="tids" item="tid" open="(" separator=","
+					close=")">
+					#{tid}
+				</foreach>
+			</if>
+			<if test="bTime != null and eTime != null">
+				and lastModifiedDate between #{bTime} and #{eTime}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询时间段内某种状态的订单数（首页） -->
+	<select id="queryTradeNumByHour" parameterType="java.util.Map"
+		resultMap="trade">
+		select HOUR(created) tid_str,count(tid) tid
+		from crm_trade_DTO${uid}
+		<where>
+			<if test="bTime != null and eTime != null">
+				and created between #{bTime} and #{eTime}
+			</if>
+		</where>
+		group by HOUR(created) order by HOUR(created) ASC
+	</select>
+
+	<!-- 订单中心效果分析数据计算 -->
+	<select id="sumTradeCenterEffect" parameterType="java.util.Map"
+		resultMap="trade">
+		select sum(payment) payment,count(tid) tid
+		from crm_trade_dto${uid}
+		<where>
+			<if test="beginTime != null">
+				and pay_time > #{beginTime}
+			</if>
+			<if test="endTime != null">
+				and #{endTime} > pay_time
+			</if>
+			<if test="tidList != null">
+				and tid in
+				<foreach collection="tidList" item="tid" open="(" separator=","
+					close=")">
+					#{tid}
+				</foreach>
+			</if>
+			<if test="statusList != null">
+				and status in
+				<foreach collection="statusList" item="status" open="("
+					separator="," close=")">
+					#{status}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<!-- 后台管理订单查询 -->
+	<select id="listManageTradeDTO" parameterType="com.kycrm.member.domain.vo.order.OrderVO"
+		resultMap="trade">
+		SELECT t1.id,
+		t1.tid,
+		t1.created,
+		t1.payment,
+		t1.buyer_nick,
+		t1.receiver_name,
+		t1.receiver_mobile,
+		t1.receiver_city,
+		t1.consign_time,
+		t1.trade_from,
+		t1.end_time
+		FROM CRM_TRADE_DTO${uid} t1,
+		(SELECT id
+		FROM CRM_TRADE_DTO${uid}
+		<where>
+			<if test="buyerNick != null and buyerNick !=''">
+				AND buyer_nick = #{buyerNick}
+			</if>
+			<if test="orderId != null and orderId !=''">
+				AND tid = #{orderId}
+			</if>
+			<if test="receiverMobile != null and receiverMobile !=''">
+				AND receiver_mobile = #{receiverMobile}
+			</if>
+			<if test="b_tradeCreated !=null">
+				AND DATE_FORMAT(created,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{b_tradeCreated},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="e_tradeCreated !=null">
+				AND DATE_FORMAT(#{e_tradeCreated},'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(created,'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="b_tradeConsignTime !=null">
+				AND DATE_FORMAT(consign_time,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{b_tradeConsignTime},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="e_tradeConsignTime !=null">
+				AND DATE_FORMAT(#{e_tradeConsignTime},'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(consign_time,'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="b_tradeEndTime !=null">
+				AND DATE_FORMAT(end_time,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{b_tradeEndTime},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="e_tradeEndTime !=null">
+				AND DATE_FORMAT(#{e_tradeEndTime},'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(end_time,'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="b_tradePayment !=null">
+				AND payment &gt;= #{b_tradePayment}
+			</if>
+			<if test="e_tradePayment !=null">
+				AND payment &lt;= #{e_tradePayment}
+			</if>
+			<if test="orderFrom !=null and orderFrom !=''">
+				AND trade_from REGEXP '${orderFrom}'
+			</if>
+			<if test="tradeStatus !=null and tradeStatus.size >0">
+				AND status IN
+				<foreach collection="tradeStatus" item="item" index="index"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		ORDER BY id DESC
+		limit #{startRows},#{currentRows}
+		)t2
+		where t1.id=t2.id
+	</select>
+
+	<!-- 后台管理订单个数 -->
+	<select id="countManageTradeDTO" parameterType="com.kycrm.member.domain.vo.order.OrderVO"
+		resultType="java.lang.Long">
+		SELECT COUNT(id)
+		FROM CRM_TRADE_DTO${uid}
+		<where>
+			<if test="buyerNick != null and buyerNick !=''">
+				AND buyer_nick = #{buyerNick}
+			</if>
+			<if test="orderId != null and orderId !=''">
+				AND tid = #{orderId}
+			</if>
+			<if test="receiverMobile != null and receiverMobile !=''">
+				AND receiver_mobile = #{receiverMobile}
+			</if>
+			<if test="b_tradeCreated !=null">
+				AND DATE_FORMAT(created,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{b_tradeCreated},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="e_tradeCreated !=null">
+				AND DATE_FORMAT(#{e_tradeCreated},'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(created,'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="b_tradeConsignTime !=null">
+				AND DATE_FORMAT(consign_time,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{b_tradeConsignTime},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="e_tradeConsignTime !=null">
+				AND DATE_FORMAT(#{e_tradeConsignTime},'%Y/%m/%d
+				%H:%i:%s') >=
+				DATE_FORMAT(consign_time,'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="b_tradeEndTime !=null">
+				AND DATE_FORMAT(end_time,'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(#{b_tradeEndTime},'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="e_tradeEndTime !=null">
+				AND DATE_FORMAT(#{e_tradeEndTime},'%Y/%m/%d %H:%i:%s') >=
+				DATE_FORMAT(end_time,'%Y/%m/%d %H:%i:%s')
+			</if>
+			<if test="b_tradePayment !=null">
+				AND payment &gt;= #{b_tradePayment}
+			</if>
+			<if test="e_tradePayment !=null">
+				AND payment &lt;= #{e_tradePayment}
+			</if>
+			<if test="orderFrom !=null and orderFrom !=''">
+				AND trade_from REGEXP '${orderFrom}'
+			</if>
+			<if test="tradeStatus !=null and tradeStatus.size >0">
+				AND status IN
+				<foreach collection="tradeStatus" item="item" index="index"
+					open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询RFM标准分析时间段内购买次数对应的的会员数 -->
+	<select id="countMemberAmountByTimes" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		select count(distinct buyer_nick) buyerNick
+		from crm_trade_dto${uid} t1
+		<where>
+			t1.status = 'TRADE_FINISHED' and t1.refund_flag is NULL
+			<if test="bTime != null and eTime == null">
+				and t1.end_time > #{bTime}
+				and NOT EXISTS(select 1 from
+				crm_trade_dto${uid} t2
+				where t1.buyer_nick = t2.buyer_nick and #{bTime} > t2.end_time
+				and t2.status = 'TRADE_FINISHED' and t2.refund_flag is NULL)
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} > t1.end_time
+			</if>
+			<if test="bTime != null and eTime != null">
+				and t1.end_time between #{bTime} and #{eTime}
+				and NOT
+				EXISTS(select 1 from crm_trade_dto${uid} t2
+				where t1.buyer_nick = t2.buyer_nick and #{bTime} > t2.end_time
+				and t2.status = 'TRADE_FINISHED' and t2.refund_flag is NULL)
+			</if>
+		</where>
+	</select>
+
+
+	<select id="listEffectRFMByTime" parameterType="java.util.Map"
+		resultMap="trade">
+		select buyer_nick,sum(payment) payment,count(tid) tid
+		from
+		crm_trade_dto${uid} t1
+		<where>
+			t1.status = 'TRADE_FINISHED' and t1.refund_flag is NULL
+			<if test="bTime != null and eTime == null">
+				and t1.end_time > #{bTime}
+				and NOT EXISTS(select 1 from
+				crm_trade_dto${uid} t2
+				where t1.buyer_nick = t2.buyer_nick and #{bTime} > t2.end_time
+				and t2.status = 'TRADE_FINISHED' and t2.refund_flag is NULL)
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} > t1.end_time
+			</if>
+			<if test="bTime != null and eTime != null">
+				and t1.end_time between #{bTime} and #{eTime}
+				and NOT
+				EXISTS(select 1 from crm_trade_dto${uid} t2
+				where t1.buyer_nick = t2.buyer_nick and #{bTime} > t2.end_time
+				and t2.status = 'TRADE_FINISHED' and t2.refund_flag is NULL)
+			</if>
+		</where>
+		group by t1.buyer_nick
+	</select>
+
+	<!-- 查询RFM标准分析时间段内购买次数对应的累计消费金额 -->
+	<select id="sumPaidAmountByTimes" parameterType="java.util.Map"
+		resultType="java.math.BigDecimal">
+		select sum(payment) payment
+		from crm_trade_dto${uid} t1
+		<where>
+			t1.status = 'TRADE_FINISHED' and t1.refund_flag is NULL
+			<if test="bTime != null and eTime == null">
+				and t1.end_time > #{bTime}
+				and NOT EXISTS(select 1 from
+				crm_trade_dto${uid} t2
+				where t1.buyer_nick = t2.buyer_nick and #{bTime} > t2.end_time
+				and t2.status = 'TRADE_FINISHED' and t2.refund_flag is NULL)
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} > t1.end_time
+			</if>
+			<if test="bTime != null and eTime != null">
+				and t1.end_time between #{bTime} and #{eTime}
+				and NOT
+				EXISTS(select 1 from crm_trade_dto${uid} t2
+				where t1.buyer_nick = t2.buyer_nick and #{bTime} > t2.end_time
+				and t2.status = 'TRADE_FINISHED' and t2.refund_flag is NULL)
+			</if>
+
+		</where>
+	</select>
+
+
+	<!-- 计算RFM详情页面折线图数据(下单客户数) -->
+	<select id="listCreateCustomerAmount" parameterType="java.util.Map"
+		resultType="com.kycrm.member.domain.vo.trade.TradeVO">
+		select
+		(case
+		when 'day' = #{dateType} then date_format(created,'%Y-%m-%d')
+		when 'month' = #{dateType} then date_format(created,'%Y-%m')
+		end)
+		minCreatedTimeStr,count(buyer_nick) buyerNick
+		from
+		crm_trade_dto${uid}
+		<where>
+			<if test="bTime != null and eTime != null">
+				and end_time between #{bTime} and #{eTime} and status = 'TRADE_FINISHED'
+			</if>
+		</where>
+		group by minCreatedTimeStr
+		order by minCreatedTimeStr ASC
+	</select>
+
+	<!-- 计算RFM详情页面折线图数据(购买次数及消费总金额) -->
+	<select id="listPaidData" parameterType="java.util.Map"
+		resultType="com.kycrm.member.domain.vo.trade.TradeVO">
+		select
+		(case
+		when 'day' = #{dateType} then date_format(end_time,'%Y-%m-%d')
+		when 'month' = #{dateType} then date_format(end_time,'%Y-%m')
+		end)
+		minCreatedTimeStr,count(tid) tid,sum(payment) buyerNick, count(distinct buyer_nick) pageNo
+		from
+		crm_trade_dto${uid} t
+		<where>
+			<if test="bTime != null and eTime != null">
+				and t.end_time between #{bTime} and #{eTime} and t.status = 'TRADE_FINISHED'
+			</if>
+			<if test="tradeNum != null">
+				<choose>
+					<when test="tradeNum == 5">
+						and EXISTS (select 1 from crm_member_info_dto${uid} m where t.buyer_nick = m.buyer_nick and m.trade_num >= 1)
+					</when>
+					<when test="tradeNum == 1">
+						and EXISTS (select 1 from crm_member_info_dto${uid} m where t.buyer_nick = m.buyer_nick and m.trade_num = 1)
+					</when>
+					<when test="tradeNum == 2">
+						and EXISTS (select 1 from crm_member_info_dto${uid} m where t.buyer_nick = m.buyer_nick and m.trade_num > 1)
+					</when>
+				</choose>
+			</if>
+		</where>
+		group by minCreatedTimeStr
+		<!-- order by minCreatedTimeStr ASC -->
+	</select>
+
+	<!-- 查询下单未付款客户数 -->
+	<select id="countUnPaidMember" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		select count(distinct buyer_nick)
+		from crm_trade_dto${uid}
+		where status in('WAIT_BUYER_PAY','TRADE_CLOSED_BY_TAOBAO')
+	</select>
+
+	<!-- 根据订单号查询所有应付金额 -->
+	<select id="sumPaymentByTids" parameterType="java.util.Map"
+		resultType="java.math.BigDecimal">
+		select sum(payment) payment
+		from crm_trade_dto${uid}
+		<where>
+			<if test="tids != null">
+				tid in
+				<foreach collection="tids" item="tid" open="(" separator=","
+					close=")">
+					#{tid}
+				</foreach>
+			</if>
+		</where>
+	</select>
+</mapper>

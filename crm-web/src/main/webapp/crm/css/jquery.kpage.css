@@ -1,0 +1,53 @@
+@charset "UTF-8";
+.kpage{
+    text-shadow:none;
+    font-family: 'Î¢ÈíÑÅºÚ', 'ËÎÌå', serif;
+    color: #616161;
+}
+.kpage-block.active{
+    color: #c1c1c1;
+    cursor:default;
+}
+.kpage>.kpage-block:first-child{
+    border-left: #BBC2E6 1px solid;
+}
+.kpage-input{
+    height:35px;
+    width:40px;
+    text-align: center;
+    float:left;
+    border: #BBC2E6 1px solid;
+    border-left:0;
+}
+.kpage-omission{
+    background-color: #f8f9ff;
+    color: #c1c1c1;
+    border: #BBC2E6 1px solid;
+    border-left:0;
+    cursor:default;
+    height:35px;
+    width:35px;
+    line-height: 35px;
+    text-align: center;
+    float:left;
+    display: block;
+}
+.kpage-block{
+    background-color: #f8f9ff;
+    border: #BBC2E6 1px solid;
+    border-left:0;
+    padding:0 10px;
+    cursor:pointer;
+    height:35px;
+    min-width:38px;
+    line-height: 35px;
+    text-align: center;
+    float:left;
+    display: block;
+}
+.kpage-block:hover{
+    background-color: #ebf2ff;
+}
+.kpage-block.active:hover{
+    background-color: #fff;
+}

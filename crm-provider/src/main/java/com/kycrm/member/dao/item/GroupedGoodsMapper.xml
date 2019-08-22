@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.item.IGroupedGoodsDao">
+
+	<!-- 查询已分组商品 -->
+	<select id="listGroupedGoods" resultType="com.kycrm.member.domain.entity.item.GroupedGoods">
+		select num_iid,url,title,price,c_time
+		from crm_grouped_goods
+		where uid = #{0} and group_id = #{1}
+	</select>
+	
+	<!-- 根据分组id删除已分组商品 -->
+	<delete id="removeGroupedGoods">
+		delete from crm_grouped_goods
+		where uid = #{0} and group_id = #{1}
+	</delete>
+	
+	<!-- 批量添加已分组商品 -->
+	<insert id="saveGroupedGoodsList">
+		insert into crm_grouped_goods(createdDate,lastModifiedBy,lastModifiedDate,optlock,c_time,
+	    GROUP_ID,num_iid,uid,approve_status,price,title,url)VALUES
+	    <foreach collection="list" item="groupedGoods" index="index"  
+			separator=",">  
+			(NOW(),NOW(),NOW(),0,NOW(),#{groupedGoods.groupId},#{groupedGoods.numIid},
+			#{groupedGoods.uid},#{groupedGoods.approveStatus},#{groupedGoods.price},
+			#{groupedGoods.title},#{groupedGoods.url})  
+		</foreach> 
+	</insert>
+	
+	<!-- 根据分组id查询所有已分组商品的id -->
+	<select id="listGroupedGoodsId" resultType="java.lang.Long">
+		select num_iid
+		from crm_grouped_goods
+		where uid = #{0} and group_id = #{1}
+	</select>
+</mapper>

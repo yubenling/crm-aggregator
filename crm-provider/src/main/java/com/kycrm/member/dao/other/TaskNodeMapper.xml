@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.other.ITaskNodeDao">
+	<resultMap type="com.kycrm.member.domain.entity.other.TaskNode" id="taskNode">
+		<result column="task_node" property="taskNode"/>
+		<result column="task_end_time" property="taskEndTime"/>
+		<result column="type" property="type"/>
+	</resultMap>
+	
+	<!-- 添加一条记录 -->
+	<insert id="saveTaskNode" parameterType="com.kycrm.member.domain.entity.other.TaskNode">
+		insert into crm_task_node(task_node,task_end_time,type)
+		value(#{taskNode},#{taskEndTime},#{type})
+	</insert>
+	
+	<!-- 更新记录 -->
+	<update id="updateTaskNode" parameterType="com.kycrm.member.domain.entity.other.TaskNode">
+		update crm_task_node
+		<set>
+			<if test="taskNode != null">
+				task_node = #{taskNode},
+			</if>
+			<if test="taskEndTime != null">
+				task_end_time = #{taskEndTime},
+			</if>
+		</set>
+		<where>
+			type = #{type}
+		</where>
+	</update>
+	
+	<!-- 根据类型查询一条记录 -->
+	<select id="queryTaskNodeByType" parameterType="String" resultMap="taskNode">
+		select task_node,task_end_time,type
+		from crm_task_node
+		<where>
+			type = #{_parameter}
+		</where>
+	</select>
+	
+</mapper>

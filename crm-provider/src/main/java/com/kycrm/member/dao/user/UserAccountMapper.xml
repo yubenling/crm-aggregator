@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.user.IUserAccountDao">
+	<resultMap type="com.kycrm.member.domain.entity.user.UserAccount" id="userAccount">
+		<result column="user_id" property="userId" />
+		<result column="sms_num" property="smsNum" />
+	</resultMap>
+	<!-- 保存用户的账户短信余额 -->
+	<insert id="doCreateUserAccount" parameterType="com.kycrm.member.domain.entity.user.UserAccount" >
+	   INSERT INTO crm_user_account(id,user_id,sms_num,createdBy,createdDate,lastModifiedBy,lastModifiedDate,uid)
+	   VALUE(#{id},#{userId},#{smsNum},#{userId},now(),#{userId},now(),#{uid})
+	</insert>
+	<!-- 查询用户的余额 -->
+	<select id="findUserAccountSms" parameterType="java.lang.Long" resultType="java.lang.Long" flushCache="true" useCache="false">
+	   SELECT  IFNULL(sms_num,0)
+	   FROM    crm_user_account
+	   WHERE   uid = #{_parameter}
+	</select>
+	<!-- 扣除用户的余额 -->
+	<update id="doDeleteUserSms" >
+	   UPDATE  crm_user_account
+	   SET     sms_num=sms_num-#{smsNum},lastModifiedDate=now()
+	   WHERE   uid = #{uid}
+	</update>
+	<!-- 增加用户的余额 -->
+    <update id="doAddUserSms" >
+       UPDATE  crm_user_account
+       SET     sms_num=sms_num+#{smsNum},lastModifiedDate=now()
+       WHERE   uid = #{uid}
+    </update>
+    <!-- 查询是否存在 -->
+    <select id="findExistsUser" parameterType="java.lang.String" resultType="java.lang.Integer">
+       SELECT   COUNT(1)
+       FROM     crm_user_account
+       WHERE    uid = #{_parameter}
+    </select>
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.syn.IRefundDao">
+	<!--判断表是否存在  -->
+	<select id="isExistsTable" parameterType="java.lang.Long"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_refund_dto${_parameter}'
+	</select>
+	<!--创建退款表  -->
+	<insert id="doCreateTableByNewUser" parameterType="java.lang.Long">
+	  CREATE TABLE `crm_refund_dto${_parameter}` (
+	   `id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+	   `uid` bigint(20) comment '分库分表实体对应用户表的主键id',
+       `optlock`  bigint(10) NOT NULL COMMENT '版本' ,
+       `createdBy`  varchar(255) NULL ,
+       `createdDate`  datetime NULL ,
+       `lastModifiedBy`  varchar(255) NULL DEFAULT NULL ,
+       `lastModifiedDate`  datetime NULL DEFAULT NULL ,
+       `refund_id`  bigint(20) NULL DEFAULT NULL COMMENT '退款id' ,
+       `status`  varchar(255) NULL DEFAULT NULL COMMENT '订单状态' ,
+       `seller_nick`  varchar(500) NULL DEFAULT NULL COMMENT '卖家昵称' ,
+       `tid`  bigint(20) NULL DEFAULT NULL COMMENT '订单id' ,
+       `oid`  bigint(20) NULL DEFAULT NULL COMMENT '子订单id' ,
+       `created`  datetime NULL DEFAULT NULL COMMENT '创建时间' ,
+       `modified`  datetime NULL DEFAULT NULL COMMENT '修改时间' ,
+       `advance_status`  bigint(20) NULL DEFAULT NULL ,
+       `alipay_no`  tinyint(20) NULL DEFAULT NULL COMMENT '支付宝号' ,
+       `attribute`  varchar(500) NULL DEFAULT NULL COMMENT '属性' ,
+       `good_status`  varchar(255) NULL DEFAULT NULL COMMENT '商品状态' ,
+       `has_good_return`  bigint(5) NULL DEFAULT NULL COMMENT '商品是否退回' ,
+       `num`  bigint(5) NULL DEFAULT NULL COMMENT '商品数量' ,
+       `num_iid`  bigint(20) NULL DEFAULT NULL COMMENT '商品id' ,
+       `order_status`  varchar(255) NULL DEFAULT NULL COMMENT '子订单状态' ,
+       `outer_id`  varchar(255) NULL DEFAULT NULL ,
+       `payment`  decimal NULL DEFAULT NULL ,
+       `price`  decimal NULL DEFAULT NULL COMMENT '单价' ,
+       `reason`  varchar(1500) NULL DEFAULT NULL COMMENT '退款理由',
+       `refund_fee`  decimal NULL DEFAULT NULL COMMENT '退款费用' ,
+       `refund_phase`  varchar(500) NULL DEFAULT NULL COMMENT '退款解析' ,
+       `refund_version`  bigint(50) NULL DEFAULT NULL COMMENT '退款版本' ,
+       `sku`  varchar(1500) NULL DEFAULT NULL ,
+       `title`  varchar(1000) NULL DEFAULT NULL ,
+       `total_fee`  decimal NULL DEFAULT NULL COMMENT '总费用' ,
+        PRIMARY KEY (`id`)
+	   )
+	</insert>
+	
+	<!--批量保存退款订单  -->
+	<insert id="saveRefund" parameterType="java.util.Map">
+	        insert into crm_refund_dto${uid} (optlock,uid,createdBy,createdDate,lastModifiedBy,lastModifiedDate,refund_id,
+	        status,seller_nick,tid,oid,created,modified,advance_status,
+	        num,num_iid,order_status,outer_id,payment,price,refund_fee,sku,title,total_fee)
+	                         VALUES 
+	    <foreach collection="list" item="refund" index="index" separator=",">
+	              (0,#{refund.uid},#{refund.sellerNick},NOW(),#{refund.sellerNick},NOW(),#{refund.refundId},
+	      #{refund.status},#{refund.sellerNick},#{refund.tid},#{refund.oid},#{refund.created},#{refund.modified},#{refund.advanceStatus},
+	      #{refund.num},#{refund.numIid},#{refund.orderStatus},#{refund.outerId},#{refund.payment},#{refund.price},
+	      #{refund.refundFee},#{refund.sku},
+	      #{refund.title},#{refund.totalFee})
+	    </foreach>                   
+	</insert>
+	<!--批量更新退款订单  -->
+	<update id="updateRefund" parameterType="java.util.Map">
+	      <foreach collection="list" item="refund" index="index" open="" close="" separator=";">
+	          update crm_refund_dto${uid}
+	          <set>
+	              <if test="refund.status!=null">
+	                  status=#{refund.status},
+	              </if>
+	              <if test="refund.modified!=null">
+	                  modified=#{refund.modified},
+	              </if>
+	              <if test="refund.hasGoodReturn!=null">
+	                  has_good_return=#{refund.hasGoodReturn},
+	              </if>
+	              <if test="refund.num!=null">
+	                  num=#{refund.num},
+	              </if>
+	              <if test="refund.numIid!=null">
+	                 num_iid=#{refund.numIid},
+	              </if>
+	              <if test="refund.orderStatus!=null">
+	                 order_status=#{refund.orderStatus},
+	              </if>
+	              <if test="refund.outerId!=null">
+	                 outer_id=#{refund.outerId},
+	              </if>
+	              <if test="refund.payment!=null">
+	                 payment=#{refund.payment},
+	              </if>
+	              <if test="refund.price!=null">
+	                 price=#{refund.price},
+	              </if>
+	              <if test="refund.reason!=null"> 
+	                 reason=#{refund.reason},
+	              </if>
+	              <if test="refund.refundFee!=null">
+	                 refund_fee=#{refund.refundFee},
+	              </if>
+	              <if test="refund.refundPhase!=null">
+	                  refund_phase=#{refund.refundPhase},
+	              </if>
+	              <if test="refund.refundVersion!=null">
+	                  refund_version=#{refund.refundVersion},
+	              </if>
+	              <if test="refund.title!=null">
+	                  title=#{refund.title},
+	              </if>
+	              <if test="refund.totalFee!=null">
+	                  total_fee=#{refund.totalFee},
+	              </if>
+	              optlock=optlock+1,
+	              lastModifiedDate=NOW(),
+	          </set>
+	           WHERE refund_id=#{refund.refundId} 
+	      </foreach>
+	</update>
+	<!--判断该退款订单时候存在  -->
+	<select id="isExit" parameterType="java.util.Map" resultType="java.lang.Long">
+	    select count(*) from crm_refund_dto${uid} where refund_id=#{refundId}
+	</select>
+	<!--给退款表添加索引  -->
+	<insert id="addIndex" parameterType="java.lang.Long">
+	   ALTER TABLE `crm_refund_dto${_parameter}`
+       ADD INDEX `index_refund_id` (`refund_id`) USING BTREE ,
+       ADD INDEX `index_status` (`status`) USING BTREE ,
+       ADD INDEX `index_tid` (`tid`) USING BTREE ,
+       ADD INDEX `index_oid` (`oid`) USING BTREE ,
+       ADD INDEX `index_created` (`created`) USING BTREE ,
+       ADD INDEX `index_modified` (`modified`) USING BTREE ,
+       ADD INDEX `index_order_status` (`order_status`) USING BTREE ;
+	</insert>
+</mapper>

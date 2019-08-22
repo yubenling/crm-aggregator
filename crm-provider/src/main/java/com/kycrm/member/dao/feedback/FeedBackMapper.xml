@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.feedback.IFeedBackDao" >
+<resultMap type="com.kycrm.member.domain.entity.feedback.FeedBack"
+	id="FeedBack_map">
+	<result column="USER_ID" property="userId" />
+	<result column="FEEDBACK_CONTENT" property="feedbackContent" />
+	<result column="FEEDBACK_IMAGE" property="feedbackImage" />
+	<result column="CONTACT_MODE" property="contactMode" />
+	<result column="FEEDBACK_READ" property="feedbackRead" />
+	<result column="CREATE_DATE" property="createDate" />
+	<result column="LAST_AMEND_DATE" property="lastAmendDATE" />
+</resultMap>
+	<insert id="insertFeedBack"  parameterType="com.kycrm.member.domain.entity.feedback.FeedBack" useGeneratedKeys="true" keyProperty="id">
+	INSERT INTO CRM_FEEDBACK(
+			uid, user_id, feedback_content,
+			feedback_image, contact_mode, feedback_read, createdBy,
+			createdDate,lastModifiedBy,lastModifiedDate , optlock)
+	VALUE(
+			#{uid},#{userId},#{feedbackContent},
+			#{feedbackImage},#{contactMode},#{feedbackRead},#{createdBy},
+			now(),#{lastModifiedBy},now(),0
+	);
+	 </insert>
+</mapper>

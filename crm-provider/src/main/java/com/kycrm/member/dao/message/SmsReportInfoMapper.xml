@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.message.ISmsReportInfoDao">
+	<resultMap type="com.kycrm.member.domain.entity.message.SmsReportInfo"
+		id="reportInfo">
+		<result column="uid" property="uid" />
+		<result column="send_date" property="sendDate" />
+		<result column="sms_num" property="smsNum" />
+		<result column="type" property="type" />
+		<result column="createdBy" property="dateStr" />
+	</resultMap>
+
+	<!-- 添加单条数据 -->
+	<select id="saveOne"
+		parameterType="com.kycrm.member.domain.entity.message.SmsReportInfo">
+		insert into
+		crm_sms_report_info(uid,send_date,sms_num,type,optlock,createdDate,createdBy,
+		lastModifiedDate,lastModifiedBy)
+		value(#{uid},#{sendDate},#{smsNum},#{type},0,#{createdDate},#{createdBy},
+		#{lastModifiedDate},#{lastModifiedBy})
+	</select>
+
+	<!-- 添加多条数据 -->
+	<select id="saveList"
+		parameterType="com.kycrm.member.domain.entity.message.SmsReportInfo">
+		insert into
+		crm_sms_report_info(uid,send_date,sms_num,type,optlock,createdDate,createdBy,
+		lastModifiedDate,lastModifiedBy)
+		values
+		<foreach collection="reportInfoList" item="report" open="("
+			separator="," close=")">
+			#{report.uid},#{report.sendDate},#{report.smsNum},#{report.type},0,#{report.createdDate},
+			#{report.createdBy},#{report.lastModifiedDate},#{report.lastModifiedBy}
+		</foreach>
+	</select>
+
+	<!-- 按照日期分页查询账单 -->
+	<select id="limitReportListByDate" parameterType="java.util.Map"
+		resultMap="reportInfo">
+		select
+		(CASE
+		WHEN 'day' = #{dateType} THEN date_format(send_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN date_format(send_date, '%Y')
+		END) as
+		createdBy, sum(sms_num) sms_num
+		from crm_sms_report_info
+		<where>
+			uid = #{uid}
+			<if test="bTime != null and eTime != null">
+				and send_date between #{bTime} and #{eTime}
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} >= send_date
+			</if>
+			<if test="bTime != null and eTime == null">
+				and send_date >= #{bTime}
+			</if>
+		</where>
+		group by (CASE
+		WHEN 'day' = #{dateType} THEN date_format(send_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN date_format(send_date, '%Y')
+		END)
+		order by
+		(CASE
+		WHEN 'day' = #{dateType} THEN date_format(send_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN date_format(send_date, '%Y')
+		END) DESC
+		<if test="startRows != null and pageSize != null">
+			limit #{startRows},#{pageSize}
+		</if>
+	</select>
+
+
+	<!-- 按照日期分页查询账单总记录数 -->
+	<select id="countReportByDate" resultType="java.lang.Integer">
+		select count(*) from
+		(select
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_date, '%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(send_date, '%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(send_date, '%Y')
+		END as
+		createdBy
+		from crm_sms_report_info
+		<where>
+			uid = #{uid}
+			<if test="bTime != null and eTime != null">
+				and send_date between #{bTime} and #{eTime}
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} > send_date
+			</if>
+			<if test="bTime != null and eTime == null">
+				and send_date > #{bTime}
+			</if>
+		</where>
+		group by (CASE
+		WHEN 'day' = #{dateType} THEN date_format(send_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN date_format(send_date, '%Y')
+		END)) report
+	</select>
+
+
+	<!-- 计算短信消费条数 -->
+	<select id="sumReportSmsNum" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		select sum(sms_num) sms_num
+		from crm_sms_report_info
+		<where>
+			uid = #{uid}
+			<if test="bTime != null and eTime != null">
+				and send_date between #{bTime} and #{eTime}
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} > send_date
+			</if>
+			<if test="bTime != null and eTime == null">
+				and send_date > #{bTime}
+			</if>
+		</where>
+	</select>
+	<!--更新账单 -->
+	<update id="updateReprotInfo"
+		parameterType="com.kycrm.member.domain.entity.message.SmsReportInfo">
+		UPDATE crm_sms_report_info
+		<set>
+			<if test="smsNum!=null and smsNum!=''">
+				sms_num=sms_num-#{smsNum},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<select id="findMessageSendCount_origin" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		select count(1) from
+		(select
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(send_date, '%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(send_date, '%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(send_date, '%Y')
+		END as content
+		from crm_sms_report_info
+		<where>
+			uid = #{uid}
+			<if test="bTime != null and eTime != null">
+				and send_date between #{bTime} and #{eTime}
+			</if>
+			<if test="bTime == null and eTime != null">
+				and #{eTime} > send_date
+			</if>
+			<if test="bTime != null and eTime == null">
+				and send_date > #{bTime}
+			</if>
+		</where>
+		group by (CASE
+		WHEN 'day' = #{dateType} THEN date_format(send_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN date_format(send_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN date_format(send_date, '%Y')
+		END)) report
+	</select>
+
+	<select id="findMessageSendCount" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		SELECT
+		SUM(count)
+		FROM
+		(
+		SELECT
+		COUNT(1) as 'count'
+		FROM
+		CRM_SMS_REPORT_INFO
+		R
+		WHERE
+		R.UID = #{uid}
+		<if test="bTime != null and eTime != null">
+			AND SEND_DATE BETWEEN #{bTime} AND #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			AND #{eTime} > SEND_DATE
+		</if>
+		<if test="bTime != null and eTime == null">
+			AND SEND_DATE > #{bTime}
+		</if>
+		) T
+	</select>
+
+</mapper>

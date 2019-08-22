@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.member.IAnalyseMobileDao">
+	<resultMap type="com.kycrm.member.domain.entity.member.MemberInfoDTO"
+		id="memberInfoDTO">
+		<result column="id" property="id" />
+		<result column="uid" property="uid" />
+		<result column="mobile" property="mobile" />
+	</resultMap>
+
+	<!--查询所有的号段的所在在地 -->
+	<select id="getMemberMobileByRange" resultMap="memberInfoDTO">
+		SELECT
+			MEM.ID,
+		MEM.MOBILE
+		FROM
+			CRM_MEMBER_INFO_DTO${uid} MEM,
+			(
+				SELECT
+					M.ID
+				FROM
+					CRM_MEMBER_INFO_DTO${uid} M,
+					CRM_ORDER_DTO${uid} O
+				WHERE
+					M.BUYER_NICK = O.BUYER_NICK
+				AND M.UID = #{uid}
+				AND O.CREATEDDATE &lt;= #{createdDate}
+				AND M.OPERATOR IS NULL
+				AND M.DNSEG_THREE IS NULL
+				AND M.DNSEG_PROVINCE IS NULL
+				AND M.DNSEG_CITY IS NULL
+				GROUP BY
+					M.ID
+				ORDER BY
+					M.ID DESC
+		<!-- 分页组件 -->
+		<include refid="pagination" />
+		) M1
+		WHERE
+		MEM.ID = M1.ID
+	</select>
+
+	<!-- 批量保存会员信息 author:jackstraw_yu -->
+	<insert id="updateAnalyseResult" parameterType="com.kycrm.member.domain.entity.member.MemberInfoDTO">
+		INSERT INTO CRM_MEMBER_INFO_DTO${uid}
+		(
+		ID,
+		DNSEG_THREE,
+		DNSEG_PROVINCE,
+		DNSEG_CITY,
+		OPERATOR
+		)
+		VALUES
+		<foreach collection="memberInfoList" item="member" index="index"
+			separator=",">
+			(#{member.id},
+			#{member.dnsegThree},
+			#{member.dnsegProvince},
+			#{member.dnsegCity},
+			#{member.operator})
+		</foreach>
+		ON DUPLICATE KEY UPDATE
+		ID = VALUES(ID),
+		DNSEG_THREE =
+		VALUES(DNSEG_THREE),
+		DNSEG_PROVINCE = VALUES(DNSEG_PROVINCE),
+		DNSEG_CITY = VALUES(DNSEG_CITY),
+		OPERATOR = VALUES(OPERATOR)
+	</insert>
+
+	<!-- 分页 -->
+	<sql id="pagination">
+		<if test="startPoint !=null  and range != null ">
+			LIMIT #{startPoint},#{range}
+		</if>
+	</sql>
+</mapper>

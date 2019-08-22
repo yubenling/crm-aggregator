@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.partition.IUserPartitionInfoDao">
+	<resultMap type="com.kycrm.member.domain.entity.partition.UserPartitionInfo" id="userPartitionInfo">
+		<result column="id" property="id" />
+		<result column="uid" property="uid"/>
+		<result column="user_nick" property="userNick"/>
+		<result column="table_no" property="tableNo"/>
+		<result column="is_hash" property="isHash"/>
+		<result column="design_table_no" property="designTableNo"/>
+		<result column="createdDate" property="createdDate"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>	
+	</resultMap>
+	
+	<select id="findAll" resultMap="userPartitionInfo">
+		SELECT uid,table_no FROM crm_user_partition_info
+	</select>
+	
+	<!-- 查询是否根据用户主键均匀分库 -->
+	<select id="findIsHash" resultMap="userPartitionInfo" useCache="false" flushCache="true">
+		SELECT is_hash,design_table_no
+		FROM crm_user_partition_info
+		WHERE id=1
+	</select>
+	
+	<!-- 查询是否根据用户主键均匀分库 -->
+	<select id="findCountByUid" resultType="java.lang.Integer" parameterType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM crm_user_partition_info
+		WHERE uid=#{_parameter}
+	</select>
+	
+	<!-- 创建用户分库关系记录 -->
+	<insert id="doCreateUserOartitionInfo" parameterType="com.kycrm.member.domain.entity.partition.UserPartitionInfo">
+		INSERT INTO crm_user_partition_info(id,createdDate,lastModifiedDate,uid,user_nick,table_no)
+		VALUE(#{uid},now(),now(),#{uid},#{userNick},#{tableNo})
+	</insert>
+</mapper>

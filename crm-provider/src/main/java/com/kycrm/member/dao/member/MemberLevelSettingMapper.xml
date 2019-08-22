@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.member.IMemberLevelSettingDao">
+
+ <!-- 查询4个会员等级 -->
+  <select id="findFourLevel" resultType="com.kycrm.member.domain.to.MemberLevelSetting">
+    SELECT l.`id` id,l.`MEMBERLEVEL` memberlevel,l.`TRADINGVOLUME` tradingVolume,
+    l.`TURNOVER` turnover,l.`DISCOUNT` discount,l.`groupId` groupId ,l.`USERID` userId,
+    l.`HIERARCHY` hierarchy
+    FROM CRM_MEMBER_LEVEL_SETTING l
+    <where>
+    <if test="userId != null">
+      l.`USERID` = #{userId}
+    </if>
+       AND  l.`MEMBERLEVEL` IN(1,2,3,4)
+    </where>
+     ORDER BY  MEMBERLEVEL ASC 
+  </select>
+  
+  <!-- 修改会员设置 -->
+  <update id="updateSetting">
+    UPDATE CRM_MEMBER_LEVEL_SETTING s SET
+     <if test="tradingVolume !=null">
+       s.`TRADINGVOLUME`= #{tradingVolume} ,
+     </if>
+     <if test="turnover !=null"> 
+       s.`TURNOVER` = #{turnover},
+     </if>
+	 <if test="discount !=null"> 
+	   s.`DISCOUNT` = #{discount},
+	 </if>
+	 <if test="groupId !=null"> 
+	   s.`groupId` = #{groupId},
+	 </if>
+	 s.`CTIME`=#{ctime},
+	 s.`HIERARCHY`=#{hierarchy}
+	 <!-- <if test="ctime !=null">
+	   s.`CTIME`=#{ctime},
+	 </if>
+	 <if test="hierarchy !=null">
+	   s.`HIERARCHY`=#{hierarchy}
+	 </if> -->
+	 <where>
+		<if test="id != null">
+		    id=#{id}
+		</if>
+	
+	</where>
+  </update>
+  
+  <!-- 取消所有折扣 -->
+  <update id="updateDiscount">
+   UPDATE CRM_MEMBER_LEVEL_SETTING s SET s.`DISCOUNT`=10 
+    <where>
+    s.`USERID` = #{userId}
+   </where>
+
+  </update>
+  
+  
+  <!-- 根据会员等级设置 更新 买家等级 -->
+   <update id="updateMemberInfoLevel">
+   UPDATE CRM_MEMBER_INFO i ,CRM_MEMBER_LEVEL_SETTING s SET
+   <if test="MEMBER_LEVEL_SETTING_ID != null">i.`MEMBER_LEVEL_SETTING_ID` =#{id} </if>
+    <where>
+     i.`id` = #{id}
+    </where>
+  </update>
+  
+  <!-- 会员归类 -->
+  <update id="updateMemberInfo">
+    BEGIN FOR 
+	a IN (SELECT * FROM CRM_MEMBER_LEVEL_SETTING  ORDER BY id DESC)
+	LOOP 
+	UPDATE FROM  CRM_MEMBER_INFO i SET i.`MEMBER_LEVEL_SETTING_ID` = a.id
+	WHERE i.`trade_amount` > a.`TRADINGVOLUME`;
+	END LOOP; 
+	END;
+  </update>
+  
+  <!-- 修改普通会员组ID -->
+  <update id="updateRegularMembers">
+    UPDATE  crm_member_level_setting s,CRM_GROUPS g SET s.`groupId`=g.`group_id` WHERE 
+    g.`group_name`='普通会员' AND s.`MEMBERLEVEL`='1' and s.`USERID`= #{userId}
+    AND s.`USERID`=g.`userId`
+  </update>
+  
+  <!-- 修改高级会员组ID -->
+  <update id="updateSeniorMember">
+   UPDATE  crm_member_level_setting s,CRM_GROUPS g SET s.`groupId`=g.`group_id` WHERE 
+    g.`group_name`='高级会员' AND s.`MEMBERLEVEL`='2' and s.`USERID`= #{userId}
+    AND s.`USERID`=g.`userId`
+  </update>
+  
+  <!-- 修改vip会员组ID -->
+  <update id="updateVipMember">
+     UPDATE  crm_member_level_setting s,CRM_GROUPS g 
+     SET s.`groupId`=g.`group_id` WHERE 
+     g.`group_name`='VIP会员' AND s.`MEMBERLEVEL`='3' and s.`USERID`= #{userId}
+     AND s.`USERID`=g.`userId`
+  </update>
+  
+  <!-- 修改至尊会员组ID -->
+  <update id="updateExtremeMember">
+     UPDATE  crm_member_level_setting s,CRM_GROUPS g 
+     SET s.`groupId`=g.`group_id` WHERE 
+     g.`group_name`='至尊VIP会员' AND s.`MEMBERLEVEL`='4' and s.`USERID`= #{userId}
+     AND s.`USERID`=g.`userId`
+  </update>
+  
+  <!-- 根据会员分组编号查询该等级设置条件 -->
+  <select id="getMemberLevelSettingInfo" resultType="com.kycrm.member.domain.to.MemberLevelSetting">
+  	select * from crm_member_level_setting 
+  	where groupId = #{groupId}
+  </select>
+  <select id="findMemberLevelByLevelAndUserId" resultType="com.kycrm.member.domain.to.MemberLevelSetting">
+  	select * from crm_member_level_setting 
+  	where USERID = #{userId} and MEMBERLEVEL = #{memberLevel}
+  </select>
+  <select id="findSetUpUserId" resultType="com.kycrm.member.domain.to.MemberLevelSetting">
+  	SELECT USERID,MEMBERLEVEL,TURNOVER,TRADINGVOLUME FROM CRM_MEMBER_LEVEL_SETTING  WHERE  1=1   
+  	GROUP BY  USERID,MEMBERLEVEL,TURNOVER,TRADINGVOLUME  ORDER  BY USERID
+  </select>
+  
+  <!-- 查询用户是否设置过 -->
+  <select id="findMemberLevelSetingCount" resultType="java.lang.Long">
+    SELECT COUNT(*) FROM crm_member_level_setting WHERE USERID=#{userId}
+  </select>
+  
+  <!-- 查询 userId 是否存在 -->
+  <select id="findUserId" resultType="com.kycrm.member.domain.to.MemberLevelSetting">
+    SELECT * FROM CRM_MEMBER_LEVEL_SETTING WHERE USERID=#{userId}
+  </select>
+  
+  <!-- 删除交易金额为0的数据 -->
+  <delete id="delShopMember">
+    DELETE FROM crm_member_level_setting WHERE USERID=#{userId} AND   TRADINGVOLUME='0.00'
+  </delete>
+  
+  <!-- 调用接口同步数据，删除旧的数据 -->
+  <delete id="delMemberLevel">
+    DELETE FROM crm_member_level_setting WHERE USERID=#{userId}
+  </delete>
+</mapper>

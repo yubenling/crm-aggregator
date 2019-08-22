@@ -1,0 +1,420 @@
+#douSevenBannerBox{
+	width: 100%;
+	height:117px;
+	background: url(../images/topBanner.jpg) no-repeat center center;
+	background-color:#2c05ba;
+	position: relative;
+}
+#douSevenBannerBox a{
+	width:100%;
+	height:100%;
+	position: absolute;
+	left:0;
+	top:0;
+}
+/*头部导航*/
+.indexHead{
+	height: 100px;
+	width: 100%;
+	background-color:#122029 ;
+	min-width: 1400px;
+	margin-bottom: 20px;
+}
+.logobox{
+	width: 10%;
+	height: 100px;
+	text-align: center;
+	display: table;
+}
+.logobox a{
+	display: table-cell;
+	vertical-align: middle;
+}
+.logobox a img{
+	width: 115px;
+	height: 39px;
+}
+.headNav{
+	height: 98px;
+	margin: 1px 0;
+	width: 62.5%;
+}
+.headNav a{
+	float: left;
+	padding: 0 35px;
+	color: #fff;
+	font-size: .2rem;
+	height: 98px;
+	line-height: 98px;
+}
+.headNav a.on{
+	background-color: #192c38;
+	border-bottom:2px solid #fff;
+}
+.headNav a.active{
+	background-color:#192c38;
+	border-bottom:2px solid #f9aa5c;
+}
+.userBox{
+	width: 20%;
+	position: relative;
+	box-sizing: border-box;
+	padding: 0 35px;
+	height: 100px;
+}
+.userTxBox{
+	position: relative;
+	z-index: 15;
+}
+.userBox .userTx{
+	display: inline-block;
+	background: url(../images/bgicon2.png) -.02rem -.03rem;
+	width: .4rem;
+	height: .4rem;
+	margin: .3rem .1rem 0 0;
+	background-size: .5rem 10rem;
+	cursor: pointer;
+}
+.userBox .userNameBox{
+	height: 100px;
+	float: right;
+	display: table;
+	max-width: 66%;
+}
+.userBox .userNameBox span{
+	display: table-cell;
+	vertical-align: middle;
+}
+.userNameBox span{
+	font-size: .2rem;
+	color: #fff;
+}
+.toggleAlertBox{
+	position: absolute;
+	width: 3.52rem;
+	height: 2.32rem;
+	background-color: #fff;
+	border-radius: .03rem;
+	left: -2.52rem;
+	padding: .1rem 0 .2rem .25rem;
+	display: none;
+}
+.toggleAlertBox.on{
+	display: block;
+}
+.toggleAlertBox h4{
+
+	
+	padding: .1rem 0; 
+}
+.toggleAlertBox h4 span{
+	font-size: .16rem;
+	color: #122029;
+	display: inline-block;
+}
+.toggleAlertBox h4 i{
+	display: inline-block;
+	width: .12rem;
+	height: .12rem;
+	border-radius: .03rem;
+	background-color: #5cc3f9;
+	margin-right: .12rem;
+}
+.selsectBox{
+	position: relative;
+	width: 2rem;
+	height: .27rem;
+	float: left;
+	background: url('../images/a2.jpg') no-repeat center right;
+	background-size: .2rem .07rem;
+	border: 1px solid #ccc;
+	border-radius: .05rem;
+	padding: 0 .1rem;
+	cursor: pointer;
+}
+.selsectBox p{
+
+}
+.selsectBox ul{
+	display: none;
+	width: 2rem;
+	border: 1px solid #ccc;
+	position: absolute;
+	left: 0;
+	background-color: #fff;
+	border-radius: 0 0 .05rem .05rem;
+}
+.selsectBox ul.on{
+	display: block;
+	position: relative;
+}
+.selsectBox ul li{
+	padding-left: .1rem;
+	height: .3rem;
+	line-height: .3rem;
+	position: relative;
+}
+.selsectBox ul li.on{
+	background-color: #00a0e9;
+    color: #FFFFFF;
+}
+
+
+/*右侧建议栏*/
+.rightsidebarBox{
+	position:fixed;
+	right:1px;
+	top:30%;
+	z-index:20;
+}
+.rightsidebarBox{
+	width:.5rem;
+}
+.rightsidebarBox .rightsidebarDiv{
+	height: .5rem;
+	border: 1px solid #dae2eb;
+	background-color: #fff;
+	position: relative;
+	height: .5rem;
+	text-align: center;
+	cursor: pointer;
+	z-index:20;
+}
+.rightsidebarBox .rightsidebarDiv>i{
+	background: url(../images/rightsidebaricon.png) no-repeat;
+	width: .24rem;
+	height: .24rem;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -.12rem;
+	margin-top: -.12rem;
+	background-size: .24rem 3rem;
+}
+.rightsidebarBox .rightsidebarDiv.on{
+	background-color: #00a0e9;
+	border: 1px solid #00a0e9;
+}
+.rightsidebarBox .kefu.on{background-color:#fff; border:1px solid #fff;}
+.rightsidebarBox .kefu.on>i{
+	background:url(../images/kftx.png) ;
+	width:.2rem;
+	height:.2rem;
+	margin-left:-.1rem;
+	background-size: .2rem .2rem;
+}
+.rightsidebarBox .yijianfankui.on>i{
+	background-position: 0 -1.134rem;
+}
+.rightsidebarBox .blackTop.on>i{
+	background-position: .05rem -1.34rem;
+}
+.rightsidebarBox .kefu>i{
+	background:url(../images/kftx.png) ;
+	width:.2rem;
+	height:.2rem;
+	margin-left:-.1rem;
+	background-size: .2rem .2rem;
+}
+.rightsidebarBox .yijianfankui>i{
+	background-position: 0 -.312rem;
+}
+.rightsidebarBox .blackTop>i{
+	background-position: .05rem -.554rem;
+}
+.kefu{
+	
+}
+.yijianfankui{
+	z-index: 10;
+	top: -1px;
+}
+.blackTop{
+	z-index: 11;
+	top: -2px;
+}
+.rightsidebarDiv.on .kefuDiv{display: block;}
+.kefuDiv{
+	position: absolute;
+	width: 1.94rem;
+	height: 1.55rem;
+	background: url(../images/customer_service_bg.png) no-repeat;
+	left: -1.85rem;
+	top: -.29rem;
+	background-size:1.94rem 1.55rem;
+	display: none;
+	z-index:30;
+}
+.kefuDiv .title{
+	font-size: 1vw;
+	text-align:left ;
+	padding-left: .2rem;
+	height: .4rem;
+	line-height: .4rem;
+	color: #6d7a8b;
+	padding-top: .1rem;
+	float:none;
+}
+.kefuDiv .kefuLink{
+	margin-top: .1rem;
+	text-align: left;
+	padding-left: .2rem;
+}
+.kefuDiv .kefuLink a span{
+	float: left;
+	color: #00a0e9;
+	text-decoration: underline;
+}
+.kefuDiv .kefuLink a{
+	
+	height: .25rem;
+	line-height: .25rem;
+}
+.kefuDiv .kefuLink a img{
+	float: left;
+	width: .2rem;
+	height: .2rem;
+	margin-top: .03rem;
+	margin-left: .15rem;
+}
+.kefuDiv p{
+	color: #6d7a8b;
+}
+.kefuDiv .tel{margin-top: .15rem;}
+.kefuDiv .tel,.kefuDiv .time{
+	font-size: 0.7vw;
+	text-align: left;
+	padding-left: .2rem;
+}
+.yijianfankuiBox{
+	width: 6.6rem;
+	position: fixed;
+	left: 50%;
+	margin-left: -3.3rem;
+	top: 5%;
+	background-color: #fff;
+	border-radius: 4px;
+	display: none;
+	z-index:51;
+}
+.yijianfankuiBox .titleH3{
+	height: .6rem;
+	background-color: #f3f3f5;
+	border-radius: 4px 4px 0 0;
+	text-align: center;
+	color: #122029;
+	font-size: .22rem;
+	line-height: .6rem;
+}
+
+.yijianfankuiBox .titleH3 span{
+	float: left;
+	height: .6rem;
+	line-height: .6rem;
+	color: #fff;
+	margin-left: .2rem;
+}
+.yijianfankuiBox .titleH3 em{
+	position: absolute;
+	width: .15rem;
+	height: .15rem;
+	background: url(../images/bgicon.png) no-repeat 0 -1.11rem;
+	background-size: .5rem 4rem;
+	right: .15rem;
+	top: .25rem;
+	cursor: pointer;
+}
+.bodyBox{
+	padding: 0 0 .18rem .3rem;
+	overflow: hidden;
+
+}
+.bodyBox .title{font-size: .7vw; color: #6d7a8b; margin: .15rem 0;}
+.bodyBox .bodyDiv{margin-top: .2rem;}
+.bodyBox .bodyDiv label{float: left; width: 1.1rem; color: #384856; font-size: 0.9vw; text-align: right; padding-right: .15rem; box-sizing: border-box; height: .34rem; line-height: .34rem;}
+.bodyBox .bodyDiv textarea{float:left; width: 3.6rem; height: 1rem; border: 1px solid #dae2eb;resize: none; outline: none; padding:5px;}
+.bodyBox .bodyDiv label i{color: #d73126; float: left;height: .25rem; line-height: .25rem; font-style: normal;margin-right: .1rem;height: .34rem; line-height: .34rem;}
+.bodyBox .bodyDiv .uploadImgBox{
+	float: left;
+}
+.bodyBox .bodyDiv .uploadImgBox .uploadImgDiv{
+	float: left;
+	width: 1.4rem;
+	height: .32rem;
+	border: 1px solid #00a0e9;
+	border-radius: 4px;
+	text-align: center;
+	line-height: .32rem;
+	
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+}
+.bodyBox .bodyDiv .uploadImgBox .uploadImgDiv a{
+	position:absolute;
+	width:100%;
+	height:100%;
+	left:0;
+	top:0;
+	color: #00a0e9;
+}
+.bodyBox .bodyDiv .uploadImgBox .uploadImgDiv input{
+	display:none;
+}
+.bodyBox .bodyDiv .uploadImgBox p{
+	height: .34rem;
+	line-height: .34rem;
+	color: #6d7a8b;
+	float: left;
+	margin-left: .1rem;
+}
+.uploadImgUl{margin-top: .2rem;}
+.uploadImgUl ul{
+	width: 4.5rem;
+	
+}
+.uploadImgUl ul li{
+	width: 1rem;
+	height: 1rem;
+	border: 1px solid #000;
+	float: left;
+	margin-right: .1rem;
+	margin-bottom: .1rem;
+	position: relative;
+}
+.uploadImgUl ul li img{width: 100%; height: 100%;}
+.uploadImgUl ul li i{
+	position: absolute;
+	background: url(../images/Oval.png) no-repeat;
+	width: .16rem;
+	height: .16rem;
+	right: -5px;
+	top: -5px;
+}
+.bodyDiv .telInput{float: left; width: 4.6rem;}
+.bodyDiv .telInput input{display: block;width: 3.4rem;height: .3rem; border: 1px solid #dae2eb; border-radius: 4px; outline: none; padding-left: .2rem;}
+.bodyDiv .telInput p{
+	color: #9da1b2;
+	font-size: .7vw;
+	margin-top: .08rem;
+}
+.bodyBtn{
+	margin-top: .3rem;
+	text-align: center;
+	height: .3rem;
+	line-height: .3rem;
+}
+.bodyBtn a{
+	display: inline-block;
+	width: 1rem;
+	height: .3rem;
+	line-height: .3rem;
+	text-align: center;
+	background-color: #00a0e9;
+	color: #fff;
+	border-radius: 5px;
+}
+
+#page,#page2{
+	text-align: right;
+}

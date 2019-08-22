@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.user.IRechargeMenuDao">
+
+	<!-- 根据mid查询出 单个RechargeMenu对象-->
+	<select id="queryRechargeMenu" parameterType="java.lang.String" resultType="com.kycrm.member.domain.entity.user.RechargeMenu">
+		SELECT
+		mid,
+		super_mid as superMid,
+		name,
+		money,
+		num,
+		is_probational as isProbational,
+		status
+		FROM crm_recharge_menu
+		WHERE mid = #{_parameter}
+	</select>
+	<!-- 查询出所有的RechargeMenu兑现,不包括父级别Mid -->
+	<select id="queryRechargeMenuList" resultType="com.kycrm.member.domain.entity.user.RechargeMenu">
+	   SELECT 
+	    mid,
+        super_mid as superMid,
+        name,
+       	money,
+       	ROUND(money/num,3) as unitPrice,
+  		num,
+  		is_probational as isProbational,
+  		status
+	    FROM crm_recharge_menu  
+	   <where>
+		   super_mid IS NOT null
+	   </where>
+	   		ORDER BY money ASC
+	</select>
+	
+</mapper>

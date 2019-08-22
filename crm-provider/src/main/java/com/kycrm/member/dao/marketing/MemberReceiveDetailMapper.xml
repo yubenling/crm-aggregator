@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.marketing.IMemberReceiveDetailDao">
+
+	<resultMap type="com.kycrm.member.domain.entity.member.MemberReceiveDetail"
+		id="memberReceiveDetail">
+		<result column="ID" property="id" />
+		<result column="UID" property="uid"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="BUYER_NICK" property="buyerNick"/>
+		<result column="RECEIVER_NAME" property="receiverName"/>
+		<result column="RECEIVER_ADDRESS" property="receiverAddress"/>
+		<result column="RECEIVER_MOBILE" property="receiverMobile"/>
+		<result column="REMARK" property="remark"/>
+		<result column="OPTLOCK" property="optlock"/>
+		<result column="CREATEDBY" property="createdBy"/>
+		<result column="CREATEDDATE" property="createdDate"/>
+		<result column="LASTMODIFIEDBY" property="lastModifiedBy"/>
+		<result column="LASTMODIFIEDDATE" property="lastModifiedDate"/>
+	</resultMap>
+
+	<select id="findMemberMultiAddress" parameterType="java.util.Map" resultMap="memberReceiveDetail">
+		SELECT
+			RECEIVER_MOBILE,
+			RECEIVER_ADDRESS,
+			REMARK
+		FROM
+			CRM_MEMBER_RECEIVE_DETAIL${uid}
+		WHERE
+			UID = #{uid}
+		AND
+			BUYER_NICK = #{buyerNick}
+		GROUP BY
+			RECEIVER_MOBILE,
+			RECEIVER_ADDRESS
+	</select>
+	
+	<!-- 查询最后一次收货信息 -->
+	<select id="findLastDetail" parameterType="java.lang.Long" resultMap="memberReceiveDetail">
+		select max(CREATEDDATE),RECEIVER_NAME,RECEIVER_ADDRESS,RECEIVER_MOBILE
+		from CRM_MEMBER_RECEIVE_DETAIL${_parameter}
+		where uid = #{_parameter}
+	</select>
+	
+	
+
+</mapper>

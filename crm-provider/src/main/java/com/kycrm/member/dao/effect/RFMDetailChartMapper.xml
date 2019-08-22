@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kycrm.member.dao.effect.IRFMDetailChartDao">
+	<resultMap type="com.kycrm.member.domain.entity.effect.RFMDetailChart" id="RFMDetail">
+		<result column="id" property="id"/>
+		<result column="uid" property="uid"/>
+		<result column="member_type" property="memberType"/>
+		<result column="date_type" property="dateType"/>
+		<result column="date_num" property="dateNum"/>
+		<result column="date_str" property="dateStr"/>
+		<result column="member_num_str" property="memberNumStr"/>
+		<result column="trade_num_str" property="tradeNumStr"/>
+		<result column="trade_amount_str" property="tradeAmountStr"/>
+		<result column="avg_price_str" property="avgPriceStr"/>
+		<result column="createdBy" property="createdBy"/>
+		<result column="createdDate" property="createdDate"/>
+		<result column="lastModifiedBy" property="lastModifiedBy"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>
+		<result column="optlock" property="optlock"/>
+	</resultMap>
+	
+	<insert id="saveSingleData" parameterType="com.kycrm.member.domain.entity.effect.RFMDetailChart">
+		insert into CRM_RFM_DETAIL_CHART(uid,member_type,date_type,date_str,member_num_str,trade_num_str,
+		trade_amount_str,avg_price_str,createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock,date_num)
+		values(#{uid},#{memberType},#{dateType},#{dateStr},#{memberNumStr},#{tradeNumStr},#{tradeAmountStr},
+		#{avgPriceStr},#{createdBy},#{createdDate},#{lastModifiedBy},#{lastModifiedDate},0,#{dateNum})
+	</insert>
+	
+	<update id="updateSingleData" parameterType="com.kycrm.member.domain.entity.effect.RFMDetailChart">
+		update CRM_RFM_DETAIL_CHART
+		<set>
+			<if test="dateStr != null and dateStr != ''">
+				date_str = #{dateStr},
+			</if>
+			<if test="memberNumStr != null and memberNumStr != ''">
+				member_num_str = #{memberNumStr},
+			</if>
+			<if test="tradeNumStr != null and tradeNumStr != ''">
+				trade_num_str = #{tradeNumStr},
+			</if>
+			<if test="tradeAmountStr != null and tradeAmountStr != ''">
+				trade_amount_str = #{tradeAmountStr},
+			</if>
+			<if test="avgPriceStr != null and avgPriceStr != ''">
+				avg_price_str = #{avgPriceStr},
+			</if>
+			<if test="createdDate != null">
+				createdDate = #{createdDate},
+			</if>
+			<if test="lastModifiedDate != null">
+				lastModifiedDate = #{lastModifiedDate},
+			</if>
+			<if test="optlock != null">
+				optlock = #{optlock},
+			</if>
+		</set>
+		<where>
+			uid = #{uid} and member_type = #{memberType} and date_type = #{dateType} and date_num = #{dateNum}
+		</where>
+	</update>
+	
+	
+	<select id="listRFMChartForDistinct" parameterType="java.util.Map" resultMap="RFMDetail">
+		select id from CRM_RFM_DETAIL_CHART
+		where uid = #{uid} and member_type = #{memberType} and date_type = #{dateType} and date_num = #{dateNum}
+	</select>
+	
+	
+	<select id="queryRFMDataForYou" parameterType="java.util.Map" resultMap="RFMDetail">
+		select * from CRM_RFM_DETAIL_CHART
+		<where>
+			uid = #{uid}
+			<if test="memberType != null">
+				and member_type = #{memberType}
+			</if>
+			<if test="dateType != null and dateType != ''">
+				and date_type= #{dateType}
+			</if>
+			<if test="dateNum != null">
+				and date_num = #{dateNum}
+			</if>
+		</where>
+	</select>
+
+</mapper>

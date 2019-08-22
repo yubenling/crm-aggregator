@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.tmc.sysinfo.entity.TbTransactionOrder">
+	<resultMap type="com.kycrm.tmc.sysinfo.entity.TbTransactionOrder" id="tbTransactionOrders">
+		<result column="id" property="id"/>
+		<result column="tid" property="tid"/>
+		<result column="status" property="status"/>
+		<result column="type" property="type"/>
+		<result column="seller_nick" property="sellerNick"/>
+		<result column="buyer_nick" property="buyerNick"/>
+		<result column="created" property="created"/>
+		<result column="modified" property="modified"/>
+		<result column="jdp_hashcode" property="jdpHashcode"/>
+		<result column="jdp_response" property="jdpResponse"/>
+		<result column="jdp_created" property="jdpCreated"/>
+		<result column="jdp_modified" property="jdpModified"/>
+	</resultMap>
+	<!-- 查询订单的状态 -->
+	<select id="findTradeStatus" resultType="java.lang.String" parameterType="java.lang.Long" flushCache="true" useCache="false">
+	   SELECT status FROM jdp_tb_trade  WHERE tid = #{tid}
+	</select>
+	<!-- 通过订单id查询电话号码 -->
+	<select id="getTbTransactionOrders" resultMap="tbTransactionOrders" flushCache="true" useCache="false">
+		SELECT *
+        from jdp_tb_trade
+        where tid = #{tid}
+         
+	</select>
+	<!-- 通过订单时间和状态和卖家名查询 -->
+	<select id="queryByOrderTimeAndStatusAndSellerNick" resultMap="tbTransactionOrders" parameterType="map">
+		SELECT id, tid, STATUS,TYPE, seller_nick, buyer_nick, created, modified, jdp_hashcode,
+              jdp_response, jdp_created, jdp_modified from jdp_tb_trade
+         <where>
+         	<if test="orderScopeOne!=null and orderScopeOne !=''">
+         		and DATE_FORMAT(created,'%Y-%m-%d') >= DATE_FORMAT(#{orderScopeOne},'%Y-%m-%d') 
+         	</if>
+         	<if test="orderScopeTwo !=null and orderScopeTwo !=''">
+         		and DATE_FORMAT(orderScopeTwo,'%Y-%m-%d') >= DATE_FORMAT(#{created},'%Y-%m-%d') 
+         	</if>
+         	<if test="sellerNick !=null and sellerNick !=''">
+         		and seller_nick =#{seller_nick}
+         	</if>
+         	and status = 'WAIT_SELLER_SEND_GOODS'
+         </where>
+	</select>
+	
+	
+	
+	<!-- ==============================================   同步订单           ============================================================ -->
+	
+	<!-- 执行速度:100多毫秒 -->
+	<!-- <select id="queryTbTrades" resultMap="tbTransactionOrders">
+		SELECT  tid,jdp_response 
+		 from jdp_tb_trade
+        <where>
+			jdp_modified BETWEEN #{beginTime} AND #{endTime} 
+			Order by tid+0 ASC 
+			limit #{startRows},#{pageSize}
+        </where>
+	</select> -->
+	<!-- 执行速度:几十毫秒 -->
+	<select id="queryTbTrades" resultMap="tbTransactionOrders">
+		SELECT t1.* from jdp_tb_trade t1,(
+			SELECT  tid
+			from jdp_tb_trade
+			where 1=1  and
+			jdp_modified
+			BETWEEN #{beginTime} AND #{endTime} 
+			Order by tid+0 ASC 
+			limit #{startRows},#{pageSize}) t2 where t1.tid=t2.tid
+	</select>
+	
+	
+	<!-- 增强方法 :查询最近一个时间段修改过的总条数   @author:jackstraw_yu -->
+	<select id="rspCountEnhance" resultType="java.lang.Long">
+		SELECT  count(tid)
+		from jdp_tb_trade where 1=1  and 
+		jdp_modified BETWEEN #{beginTime} AND #{endTime} 
+<!--         <where> -->
+<!-- 			jdp_modified BETWEEN #{beginTime} AND #{endTime}  -->
+<!--         </where> -->
+	</select>
+	
+	
+	
+	<!-- 分页查询未同步的订单,后期该方法弃用@author:jackstraw_yu -->
+	<select id="repairTbTradeData" resultMap="tbTransactionOrders">
+		SELECT t1.* from jdp_tb_trade t1,(
+		SELECT  tid
+		 from jdp_tb_trade
+			Order by jdp_modified ASC 
+			limit #{node},#{pageSize}) t2 where t1.tid=t2.tid
+	</select>
+	
+	<!-- 根据卖家编号和买家昵称，查询一段时间内付过款的订单信息 -->
+	<select id="findTradePayTime" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT tid,buyer_nick buyerNick,status FROM jdp_tb_trade
+		WHERE modified BETWEEN #{bTime} and #{eTime} 
+		and seller_nick =#{sellerNick}
+	</select>
+	
+</mapper>

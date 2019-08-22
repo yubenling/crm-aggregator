@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.usermanagement.ISellerGroupRuleDao">
+
+	<resultMap
+		type="com.kycrm.member.domain.entity.usermanagement.SellerGroupRule"
+		id="sellerGroupRule">
+		<result column="UID" property="uid" />
+		<result column="GROUP_ID" property="groupId" />
+		<result column="BUYER_NICK" property="buyerNick" />
+		<result column="BUYER_NAME" property="buyerName" />
+		<result column="SEND_OR_NOT_SEND_FOR_AREA" property="sendOrNotSendForArea" />
+		<result column="PROVINCE" property="province" />
+		<result column="CITY" property="city" />
+		<result column="SEX" property="sex" />
+		<result column="AGE_RANGE" property="ageRange" />
+		<result column="AGE" property="age" />
+		<result column="OCCUPATION" property="occupation" />
+		<result column="BIRTHDAY" property="birthday" />
+		<result column="QQ" property="qq" />
+		<result column="WECHAT" property="wechat" />
+		<result column="PHONE" property="phone" />
+		<result column="PHONE_RANGE" property="phoneRange" />
+		<result column="EMAIL" property="email" />
+		<result column="EMAIL_TYPE" property="emailType" />
+		<result column="REGISTER_DATE" property="registerDate" />
+		<result column="SCORE" property="score" />
+		<result column="REMARKS" property="remarks" />
+		<result column="ORDER_FROM" property="orderFrom" />
+		<result column="IS_TRADE_OR_UNTRADE_TIME" property="tradeOrUntradeTime" />
+		<result column="TRADE_TIME" property="tradeTime" />
+		<result column="MIN_TRADE_TIME" property="minTradeTime" />
+		<result column="MAX_TRADE_TIME" property="maxTradeTime" />
+		<result column="TRADE_NUM" property="tradeNum" />
+		<result column="MIN_TRADE_NUM" property="minTradeNum" />
+		<result column="MAX_TRADE_NUM" property="maxTradeNum" />
+		<result column="CLOSE_TRADE_TIME" property="closeTradeTime" />
+		<result column="MIN_CLOSE_TRADE_TIME" property="minCloseTradeTime" />
+		<result column="MAX_CLOSE_TRADE_TIME" property="maxCloseTradeTime" />
+		<result column="ACCUMULATED_AMOUNT" property="accumulatedAmount" />
+		<result column="MIN_ACCUMULATED_AMOUNT" property="minAccumulatedAmount" />
+		<result column="MAX_ACCUMULATED_AMOUNT" property="maxAccumulatedAmount" />
+		<result column="ITEM_NUM" property="itemNum" />
+		<result column="MIN_ITEM_NUM" property="minItemNum" />
+		<result column="MAX_ITEM_NUM" property="maxItemNum" />
+		<result column="AVERAGE_PRICE" property="averagePrice" />
+		<result column="MIN_AVERAGE_PRICE" property="minAveragePrice" />
+		<result column="MAX_AVERAGE_PRICE" property="maxAveragePrice" />
+		<result column="MEMBER_GRADE" property="memberGrade" />
+		<result column="USER_ID" property="userId" />
+		<result column="TRADE_TIME_STATUS" property="tradeTimeStatus" />
+		<result column="SEND_OR_NOT_SEND_FOR_GOODS" property="sendOrNotSendForGoods" />
+		<result column="SPECIFY_GOODS_OR_KEY_CODE_GOODS" property="specifyGoodsOrKeyCodeGoods" />
+		<result column="NUM_IID" property="numIid" />
+		<result column="GOODS_KEY_CODE" property="goodsKeyCode" />
+		<result column="ORDER_STATUS" property="orderStatus" />
+		<result column="ORDER_TIME_SECTION_START" property="orderTimeSectionStart" />
+		<result column="ORDER_TIME_SECTION_END" property="orderTimeSectionEnd" />
+		<result column="MARKETING_SMS_NUMBER" property="marketingSmsNumber" />
+		<result column="MIN_MARKETING_SMS_NUMBER" property="minMarketingSmsNumber" />
+		<result column="MAX_MARKETING_SMS_NUMBER" property="maxMarketingSmsNumber" />
+		<result column="SELLER_FLAG" property="sellerFlag" />
+		<result column="SENT_FILTER" property="sentFilter" />
+		<result column="MEMBER_STATUS" property="memberStatus" />
+		<result column="TRADE_TYPE" property="tradeType" />
+		<result column="CREATEDBY" property="createdBy" />
+		<result column="CREATEDDATE" property="createdDate" />
+		<result column="LASTMODIFIEDBY" property="lastModifiedBy" />
+		<result column="LASTMODIFIEDDATE" property="lastModifiedDate" />
+	</resultMap>
+
+	<sql id="table">CRM_GROUPS_RULE</sql>
+
+	<!-- 添加会员分组 -->
+	<insert id="addSellerGroupRule" useGeneratedKeys="true"
+		keyProperty="id"
+		parameterType="com.kycrm.member.domain.entity.usermanagement.SellerGroupRule">
+		INSERT INTO
+		<include refid="table" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uid != null ">
+				UID,
+			</if>
+			<if test="groupId != null">
+				GROUP_ID,
+			</if>
+			<if test="buyerNick != null ">
+				BUYER_NICK,
+			</if>
+			<if test="buyerName != null ">
+				BUYER_NAME,
+			</if>
+			<if test="sex != null ">
+				SEX,
+			</if>
+			<if test="ageRange != null ">
+				AGE_RANGE,
+			</if>
+			<if test="age != null ">
+				AGE,
+			</if>
+			<if test="occupation != null ">
+				OCCUPATION,
+			</if>
+			<if test="birthday != null ">
+				BIRTHDAY,
+			</if>
+			<if test="qq != null ">
+				QQ,
+			</if>
+			<if test="wechat != null ">
+				WECHAT,
+			</if>
+			<if test="phone != null ">
+				PHONE,
+			</if>
+			<if test="phoneRange != null ">
+				PHONE_RANGE,
+			</if>
+			<if test="email != null ">
+				EMAIL,
+			</if>
+			<if test="emailType != null ">
+				EMAIL_TYPE,
+			</if>
+			<if test="registerDate != null ">
+				REGISTER_DATE,
+			</if>
+			<if test="score != null ">
+				SCORE,
+			</if>
+			<if test="memberGrade != null ">
+				MEMBER_GRADE,
+			</if>
+			<if test="tradeOrUntradeTime != null ">
+				IS_TRADE_OR_UNTRADE_TIME,
+			</if>
+			<if test="tradeTime != null ">
+				TRADE_TIME,
+			</if>
+			<if test="minTradeTime != null ">
+				MIN_TRADE_TIME,
+			</if>
+			<if test="maxTradeTime != null ">
+				MAX_TRADE_TIME,
+			</if>
+			<if test="orderFrom != null ">
+				ORDER_FROM,
+			</if>
+			<if test="tradeNum != null ">
+				TRADE_NUM,
+			</if>
+			<if test="minTradeNum != null ">
+				MIN_TRADE_NUM,
+			</if>
+			<if test="maxTradeNum != null ">
+				MAX_TRADE_NUM,
+			</if>
+			<if test="closeTradeTime != null ">
+				CLOSE_TRADE_TIME,
+			</if>
+			<if test="minCloseTradeTime != null ">
+				MIN_CLOSE_TRADE_TIME,
+			</if>
+			<if test="maxCloseTradeTime != null ">
+				MAX_CLOSE_TRADE_TIME,
+			</if>
+			<if test="accumulatedAmount != null">
+				ACCUMULATED_AMOUNT,
+			</if>
+			<if test="minAccumulatedAmount != null ">
+				MIN_ACCUMULATED_AMOUNT,
+			</if>
+			<if test="maxAccumulatedAmount != null ">
+				MAX_ACCUMULATED_AMOUNT,
+			</if>
+			<if test="sendOrNotSendForGoods != null ">
+				SEND_OR_NOT_SEND_FOR_GOODS,
+			</if>
+			<if test="specifyGoodsOrKeyCodeGoods != null ">
+				SPECIFY_GOODS_OR_KEY_CODE_GOODS,
+			</if>
+			<if test="numIid != null ">
+				NUM_IID,
+			</if>
+			<if test="goodsKeyCode != null ">
+				GOODS_KEY_CODE,
+			</if>
+			<if test="itemNum != null ">
+				ITEM_NUM,
+			</if>
+			<if test="minItemNum != null ">
+				MIN_ITEM_NUM,
+			</if>
+			<if test="maxItemNum != null ">
+				MAX_ITEM_NUM,
+			</if>
+			<if test="sendOrNotSendForArea != null ">
+				SEND_OR_NOT_SEND_FOR_AREA,
+			</if>
+			<if test="province != null ">
+				PROVINCE,
+			</if>
+			<if test="city != null ">
+				CITY,
+			</if>
+			<if test="averagePrice != null ">
+				AVERAGE_PRICE,
+			</if>
+			<if test="minAveragePrice != null ">
+				MIN_AVERAGE_PRICE,
+			</if>
+			<if test="maxAveragePrice != null ">
+				MAX_AVERAGE_PRICE,
+			</if>
+			<if test="remarks != null ">
+				REMARKS,
+			</if>
+			<if test="userId != null ">
+				USER_ID,
+			</if>
+			<if test="tradeTimeStatus != null ">
+				TRADE_TIME_STATUS,
+			</if>
+			<if test="tradeType != null ">
+				TRADE_TYPE,
+			</if>
+			<if test="orderStatus != null ">
+				ORDER_STATUS,
+			</if>
+			<if test="orderTimeSectionStart  != null ">
+				ORDER_TIME_SECTION_START,
+			</if>
+			<if test="orderTimeSectionEnd  != null ">
+				ORDER_TIME_SECTION_END,
+			</if>
+			<if test="marketingSmsNumber  != null ">
+				MARKETING_SMS_NUMBER,
+			</if>
+			<if test="minMarketingSmsNumber  != null ">
+				MIN_MARKETING_SMS_NUMBER,
+			</if>
+			<if test="maxMarketingSmsNumber  != null ">
+				MAX_MARKETING_SMS_NUMBER,
+			</if>
+			<if test="sellerFlag  != null ">
+				SELLER_FLAG,
+			</if>
+			<if test="sentFilter  != null ">
+				SENT_FILTER,
+			</if>
+			<if test="memberStatus  != null ">
+				MEMBER_STATUS,
+			</if>
+			<if test="optlock != null ">
+				OPTLOCK,
+			</if>
+			<if test="createdDate != null ">
+				CREATEDDATE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uid != null ">
+				#{uid,jdbcType=BIGINT},
+			</if>
+			<if test="groupId != null ">
+				#{groupId,jdbcType=BIGINT},
+			</if>
+			<if test="buyerNick != null ">
+				#{buyerNick,jdbcType=VARCHAR},
+			</if>
+			<if test="buyerName != null ">
+				#{buyerName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null ">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="ageRange != null ">
+				#{ageRange,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null ">
+				#{age,jdbcType=INTEGER},
+			</if>
+			<if test="occupation != null ">
+				#{occupation,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null ">
+				#{birthday,jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null ">
+				#{qq,jdbcType=VARCHAR},
+			</if>
+			<if test="wechat != null ">
+				#{wechat,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null ">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneRange != null ">
+				#{phoneRange,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null ">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="emailType != null ">
+				#{emailType,jdbcType=VARCHAR},
+			</if>
+			<if test="registerDate != null ">
+				#{registerDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="score != null ">
+				#{score,jdbcType=VARCHAR},
+			</if>
+			<if test="memberGrade != null ">
+				#{memberGrade,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeOrUntradeTime != null ">
+				#{tradeOrUntradeTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeTime != null ">
+				#{tradeTime,jdbcType=VARCHAR},
+			</if>
+			<if test="minTradeTime != null ">
+				#{minTradeTime,jdbcType=VARCHAR},
+			</if>
+			<if test="maxTradeTime != null ">
+				#{maxTradeTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderFrom != null ">
+				#{orderFrom,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeNum != null ">
+				#{tradeNum,jdbcType=INTEGER},
+			</if>
+			<if test="minTradeNum != null ">
+				#{minTradeNum,jdbcType=INTEGER},
+			</if>
+			<if test="maxTradeNum != null ">
+				#{maxTradeNum,jdbcType=INTEGER},
+			</if>
+			<if test="closeTradeTime != null">
+				#{closeTradeTime,jdbcType=INTEGER},
+			</if>
+			<if test="minCloseTradeTime != null ">
+				#{minCloseTradeTime,jdbcType=INTEGER},
+			</if>
+			<if test="maxCloseTradeTime != null ">
+				#{maxCloseTradeTime,jdbcType=INTEGER},
+			</if>
+			<if test="accumulatedAmount != null ">
+				#{accumulatedAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="minAccumulatedAmount != null ">
+				#{minAccumulatedAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="maxAccumulatedAmount != null ">
+				#{maxAccumulatedAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="sendOrNotSendForGoods != null ">
+				#{sendOrNotSendForGoods,jdbcType=INTEGER},
+			</if>
+			<if test="specifyGoodsOrKeyCodeGoods != null ">
+				#{specifyGoodsOrKeyCodeGoods,jdbcType=INTEGER},
+			</if>
+			<if test="numIid != null ">
+				#{numIid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsKeyCode != null ">
+				#{goodsKeyCode,jdbcType=VARCHAR},
+			</if>
+			<if test="itemNum != null ">
+				#{itemNum,jdbcType=BIGINT},
+			</if>
+			<if test="minItemNum != null ">
+				#{minItemNum,jdbcType=BIGINT},
+			</if>
+			<if test="maxItemNum != null ">
+				#{maxItemNum,jdbcType=BIGINT},
+			</if>
+			<if test="sendOrNotSendForArea != null ">
+				#{sendOrNotSendForArea,jdbcType=INTEGER},
+			</if>
+			<if test="province != null ">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null ">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="averagePrice != null ">
+				#{averagePrice,jdbcType=VARCHAR},
+			</if>
+			<if test="minAveragePrice != null ">
+				#{minAveragePrice,jdbcType=VARCHAR},
+			</if>
+			<if test="maxAveragePrice != null ">
+				#{maxAveragePrice,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null ">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null ">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeTimeStatus != null ">
+				#{tradeTimeStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeType != null ">
+				#{tradeType,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null ">
+				#{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTimeSectionStart  != null ">
+				#{orderTimeSectionStart,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTimeSectionEnd  != null ">
+				#{orderTimeSectionEnd,jdbcType=VARCHAR},
+			</if>
+			<if test="marketingSmsNumber  != null ">
+				#{marketingSmsNumber,jdbcType=INTEGER},
+			</if>
+			<if test="minMarketingSmsNumber  != null ">
+				#{minMarketingSmsNumber,jdbcType=INTEGER},
+			</if>
+			<if test="maxMarketingSmsNumber  != null ">
+				#{maxMarketingSmsNumber,jdbcType=INTEGER},
+			</if>
+			<if test="sellerFlag  != null ">
+				#{sellerFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="sentFilter  != null ">
+				#{sentFilter,jdbcType=VARCHAR},
+			</if>
+			<if test="memberStatus  != null ">
+				#{memberStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="optlock != null ">
+				#{optlock,jdbcType=VARCHAR},
+			</if>
+			<if test="createdDate != null ">
+				#{createdDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!--根据ruleId查询数据 -->
+	<select id="querySellerGroupRule" resultMap="sellerGroupRule">
+		SELECT
+		*
+		FROM
+		<include refid="table" />
+		WHERE
+		1=1
+		<if test="id!=null">
+			AND
+			ID = #{id,jdbcType=BIGINT}
+		</if>
+	</select>
+
+	<!-- 根据分组groupId查询数据 -->
+	<select id="findSellerGroupRule" parameterType="java.util.Map"
+		resultMap="sellerGroupRule">
+		SELECT
+		MEMBER_GRADE,
+		IS_TRADE_OR_UNTRADE_TIME,
+		TRADE_TIME,
+		MIN_TRADE_TIME,
+		MAX_TRADE_TIME,
+		ORDER_FROM,
+		TRADE_NUM,
+		MIN_TRADE_NUM,
+		MAX_TRADE_NUM,
+		CLOSE_TRADE_TIME,
+		MIN_CLOSE_TRADE_TIME,
+		MAX_CLOSE_TRADE_TIME,
+		ACCUMULATED_AMOUNT,
+		MIN_ACCUMULATED_AMOUNT,
+		MAX_ACCUMULATED_AMOUNT,
+		SEND_OR_NOT_SEND_FOR_GOODS,
+		SPECIFY_GOODS_OR_KEY_CODE_GOODS,
+		NUM_IID,
+		GOODS_KEY_CODE,
+		ITEM_NUM,
+		MIN_ITEM_NUM,
+		MAX_ITEM_NUM,
+		SEND_OR_NOT_SEND_FOR_AREA,
+		PROVINCE,
+		CITY,
+		AVERAGE_PRICE,
+		MIN_AVERAGE_PRICE,
+		MAX_AVERAGE_PRICE,
+		ORDER_STATUS,
+		ORDER_TIME_SECTION_START,
+		ORDER_TIME_SECTION_END,
+		MARKETING_SMS_NUMBER,
+		MIN_MARKETING_SMS_NUMBER,
+		MAX_MARKETING_SMS_NUMBER,
+		SELLER_FLAG,
+		SENT_FILTER,
+		MEMBER_STATUS
+		FROM
+		<include refid="table" />
+		WHERE
+		UID
+		= #{uid}
+		AND
+		GROUP_ID=#{groupId}
+	</select>
+
+	<!-- 修改分组规则值可为空 -->
+	<update id="updateSellerGroupRule"
+		parameterType="com.kycrm.member.domain.entity.usermanagement.SellerGroupRule">
+		UPDATE
+		<include refid="table" />
+		<set>
+			USER_ID = #{userId},
+			GROUP_ID = #{groupId},
+			BUYER_NICK =
+			#{buyerNick},
+			BUYER_NAME = #{buyerName},
+			SEND_OR_NOT_SEND_FOR_AREA =
+			#{sendOrNotSendForArea},
+			PROVINCE = #{province},
+			CITY = #{city},
+			REMARKS = #{remarks},
+			ORDER_FROM = #{orderFrom},
+			IS_TRADE_OR_UNTRADE_TIME = #{tradeOrUntradeTime},
+			TRADE_TIME =
+			#{tradeTime},
+			MIN_TRADE_TIME = #{minTradeTime},
+			MAX_TRADE_TIME =
+			#{maxTradeTime},
+			TRADE_NUM = #{tradeNum},
+			MIN_TRADE_NUM =
+			#{minTradeNum},
+			MAX_TRADE_NUM = #{maxTradeNum},
+			CLOSE_TRADE_TIME =
+			#{closeTradeTime},
+			MIN_CLOSE_TRADE_TIME = #{minCloseTradeTime},
+			MAX_CLOSE_TRADE_TIME = #{maxCloseTradeTime},
+			ACCUMULATED_AMOUNT =
+			#{accumulatedAmount},
+			MIN_ACCUMULATED_AMOUNT =
+			#{minAccumulatedAmount},
+			MAX_ACCUMULATED_AMOUNT =
+			#{maxAccumulatedAmount},
+			SEND_OR_NOT_SEND_FOR_GOODS =
+			#{sendOrNotSendForGoods},
+			SPECIFY_GOODS_OR_KEY_CODE_GOODS =
+			#{specifyGoodsOrKeyCodeGoods},
+			NUM_IID = #{numIid},
+			GOODS_KEY_CODE =
+			#{goodsKeyCode},
+			ITEM_NUM = #{itemNum},
+			MIN_ITEM_NUM = #{minItemNum},
+			MAX_ITEM_NUM = #{maxItemNum},
+			AVERAGE_PRICE = #{averagePrice},
+			MIN_AVERAGE_PRICE = #{minAveragePrice},
+			MAX_AVERAGE_PRICE =
+			#{maxAveragePrice},
+			MEMBER_GRADE = #{memberGrade},
+			ORDER_STATUS =
+			#{orderStatus},
+			ORDER_TIME_SECTION_START = #{orderTimeSectionStart},
+			ORDER_TIME_SECTION_END = #{orderTimeSectionEnd},
+			MARKETING_SMS_NUMBER
+			= #{marketingSmsNumber},
+			MIN_MARKETING_SMS_NUMBER =
+			#{minMarketingSmsNumber},
+			MAX_MARKETING_SMS_NUMBER =
+			#{maxMarketingSmsNumber},
+			SELLER_FLAG = #{sellerFlag},
+			SENT_FILTER =
+			#{sentFilter},
+			MEMBER_STATUS = #{memberStatus},
+			TRADE_TYPE = #{tradeType},
+			TRADE_TIME_STATUS =
+			#{tradeTimeStatus},
+			LASTMODIFIEDDATE = now()
+		</set>
+		WHERE
+		ID = #{id}
+	</update>
+
+	<!-- 根据userId查询分组规则 -->
+	<select id="querySellerGroupByUserId" resultMap="sellerGroupRule"
+		parameterType="string">
+		SELECT
+		*
+		FROM
+		<include refid="table" />
+		WHERE
+		USER_ID = #{userId}
+	</select>
+
+	<!-- 根据主键id删除对应数据 -->
+	<delete id="delSellerGroupRule" parameterType="java.util.Map">
+		DELETE FROM
+		<include refid="table" />
+		WHERE
+		UID = #{uid}
+		AND
+		ID = #{ruleId}
+	</delete>
+
+</mapper>

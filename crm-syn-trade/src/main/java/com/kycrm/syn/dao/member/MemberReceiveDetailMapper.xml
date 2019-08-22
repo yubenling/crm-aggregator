@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.syn.dao.member.IMemberReceiveDetailDao">
+
+	<resultMap type="com.kycrm.member.domain.entity.member.MemberReceiveDetail"
+		id="memberReceiveDetail">
+		<result column="ID" property="id" />
+		<result column="UID" property="uid" />
+		<result column="MEMBER_ID" property="memberId" />
+		<result column="BUYER_NICK" property="buyerNick" />
+		<result column="RECEIVER_NAME" property="receiverName" />
+		<result column="RECEIVER_ADDRESS" property="receiverAddress" />
+		<result column="RECEIVER_MOBILE" property="receiverMobile" />
+		<result column="REMARK" property="remark" />
+		<result column="OPTLOCK" property="version" />
+		<result column="CREATEDBY" property="createdBy" />
+		<result column="CREATEDDATE" property="createdDate" />
+		<result column="LASTMODIFIEDBY" property="lastModifiedBy" />
+		<result column="LASTMODIFIEDDATE" property="lastModifiedDate" />
+	</resultMap>
+
+	<select id="findMemberAddressIsExit"
+		parameterType="com.kycrm.member.domain.entity.member.MemberReceiveDetail"
+		resultType="int">
+		SELECT count(1)
+		FROM CRM_MEMBER_RECEIVE_DETAIL${uid}
+		WHERE
+		UID = #{uid} AND RECEIVER_MOBILE = #{receiverMobile} AND
+		BUYER_NICK=#{buyerNick}
+	</select>
+
+	<insert id="bathSaveMemberAddress" parameterType="java.util.Map">
+		INSERT INTO CRM_MEMBER_RECEIVE_DETAIL${uid}
+		(uid,BUYER_NICK,RECEIVER_NAME,RECEIVER_ADDRESS,RECEIVER_MOBILE,OPTLOCK,CREATEDDATE,LASTMODIFIEDDATE)
+		VALUES
+		<foreach collection="list" item="member" index="index"
+			separator=",">
+			(#{member.uid},#{member.buyerNick},#{member.receiverName},
+			#{member.receiverAddress},#{member.receiverMobile},0,NOW(),NOW())
+		</foreach>
+	</insert>
+
+	<insert id="batchUpdateMemberAddress" parameterType="java.util.Map">
+		<!-- INSERT INTO CRM_MEMBER_RECEIVE_DETAIL${uid} ( BUYER_NICK, RECEIVER_ADDRESS, 
+			lastModifiedDate, optlock ) <foreach collection="list" item="member" index="index" 
+			separator=";" open="" close=""> (#{member.buyerNick},#{member.receiverAddress},NOW(), 
+			optlock+1) </foreach> ON DUPLICATE KEY UPDATE BUYER_NICK = VALUES(BUYER_NICK), 
+			RECEIVER_ADDRESS = VALUES(RECEIVER_ADDRESS), lastModifiedDate = VALUES(lastModifiedDate), 
+			optlock = VALUES(optlock) -->
+
+		<foreach collection="list" item="member" index="index"
+			separator=";" open="" close="">
+			UPDATE CRM_MEMBER_RECEIVE_DETAIL${uid}
+			set
+			lastModifiedDate = NOW(),
+			optlock = optlock+1
+			WHERE BUYER_NICK =
+			#{member.buyerNick} and
+			RECEIVER_ADDRESS=#{receiverAddress}
+		</foreach>
+	</insert>
+
+
+
+</mapper>

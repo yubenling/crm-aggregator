@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.message.ISmsBlackListImportDao">
+
+	<!-- 添加黑名单导入记录 -->
+	<insert id="insertSmsBlackListImport" parameterType="com.kycrm.member.domain.entity.message.SmsBlackListImport" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO CRM_BLACKLIST_IMPORT
+			(uid,file_name,sum_num,
+			success_num,status,createdBy,
+			createdDate,lastModifiedBy,lastModifiedDate,optlock)
+		VALUE(#{uid},#{fileName},#{sumNum},
+			#{successNum},#{status},#{createdBy},
+			NOW(),#{lastModifiedBy},NOW(),0)
+	</insert>
+	
+	 <select id="findSmsBlackListImport" parameterType="java.lang.Long" resultType="com.kycrm.member.domain.entity.message.SmsBlackListImport">
+    	SELECT id,uid,file_name AS fileName,sum_num AS sumNum,
+    		   success_num AS successNum,status,createdDate
+    	FROM CRM_BLACKLIST_IMPORT
+    	WHERE  uid=#{uid}
+    	ORDER BY createdDate DESC
+    </select>
+    
+    <update id="updateSmsBlackListImport">
+    	UPDATE CRM_BLACKLIST_IMPORT
+		SET success_num = #{successNum},
+		status = #{status}
+		WHERE id=#{id}
+    </update>
+    <delete id="deleteSmsBlackImport" parameterType="java.lang.Long">
+    	DELETE FROM CRM_BLACKLIST_IMPORT
+    	WHERE id = #{id}
+    </delete>
+</mapper>

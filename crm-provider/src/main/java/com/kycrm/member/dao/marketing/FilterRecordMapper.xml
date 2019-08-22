@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.marketing.IFilterRecordDao">
+
+	<resultMap type="com.kycrm.member.domain.entity.filterrecord.FilterRecord"
+		id="filterRecord">
+		<result column="ID" property="id" />
+		<result column="UID" property="uid" />
+		<result column="FILTER_TYPE" property="filterType" />
+		<result column="PARAMETER" property="parameter" />
+		<result column="UUID" property="uuid" />
+		<result column="CREATEDBY" property="createdBy" />
+		<result column="CREATEDDATE" property="createdDate" />
+	</resultMap>
+
+	<!-- 插入筛选记录 -->
+	<insert id="insertFilterRecord" useGeneratedKeys="true"
+		keyProperty="id" parameterType="com.kycrm.member.domain.entity.filterrecord.FilterRecord">
+		INSERT INTO CRM_PREMIUM_FILTER_RECORD${uid}
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uid != null ">
+				UID,
+			</if>
+			<if test="filterType != null ">
+				FILTER_TYPE,
+			</if>
+			<if test="parameter != null ">
+				PARAMETER,
+			</if>
+			<if test="uuid != null ">
+				UUID,
+			</if>
+			<if test="createdBy != null ">
+				CREATEDBY,
+			</if>
+			<if test="createdDate != null ">
+				CREATEDDATE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uid != null ">
+				#{uid},
+			</if>
+			<if test="filterType != null ">
+				#{filterType},
+			</if>
+			<if test="parameter != null ">
+				#{parameter},
+			</if>
+			<if test="uuid != null ">
+				#{uuid},
+			</if>
+			<if test="createdBy != null ">
+				#{createdBy},
+			</if>
+			<if test="createdDate != null ">
+				#{createdDate},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 根据ID和UID查询筛选记录 -->
+	<select id="getFilterRecordById" parameterType="java.lang.Long"
+		resultMap="filterRecord">
+		SELECT
+		*
+		FROM
+		CRM_PREMIUM_FILTER_RECORD${uid}
+		WHERE
+		ID = #{id}
+	</select>
+
+</mapper>

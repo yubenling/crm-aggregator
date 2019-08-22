@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:repository="http://www.springframework.org/schema/data/repository"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-lazy-init="false">
+
+	<description>MyBatis配置，主要为了提供高效灵活的查询功能支持。http://mybatis.github.io/mybatis-3/zh/index.html</description>
+
+	
+	<!-- APP数据源配置 -->    
+	<bean id="sysinfoSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"  >
+		<property name="configLocation" value="classpath:/context/mybatis-config.xml" />
+		<property name="dataSource" ref="sysinfoDataSource" /> 
+		<property name="databaseIdProvider" ref="sysDatabaseIdProvider" />  
+		<!-- 显式指定Mapper文件位置 -->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:/com/kycrm/**/entity/*Mapper.xml</value>
+			</list> 
+		</property>
+	</bean>
+	
+    <bean id="sysInfoBatisDao" name="sysInfoBatisDao" class="com.kycrm.tmc.core.mybatis.SysInfoBatisGenerialDaoImpl" >
+		<property name="sqlSession">
+			<bean class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+				<constructor-arg name="sqlSessionFactory" ref="sysinfoSqlSessionFactory" />
+			</bean>
+		</property>
+	</bean>
+</beans>

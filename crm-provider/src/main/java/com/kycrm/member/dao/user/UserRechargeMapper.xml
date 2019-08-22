@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.user.IUserRechargeDao">
+
+	<resultMap id="userRecharge"
+		type="com.kycrm.member.domain.entity.user.UserRecharge">
+		<result column="RECHARGE_NUM" property="rechargeNum" />
+		<result column="RECHARGE_DATE" property="rechargeDateStr"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 根据订单编号查询是否存在该订单 -->
+	<select id="queryUserRechargeCount" resultType="long">
+		SELECT COUNT(1)
+		FROM CRM_USER_RECHARGE_RECORD
+		WHERE order_id = #{orderId}
+	</select>
+
+	<!-- 根据订单编号查询充值信息 -->
+	<select id="getUserRechargeInfo" parameterType="java.lang.String"
+		resultType="com.kycrm.member.domain.entity.user.UserRecharge">
+		SELECT
+		id,uid,user_nick AS userNick,recharge_price AS rechargePrice,
+		recharge_type AS rechargeType,unit_price AS unitPrice,status,remarks,
+		order_id AS orderId,recharge_num AS rechargeNum,recharge_later_num AS
+		rechargeLaterNum,
+		recharge_date AS
+		rechargeDate,createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock
+		FROM CRM_USER_RECHARGE_RECORD
+		<where>
+			<if test="_parameter !=null and _parameter !='' ">
+				order_id = #{_parameter}
+			</if>
+		</where>
+	</select>
+
+	<!-- 更改充值记录状态 -->
+	<update id="updateUserRechargeStatus" parameterType="com.kycrm.member.domain.entity.user.UserRecharge">
+		UPDATE CRM_USER_RECHARGE_RECORD SET status =
+		#{status},recharge_later_num=#{rechargeLaterNum},
+		<if test="pid!=null and pid!=''">
+			pid=#{pid},
+		</if>
+		recharge_before_num=#{rechargeBeforeNum},
+		lastModifiedDate = now()
+		WHERE id = #{id}
+	</update>
+
+	<!-- 保存充值记录 -->
+	<insert id="saveUserRechar" parameterType="com.kycrm.member.domain.entity.user.UserRecharge">
+		INSERT INTO
+		CRM_USER_RECHARGE_RECORD(
+		uid,user_nick,recharge_price,recharge_type,
+		unit_price,status,remarks,order_id,recharge_num,
+		recharge_before_num,recharge_later_num,recharge_date,createdBy,createdDate,
+		lastModifiedBy,lastModifiedDate,optlock,pid)
+		VALUE(
+		#{uid},#{userNick},#{rechargePrice},#{rechargeType},
+		#{unitPrice},#{status},#{remarks},#{orderId},#{rechargeNum},
+		#{rechargeBeforeNum},#{rechargeLaterNum},now(),#{createdBy},now(),#{lastModifiedBy},now(),0,#{pid});
+	</insert>
+
+	<select id="findPayStatus" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT
+		status
+		FROM CRM_USER_RECHARGE_RECORD
+		WHERE order_id =
+		#{_parameter}
+	</select>
+
+
+	<select id="findRechargeRecordlist" parameterType="com.kycrm.member.domain.vo.user.UserRechargeVO"
+		resultType="com.kycrm.member.domain.entity.user.UserRecharge">
+		SELECT
+		id,uid,user_nick AS userNick,recharge_price AS rechargePrice,
+		recharge_type AS rechargeType,unit_price AS unitPrice,status,remarks,
+		order_id AS orderId,recharge_num AS rechargeNum,recharge_later_num AS
+		rechargeLaterNum,
+		recharge_date AS
+		rechargeDate,createdBy,createdDate,lastModifiedBy,lastModifiedDate,optlock,
+		recharge_before_num AS rechargeBeforeNum,remarks
+		FROM
+		CRM_USER_RECHARGE_RECORD
+		WHERE STATUS != '3'
+		<if test="startTimeStr!=null and startTimeStr!=''">
+			AND recharge_date &gt; #{startTimeStr}
+		</if>
+		<if test="endTimeStr!=null and endTimeStr!=''">
+			AND recharge_date &lt; #{endTimeStr}
+		</if>
+		AND recharge_type &lt;7
+		AND uid = #{uid}
+		ORDER BY rechargeDate DESC
+		limit
+		#{startRows},#{currentRows}
+	</select>
+
+	<select id="findRechargeRecordListCount" parameterType="com.kycrm.member.domain.vo.user.UserRechargeVO"
+		resultType="java.lang.Long">
+		SELECT COUNT(1)
+		FROM CRM_USER_RECHARGE_RECORD
+		WHERE STATUS != '3'
+		<if test="startTimeStr!=null and startTimeStr!=''">
+			AND recharge_date &gt; #{startTimeStr}
+		</if>
+		<if test="endTimeStr!=null and endTimeStr!=''">
+			AND recharge_date &lt; #{endTimeStr}
+		</if>
+		AND recharge_type &lt;7
+		AND uid = #{uid}
+	</select>
+
+	<select id="countReport" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		SELECT sum(recharge_num) AS recharge_num
+		FROM (
+		SELECT
+		(
+		CASE
+		WHEN 'day' =
+		#{dateType} THEN
+		date_format(recharge_date,
+		'%Y-%m-%d')
+		WHEN 'month' =
+		#{dateType} THEN
+		date_format(recharge_date,
+		'%Y-%m')
+		WHEN 'year' =
+		#{dateType} THEN
+		date_format(recharge_date, '%Y')
+		END
+		) AS recharge_date,
+		sum(recharge_num) AS recharge_num
+		FROM
+		crm_user_recharge_record
+		WHERE
+		uid
+		= #{uid}
+		<if test="bTime != null and eTime != null">
+			and recharge_date between #{bTime} and #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			and #{eTime} > recharge_date
+		</if>
+		<if test="bTime != null and eTime == null">
+			and recharge_date > #{bTime}
+		</if>
+		and
+		recharge_type &lt; 6
+		GROUP BY
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(recharge_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(recharge_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(recharge_date, '%Y')
+		END
+		)
+		ORDER BY recharge_date DESC
+		)T
+	</select>
+
+	<select id="countReportByDate" parameterType="java.util.Map"
+		resultMap="userRecharge">
+		SELECT
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(recharge_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(recharge_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(recharge_date, '%Y')
+		END
+		) AS recharge_date,
+		sum(recharge_num) AS recharge_num
+		FROM
+		crm_user_recharge_record
+		WHERE
+		uid = #{uid}
+		<if test="bTime != null and eTime != null">
+			and recharge_date between #{bTime} and #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			and #{eTime} > recharge_date
+		</if>
+		<if test="bTime != null and eTime == null">
+			and recharge_date > #{bTime}
+		</if>
+		and
+		recharge_type &lt; 6
+		GROUP BY
+		(
+		CASE
+		WHEN 'day' = #{dateType} THEN
+		date_format(recharge_date,
+		'%Y-%m-%d')
+		WHEN 'month' = #{dateType} THEN
+		date_format(recharge_date,
+		'%Y-%m')
+		WHEN 'year' = #{dateType} THEN
+		date_format(recharge_date, '%Y')
+		END
+		)
+		ORDER BY recharge_date DESC
+		<if test="startRow != null and range != null">
+			LIMIT #{startRow}, #{range}
+		</if>
+	</select>
+
+	<select id="findRechargeRecordCountByType" resultType="java.lang.Long">
+		SELECT
+		SUM(RECHARGE_NUM)
+		FROM
+		CRM_USER_RECHARGE_RECORD R
+		WHERE
+		R.UID = #{uid}
+		AND
+		R.RECHARGE_TYPE = #{rechargeType}
+		<if test="bTime != null and eTime != null">
+			AND recharge_date between #{bTime} AND #{eTime}
+		</if>
+		<if test="bTime == null and eTime != null">
+			AND #{eTime} > recharge_date
+		</if>
+		<if test="bTime != null and eTime == null">
+			AND recharge_date > #{bTime}
+		</if>
+	</select>
+
+</mapper>

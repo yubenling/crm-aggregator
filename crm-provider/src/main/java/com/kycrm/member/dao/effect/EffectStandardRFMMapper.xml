@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kycrm.member.dao.effect.IEffectStandardRFMDao">
+	<resultMap type="com.kycrm.member.domain.entity.effect.EffectStandardRFM" id="standardRFM">
+		<result column="id" property="id"/>
+		<result column="uid" property="uid"/>
+		<result column="effect_type" property="effectType"/>
+		<result column="time_scope" property="timeScope"/>
+		
+		<result column="buy_once_data" property="buyOnceData"/>
+		<result column="buy_twice_data" property="buyTwiceData"/>
+		<result column="buy_thrice_data" property="buyThriceData"/>                                                            
+		<result column="buy_quartic_data" property="buyQuarticData"/>
+		<result column="buy_quintic_data" property="buyQuinticData"/>
+		
+		<result column="buy_once_ratio" property="buyOnceRatio"/>
+		<result column="buy_twice_ratio" property="buyTwiceRatio"/>
+		<result column="buy_thrice_ratio" property="buyThriceRatio"/>
+		<result column="buy_quartic_ratio" property="buyQuarticRatio"/>
+		<result column="buy_quintic_ratio" property="buyQuinticRatio"/>
+		
+		<result column="createdDate" property="createdDate"/>
+		<result column="createdBy" property="createdBy"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>
+		<result column="lastModifiedBy" property="lastModifiedBy"/>
+	</resultMap>
+
+	<!-- 添加单条数据 -->
+	<insert id="saveSingleStandardRFM" parameterType="com.kycrm.member.domain.entity.effect.EffectStandardRFM">
+		insert into crm_effect_standard_RFM(uid,effect_type,time_scope,
+		buy_once_data,buy_twice_data,buy_thrice_data,buy_quartic_data,buy_quintic_data,
+		buy_once_ratio,buy_twice_ratio,buy_thrice_ratio,buy_quartic_ratio,buy_quintic_ratio,
+		createdDate,createdBy,lastModifiedDate,lastModifiedBy)
+		values(#{uid},#{effectType},#{timeScope},#{buyOnceData},#{buyTwiceData},#{buyThriceData},
+		#{buyQuarticData},#{buyQuinticData},#{buyOnceRatio},#{buyTwiceRatio},#{buyThriceRatio},
+		#{buyQuarticRatio},#{buyQuinticRatio},#{createdDate},#{uid},now(),#{uid})
+	</insert>
+
+	<!-- 批量添加数据 -->
+	<insert id="saveListStandardRFM" parameterType="java.util.Map">
+		insert into crm_effect_standard_RFM(uid,effect_type,time_scope,
+		buy_once_data,buy_twice_data,buy_thrice_data,buy_quartic_data,buy_quintic_data,
+		buy_once_ratio,buy_twice_ratio,buy_thrice_ratio,buy_quartic_ratio,buy_quintic_ratio,
+		createdDate,createdBy,lastModifiedDate,lastModifiedBy)
+		values
+		<foreach collection="standardRFMs" item="standardRFM" index="index" separator="," close=";">
+			(#{standardRFM.uid},#{standardRFM.effectType},#{standardRFM.timeScope},#{standardRFM.buyOnceData},
+			#{standardRFM.buyTwiceData},#{standardRFM.buyThriceData},#{standardRFM.buyQuarticData},
+			#{standardRFM.buyQuinticData},#{standardRFM.buyOnceRatio},#{standardRFM.buyTwiceRatio},
+			#{standardRFM.buyThriceRatio},#{standardRFM.buyQuarticRatio},#{standardRFM.buyQuinticRatio},
+			#{standardRFM.createdDate},#{standardRFM.uid},now(),#{standardRFM.uid})
+		</foreach>
+	</insert>
+	
+	<!-- 更新数据 -->
+	<update id="updateStandartRFM" parameterType="com.kycrm.member.domain.entity.effect.EffectStandardRFM">
+		update crm_effect_standard_RFM
+		<set>
+			<if test="buyOnceData != null and buyOnceData != ''">
+				buy_once_data = #{buyOnceData},
+			</if>
+			<if test="buyTwiceData != null and buyTwiceData != ''">
+				buy_twice_data = #{buyTwiceData},
+			</if>
+			<if test="buyThriceData != null and buyThriceData != ''">
+				buy_thrice_data = #{buyThriceData},
+			</if>
+			<if test="buyQuarticData != null and buyQuarticData != ''">
+				buy_quartic_data = #{buyQuarticData},
+			</if>
+			<if test="buyQuinticData != null and buyQuinticData != ''">
+				buy_quintic_data = #{buyQuinticData},
+			</if>
+			<if test="buyOnceRatio != null and buyOnceRatio != ''">
+				buy_once_ratio = #{buyOnceRatio},
+			</if>
+			<if test="buyTwiceRatio != null and buyTwiceRatio != ''">
+				buy_twice_ratio = #{buyTwiceRatio},
+			</if>
+			<if test="buyThriceRatio != null and buyThriceRatio != ''">
+				buy_thrice_ratio = #{buyThriceRatio},
+			</if>
+			<if test="buyQuarticRatio != null and buyQuarticRatio != ''">
+				buy_quartic_ratio = #{buyQuarticRatio},
+			</if>
+			<if test="buyQuinticRatio != null and buyQuinticRatio != ''">
+				buy_quintic_ratio = #{buyQuinticRatio},
+			</if>
+			<if test="lastModifiedDate != null">
+				lastModifiedDate = now()
+			</if>
+		</set>
+		<where>
+			uid = #{uid}
+			<if test="effectType != null">
+				and effect_type = #{effectType}
+			</if>
+			<if test="timeScope != null and timeScope != ''">
+				and time_scope = #{timeScope}
+			</if>
+		</where>
+	</update>
+	
+	<!-- 查询数据list -->
+	<select id="listRFMByEffectType" parameterType="java.util.Map" resultMap="standardRFM">
+		select effect_type,time_scope,buy_once_data,buy_twice_data,buy_thrice_data,buy_quartic_data,
+		buy_quintic_data,buy_once_ratio,buy_twice_ratio,buy_thrice_ratio,buy_quartic_ratio,buy_quintic_ratio
+		from crm_effect_standard_RFM
+		<where>
+			uid = #{uid}
+			<if test="effectType != null">
+				and effect_type = #{effectType}
+			</if>
+			<if test="timeScope != null and timeScope != ''">
+				and time_scope = #{timeScope}
+			</if>
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.message.ISmsReceiveInfoDao">
+	<resultMap type="com.kycrm.member.domain.entity.message.SmsReceiveInfo"
+		id="receiveInfo">
+		<result column="id" property="id" />
+		<result column="uid" property="uid" />
+		<result column="user_id" property="userId" />
+		<result column="taobao_nick" property="taobaoNick" />
+		<result column="buyer_nick" property="buyerNick" />
+		<result column="send_phone" property="sendPhone" />
+		<result column="content" property="content" />
+		<result column="receive_phone" property="receivePhone" />
+		<result column="receive_date" property="receiveDate" />
+		<result column="remarks" property="remarks" />
+		<result column="status" property="status" />
+		<result column="is_show" property="isShow" />
+		<result column="optlock" property="version" />
+		<result column="createdBy" property="createdBy" />
+		<result column="createdDate" property="createdDate" />
+		<result column="lastModifiedBy" property="lastModifiedBy" />
+		<result column="lastModifiedDate" property="lastModifiedDate" />
+	</resultMap>
+	
+	<!-- 添加单条记录 -->
+	<insert id="saveReceiverInfo" parameterType="com.kycrm.member.domain.entity.message.SmsReceiveInfo">
+		insert into crm_sms_receive_info
+			(uid,buyer_nick,send_phone,content,receive_phone,receive_date,remarks,status,is_show,optlock,
+			createdBy,createdDate,lastModifiedBy,lastModifiedDate)
+		values
+			(#{uid},#{buyerNick},#{sendPhone},#{content},#{receivePhone},#{receiveDate},#{remarks},#{status},
+			true,0,#{createdBy},NOW(),#{lastModifiedBy},NOW())
+	</insert>
+	
+
+	<!-- 买家回复内容查询列表(分页) -->
+	<select id="listReceiveInfoLimit" resultMap="receiveInfo" parameterType="java.util.Map">
+		select id,receive_date,send_phone,buyer_nick,receive_phone,content
+		from crm_sms_receive_info
+		<where>
+			uid = #{uid} and is_show = 1
+			<if test="buyerNick !=null and buyerNick !=''">
+				and buyer_nick = #{buyerNick}
+			</if>
+			<if test="phone != null and phone !=''">
+				and send_phone = #{phone}
+			</if>
+			<choose>
+				<when test="bTime != null and eTime != null">
+					and receive_date between #{bTime} and #{eTime}
+				</when>
+				<when test="bTime != null">
+					and receive_date >= #{bTime}
+				</when>
+				<when test="eTime != null">
+					and #{eTime} >= receive_date
+				</when>	
+			</choose>
+			<if test="containN != null and containN != ''">
+				and content not like 'N' and content not like 'TD' and content not like '%EF%BC%AE'
+			</if>
+			ORDER BY id DESC
+			<if test="startRows != null and pageSize != null">
+				limit #{startRows},#{pageSize}
+			</if>
+		</where>
+	</select>
+
+	<!-- 买家回复内容查询列表个数 -->
+	<select id="countReceiveInfo" parameterType="java.util.Map" resultType="long">
+		SELECT COUNT(1)
+		FROM crm_sms_receive_info
+		<where>
+			uid = #{uid} and is_show = 1
+			<if test="buyerNick !=null and buyerNick !=''">
+				and buyer_nick = #{buyerNick}
+			</if>
+			<if test="phone != null and phone !=''">
+				and send_phone = #{phone}
+			</if>
+			<choose>
+				<when test="bTime != null and eTime != null">
+					and receive_date between #{bTime} and #{eTime}
+				</when>
+				<when test="bTime != null">
+					and receive_date >= #{bTime}
+				</when>
+				<when test="eTime != null">
+					and #{eTime} >= receive_date
+				</when>	
+			</choose>
+			<if test="containN != null and containN != ''">
+				and content not like 'N' and content not like 'TD' and content not like '%EF%BC%AE'
+			</if>
+		</where>
+	</select>
+
+	<!-- 根据手机号查询买家回复内容 -->
+	<select id="listReceiveInfoByPhone" resultMap="receiveInfo">
+		select
+		id,receive_date,content
+		from crm_sms_receive_info
+		where uid = #{uid} and
+		send_phone = #{phone} and is_show = 1
+	</select>
+
+	<update id="updateReceiveIsShow" parameterType="java.lang.Long">
+		update CRM_SMS_RECEIVE_INFO
+		set is_show = 0
+		WHERE id = #{id}
+	</update>
+
+</mapper>

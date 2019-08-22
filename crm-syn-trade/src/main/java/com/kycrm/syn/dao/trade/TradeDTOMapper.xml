@@ -1,0 +1,1030 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.syn.dao.trade.ITradeDTODao">
+
+	<resultMap id="tradeInfoMap" type="com.kycrm.member.domain.entity.trade.TradeDTO">
+		<result column="id" property="id" />
+		<result column="tid" property="tid" />
+		<result column="tid_str" property="tidStr" />
+		<result column="uid" property="uid" />
+		<result column="createdDate" property="createdDate" />
+		<result column="lastModifiedDate" property="lastModifiedDate" />
+		<result column="adjust_fee" property="adjustFee" />
+		<result column="adjust_fee" property="adjustFee" />
+		<result column="alipay_id" property="alipayId" />
+		<result column="alipay_no" property="alipayNo" />
+		<result column="alipay_point" property="alipayPoint" />
+		<result column="available_confirm_fee" property="availableConfirmFee" />
+		<result column="buyer_alipay_no" property="buyerAlipayNo" />
+		<result column="buyer_area" property="buyerArea" />
+		<result column="buyer_cod_fee" property="buyerCodFee" />
+		<result column="buyer_email" property="buyerEmail" />
+		<result column="buyer_nick" property="buyerNick" />
+		<result column="buyer_obtain_point_fee" property="buyerObtainPointFee" />
+		<result column="buyer_rate" property="buyerRate" />
+		<result column="buyer_cod_fee" property="buyerCodFee" />
+		<result column="cod_status" property="codStatus" />
+		<result column="commission_fee" property="commissionFee" />
+		<result column="consign_time" property="consignTime" />
+		<result column="created" property="created" />
+		<result column="discount_fee" property="discountFee" />
+		<result column="end_time" property="endTime" />
+		<result column="has_post_fee" property="hasPostFee" />
+		<result column="is_3D" property="is3D" />
+		<result column="is_brand_sale" property="isBrandSale" />
+		<result column="is_daixiao" property="isDaixiao" />
+		<result column="is_force_wlb" property="isForceWlb" />
+		<result column="is_lgtype" property="isLgtype" />
+		<result column="is_part_consign" property="isPartConsign" />
+		<result column="is_wt" property="isWt" />
+		<result column="modified" property="modified" />
+		<result column="pay_time" property="payTime" />
+		<result column="payment" property="payment" />
+		<result column="pcc_af" property="pccAf" />
+		<result column="point_fee" property="pointFee" />
+		<result column="post_fee" property="postFee" />
+		<result column="promotion_details" property="promotionDetails" />
+		<result column="real_point_fee" property="realPointFee" />
+		<result column="received_payment" property="receivedPayment" />
+		<result column="receiver_address" property="receiverAddress" />
+		<result column="receiver_city" property="receiverCity" />
+		<result column="receiver_district" property="receiverDistrict" />
+		<result column="receiver_mobile" property="receiverMobile" />
+		<result column="receiver_name" property="receiverName" />
+		<result column="receiver_state" property="receiverState" />
+		<result column="receiver_zip" property="receiverZip" />
+		<result column="seller_alipay_no" property="sellerAlipayNo" />
+		<result column="seller_can_rate" property="sellerCanRate" />
+		<result column="seller_cod_fee" property="sellerCodFee" />
+		<result column="seller_email" property="sellerEmail" />
+		<result column="seller_flag" property="sellerFlag" />
+		<result column="seller_mobile" property="sellerMobile" />
+		<result column="seller_name" property="sellerName" />
+		<result column="seller_nick" property="sellerNick" />
+		<result column="seller_phone" property="sellerPhone" />
+		<result column="seller_rate" property="sellerRate" />
+		<result column="service_tags" property="serviceTags" />
+		<result column="shipping_type" property="shippingType" />
+		<result column="snapshot_url" property="snapshotUrl" />
+		<result column="status" property="status" />
+		<result column="title" property="title" />
+		<result column="total_fee" property="totalFee" />
+		<result column="trade_from" property="tradeFrom" />
+		<result column="type" property="type" />
+		<result column="optlock" property="optlock" />
+		<result column="last_send_sms_time" property="lastSendSmsTime" />
+		<result column="msg_id" property="msgId" />
+		<result column="trade_source" property="tradeSource" />
+		<result column="step_trade_status" property="stepTradeStatus" />
+		<result column="step_paid_fee" property="stepPaidFee" />
+		<collection property="orders" column="tid"
+			ofType="com.kycrm.member.domain.entity.order.OrderDTO">
+			<id column="oid" jdbcType="BIGINT" property="oid" />
+			<result column="id" jdbcType="BIGINT" property="id" />
+			<result column="uid" jdbcType="BIGINT" property="uid" />
+			<result column="pic_path" jdbcType="VARCHAR" property="picPath" />
+			<result column="seller_nick" jdbcType="VARCHAR" property="sellerNick" />
+			<result column="buyer_nick" jdbcType="VARCHAR" property="buyerNick" />
+			<result column="refund_status" jdbcType="VARCHAR" property="refundStatus" />
+			<result column="buyer_rate" jdbcType="TINYINT" property="buyerRate" />
+			<result column="seller_rate" jdbcType="TINYINT" property="sellerRate" />
+			<result column="seller_type" jdbcType="VARCHAR" property="sellerType" />
+			<result column="cid" jdbcType="BIGINT" property="cid" />
+			<result column="status" jdbcType="VARCHAR" property="status" />
+			<result column="title" jdbcType="VARCHAR" property="title" />
+			<result column="type" jdbcType="VARCHAR" property="type" />
+			<result column="iid" jdbcType="VARCHAR" property="iid" />
+			<result column="price" jdbcType="DECIMAL" property="price" />
+			<result column="num_iid" jdbcType="BIGINT" property="numIid" />
+			<result column="num" jdbcType="BIGINT" property="num" />
+			<result column="order_from" jdbcType="VARCHAR" property="orderFrom" />
+			<result column="total_fee" jdbcType="DECIMAL" property="totalFee" />
+			<result column="payment" jdbcType="DECIMAL" property="payment" />
+			<result column="modified" jdbcType="TIMESTAMP" property="modified" />
+			<result column="refund_id" jdbcType="BIGINT" property="refundId" />
+			<result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+			<result column="consign_time" jdbcType="TIMESTAMP" property="consignTime" />
+			<result column="trade_payment" jdbcType="DECIMAL" property="tradePayment" />
+			<result column="trade_seller_rate" jdbcType="TINYINT"
+				property="tradeSellerRate" />
+			<result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+			<result column="receiver_state" jdbcType="VARCHAR" property="receiverState" />
+			<result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress" />
+			<result column="receiver_zip" jdbcType="VARCHAR" property="receiverZip" />
+			<result column="receiver_mobile" jdbcType="VARCHAR" property="receiverMobile" />
+			<result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone" />
+			<result column="trade_consign_time" jdbcType="TIMESTAMP"
+				property="tradeConsignTime" />
+			<result column="received_payment" jdbcType="DECIMAL" property="receivedPayment" />
+			<result column="receiver_country" jdbcType="VARCHAR" property="receiverCountry" />
+			<result column="receiver_town" jdbcType="VARCHAR" property="receiverTown" />
+			<result column="shop_pick" jdbcType="VARCHAR" property="shopPick" />
+			<result column="tid" jdbcType="BIGINT" property="tid" />
+			<result column="trade_num" jdbcType="BIGINT" property="tradeNum" />
+			<result column="trade_status" jdbcType="VARCHAR" property="tradeStatus" />
+			<result column="trade_title" jdbcType="VARCHAR" property="tradeTitle" />
+			<result column="trade_type" jdbcType="VARCHAR" property="tradeType" />
+			<result column="trade_total_fee" jdbcType="DECIMAL" property="tradeTotalFee" />
+			<result column="trade_created" jdbcType="TIMESTAMP" property="tradeCreated" />
+			<result column="trade_pay_time" jdbcType="TIMESTAMP" property="tradePayTime" />
+			<result column="trade_modified" jdbcType="TIMESTAMP" property="tradeModified" />
+			<result column="trade_end_time" jdbcType="TIMESTAMP" property="tradeEndTime" />
+			<result column="buyer_flag" jdbcType="BIGINT" property="buyerFlag" />
+			<result column="seller_flag" jdbcType="BIGINT" property="sellerFlag" />
+			<result column="step_trade_status" jdbcType="VARCHAR"
+				property="stepTradeStatus" />
+			<result column="step_paid_fee" jdbcType="DECIMAL" property="stepPaidFee" />
+			<result column="trade_shipping_type" jdbcType="VARCHAR"
+				property="tradeShippingType" />
+			<result column="buyer_cod_fee" jdbcType="DECIMAL" property="buyerCodFee" />
+			<result column="trade_adjust_fee" jdbcType="DECIMAL" property="tradeAdjustFee" />
+			<result column="trade_from" jdbcType="VARCHAR" property="tradeFrom" />
+			<result column="trade_buyer_rate" jdbcType="TINYINT" property="tradeBuyerRate" />
+			<result column="receiver_city" jdbcType="VARCHAR" property="receiverCity" />
+			<result column="receiver_district" jdbcType="VARCHAR"
+				property="receiverDistrict" />
+			<result column="trade_source" jdbcType="INTEGER" property="tradeSource" />
+			<result column="msg_id" jdbcType="BIGINT" property="msgId" />
+			<result column="item_meal_name" jdbcType="VARCHAR" property="itemMealName" />
+			<result column="outer_iid" jdbcType="VARCHAR" property="outerIid" />
+			<result column="snapshot_url" jdbcType="VARCHAR" property="snapshotUrl" />
+			<result column="snapshot" jdbcType="VARCHAR" property="snapshot" />
+			<result column="timeout_action_time" jdbcType="TIMESTAMP"
+				property="timeoutActionTime" />
+			<result column="sub_order_tax_fee" jdbcType="VARCHAR"
+				property="subOrderTaxFee" />
+			<result column="sub_order_tax_rate" jdbcType="VARCHAR"
+				property="subOrderTaxRate" />
+			<result column="estimate_con_time" jdbcType="VARCHAR"
+				property="estimateConTime" />
+			<result column="item_meal_id" jdbcType="BIGINT" property="itemMealId" />
+			<result column="sku_id" jdbcType="VARCHAR" property="skuId" />
+			<result column="outer_sku_id" jdbcType="VARCHAR" property="outerSkuId" />
+			<result column="discount_fee" jdbcType="DECIMAL" property="discountFee" />
+			<result column="adjust_fee" jdbcType="DECIMAL" property="adjustFee" />
+			<result column="sku_properties_name" jdbcType="VARCHAR"
+				property="skuPropertiesName" />
+			<result column="is_oversold" jdbcType="TINYINT" property="isOversold" />
+			<result column="is_service_order" jdbcType="TINYINT" property="isServiceOrder" />
+			<result column="order_attr" jdbcType="VARCHAR" property="orderAttr" />
+			<result column="shipping_type" jdbcType="VARCHAR" property="shippingType" />
+			<result column="bind_oid" jdbcType="BIGINT" property="bindOid" />
+			<result column="logistics_company" jdbcType="VARCHAR"
+				property="logisticsCompany" />
+			<result column="invoice_no" jdbcType="VARCHAR" property="invoiceNo" />
+			<result column="is_daixiao" jdbcType="TINYINT" property="isDaixiao" />
+			<result column="divide_order_fee" jdbcType="DECIMAL" property="divideOrderFee" />
+			<result column="part_mjz_discount" jdbcType="VARCHAR"
+				property="partMjzDiscount" />
+			<result column="ticket_outer_id" jdbcType="VARCHAR" property="ticketOuterId" />
+			<result column="ticket_expdate_key" jdbcType="VARCHAR"
+				property="ticketExpdateKey" />
+			<result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+			<result column="is_www" jdbcType="VARCHAR" property="isWww" />
+			<result column="tmser_spu_code" jdbcType="VARCHAR" property="tmserSpuCode" />
+			<result column="bind_oids" jdbcType="VARCHAR" property="bindOids" />
+			<result column="zhengji_status" jdbcType="VARCHAR" property="zhengjiStatus" />
+			<result column="md_qualification" jdbcType="VARCHAR" property="mdQualification" />
+			<result column="md_fee" jdbcType="DECIMAL" property="mdFee" />
+			<result column="customization" jdbcType="VARCHAR" property="customization" />
+			<result column="inv_type" jdbcType="VARCHAR" property="invType" />
+			<result column="is_sh_ship" jdbcType="TINYINT" property="isShShip" />
+			<result column="shipper" jdbcType="VARCHAR" property="shipper" />
+			<result column="f_type" jdbcType="VARCHAR" property="fType" />
+			<result column="f_status" jdbcType="VARCHAR" property="fStatus" />
+			<result column="f_term" jdbcType="VARCHAR" property="fTerm" />
+			<result column="combo_id" jdbcType="VARCHAR" property="comboId" />
+			<result column="assembly_rela" jdbcType="VARCHAR" property="assemblyRela" />
+			<result column="assembly_price" jdbcType="VARCHAR" property="assemblyPrice" />
+			<result column="assembly_item" jdbcType="VARCHAR" property="assemblyItem" />
+			<result column="sub_order_tax_promotion_fee" jdbcType="VARCHAR"
+				property="subOrderTaxPromotionFee" />
+			<result column="fqg_num" jdbcType="BIGINT" property="fqgNum" />
+			<result column="is_fqg_s_fee" jdbcType="TINYINT" property="isFqgSFee" />
+			<result column="trade_created_time" jdbcType="TIME"
+				property="tradeCreatedTime" />
+			<result column="trade_pay_time_hms" jdbcType="TIME" property="tradePayTimeHms" />
+
+			<result column="createdBy" jdbcType="TIME" property="createdBy" />
+			<result column="createdDate" jdbcType="TIME" property="createdDate" />
+			<result column="lastModifiedBy" jdbcType="TIME" property="lastModifiedBy" />
+			<result column="lastModifiedDate" jdbcType="TIME" property="lastModifiedDate" />
+		</collection>
+	</resultMap>
+
+	<resultMap id="tempEntity"
+		type="com.kycrm.member.domain.entity.member.TempEntity">
+		<result column="num" property="num" />
+		<result column="first_pay_time" property="firstPayTime" />
+		<result column="buyer_nick" property="buyerNick" />
+	</resultMap>
+
+	<resultMap id="tradeTempEntity"
+		type="com.kycrm.member.domain.entity.trade.TradeTempEntity">
+		<result column="ID" property="id" />
+		<result column="BUYER_NICK" property="buyerNick" />
+		<result column="TRADE_NUM" property="tradeNum" />
+		<result column="CLOSE_TRADE_NUM" property="closeTradeNum" />
+		<result column="ADD_NUMBER" property="addNumber" />
+		<result column="BUYER_ALIPAY_NO" property="buyerAlipayNo"/>
+		<result column="RECEIVER_INFO_STR" property="receiverInfoStr" />
+	</resultMap>
+
+	<!-- 订单表的所有字段 -->
+	<sql id="tradeDTOAllSqlField">
+		id,tid,
+		tid_str,
+		uid,
+		createdDate,lastModifiedDate,adjust_fee,alipay_id,alipay_no,alipay_point,
+		available_confirm_fee,buyer_alipay_no,buyer_area,buyer_cod_fee,cod_status,
+		commission_fee,consign_time,created,discount_fee,end_time,has_post_fee,is_3D,
+		is_brand_sale,is_daixiao,is_force_wlb,is_force_wlb,is_lgtype,is_part_consign,is_wt,
+		modified,pay_time,payment,pcc_af,point_fee,post_fee,promotion_details,real_point_fee,
+		received_payment,receiver_address,receiver_city,receiver_district,receiver_mobile,
+		receiver_name,receiver_state,receiver_zip,seller_alipay_no,seller_can_rate,
+		seller_cod_fee,seller_email,seller_flag,seller_mobile,seller_name,seller_nick,
+		seller_phone,seller_rate,service_tags,shipping_type,snapshot_url,status,title,total_fee,
+		trade_from,type,last_send_sms_time,msg_id,trade_source,step_trade_status,step_paid_fee
+	</sql>
+
+	<select id="isExistsTable" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SHOW TABLES LIKE 'crm_trade_dto${_parameter}'
+	</select>
+
+	<!-- 自动创建用户主订单表 -->
+	<insert id="doCreateTableByNewUser" parameterType="java.lang.String">
+		CREATE TABLE
+		`crm_trade_dto${_parameter}` (
+		`id` bigint(20) NOT NULL AUTO_INCREMENT
+		COMMENT '主键id',
+		`tid` bigint(50) NOT NULL,
+		`tid_str` varchar(20) comment
+		'主订单id（字符串类型）',
+		`uid` bigint(20) comment '用户主键id',
+		`buyer_nick`
+		varchar(1000) DEFAULT NULL,
+		`buyer_rate` tinyint(1) DEFAULT NULL,
+		`consign_time` datetime DEFAULT NULL,
+		`created` datetime DEFAULT NULL,
+		`end_time` datetime DEFAULT NULL,
+		`modified` datetime DEFAULT NULL,
+		`pay_time` datetime DEFAULT NULL,
+		`payment` double(15,2) DEFAULT NULL,
+		`receiver_address` varchar(2000) DEFAULT NULL,
+		`receiver_city`
+		varchar(50) DEFAULT NULL,
+		`receiver_district` varchar(50) DEFAULT NULL,
+		`receiver_mobile` varchar(200) DEFAULT NULL,
+		`receiver_phone`
+		varchar(200) DEFAULT NULL,
+		`receiver_name` varchar(1000) DEFAULT NULL,
+		`receiver_state` varchar(50) DEFAULT NULL,
+		`receiver_zip` varchar(20)
+		DEFAULT NULL,
+		`seller_flag` int(10) DEFAULT NULL,
+		`seller_mobile`
+		varchar(50) DEFAULT NULL,
+		`seller_name` varchar(255) DEFAULT NULL,
+		`seller_nick` varchar(255) DEFAULT NULL,
+		`seller_phone` varchar(50)
+		DEFAULT NULL,
+		`seller_rate` tinyint(1) DEFAULT NULL,
+		`status`
+		varchar(50) DEFAULT NULL,
+		`title` varchar(255) DEFAULT NULL,
+		`total_fee` double(15,2) DEFAULT NULL,
+		`trade_from` varchar(50) DEFAULT
+		NULL,
+		`type` varchar(100) DEFAULT NULL,
+		`msg_id` bigint(20) DEFAULT
+		NULL,
+		`last_send_sms_time` datetime DEFAULT NULL,
+		`trade_source`
+		varchar(255) NOT NULL,
+		`receiver_country` varchar(50) DEFAULT NULL,
+		`receiver_town` varchar(300) DEFAULT NULL,
+		`num` bigint(20) DEFAULT
+		NULL,
+		`buyer_flag` int(10) DEFAULT NULL,
+		`refund_flag` tinyint(1)
+		DEFAULT NULL,
+		`adjust_fee` double(10,2) DEFAULT NULL COMMENT
+		'卖家手工调整金额',
+		`alipay_id` bigint(20) DEFAULT NULL COMMENT '买家的支付宝id号',
+		`alipay_no` varchar(100) DEFAULT NULL COMMENT '买家的支付宝账号',
+		`alipay_point` int(11) DEFAULT NULL COMMENT '付款时使用的支付宝积分的额度,单位分',
+		`available_confirm_fee` double(10,2) DEFAULT NULL,
+		`buyer_alipay_no`
+		varchar(255) DEFAULT NULL,
+		`buyer_area` varchar(100) DEFAULT NULL,
+		`buyer_cod_fee` varchar(50) DEFAULT NULL,
+		`buyer_email` varchar(500)
+		DEFAULT NULL,
+		`buyer_obtain_point_fee` bigint(20) DEFAULT NULL,
+		`cod_fee` double(10,2) DEFAULT NULL,
+		`cod_status` varchar(50) DEFAULT
+		NULL,
+		`commission_fee` double(10,2) DEFAULT NULL,
+		`discount_fee`
+		double(10,2) DEFAULT NULL,
+		`has_post_fee` tinyint(1) DEFAULT NULL,
+		`is_3D` tinyint(1) DEFAULT NULL,
+		`is_brand_sale` tinyint(1) DEFAULT
+		NULL,
+		`is_daixiao` tinyint(1) DEFAULT NULL,
+		`is_force_wlb` tinyint(1)
+		DEFAULT NULL,
+		`is_lgtype` tinyint(1) DEFAULT NULL,
+		`is_part_consign`
+		tinyint(1) DEFAULT NULL,
+		`is_wt` tinyint(1) DEFAULT NULL,
+		`pcc_af`
+		bigint(20) DEFAULT NULL,
+		`point_fee` bigint(20) DEFAULT NULL,
+		`post_fee` double(10,2) DEFAULT NULL,
+		`real_point_fee` bigint(20)
+		DEFAULT NULL,
+		`received_payment` double(15,2) DEFAULT NULL,
+		`seller_alipay_no` varchar(255) DEFAULT NULL,
+		`seller_can_rate`
+		tinyint(1) DEFAULT NULL,
+		`seller_cod_fee` double(10,2) DEFAULT NULL,
+		`shipping_type` varchar(20) DEFAULT NULL,
+		`snapshot_url` varchar(255)
+		DEFAULT NULL,
+		`step_trade_status` varchar(255) DEFAULT NULL,
+		`step_paid_fee` varchar(255) DEFAULT NULL,
+		`service_tags` text DEFAULT
+		NULL,
+		`promotion_details` text,
+		`shop_pick` varchar(50) DEFAULT NULL,
+		`seller_email` varchar(255) DEFAULT NULL,
+		`createdDate` datetime
+		DEFAULT NULL COMMENT '创建时间',
+		`lastModifiedDate` datetime DEFAULT NULL
+		COMMENT '最后修改时间',
+		`optlock` int(11) NOT NULL DEFAULT '0' COMMENT '版本',
+		PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8
+		ROW_FORMAT=FIXED
+		COMMENT='主订单';
+	</insert>
+
+	<insert id="addTradeTableIndex" parameterType="java.lang.String">
+		ALTER TABLE
+		`crm_trade_dto${_parameter}`
+		ADD INDEX index_tid (tid),
+		ADD INDEX
+		index_payment (payment),
+		ADD INDEX index_created (created),
+		ADD INDEX
+		index_consign_time (consign_time),
+		ADD INDEX index_end_time (end_time),
+		ADD INDEX index_msg_id (msg_id),
+		ADD INDEX index_status (status),
+		ADD
+		INDEX index_last_send_sms_time (last_send_sms_time),
+		ADD INDEX
+		index_refund_flag (refund_flag),
+		ADD INDEX index_lastModifiedDate
+		(lastModifiedDate),
+		ADD INDEX index_buyer_nick (buyer_nick(255)),
+		ADD
+		INDEX index_pay_time (pay_time),
+		ADD INDEX index_receiver_mobile
+		(receiver_mobile),
+		ADD INDEX index_trade_from (trade_from);
+	</insert>
+
+	<!-- 批量保存订单 -->
+	<insert id="doCreateTradeDTOByList" parameterType="java.util.Map">
+		INSERT INTO crm_trade_dto${uid}
+		(tid,tid_str,uid,createdDate,lastModifiedDate,adjust_fee,alipay_id,alipay_no,alipay_point,
+		available_confirm_fee,buyer_alipay_no,buyer_area,buyer_cod_fee,cod_status,
+		commission_fee,consign_time,created,discount_fee,end_time,has_post_fee,is_3D,
+		is_brand_sale,is_daixiao,is_force_wlb,is_lgtype,is_part_consign,is_wt,
+		modified,pay_time,payment,pcc_af,point_fee,post_fee,promotion_details,real_point_fee,
+		received_payment,receiver_address,receiver_city,receiver_district,receiver_mobile,
+		receiver_name,receiver_state,receiver_zip,seller_alipay_no,seller_can_rate,
+		seller_cod_fee,seller_email,seller_flag,seller_mobile,seller_name,seller_nick,
+		seller_phone,seller_rate,service_tags,shipping_type,snapshot_url,status,title,total_fee,
+		trade_from,type,last_send_sms_time,msg_id,trade_source,step_trade_status,step_paid_fee,buyer_email,
+		buyer_nick,buyer_obtain_point_fee,buyer_rate,cod_fee,receiver_phone,refund_flag,
+		receiver_country,receiver_town,shop_pick,num,buyer_flag,front,tail)
+		VALUES
+		<foreach collection="list" item="trade" index="index"
+			separator=",">
+			(#{trade.tid},#{trade.tidStr},#{trade.uid},now(),now(),#{trade.adjustFee},#{trade.alipayId},#{trade.alipayNo},
+			#{trade.alipayPoint},#{trade.availableConfirmFee},#{trade.buyerAlipayNo},#{trade.buyerArea},#{trade.buyerCodFee},
+			#{trade.codStatus},#{trade.commissionFee},#{trade.consignTime},#{trade.created},#{trade.discountFee},#{trade.endTime},
+			#{trade.hasPostFee},#{trade.is3D},#{trade.isBrandSale},#{trade.isDaixiao},#{trade.isForceWlb},
+			#{trade.isLgtype},#{trade.isPartConsign},#{trade.isWt},#{trade.modified},#{trade.payTime},#{trade.payment},#{trade.pccAf},
+			#{trade.pointFee},#{trade.postFee},#{trade.promotionDetails},#{trade.realPointFee},#{trade.receivedPayment},
+			#{trade.receiverAddress},#{trade.receiverCity},#{trade.receiverDistrict},#{trade.receiverMobile},#{trade.receiverName},
+			#{trade.receiverState},#{trade.receiverZip},#{trade.sellerAlipayNo},#{trade.sellerCanRate},#{trade.sellerCodFee},
+			#{trade.sellerEmail},#{trade.sellerFlag},#{trade.sellerMobile},#{trade.sellerName},#{trade.sellerNick},#{trade.sellerPhone},
+			#{trade.sellerRate},#{trade.serviceTags},#{trade.shippingType},#{trade.snapshotUrl},#{trade.status},#{trade.title},
+			#{trade.totalFee},#{trade.tradeFrom},#{trade.type},#{trade.lastSendSmsTime},#{trade.msgId},#{trade.tradeSource},
+			#{trade.stepTradeStatus},#{trade.stepPaidFee},#{trade.buyerEmail},#{trade.buyerNick},#{trade.buyerObtainPointFee},
+			#{trade.buyerRate},#{trade.codFee},#{trade.receiverPhone},#{trade.refundFlag},#{trade.receiverCountry},
+			#{trade.receiverTown},#{trade.shopPick},#{trade.num},#{trade.buyerFlag},#{trade.front},#{trade.tail})
+		</foreach>
+	</insert>
+
+	<!-- 保存单条订单记录 -->
+	<insert id="doCreateTradeDTOByBySingle" parameterType="com.kycrm.member.domain.entity.trade.TradeDTO">
+		INSERT
+		INTO crm_trade_dto${uid}
+		(tid,tid_str,uid,createdDate,lastModifiedDate,adjust_fee,alipay_id,alipay_no,alipay_point,
+		available_confirm_fee,buyer_alipay_no,buyer_area,buyer_cod_fee,cod_status,
+		commission_fee,consign_time,created,discount_fee,end_time,has_post_fee,is_3D,
+		is_brand_sale,is_daixiao,is_force_wlb,is_lgtype,is_part_consign,is_wt,
+		modified,pay_time,payment,pcc_af,point_fee,post_fee,promotion_details,real_point_fee,
+		received_payment,receiver_address,receiver_city,receiver_district,receiver_mobile,
+		receiver_name,receiver_state,receiver_zip,seller_alipay_no,seller_can_rate,
+		seller_cod_fee,seller_email,seller_flag,seller_mobile,seller_name,seller_nick,
+		seller_phone,seller_rate,service_tags,shipping_type,snapshot_url,status,title,total_fee,
+		trade_from,type,last_send_sms_time,msg_id,trade_source,step_trade_status,step_paid_fee,buyer_email,
+		buyer_nick,buyer_obtain_point_fee,buyer_rate,cod_fee,receiver_phone,refund_flag,
+		receiver_country,receiver_town,shop_pick,num,buyer_flag,front,tail)
+		VALUE(#{tid},#{tidStr},#{uid},now(),now(),#{adjustFee},#{alipayId},#{alipayNo},#{alipayPoint},#{availableConfirmFee},
+		#{buyerAlipayNo},#{buyerArea},#{buyerCodFee},#{codStatus},#{commissionFee},#{consignTime},#{created},#{discountFee},
+		#{endTime},#{hasPostFee},#{is3D},#{isBrandSale},#{isDaixiao},#{isForceWlb},#{isLgtype},#{isPartConsign},
+		#{isWt},#{modified},#{payTime},#{payment},#{pccAf},#{pointFee},#{postFee},#{promotionDetails},#{realPointFee},
+		#{receivedPayment},#{receiverAddress},#{receiverCity},#{receiverDistrict},#{receiverMobile},#{receiverName},#{receiverState},
+		#{receiverZip},#{sellerAlipayNo},#{sellerCanRate},#{sellerCodFee},#{sellerEmail},#{sellerFlag},#{sellerMobile},#{sellerName},
+		#{sellerNick},#{sellerPhone},#{sellerRate},#{serviceTags},#{shippingType},#{snapshotUrl},#{status},#{title},#{totalFee},
+		#{tradeFrom},#{type},#{lastSendSmsTime},#{msgId},#{tradeSource},#{stepTradeStatus},#{stepPaidFee},#{buyerEmail},
+		#{buyerNick},#{buyerObtainPointFee},#{buyerRate},#{codFee},#{receiverPhone},#{refundFlag},#{receiverCountry},
+		#{receiverTown},#{shopPick},#{num},#{buyerFlag},#{front},#{tail})
+	</insert>
+
+	<!-- 批量更新订单 -->
+	<update id="doUpdateTradeDTOByList" parameterType="java.util.Map">
+		INSERT INTO CRM_TRADE_DTO${uid}
+		(TID,ALIPAY_NO,TRADE_SOURCE,OPTLOCK)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.tid},#{item.alipayNo},#{item.tradeSource},0)
+		</foreach>
+		ON DUPLICATE KEY UPDATE
+		TID = VALUES(TID),
+		ALIPAY_NO =
+		VALUES(ALIPAY_NO),
+		TRADE_SOURCE = VALUES(TRADE_SOURCE),
+		OPTLOCK =
+		VALUES(OPTLOCK)
+	</update>
+
+
+	<update id="doUpdateTradeDTOByList_bak" parameterType="java.util.Map">
+		<foreach collection="list" item="trade" index="index"
+			separator=";" open="" close="">
+			UPDATE crm_trade_dto${uid}
+
+			<set>
+				lastModifiedDate = now(),optlock=optlock+1
+				<if test="trade.alipayId != null">
+					,alipay_id = #{trade.alipayId}
+				</if>
+				<if test="trade.alipayNo != null">
+					,alipay_no = #{trade.alipayNo}
+				</if>
+				<if test="trade.alipayPoint != null">
+					,alipay_point = #{trade.alipayPoint}
+				</if>
+				<if test="trade.adjustFee != null">
+					,available_confirm_fee = #{trade.availableConfirmFee}
+				</if>
+				<if test="trade.buyerAlipayNo != null">
+					,buyer_alipay_no = #{trade.buyerAlipayNo}
+				</if>
+				<if test="trade.buyerCodFee != null">
+					,buyer_cod_fee = #{trade.buyerCodFee}
+				</if>
+				<if test="trade.buyerObtainPointFee != null">
+					,buyer_obtain_point_fee = #{trade.buyerObtainPointFee}
+				</if>
+				<if test="trade.buyerRate != null">
+					,buyer_rate = #{trade.buyerRate}
+				</if>
+				<if test="trade.codFee != null">
+					,cod_fee = #{trade.codFee}
+				</if>
+				<if test="trade.codStatus != null">
+					,cod_status = #{trade.codStatus}
+				</if>
+				<if test="trade.commissionFee != null">
+					,commission_fee = #{trade.commissionFee}
+				</if>
+				<if test="trade.consignTime != null">
+					,consign_time = #{trade.consignTime}
+				</if>
+				<if test="trade.discountFee != null">
+					,discount_fee = #{trade.discountFee}
+				</if>
+				<if test="trade.endTime != null">
+					,end_time = #{trade.endTime}
+				</if>
+				<if test="trade.hasPostFee != null">
+					,has_post_fee = #{trade.hasPostFee}
+				</if>
+				<if test="trade.isForceWlb != null">
+					,is_force_wlb = #{trade.isForceWlb}
+				</if>
+				<if test="trade.isLgtype != null">
+					,is_lgtype = #{trade.isLgtype}
+				</if>
+				<if test="trade.isPartConsign != null">
+					,is_part_consign = #{trade.isPartConsign}
+				</if>
+				<if test="trade.modified != null">
+					,modified = #{trade.modified}
+				</if>
+				<if test="trade.payTime != null">
+					,pay_time = #{trade.payTime}
+				</if>
+				<if test="trade.payment != null">
+					,payment = #{trade.payment}
+				</if>
+				<if test="trade.pccAf != null">
+					,pcc_af = #{trade.pccAf}
+				</if>
+				<if test="trade.postFee != null">
+					,post_fee = #{trade.postFee}
+				</if>
+				<if test="trade.realPointFee != null">
+					,real_point_fee = #{trade.realPointFee}
+				</if>
+				<if test="trade.receivedPayment != null">
+					,received_payment = #{trade.receivedPayment}
+				</if>
+				<if test="trade.sellerAlipayNo != null">
+					,seller_alipay_no = #{trade.sellerAlipayNo}
+				</if>
+				<if test="trade.sellerCanRate != null">
+					,seller_can_rate = #{trade.sellerCanRate}
+				</if>
+				<if test="trade.sellerCodFee != null">
+					,seller_cod_fee = #{trade.sellerCodFee}
+				</if>
+				<if test="trade.sellerFlag != null">
+					,seller_flag = #{trade.sellerFlag}
+				</if>
+				<if test="trade.sellerRate != null">
+					,seller_rate = #{trade.sellerRate}
+				</if>
+				<if test="trade.shippingType != null">
+					,shipping_type = #{trade.shippingType}
+				</if>
+				<if test="trade.status != null">
+					,status = #{trade.status}
+				</if>
+				<if test="trade.type != null">
+					,type = #{trade.type}
+				</if>
+				<if test="trade.stepTradeStatus != null">
+					,step_trade_status = #{trade.stepTradeStatus}
+				</if>
+				<if test="trade.stepPaidFee != null">
+					,step_paid_fee = #{trade.stepPaidFee}
+				</if>
+				<if test="trade.serviceTags != null">
+					,service_tags = #{trade.serviceTags}
+				</if>
+				<if test="trade.promotionDetails != null">
+					,promotion_details = #{trade.promotionDetails}
+				</if>
+				<if test="trade.msgId != null">
+					,msg_id = #{trade.msgId}
+				</if>
+				<if test="trade.lastSendSmsTime != null">
+					,last_send_sms_time = #{trade.lastSendSmsTime}
+				</if>
+				<if test="trade.created != null">
+					,created = #{trade.created}
+				</if>
+				<if test="trade.tradeFrom != null">
+					,trade_from = #{trade.tradeFrom}
+				</if>
+				<if test="trade.refundFlag != null">
+					,refund_flag = #{trade.refundFlag}
+				</if>
+				<if test="trade.num != null">
+					,num = #{trade.num}
+				</if>
+				<if test="trade.buyerFlag != null">
+					,buyer_flag = #{trade.buyerFlag}
+				</if>
+				<if test="trade.front != null">
+					,front=#{trade.front}
+				</if>
+				<if test="trade.tail != null">
+					,tail=#{trade.tail}-IFNULL(front,0)
+				</if>
+			</set>
+			WHERE tid = #{trade.tid}
+		</foreach>
+	</update>
+
+	<!-- 更新单个订单信息 -->
+	<update id="doUpdateTradeDTOBySingle" parameterType="com.kycrm.member.domain.entity.trade.TradeDTO">
+		UPDATE crm_trade_dto${uid}
+		<set>
+			lastModifiedDate = now(),optlock=optlock+1
+			<if test="alipayId != null">
+				,alipay_id = #{alipayId}
+			</if>
+			<if test="alipayNo != null">
+				,alipay_no = #{alipayNo}
+			</if>
+			<if test="alipayPoint != null">
+				,alipay_point = #{alipayPoint}
+			</if>
+			<if test="adjustFee != null">
+				,available_confirm_fee = #{availableConfirmFee}
+			</if>
+			<if test="buyerAlipayNo != null">
+				,buyer_alipay_no = #{buyerAlipayNo}
+			</if>
+			<if test="buyerCodFee != null">
+				,buyer_cod_fee = #{buyerCodFee}
+			</if>
+			<if test="buyerObtainPointFee != null">
+				,buyer_obtain_point_fee = #{buyerObtainPointFee}
+			</if>
+			<if test="buyerRate != null">
+				,buyer_rate = #{buyerRate}
+			</if>
+			<if test="codFee != null">
+				,cod_fee = #{codFee}
+			</if>
+			<if test="codStatus != null">
+				,cod_status = #{codStatus}
+			</if>
+			<if test="commissionFee != null">
+				,commission_fee = #{commissionFee}
+			</if>
+			<if test="consignTime != null">
+				,consign_time = #{consignTime}
+			</if>
+			<if test="discountFee != null">
+				,discount_fee = #{discountFee}
+			</if>
+			<if test="endTime != null">
+				,end_time = #{endTime}
+			</if>
+			<if test="hasPostFee != null">
+				,has_post_fee = #{hasPostFee}
+			</if>
+			<if test="isForceWlb != null">
+				,is_force_wlb = #{isForceWlb}
+			</if>
+			<if test="isLgtype != null">
+				,is_lgtype = #{isLgtype}
+			</if>
+			<if test="isPartConsign != null">
+				,is_part_consign = #{isPartConsign}
+			</if>
+			<if test="modified != null">
+				,modified = #{modified}
+			</if>
+			<if test="payTime != null">
+				,pay_time = #{payTime}
+			</if>
+			<if test="payment != null">
+				,payment = #{payment}
+			</if>
+			<if test="pccAf != null">
+				,pcc_af = #{pccAf}
+			</if>
+			<if test="postFee != null">
+				,post_fee = #{postFee}
+			</if>
+			<if test="realPointFee != null">
+				,real_point_fee = #{realPointFee}
+			</if>
+			<if test="receivedPayment != null">
+				,received_payment = #{receivedPayment}
+			</if>
+			<if test="sellerAlipayNo != null">
+				,seller_alipay_no = #{sellerAlipayNo}
+			</if>
+			<if test="sellerCanRate != null">
+				,seller_can_rate = #{sellerCanRate}
+			</if>
+			<if test="sellerCodFee != null">
+				,seller_cod_fee = #{sellerCodFee}
+			</if>
+			<if test="sellerFlag != null">
+				,seller_flag = #{sellerFlag}
+			</if>
+			<if test="sellerRate != null">
+				,seller_rate = #{sellerRate}
+			</if>
+			<if test="shippingType != null">
+				,shipping_type = #{shippingType}
+			</if>
+			<if test="status != null">
+				,status = #{status}
+			</if>
+			<if test="type != null">
+				,type = #{type}
+			</if>
+			<if test="stepTradeStatus != null">
+				,step_trade_status = #{stepTradeStatus}
+			</if>
+			<if test="stepPaidFee != null">
+				,step_paid_fee = #{stepPaidFee}
+			</if>
+			<if test="serviceTags != null">
+				,service_tags = #{serviceTags}
+			</if>
+			<if test="promotionDetails != null">
+				,promotion_details = #{promotionDetails}
+			</if>
+			<if test="msgId != null">
+				,msg_id = #{msgId}
+			</if>
+			<if test="lastSendSmsTime != null">
+				,last_send_sms_time = #{lastSendSmsTime}
+			</if>
+			<if test="created != null">
+				,created = #{created}
+			</if>
+			<if test="tradeFrom != null">
+				,trade_from = #{tradeFrom}
+			</if>
+			<if test="refundFlag != null">
+				,refund_flag = #{refundFlag}
+			</if>
+			<if test="num != null">
+				,num = #{num}
+			</if>
+			<if test="buyerFlag != null">
+				,buyer_flag = #{buyerFlag}
+			</if>
+			<if test="front !=null">
+				,front=#{front}
+			</if>
+			<if test="tail !=null">
+				,tail=#{tail}-IFNULL(front,0)
+			</if>
+		</set>
+		WHERE tid = #{tid}
+	</update>
+	<!-- 通过tid找到主订单 -->
+	<select id="findStatusByTid" parameterType="java.util.Map"
+		resultType="java.lang.String" useCache="false" flushCache="true">
+		SELECT
+		status
+		FROM crm_trade_dto${uid}
+		WHERE tid = #{tid} limit 0,1
+	</select>
+
+	<select id="findTradeDTOByTid" parameterType="java.util.Map"
+		resultType="com.kycrm.member.domain.entity.trade.TradeDTO" useCache="false"
+		flushCache="true">
+		SELECT *
+		FROM crm_trade_dto${uid}
+		WHERE tid
+		= #{tid} limit 0,1
+	</select>
+
+	<update id="updateTableIndex" parameterType="java.lang.Long">
+		ALTER TABLE
+		crm_trade_dto${_parameter} DROP PRIMARY KEY;
+		ALTER TABLE
+		crm_trade_dto${_parameter} ADD PRIMARY KEY(ID);
+	</update>
+
+	<select id="getDirtyData" parameterType="java.util.Map"
+		resultMap="tradeInfoMap">
+	<![CDATA[ 
+		SELECT 
+			TID,
+			UID
+		FROM
+			CRM_TRADE_DTO${uid}
+		WHERE
+			SELLER_NICK <> #{sellerNick}
+	]]>
+	</select>
+
+	<select id="deleteDirtyDataBySellerNick" parameterType="java.util.Map">
+	<![CDATA[ 
+		DELETE FROM 
+			CRM_TRADE_DTO${uid}
+		WHERE SELLER_NICK <> #{sellerNick}
+		]]>
+	</select>
+
+	<select id="getTidWhetherTradeNumIsNullOrEqualsZero"
+		parameterType="java.util.Map" resultType="java.lang.Long">
+	<![CDATA[ 
+		SELECT
+			TID
+		FROM
+			CRM_TRADE_DTO${uid}
+		WHERE
+			TRADE_FROM <> "import"
+		AND
+			NUM IS NULL
+		OR NUM = 0;
+		]]>
+	</select>
+
+	<select id="getAddNumberFromTradeTable" resultMap="tempEntity">
+		SELECT
+		count(1) AS 'num',
+		buyer_nick
+		FROM
+		crm_trade_dto${uid}
+		WHERE
+		buyer_nick IN
+		<foreach collection=" buyerNickList" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		buyer_nick
+	</select>
+
+	<select id="getBuyNumberFromTradeTable" resultMap="tempEntity">
+		SELECT
+		count(1) AS 'num',
+		buyer_nick
+		FROM
+		crm_trade_dto${uid}
+		WHERE
+		`status` IN (
+		'WAIT_SELLER_SEND_GOODS',
+		'WAIT_BUYER_CONFIRM_GOODS',
+		'TRADE_FINISHED'
+		)
+		AND
+		buyer_nick IN
+		<foreach collection=" buyerNickList" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		buyer_nick
+	</select>
+
+	<select id="getFirstPayTimeFromTradeTable" resultMap="tempEntity">
+		SELECT
+		min(pay_time) AS 'first_pay_time',
+		buyer_nick
+		FROM
+		crm_trade_dto${uid}
+		WHERE
+		buyer_nick IN
+		<foreach collection=" buyerNickList" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		buyer_nick
+	</select>
+
+	<select id="getTradeNumByBuyerNick" resultMap="tradeTempEntity">
+		SELECT
+		T.BUYER_NICK,
+		COUNT(1) AS 'TRADE_NUM'
+		FROM
+		CRM_TRADE_DTO${uid} T
+		WHERE
+		T.`STATUS` = 'TRADE_FINISHED'
+		AND
+		T.BUYER_NICK IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		T.BUYER_NICK
+	</select>
+
+	<select id="getCloseTradeNum" resultMap="tradeTempEntity">
+		SELECT
+		T.BUYER_NICK,
+		COUNT(1) AS 'CLOSE_TRADE_NUM'
+		FROM
+		CRM_TRADE_DTO${uid}
+		T
+		WHERE
+		T.`STATUS` IN (
+		'TRADE_CLOSED',
+		'TRADE_CLOSED_BY_TAOBAO'
+		)
+		AND
+		T.BUYER_NICK IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		T.BUYER_NICK
+	</select>
+
+	<select id="getAddNumber" resultMap="tradeTempEntity">
+		SELECT
+		T.BUYER_NICK,
+		COUNT(1) AS 'ADD_NUMBER'
+		FROM
+		CRM_TRADE_DTO${uid} T
+		WHERE
+		T.BUYER_NICK
+		IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		T.BUYER_NICK
+	</select>
+
+	<select id="getBuyerAlipayNo" resultMap="tradeTempEntity">
+		SELECT
+		T.BUYER_ALIPAY_NO,
+		T.BUYER_NICK
+		FROM
+		CRM_TRADE_DTO${uid} T
+		WHERE
+		T.BUYER_NICK
+		IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		T.BUYER_NICK
+	</select>
+
+	<select id="getReceiverInfoStr" resultMap="tradeTempEntity">
+		SELECT
+		T1.BUYER_NICK,
+		T1.RECEIVER_ADDRESS AS 'RECEIVER_INFO_STR'
+		FROM
+		CRM_TRADE_DTO${uid} T1,
+		(
+		SELECT
+		MAX(CTD.MODIFIED) AS 'MODIFIED',
+		CTD.BUYER_NICK
+		FROM
+		CRM_TRADE_DTO${uid} CTD
+		WHERE
+		CTD.BUYER_NICK
+		IN
+		<foreach collection="buyerNickSet" item="buyerNick" open="("
+			close=")" separator=",">
+			#{buyerNick}
+		</foreach>
+		GROUP BY
+		CTD.BUYER_NICK
+		) T2
+		WHERE
+		T1.MODIFIED = T2.MODIFIED
+		AND
+		T1.BUYER_NICK = T2.BUYER_NICK;
+	</select>
+	
+	<select id="alterTableTrade" parameterType="java.util.Map">
+		DROP   INDEX   index_buyer_nick  ON  crm_trade_dto${uid};
+		alter table crm_trade_dto${uid} modify column receiver_name text;
+		alter table crm_trade_dto${uid} modify column receiver_address text;
+		alter table crm_trade_dto${uid} modify column buyer_nick varchar(1500);
+		alter table crm_trade_dto${uid} add index index_buyer_nick(buyer_nick(255));
+	</select>
+	
+	<select id="getCount" resultType="java.lang.Long">
+		SELECT
+		COUNT(1)
+		FROM
+		CRM_TRADE_DTO${uid} T1
+	</select>
+	
+	<insert id="truncateTable">
+		TRUNCATE TABLE CRM_BLACKLIST_DTO${uid};
+		TRUNCATE TABLE CRM_ITEM${uid};
+		TRUNCATE TABLE CRM_ITEM_TEMP_TRADE${uid};
+		TRUNCATE TABLE CRM_ITEM_TEMP_TRADE_HISTORY${uid};
+		TRUNCATE TABLE CRM_MARKETING_CENTER_EFFECT${uid};
+		TRUNCATE TABLE CRM_MEMBER_INFO_DTO${uid};
+		TRUNCATE TABLE CRM_MEMBER_ITEM_AMOUNT${uid};
+		TRUNCATE TABLE CRM_MEMBER_RECEIVE_DETAIL${uid};
+		TRUNCATE TABLE CRM_MSG_TEMP_TRADE${uid};
+		TRUNCATE TABLE CRM_MSG_TEMP_TRADE_HISTORY${uid};
+		TRUNCATE TABLE CRM_ORDER_DTO${uid};
+		TRUNCATE TABLE CRM_PREMIUM_FILTER_RECORD${uid};
+		TRUNCATE TABLE CRM_REFUND_DTO${uid};
+		TRUNCATE TABLE CRM_SMS_RECORD_DTO${uid};
+		TRUNCATE TABLE CRM_TRADE_DTO${uid};
+		TRUNCATE TABLE CRM_TRADE_RATES${uid};
+	</insert>
+</mapper>

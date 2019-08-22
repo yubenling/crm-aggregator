@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.message.ISmsSendInfoDao">
+	<resultMap type="com.kycrm.member.domain.entity.message.SmsSendInfo" id="smsSendInfo">
+		<result column="ID" property="id"/>
+		<result column="phone" property="phone"/>
+		<result column="nickname" property="nickname"/>
+		<result column="content" property="content"/>
+		<result column="user_id" property="userId"/>
+		<result column="uid" property="uid"/>
+		<result column="send_time" property="sendTime"/>
+		<result column="createdBy" property="createdBy"/>
+		<result column="createdDate" property="createdDate"/>
+		<result column="lastModifiedBy" property="lastModifiedBy"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>
+		<result column="status" property="status"/>
+		<result column="actual_deduction" property="actualDeduction"/>
+		<result column="channel" property="channel"/>
+		<result column="taskId" property="taskId"/>
+	</resultMap>
+	<!-- 查询卖家的短信发送历史 -->
+	<select id="findSellerHistory" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT phone,content
+		FROM crm_sms_send_info
+		WHERE createdDate BETWEEN #{startDate} AND #{endDate} AND type = #{type} AND uid = #{uid}
+		ORDER BY phone,content
+	</select>
+	<!-- 创建短信记录 -->
+	<insert id="doCreateByMessage" parameterType="com.kycrm.member.domain.entity.message.SmsSendInfo">
+		INSERT INTO crm_sms_send_info(user_id,PHONE,NICKNAME,CONTENT,type,send_time,actual_deduction,status,channel,createdDate,lastModifiedDate,tid,uid) 
+		VALUE(#{userId},#{phone},#{nickname},#{content},#{type},#{createdDate},#{actualDeduction},#{status},#{channel},#{createdDate},#{createdDate},#{tid},#{uid});
+	</insert>
+	<!-- 查询超过一个月短信的数量 -->
+	<select id="findByOnceDayCount" parameterType="java.util.Date" resultType="java.lang.Integer">
+		 SELECT count(id) FROM crm_sms_send_info WHERE DATE_SUB(#{nowDate},INTERVAL 30 DAY) > createdDate
+	</select>
+	<!-- 查询超过一个月的短信 -->
+	<select id="findByOnceDay" parameterType="java.util.Map" resultType="java.lang.Long">
+		 SELECT id FROM crm_sms_send_info WHERE DATE_SUB(#{nowDate},INTERVAL 30 DAY) > createdDate LIMIT 0,#{lineSize}
+	</select>	
+	<!-- 根据tid和类型查询是否存在 -->
+	<select id="findCountByTidAndType" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT count(*) FROM crm_sms_send_info WHERE tid=#{tid} AND type=#{type}
+	</select>
+	<!-- 根据卖家昵称和买家昵称和类型查询是否存在 -->
+	<select id="findCountByNickAndType" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT count(*) 
+		FROM  crm_sms_send_info 
+		WHERE type=#{type} AND createdDate > #{startDate} AND  #{endDate} > createdDate
+		      AND  uid = #{uid} AND nickname = #{buyerNick}  
+	</select>
+	<!-- 删除两天之前的短信记录-->
+  	<delete id="removeByInvalid" parameterType="java.util.Map">
+  		DELETE FROM crm_sms_send_info WHERE id in 
+  		<foreach collection="idsList" item="item" open="(" separator="," close=")" index="index">
+				#{item}
+		</foreach>
+  	</delete>
+  	
+</mapper>

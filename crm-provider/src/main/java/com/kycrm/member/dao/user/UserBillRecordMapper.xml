@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.user.IUserBillRecordDao">
+   <resultMap type="com.kycrm.member.domain.entity.user.UserBillRecord" id="billrecordMap">
+          <result column="id" property="id"/>
+          <result column="uid" property="uid"/>
+          <result column="optlock" property="optlock"/>
+          <result column="createdBy" property="createdBy"/>
+          <result column="createdDate" property="createdDate"/>
+          <result column="lastModifiedBy" property="lastModifiedBy"/>
+          <result column="lastModifiedDate" property="lastModifiedDate"/>
+          <result column="apply_price" property="applyPrice"/>
+          <result column="apply_time" property="applyTime"/>
+          <result column="bill_type" property="billType"/>
+          <result column="bill_head" property="billHead"/>
+          <result column="company_duty_num" property="companyDutyNum"/>
+          <result column="register_address" property="registerAddress"/>
+          <result column="company_phone" property="companyPhone"/>
+          <result column="company_bank" property="companyBank"/>
+          <result column="company_card" property="companyCard"/>
+          <result column="receiver_name" property="receiverName"/>
+          <result column="receiver_phone" property="receiverPhone"/>
+          <result column="receiver_address" property="receiverAddress"/>
+          <result column="apply_status" property="applyStatus"/>
+          <result column="logistical_operator" property="logisticalOperator"/>
+          <result column="logistical_order_id" property="logisticalOrderId"/>
+   </resultMap>
+   <!--查询发票记录  -->
+   <select id="selectBillRecordList" 
+           parameterType="com.kycrm.member.domain.vo.user.UserBillRecordVO" 
+           resultMap="billrecordMap">
+      select * from crm_user_bill_record 
+      <where>
+           <if test="applyStartTime!=null">
+              and  apply_time &gt;=#{applyStartTime}
+           </if>
+           <if test="applyEndTime!=null">
+              and  apply_time &lt;=#{applyEndTime}
+           </if>
+           <if test="billType!=null">
+              and  bill_type=#{billType}
+           </if>
+           <if test="uid !=null">
+              and uid=#{uid}
+           </if>
+      </where>
+      order by id desc
+      limit #{startRows},#{currentRows}
+   </select>
+   <!--查询发票条数  -->
+   <select id="selectBillRecordListCount" parameterType="com.kycrm.member.domain.vo.user.UserBillRecordVO" resultType="java.lang.Integer">
+       select count(*) from crm_user_bill_record 
+      <where>
+           <if test="applyStartTime!=null">
+              and  apply_time &gt;=#{applyStartTime}
+           </if>
+           <if test="applyEndTime!=null">
+              and  apply_time &lt;=#{applyEndTime}
+           </if>
+           <if test="billType!=null">
+              and  bill_type=#{billType}
+           </if>
+           <if test="uid !=null">
+              and uid=#{uid}
+           </if>
+      </where>
+   </select>
+   
+   <!--插入订单记录  -->
+   <insert id="saveBillRecord"
+        parameterType="com.kycrm.member.domain.entity.user.UserBillRecord"
+        useGeneratedKeys="true" keyProperty="id">
+       insert into crm_user_bill_record
+       (uid,optlock,createdBy,createdDate,lastModifiedBy,lastModifiedDate,
+        apply_price,apply_time,bill_type,bill_head,company_duty_num,
+        register_address,company_phone,company_bank,company_card,receiver_name,receiver_address,
+        receiver_phone,apply_status,logistical_operator,logistical_order_id )
+        VALUES
+           (#{uid},0,#{createdBy},NOW(),#{lastModifiedBy},NOW(),
+            #{applyPrice},NOW(),#{billType},#{billHead},#{companyDutyNum},
+            #{registerAddress},#{companyPhone},#{companyBank},#{companyCard},#{receiverName},#{receiverAddress},
+            #{receiverPhone},#{applyStatus},#{logisticalOperator},#{logisticalOrderId} )
+   </insert>
+   <!--修改发票记录的状态 -->
+   <update id="updateBillRecordStatus" parameterType="java.util.Map">
+         update crm_user_bill_record set apply_status=#{applyStatus} WHERE id=#{id} 
+   </update>
+   
+   <!--修改发票记录中的发票信息  -->
+   <update id="updateRecordBillInfo" parameterType="com.kycrm.member.domain.vo.user.UserBillRecordVO">
+         update crm_user_bill_record
+            <set>
+                <if test="billHead!=null">
+                   bill_head=#{billHead} ,
+                </if>
+                <if test="companyDutyNum!=null">
+                   company_duty_num=#{companyDutyNum} ,
+                </if>
+                <if test="registerAddress!=null">
+                   register_address=#{registerAddress} ,
+                </if>
+                <if test="companyPhone!=null">
+                  company_phone=#{companyPhone} ,
+                </if>
+                <if test="companyBank!=null">
+                  company_bank=#{companyBank} ,
+                </if>
+                <if test="companyCard!=null">
+                  company_card=#{companyCard},
+                </if>
+                <if test="receiverName!=null">
+                  receiver_name=#{receiverName},
+                </if>
+                <if test="receiverPhone!=null">
+                  receiver_phone=#{receiverPhone},
+                </if>
+                <if test="receiverAddress!=null">
+                  receiver_address=#{receiverAddress},
+                </if>
+                <if test="billType!=null">
+                   bill_type=#{billType},
+                </if>
+            </set>
+          WHERE id=#{id}
+   </update>
+   <!--删除发票记录  -->
+   <delete id="deleteBillRecordById" parameterType="java.util.Map">
+       delete from crm_user_bill_record WHERE id=#{id}
+   </delete>
+   <!--根据id,查询出发票记录  -->
+   <select id="selectBillRecordById" parameterType="java.util.Map" resultMap="billrecordMap">
+       select * from crm_user_bill_record WHERE id=#{id}
+   </select>
+   
+</mapper>

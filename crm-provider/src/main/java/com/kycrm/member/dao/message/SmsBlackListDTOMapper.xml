@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.message.ISmsBlackListDTODao">
+
+
+ 	<select id="findBlackPhones" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT 	phone
+		FROM crm_blacklist_dto${_parameter}
+		WHERE phone IS NOT NULL 
+		GROUP BY phone
+	</select>
+    
+    <select id="findBlackNick" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT 	nick
+		FROM crm_blacklist_dto${_parameter}
+		WHERE nick IS NOT NULL 
+		GROUP BY nick
+	</select>
+    <select id="findSmsBlackList" parameterType="com.kycrm.member.domain.vo.message.SmsBlackListVO" resultType="com.kycrm.member.domain.entity.message.SmsBlackListDTO">
+		SELECT 	id,uid,nick_or_phone AS nickOrPhone,
+				nick,phone,add_source AS addSource,
+				type,createdDate
+		FROM crm_blacklist_dto${uid}
+		<where>
+			<if test="nickOrPhone != null and nickOrPhone != ''">
+				AND nick_or_phone = #{nickOrPhone}
+			</if>
+		</where>
+		GROUP BY nickOrPhone
+		ORDER BY createdDate DESC
+		limit #{startRows},#{currentRows}
+	</select>
+	
+	<select id="findSmsBlackCount" parameterType="com.kycrm.member.domain.vo.message.SmsBlackListVO" resultType="java.lang.Long">
+		SELECT COUNT(1) From(
+		SELECT COUNT(1) From crm_blacklist_dto${uid}
+		<where>
+			<if test="nickOrPhone != null and nickOrPhone != ''">
+				AND nick_or_phone = #{nickOrPhone}
+			</if>
+		</where>
+		GROUP BY nick_or_phone)c
+	</select>
+	
+	
+	<insert id="insertSmsBlackList" parameterType="java.util.Map">
+		INSERT INTO crm_blacklist_dto${uid}
+			(uid,nick_or_phone,nick,
+			phone,add_source,type,createdBy,
+			createdDate,lastModifiedBy,lastModifiedDate,optlock)
+		VALUES	
+		 <foreach collection="list" item="item" index="index"
+        				 separator=",">	
+			(#{item.uid},#{item.nickOrPhone},#{item.nick},
+			#{item.phone},#{item.addSource},#{item.type},#{item.createdBy},
+			NOW(),#{item.lastModifiedBy},NOW(),0)
+		</foreach>
+	</insert>
+	
+	<!-- 保存单条记录 -->
+	<insert id="saveBlackList" parameterType="com.kycrm.member.domain.entity.message.SmsBlackListDTO">
+		INSERT INTO crm_blacklist_dto${uid}
+			(uid,nick_or_phone,nick,phone,add_source,type,createdBy,
+			createdDate,lastModifiedBy,lastModifiedDate,optlock)
+		VALUES
+			(#{uid},#{nickOrPhone},#{nick},#{phone},#{addSource},#{type},
+			#{createdBy},NOW(),#{lastModifiedBy},NOW(),0)
+	</insert>
+	
+	
+	
+	<!-- 此方法有坑请勿调用 -->
+	<delete id="deleteSmsBlack" parameterType="com.kycrm.member.domain.vo.message.SmsBlackListVO">
+		DELETE FROM crm_blacklist_dto${uid}
+		<where>
+			<if test="phoneIds != null and phoneIds.size >0">
+			nick_or_phone IN (
+				SELECT nick_or_phone FROM (
+					SELECT nick_or_phone FROM crm_blacklist_dto${uid}
+					WHERE id IN
+					<foreach collection="phoneIds" item="item" index="index"
+					      open="(" separator="," close=")">  
+					        #{item} 
+			   		</foreach>
+				)dto
+			)
+			</if>
+		</where>
+	</delete>
+
+	<select id="findSmsBlackListNick" parameterType="com.kycrm.member.domain.vo.message.SmsBlackListVO" resultType="java.lang.String">
+		SELECT NICK FROM crm_blacklist_dto${uid} 
+		<where>
+			TYPE = '2' AND NICK IS NOT NULL 
+			<if test="phoneIds != null and phoneIds.size >0">
+			   	AND id IN
+				<foreach collection="phoneIds" item="item" index="index"
+				      open="(" separator="," close=")">  
+				        #{item} 
+		   		</foreach>
+			</if>
+		</where>
+		GROUP BY NICK
+	</select>
+	
+	 <!-- 查询用户是否在黑名单 -->
+     <select id="findExistsByNick" parameterType="java.util.Map" resultType="java.lang.Integer">
+    	SELECT count(*)
+    	FROM crm_blacklist_dto${uid}
+    	<where>
+    	    uid=#{uid}
+    	    <if test="nick!=null and nick!=''">
+    	         and nick=#{nick}
+    	    </if>
+    	</where>
+    </select>
+     <!-- 通过手机号查询用户是否在黑名单 -->
+    <select id="findExistsByPhone" parameterType="java.util.Map" resultType="java.lang.Integer">
+    	SELECT count(*)
+    	FROM crm_blacklist_dto${uid}
+    	 <where>
+    	     uid=#{uid}
+    	     <if test="phone!=null and phone!=''">
+    	         and phone = #{phone}
+    	     </if>
+    	</where>
+    </select>
+    
+    <delete id="clearAllSmsBlack" parameterType="java.util.Map">
+    	DELETE FROM CRM_BLACKLIST_DTO${uid}
+    </delete>
+</mapper>

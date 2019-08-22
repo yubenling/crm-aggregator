@@ -1,0 +1,1708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.syn.dao.item.ItemDao">
+	<resultMap id="BaseResultMap"
+		type="com.kycrm.member.domain.entity.item.Item">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="uid" jdbcType="BIGINT" property="uid" />
+		<result column="user_name" jdbcType="VARCHAR"
+			property="userName" />
+		<result column="num_iid" jdbcType="BIGINT" property="numIid" />
+		<result column="approve_status" jdbcType="VARCHAR"
+			property="approveStatus" />
+		<result column="cid" jdbcType="VARCHAR" property="cid" />
+		<result column="has_showcase" jdbcType="VARCHAR"
+			property="hasShowcase" />
+		<result column="has_discount" jdbcType="VARCHAR"
+			property="hasDiscount" />
+		<result column="created" jdbcType="TIMESTAMP"
+			property="created" />
+		<result column="modified" jdbcType="TIMESTAMP"
+			property="modified" />
+		<result column="seller_cids" jdbcType="VARCHAR"
+			property="sellerCids" />
+		<result column="props" jdbcType="VARCHAR" property="props" />
+		<result column="input_pids" jdbcType="VARCHAR"
+			property="inputPids" />
+		<result column="input_str" jdbcType="VARCHAR"
+			property="inputStr" />
+		<result column="num" jdbcType="INTEGER" property="num" />
+		<result column="list_time" jdbcType="TIMESTAMP"
+			property="listTime" />
+		<result column="delist_time" jdbcType="TIMESTAMP"
+			property="delistTime" />
+		<result column="stuff_status" jdbcType="TIMESTAMP"
+			property="stuffStatus" />
+		<result column="zip" jdbcType="VARCHAR" property="zip" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="city" jdbcType="VARCHAR" property="city" />
+		<result column="state" jdbcType="VARCHAR" property="state" />
+		<result column="country" jdbcType="VARCHAR" property="country" />
+		<result column="district" jdbcType="VARCHAR"
+			property="district" />
+		<result column="freight_payer" jdbcType="VARCHAR"
+			property="freightPayer" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="is_3D" jdbcType="TINYINT" property="is3D" />
+		<result column="score" jdbcType="INTEGER" property="score" />
+		<result column="sell_promise" jdbcType="TINYINT"
+			property="sellPromise" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="item_desc" jdbcType="VARCHAR"
+			property="itemDesc" />
+		<result column="sku_id" jdbcType="BIGINT" property="skuId" />
+		<result column="properties" jdbcType="VARCHAR"
+			property="properties" />
+		<result column="quantity" jdbcType="INTEGER"
+			property="quantity" />
+		<result column="sku_price" jdbcType="VARCHAR"
+			property="skuPrice" />
+		<result column="sku_created" jdbcType="VARCHAR"
+			property="skuCreated" />
+		<result column="sku_modified" jdbcType="VARCHAR"
+			property="skuModified" />
+		<result column="sku_status" jdbcType="VARCHAR"
+			property="skuStatus" />
+		<result column="sku_properties_name" jdbcType="VARCHAR"
+			property="skuPropertiesName" />
+		<result column="sku_spec_id" jdbcType="INTEGER"
+			property="skuSpecId" />
+		<result column="sku_with_hold_quantity" jdbcType="INTEGER"
+			property="skuWithHoldQuantity" />
+		<result column="sku_delivery_time" jdbcType="VARCHAR"
+			property="skuDeliveryTime" />
+		<result column="change_prop" jdbcType="VARCHAR"
+			property="changeProp" />
+		<result column="props_name" jdbcType="VARCHAR"
+			property="propsName" />
+		<result column="promoted_service" jdbcType="VARCHAR"
+			property="promotedService" />
+		<result column="is_lightning_consignment" jdbcType="TINYINT"
+			property="isLightningConsignment" />
+		<result column="is_fenxiao" jdbcType="INTEGER"
+			property="isFenxiao" />
+		<result column="auction_point" jdbcType="INTEGER"
+			property="auctionPoint" />
+		<result column="property_alias" jdbcType="VARCHAR"
+			property="propertyAlias" />
+		<result column="template_id" jdbcType="VARCHAR"
+			property="templateId" />
+		<result column="after_sale_id" jdbcType="BIGINT"
+			property="afterSaleId" />
+		<result column="is_xinpin" jdbcType="TINYINT"
+			property="isXinpin" />
+		<result column="sub_stock" jdbcType="INTEGER"
+			property="subStock" />
+		<result column="features" jdbcType="VARCHAR"
+			property="features" />
+		<result column="item_weight" jdbcType="VARCHAR"
+			property="itemWeight" />
+		<result column="item_size" jdbcType="VARCHAR"
+			property="itemSize" />
+		<result column="sell_point" jdbcType="VARCHAR"
+			property="sellPoint" />
+		<result column="valid_thru" jdbcType="INTEGER"
+			property="validThru" />
+		<result column="auto_fill" jdbcType="VARCHAR"
+			property="autoFill" />
+		<result column="desc_modules" jdbcType="VARCHAR"
+			property="descModules" />
+		<result column="custom_made_type_id" jdbcType="VARCHAR"
+			property="customMadeTypeId" />
+		<result column="wireless_desc" jdbcType="VARCHAR"
+			property="wirelessDesc" />
+		<result column="barcode" jdbcType="VARCHAR" property="barcode" />
+		<result column="newprepay" jdbcType="VARCHAR"
+			property="newprepay" />
+		<result column="price" jdbcType="VARCHAR" property="price" />
+		<result column="post_fee" jdbcType="VARCHAR" property="postFee" />
+		<result column="express_fee" jdbcType="VARCHAR"
+			property="expressFee" />
+		<result column="ems_fee" jdbcType="VARCHAR" property="emsFee" />
+		<result column="global_stock_type" jdbcType="VARCHAR"
+			property="globalStockType" />
+		<result column="global_stock_country" jdbcType="VARCHAR"
+			property="globalStockCountry" />
+		<result column="large_screen_image_url" jdbcType="VARCHAR"
+			property="largeScreenImageUrl" />
+		<result column="optlock" jdbcType="INTEGER" property="version" />
+		<result column="createdBy" jdbcType="VARCHAR"
+			property="createdBy" />
+		<result column="createdDate" jdbcType="TIMESTAMP"
+			property="createdDate" />
+		<result column="lastModifiedBy" jdbcType="VARCHAR"
+			property="lastModifiedBy" />
+		<result column="lastModifiedDate" jdbcType="TIMESTAMP"
+			property="lastModifiedDate" />
+		<result column="sub_title" jdbcType="VARCHAR"
+			property="subTitle" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, uid, user_name, num_iid, approve_status, cid, has_showcase,
+		has_discount, created,
+		modified, seller_cids, props, input_pids, input_str, num, list_time,
+		delist_time,
+		stuff_status, zip, address, city, state, country, district, freight_payer, url,
+		is_3D,
+		score, sell_promise, title, type, item_desc, sku_id, properties, quantity,
+		sku_price,
+		sku_created, sku_modified, sku_status, sku_properties_name, sku_spec_id,
+		sku_with_hold_quantity,
+		sku_delivery_time, change_prop, props_name, promoted_service, is_lightning_consignment,
+		is_fenxiao, auction_point, property_alias, template_id, after_sale_id,
+		is_xinpin,
+		sub_stock, features, item_weight, item_size, sell_point, valid_thru, auto_fill,
+		desc_modules,
+		custom_made_type_id, wireless_desc, barcode, newprepay, price, post_fee, express_fee,
+		ems_fee, global_stock_type, global_stock_country,
+		large_screen_image_url, optlock,
+		createdBy, createdDate, lastModifiedBy, lastModifiedDate, sub_title
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.kycrm.syn.dao.item.example.ItemExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from crm_item${uid}
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from crm_item{uid}
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from crm_item{uid}
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.kycrm.syn.dao.item.example.ItemExample">
+		delete from crm_item{uid}
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"
+		parameterType="com.kycrm.member.domain.entity.item.Item">
+		insert into crm_item${uid} (id, uid, user_name,
+		num_iid, approve_status, cid,
+		has_showcase, has_discount, created,
+		modified, seller_cids, props,
+		input_pids, input_str, num,
+		list_time, delist_time, stuff_status,
+		zip, address, city,
+		state, country, district,
+		freight_payer, url, is_3D,
+		score, sell_promise, title,
+		type, item_desc, sku_id,
+		properties, quantity, sku_price,
+		sku_created, sku_modified, sku_status,
+		sku_properties_name, sku_spec_id, sku_with_hold_quantity,
+		sku_delivery_time, change_prop, props_name,
+		promoted_service, is_lightning_consignment,
+		is_fenxiao, auction_point, property_alias,
+		template_id, after_sale_id, is_xinpin,
+		sub_stock, features, item_weight,
+		item_size, sell_point, valid_thru,
+		auto_fill, desc_modules, custom_made_type_id,
+		wireless_desc, barcode, newprepay,
+		price, post_fee, express_fee,
+		ems_fee, global_stock_type, global_stock_country,
+		large_screen_image_url, optlock, createdBy,
+		createdDate, lastModifiedBy, lastModifiedDate,
+		sub_title)
+		values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT},
+		#{userName,jdbcType=VARCHAR},
+		#{numIid,jdbcType=BIGINT}, #{approveStatus,jdbcType=VARCHAR}, #{cid,jdbcType=VARCHAR},
+		#{hasShowcase,jdbcType=VARCHAR}, #{hasDiscount,jdbcType=VARCHAR},
+		#{created,jdbcType=TIMESTAMP},
+		#{modified,jdbcType=TIMESTAMP}, #{sellerCids,jdbcType=VARCHAR}, #{props,jdbcType=VARCHAR},
+		#{inputPids,jdbcType=VARCHAR}, #{inputStr,jdbcType=VARCHAR},
+		#{num,jdbcType=INTEGER},
+		#{listTime,jdbcType=TIMESTAMP}, #{delistTime,jdbcType=TIMESTAMP}, #{stuffStatus,jdbcType=TIMESTAMP},
+		#{zip,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+		#{city,jdbcType=VARCHAR},
+		#{state,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR},
+		#{freightPayer,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+		#{is3D,jdbcType=TINYINT},
+		#{score,jdbcType=INTEGER}, #{sellPromise,jdbcType=TINYINT}, #{title,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR}, #{itemDesc,jdbcType=VARCHAR},
+		#{skuId,jdbcType=BIGINT},
+		#{properties,jdbcType=VARCHAR}, #{quantity,jdbcType=INTEGER}, #{skuPrice,jdbcType=VARCHAR},
+		#{skuCreated,jdbcType=VARCHAR}, #{skuModified,jdbcType=VARCHAR},
+		#{skuStatus,jdbcType=VARCHAR},
+		#{skuPropertiesName,jdbcType=VARCHAR}, #{skuSpecId,jdbcType=INTEGER},
+		#{skuWithHoldQuantity,jdbcType=INTEGER},
+		#{skuDeliveryTime,jdbcType=VARCHAR}, #{changeProp,jdbcType=VARCHAR},
+		#{propsName,jdbcType=VARCHAR},
+		#{promotedService,jdbcType=VARCHAR}, #{isLightningConsignment,jdbcType=TINYINT},
+		#{isFenxiao,jdbcType=INTEGER}, #{auctionPoint,jdbcType=INTEGER},
+		#{propertyAlias,jdbcType=VARCHAR},
+		#{templateId,jdbcType=VARCHAR}, #{afterSaleId,jdbcType=BIGINT}, #{isXinpin,jdbcType=TINYINT},
+		#{subStock,jdbcType=INTEGER}, #{features,jdbcType=VARCHAR},
+		#{itemWeight,jdbcType=VARCHAR},
+		#{itemSize,jdbcType=VARCHAR}, #{sellPoint,jdbcType=VARCHAR}, #{validThru,jdbcType=INTEGER},
+		#{autoFill,jdbcType=VARCHAR}, #{descModules,jdbcType=VARCHAR},
+		#{customMadeTypeId,jdbcType=VARCHAR},
+		#{wirelessDesc,jdbcType=VARCHAR}, #{barcode,jdbcType=VARCHAR},
+		#{newprepay,jdbcType=VARCHAR},
+		#{price,jdbcType=VARCHAR}, #{postFee,jdbcType=VARCHAR}, #{expressFee,jdbcType=VARCHAR},
+		#{emsFee,jdbcType=VARCHAR}, #{globalStockType,jdbcType=VARCHAR},
+		#{globalStockCountry,jdbcType=VARCHAR},
+		#{largeScreenImageUrl,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER},
+		#{createdBy,jdbcType=VARCHAR},
+		#{createdDate,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=VARCHAR},
+		#{lastModifiedDate,jdbcType=TIMESTAMP},
+		#{subTitle,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.kycrm.member.domain.entity.item.Item">
+		insert into crm_item${uid}
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="numIid != null">
+				num_iid,
+			</if>
+			<if test="approveStatus != null">
+				approve_status,
+			</if>
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="hasShowcase != null">
+				has_showcase,
+			</if>
+			<if test="hasDiscount != null">
+				has_discount,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="modified != null">
+				modified,
+			</if>
+			<if test="sellerCids != null">
+				seller_cids,
+			</if>
+			<if test="props != null">
+				props,
+			</if>
+			<if test="inputPids != null">
+				input_pids,
+			</if>
+			<if test="inputStr != null">
+				input_str,
+			</if>
+			<if test="num != null">
+				num,
+			</if>
+			<if test="listTime != null">
+				list_time,
+			</if>
+			<if test="delistTime != null">
+				delist_time,
+			</if>
+			<if test="stuffStatus != null">
+				stuff_status,
+			</if>
+			<if test="zip != null">
+				zip,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="country != null">
+				country,
+			</if>
+			<if test="district != null">
+				district,
+			</if>
+			<if test="freightPayer != null">
+				freight_payer,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="is3D != null">
+				is_3D,
+			</if>
+			<if test="score != null">
+				score,
+			</if>
+			<if test="sellPromise != null">
+				sell_promise,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="itemDesc != null">
+				item_desc,
+			</if>
+			<if test="skuId != null">
+				sku_id,
+			</if>
+			<if test="properties != null">
+				properties,
+			</if>
+			<if test="quantity != null">
+				quantity,
+			</if>
+			<if test="skuPrice != null">
+				sku_price,
+			</if>
+			<if test="skuCreated != null">
+				sku_created,
+			</if>
+			<if test="skuModified != null">
+				sku_modified,
+			</if>
+			<if test="skuStatus != null">
+				sku_status,
+			</if>
+			<if test="skuPropertiesName != null">
+				sku_properties_name,
+			</if>
+			<if test="skuSpecId != null">
+				sku_spec_id,
+			</if>
+			<if test="skuWithHoldQuantity != null">
+				sku_with_hold_quantity,
+			</if>
+			<if test="skuDeliveryTime != null">
+				sku_delivery_time,
+			</if>
+			<if test="changeProp != null">
+				change_prop,
+			</if>
+			<if test="propsName != null">
+				props_name,
+			</if>
+			<if test="promotedService != null">
+				promoted_service,
+			</if>
+			<if test="isLightningConsignment != null">
+				is_lightning_consignment,
+			</if>
+			<if test="isFenxiao != null">
+				is_fenxiao,
+			</if>
+			<if test="auctionPoint != null">
+				auction_point,
+			</if>
+			<if test="propertyAlias != null">
+				property_alias,
+			</if>
+			<if test="templateId != null">
+				template_id,
+			</if>
+			<if test="afterSaleId != null">
+				after_sale_id,
+			</if>
+			<if test="isXinpin != null">
+				is_xinpin,
+			</if>
+			<if test="subStock != null">
+				sub_stock,
+			</if>
+			<if test="features != null">
+				features,
+			</if>
+			<if test="itemWeight != null">
+				item_weight,
+			</if>
+			<if test="itemSize != null">
+				item_size,
+			</if>
+			<if test="sellPoint != null">
+				sell_point,
+			</if>
+			<if test="validThru != null">
+				valid_thru,
+			</if>
+			<if test="autoFill != null">
+				auto_fill,
+			</if>
+			<if test="descModules != null">
+				desc_modules,
+			</if>
+			<if test="customMadeTypeId != null">
+				custom_made_type_id,
+			</if>
+			<if test="wirelessDesc != null">
+				wireless_desc,
+			</if>
+			<if test="barcode != null">
+				barcode,
+			</if>
+			<if test="newprepay != null">
+				newprepay,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="postFee != null">
+				post_fee,
+			</if>
+			<if test="expressFee != null">
+				express_fee,
+			</if>
+			<if test="emsFee != null">
+				ems_fee,
+			</if>
+			<if test="globalStockType != null">
+				global_stock_type,
+			</if>
+			<if test="globalStockCountry != null">
+				global_stock_country,
+			</if>
+			<if test="largeScreenImageUrl != null">
+				large_screen_image_url,
+			</if>
+			<if test="version != null">
+				optlock,
+			</if>
+			<if test="createdBy != null">
+				createdBy,
+			</if>
+			<if test="createdDate != null">
+				createdDate,
+			</if>
+			<if test="lastModifiedBy != null">
+				lastModifiedBy,
+			</if>
+			<if test="lastModifiedDate != null">
+				lastModifiedDate,
+			</if>
+			<if test="subTitle != null">
+				sub_title,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				#{uid,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="numIid != null">
+				#{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="approveStatus != null">
+				#{approveStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="cid != null">
+				#{cid,jdbcType=VARCHAR},
+			</if>
+			<if test="hasShowcase != null">
+				#{hasShowcase,jdbcType=VARCHAR},
+			</if>
+			<if test="hasDiscount != null">
+				#{hasDiscount,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modified != null">
+				#{modified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sellerCids != null">
+				#{sellerCids,jdbcType=VARCHAR},
+			</if>
+			<if test="props != null">
+				#{props,jdbcType=VARCHAR},
+			</if>
+			<if test="inputPids != null">
+				#{inputPids,jdbcType=VARCHAR},
+			</if>
+			<if test="inputStr != null">
+				#{inputStr,jdbcType=VARCHAR},
+			</if>
+			<if test="num != null">
+				#{num,jdbcType=INTEGER},
+			</if>
+			<if test="listTime != null">
+				#{listTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delistTime != null">
+				#{delistTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="stuffStatus != null">
+				#{stuffStatus,jdbcType=TIMESTAMP},
+			</if>
+			<if test="zip != null">
+				#{zip,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				#{country,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				#{district,jdbcType=VARCHAR},
+			</if>
+			<if test="freightPayer != null">
+				#{freightPayer,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="is3D != null">
+				#{is3D,jdbcType=TINYINT},
+			</if>
+			<if test="score != null">
+				#{score,jdbcType=INTEGER},
+			</if>
+			<if test="sellPromise != null">
+				#{sellPromise,jdbcType=TINYINT},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="itemDesc != null">
+				#{itemDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="skuId != null">
+				#{skuId,jdbcType=BIGINT},
+			</if>
+			<if test="properties != null">
+				#{properties,jdbcType=VARCHAR},
+			</if>
+			<if test="quantity != null">
+				#{quantity,jdbcType=INTEGER},
+			</if>
+			<if test="skuPrice != null">
+				#{skuPrice,jdbcType=VARCHAR},
+			</if>
+			<if test="skuCreated != null">
+				#{skuCreated,jdbcType=VARCHAR},
+			</if>
+			<if test="skuModified != null">
+				#{skuModified,jdbcType=VARCHAR},
+			</if>
+			<if test="skuStatus != null">
+				#{skuStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="skuPropertiesName != null">
+				#{skuPropertiesName,jdbcType=VARCHAR},
+			</if>
+			<if test="skuSpecId != null">
+				#{skuSpecId,jdbcType=INTEGER},
+			</if>
+			<if test="skuWithHoldQuantity != null">
+				#{skuWithHoldQuantity,jdbcType=INTEGER},
+			</if>
+			<if test="skuDeliveryTime != null">
+				#{skuDeliveryTime,jdbcType=VARCHAR},
+			</if>
+			<if test="changeProp != null">
+				#{changeProp,jdbcType=VARCHAR},
+			</if>
+			<if test="propsName != null">
+				#{propsName,jdbcType=VARCHAR},
+			</if>
+			<if test="promotedService != null">
+				#{promotedService,jdbcType=VARCHAR},
+			</if>
+			<if test="isLightningConsignment != null">
+				#{isLightningConsignment,jdbcType=TINYINT},
+			</if>
+			<if test="isFenxiao != null">
+				#{isFenxiao,jdbcType=INTEGER},
+			</if>
+			<if test="auctionPoint != null">
+				#{auctionPoint,jdbcType=INTEGER},
+			</if>
+			<if test="propertyAlias != null">
+				#{propertyAlias,jdbcType=VARCHAR},
+			</if>
+			<if test="templateId != null">
+				#{templateId,jdbcType=VARCHAR},
+			</if>
+			<if test="afterSaleId != null">
+				#{afterSaleId,jdbcType=BIGINT},
+			</if>
+			<if test="isXinpin != null">
+				#{isXinpin,jdbcType=TINYINT},
+			</if>
+			<if test="subStock != null">
+				#{subStock,jdbcType=INTEGER},
+			</if>
+			<if test="features != null">
+				#{features,jdbcType=VARCHAR},
+			</if>
+			<if test="itemWeight != null">
+				#{itemWeight,jdbcType=VARCHAR},
+			</if>
+			<if test="itemSize != null">
+				#{itemSize,jdbcType=VARCHAR},
+			</if>
+			<if test="sellPoint != null">
+				#{sellPoint,jdbcType=VARCHAR},
+			</if>
+			<if test="validThru != null">
+				#{validThru,jdbcType=INTEGER},
+			</if>
+			<if test="autoFill != null">
+				#{autoFill,jdbcType=VARCHAR},
+			</if>
+			<if test="descModules != null">
+				#{descModules,jdbcType=VARCHAR},
+			</if>
+			<if test="customMadeTypeId != null">
+				#{customMadeTypeId,jdbcType=VARCHAR},
+			</if>
+			<if test="wirelessDesc != null">
+				#{wirelessDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="barcode != null">
+				#{barcode,jdbcType=VARCHAR},
+			</if>
+			<if test="newprepay != null">
+				#{newprepay,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=VARCHAR},
+			</if>
+			<if test="postFee != null">
+				#{postFee,jdbcType=VARCHAR},
+			</if>
+			<if test="expressFee != null">
+				#{expressFee,jdbcType=VARCHAR},
+			</if>
+			<if test="emsFee != null">
+				#{emsFee,jdbcType=VARCHAR},
+			</if>
+			<if test="globalStockType != null">
+				#{globalStockType,jdbcType=VARCHAR},
+			</if>
+			<if test="globalStockCountry != null">
+				#{globalStockCountry,jdbcType=VARCHAR},
+			</if>
+			<if test="largeScreenImageUrl != null">
+				#{largeScreenImageUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createdDate != null">
+				#{createdDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifiedBy != null">
+				#{lastModifiedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastModifiedDate != null">
+				#{lastModifiedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="subTitle != null">
+				#{subTitle,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.kycrm.syn.dao.item.example.ItemExample"
+		resultType="java.lang.Long">
+		select count(*) from crm_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update crm_item
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.uid != null">
+				uid = #{record.uid,jdbcType=BIGINT},
+			</if>
+			<if test="record.userName != null">
+				user_name = #{record.userName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.numIid != null">
+				num_iid = #{record.numIid,jdbcType=BIGINT},
+			</if>
+			<if test="record.approveStatus != null">
+				approve_status = #{record.approveStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cid != null">
+				cid = #{record.cid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.hasShowcase != null">
+				has_showcase = #{record.hasShowcase,jdbcType=VARCHAR},
+			</if>
+			<if test="record.hasDiscount != null">
+				has_discount = #{record.hasDiscount,jdbcType=VARCHAR},
+			</if>
+			<if test="record.created != null">
+				created = #{record.created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.modified != null">
+				modified = #{record.modified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.sellerCids != null">
+				seller_cids = #{record.sellerCids,jdbcType=VARCHAR},
+			</if>
+			<if test="record.props != null">
+				props = #{record.props,jdbcType=VARCHAR},
+			</if>
+			<if test="record.inputPids != null">
+				input_pids = #{record.inputPids,jdbcType=VARCHAR},
+			</if>
+			<if test="record.inputStr != null">
+				input_str = #{record.inputStr,jdbcType=VARCHAR},
+			</if>
+			<if test="record.num != null">
+				num = #{record.num,jdbcType=INTEGER},
+			</if>
+			<if test="record.listTime != null">
+				list_time = #{record.listTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.delistTime != null">
+				delist_time = #{record.delistTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.stuffStatus != null">
+				stuff_status = #{record.stuffStatus,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.zip != null">
+				zip = #{record.zip,jdbcType=VARCHAR},
+			</if>
+			<if test="record.address != null">
+				address = #{record.address,jdbcType=VARCHAR},
+			</if>
+			<if test="record.city != null">
+				city = #{record.city,jdbcType=VARCHAR},
+			</if>
+			<if test="record.state != null">
+				state = #{record.state,jdbcType=VARCHAR},
+			</if>
+			<if test="record.country != null">
+				country = #{record.country,jdbcType=VARCHAR},
+			</if>
+			<if test="record.district != null">
+				district = #{record.district,jdbcType=VARCHAR},
+			</if>
+			<if test="record.freightPayer != null">
+				freight_payer = #{record.freightPayer,jdbcType=VARCHAR},
+			</if>
+			<if test="record.url != null">
+				url = #{record.url,jdbcType=VARCHAR},
+			</if>
+			<if test="record.is3D != null">
+				is_3D = #{record.is3D,jdbcType=TINYINT},
+			</if>
+			<if test="record.score != null">
+				score = #{record.score,jdbcType=INTEGER},
+			</if>
+			<if test="record.sellPromise != null">
+				sell_promise = #{record.sellPromise,jdbcType=TINYINT},
+			</if>
+			<if test="record.title != null">
+				title = #{record.title,jdbcType=VARCHAR},
+			</if>
+			<if test="record.type != null">
+				type = #{record.type,jdbcType=VARCHAR},
+			</if>
+			<if test="record.itemDesc != null">
+				item_desc = #{record.itemDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="record.skuId != null">
+				sku_id = #{record.skuId,jdbcType=BIGINT},
+			</if>
+			<if test="record.properties != null">
+				properties = #{record.properties,jdbcType=VARCHAR},
+			</if>
+			<if test="record.quantity != null">
+				quantity = #{record.quantity,jdbcType=INTEGER},
+			</if>
+			<if test="record.skuPrice != null">
+				sku_price = #{record.skuPrice,jdbcType=VARCHAR},
+			</if>
+			<if test="record.skuCreated != null">
+				sku_created = #{record.skuCreated,jdbcType=VARCHAR},
+			</if>
+			<if test="record.skuModified != null">
+				sku_modified = #{record.skuModified,jdbcType=VARCHAR},
+			</if>
+			<if test="record.skuStatus != null">
+				sku_status = #{record.skuStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="record.skuPropertiesName != null">
+				sku_properties_name = #{record.skuPropertiesName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.skuSpecId != null">
+				sku_spec_id = #{record.skuSpecId,jdbcType=INTEGER},
+			</if>
+			<if test="record.skuWithHoldQuantity != null">
+				sku_with_hold_quantity = #{record.skuWithHoldQuantity,jdbcType=INTEGER},
+			</if>
+			<if test="record.skuDeliveryTime != null">
+				sku_delivery_time = #{record.skuDeliveryTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.changeProp != null">
+				change_prop = #{record.changeProp,jdbcType=VARCHAR},
+			</if>
+			<if test="record.propsName != null">
+				props_name = #{record.propsName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.promotedService != null">
+				promoted_service = #{record.promotedService,jdbcType=VARCHAR},
+			</if>
+			<if test="record.isLightningConsignment != null">
+				is_lightning_consignment = #{record.isLightningConsignment,jdbcType=TINYINT},
+			</if>
+			<if test="record.isFenxiao != null">
+				is_fenxiao = #{record.isFenxiao,jdbcType=INTEGER},
+			</if>
+			<if test="record.auctionPoint != null">
+				auction_point = #{record.auctionPoint,jdbcType=INTEGER},
+			</if>
+			<if test="record.propertyAlias != null">
+				property_alias = #{record.propertyAlias,jdbcType=VARCHAR},
+			</if>
+			<if test="record.templateId != null">
+				template_id = #{record.templateId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.afterSaleId != null">
+				after_sale_id = #{record.afterSaleId,jdbcType=BIGINT},
+			</if>
+			<if test="record.isXinpin != null">
+				is_xinpin = #{record.isXinpin,jdbcType=TINYINT},
+			</if>
+			<if test="record.subStock != null">
+				sub_stock = #{record.subStock,jdbcType=INTEGER},
+			</if>
+			<if test="record.features != null">
+				features = #{record.features,jdbcType=VARCHAR},
+			</if>
+			<if test="record.itemWeight != null">
+				item_weight = #{record.itemWeight,jdbcType=VARCHAR},
+			</if>
+			<if test="record.itemSize != null">
+				item_size = #{record.itemSize,jdbcType=VARCHAR},
+			</if>
+			<if test="record.sellPoint != null">
+				sell_point = #{record.sellPoint,jdbcType=VARCHAR},
+			</if>
+			<if test="record.validThru != null">
+				valid_thru = #{record.validThru,jdbcType=INTEGER},
+			</if>
+			<if test="record.autoFill != null">
+				auto_fill = #{record.autoFill,jdbcType=VARCHAR},
+			</if>
+			<if test="record.descModules != null">
+				desc_modules = #{record.descModules,jdbcType=VARCHAR},
+			</if>
+			<if test="record.customMadeTypeId != null">
+				custom_made_type_id = #{record.customMadeTypeId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.wirelessDesc != null">
+				wireless_desc = #{record.wirelessDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="record.barcode != null">
+				barcode = #{record.barcode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.newprepay != null">
+				newprepay = #{record.newprepay,jdbcType=VARCHAR},
+			</if>
+			<if test="record.price != null">
+				price = #{record.price,jdbcType=VARCHAR},
+			</if>
+			<if test="record.postFee != null">
+				post_fee = #{record.postFee,jdbcType=VARCHAR},
+			</if>
+			<if test="record.expressFee != null">
+				express_fee = #{record.expressFee,jdbcType=VARCHAR},
+			</if>
+			<if test="record.emsFee != null">
+				ems_fee = #{record.emsFee,jdbcType=VARCHAR},
+			</if>
+			<if test="record.globalStockType != null">
+				global_stock_type = #{record.globalStockType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.globalStockCountry != null">
+				global_stock_country = #{record.globalStockCountry,jdbcType=VARCHAR},
+			</if>
+			<if test="record.largeScreenImageUrl != null">
+				large_screen_image_url = #{record.largeScreenImageUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="record.version != null">
+				optlock = #{record.version,jdbcType=INTEGER},
+			</if>
+			<if test="record.createdBy != null">
+				createdBy = #{record.createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createdDate != null">
+				createdDate = #{record.createdDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.lastModifiedBy != null">
+				lastModifiedBy = #{record.lastModifiedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="record.lastModifiedDate != null">
+				lastModifiedDate = #{record.lastModifiedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.subTitle != null">
+				sub_title = #{record.subTitle,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update crm_item
+		set id = #{record.id,jdbcType=BIGINT},
+		uid = #{record.uid,jdbcType=BIGINT},
+		user_name = #{record.userName,jdbcType=VARCHAR},
+		num_iid = #{record.numIid,jdbcType=BIGINT},
+		approve_status = #{record.approveStatus,jdbcType=VARCHAR},
+		cid = #{record.cid,jdbcType=VARCHAR},
+		has_showcase = #{record.hasShowcase,jdbcType=VARCHAR},
+		has_discount = #{record.hasDiscount,jdbcType=VARCHAR},
+		created = #{record.created,jdbcType=TIMESTAMP},
+		modified = #{record.modified,jdbcType=TIMESTAMP},
+		seller_cids = #{record.sellerCids,jdbcType=VARCHAR},
+		props = #{record.props,jdbcType=VARCHAR},
+		input_pids = #{record.inputPids,jdbcType=VARCHAR},
+		input_str = #{record.inputStr,jdbcType=VARCHAR},
+		num = #{record.num,jdbcType=INTEGER},
+		list_time = #{record.listTime,jdbcType=TIMESTAMP},
+		delist_time = #{record.delistTime,jdbcType=TIMESTAMP},
+		stuff_status = #{record.stuffStatus,jdbcType=TIMESTAMP},
+		zip = #{record.zip,jdbcType=VARCHAR},
+		address = #{record.address,jdbcType=VARCHAR},
+		city = #{record.city,jdbcType=VARCHAR},
+		state = #{record.state,jdbcType=VARCHAR},
+		country = #{record.country,jdbcType=VARCHAR},
+		district = #{record.district,jdbcType=VARCHAR},
+		freight_payer = #{record.freightPayer,jdbcType=VARCHAR},
+		url = #{record.url,jdbcType=VARCHAR},
+		is_3D = #{record.is3D,jdbcType=TINYINT},
+		score = #{record.score,jdbcType=INTEGER},
+		sell_promise = #{record.sellPromise,jdbcType=TINYINT},
+		title = #{record.title,jdbcType=VARCHAR},
+		type = #{record.type,jdbcType=VARCHAR},
+		item_desc = #{record.itemDesc,jdbcType=VARCHAR},
+		sku_id = #{record.skuId,jdbcType=BIGINT},
+		properties = #{record.properties,jdbcType=VARCHAR},
+		quantity = #{record.quantity,jdbcType=INTEGER},
+		sku_price = #{record.skuPrice,jdbcType=VARCHAR},
+		sku_created = #{record.skuCreated,jdbcType=VARCHAR},
+		sku_modified = #{record.skuModified,jdbcType=VARCHAR},
+		sku_status = #{record.skuStatus,jdbcType=VARCHAR},
+		sku_properties_name = #{record.skuPropertiesName,jdbcType=VARCHAR},
+		sku_spec_id = #{record.skuSpecId,jdbcType=INTEGER},
+		sku_with_hold_quantity = #{record.skuWithHoldQuantity,jdbcType=INTEGER},
+		sku_delivery_time = #{record.skuDeliveryTime,jdbcType=VARCHAR},
+		change_prop = #{record.changeProp,jdbcType=VARCHAR},
+		props_name = #{record.propsName,jdbcType=VARCHAR},
+		promoted_service = #{record.promotedService,jdbcType=VARCHAR},
+		is_lightning_consignment =
+		#{record.isLightningConsignment,jdbcType=TINYINT},
+		is_fenxiao = #{record.isFenxiao,jdbcType=INTEGER},
+		auction_point = #{record.auctionPoint,jdbcType=INTEGER},
+		property_alias = #{record.propertyAlias,jdbcType=VARCHAR},
+		template_id = #{record.templateId,jdbcType=VARCHAR},
+		after_sale_id = #{record.afterSaleId,jdbcType=BIGINT},
+		is_xinpin = #{record.isXinpin,jdbcType=TINYINT},
+		sub_stock = #{record.subStock,jdbcType=INTEGER},
+		features = #{record.features,jdbcType=VARCHAR},
+		item_weight = #{record.itemWeight,jdbcType=VARCHAR},
+		item_size = #{record.itemSize,jdbcType=VARCHAR},
+		sell_point = #{record.sellPoint,jdbcType=VARCHAR},
+		valid_thru = #{record.validThru,jdbcType=INTEGER},
+		auto_fill = #{record.autoFill,jdbcType=VARCHAR},
+		desc_modules = #{record.descModules,jdbcType=VARCHAR},
+		custom_made_type_id = #{record.customMadeTypeId,jdbcType=VARCHAR},
+		wireless_desc = #{record.wirelessDesc,jdbcType=VARCHAR},
+		barcode = #{record.barcode,jdbcType=VARCHAR},
+		newprepay = #{record.newprepay,jdbcType=VARCHAR},
+		price = #{record.price,jdbcType=VARCHAR},
+		post_fee = #{record.postFee,jdbcType=VARCHAR},
+		express_fee = #{record.expressFee,jdbcType=VARCHAR},
+		ems_fee = #{record.emsFee,jdbcType=VARCHAR},
+		global_stock_type = #{record.globalStockType,jdbcType=VARCHAR},
+		global_stock_country = #{record.globalStockCountry,jdbcType=VARCHAR},
+		large_screen_image_url =
+		#{record.largeScreenImageUrl,jdbcType=VARCHAR},
+		optlock = #{record.version,jdbcType=INTEGER},
+		createdBy = #{record.createdBy,jdbcType=VARCHAR},
+		createdDate = #{record.createdDate,jdbcType=TIMESTAMP},
+		lastModifiedBy = #{record.lastModifiedBy,jdbcType=VARCHAR},
+		lastModifiedDate = #{record.lastModifiedDate,jdbcType=TIMESTAMP},
+		sub_title = #{record.subTitle,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.kycrm.member.domain.entity.item.Item">
+		update crm_item
+		<set>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="numIid != null">
+				num_iid = #{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="approveStatus != null">
+				approve_status = #{approveStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="cid != null">
+				cid = #{cid,jdbcType=VARCHAR},
+			</if>
+			<if test="hasShowcase != null">
+				has_showcase = #{hasShowcase,jdbcType=VARCHAR},
+			</if>
+			<if test="hasDiscount != null">
+				has_discount = #{hasDiscount,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modified != null">
+				modified = #{modified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sellerCids != null">
+				seller_cids = #{sellerCids,jdbcType=VARCHAR},
+			</if>
+			<if test="props != null">
+				props = #{props,jdbcType=VARCHAR},
+			</if>
+			<if test="inputPids != null">
+				input_pids = #{inputPids,jdbcType=VARCHAR},
+			</if>
+			<if test="inputStr != null">
+				input_str = #{inputStr,jdbcType=VARCHAR},
+			</if>
+			<if test="num != null">
+				num = #{num,jdbcType=INTEGER},
+			</if>
+			<if test="listTime != null">
+				list_time = #{listTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delistTime != null">
+				delist_time = #{delistTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="stuffStatus != null">
+				stuff_status = #{stuffStatus,jdbcType=TIMESTAMP},
+			</if>
+			<if test="zip != null">
+				zip = #{zip,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				country = #{country,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				district = #{district,jdbcType=VARCHAR},
+			</if>
+			<if test="freightPayer != null">
+				freight_payer = #{freightPayer,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="is3D != null">
+				is_3D = #{is3D,jdbcType=TINYINT},
+			</if>
+			<if test="score != null">
+				score = #{score,jdbcType=INTEGER},
+			</if>
+			<if test="sellPromise != null">
+				sell_promise = #{sellPromise,jdbcType=TINYINT},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="itemDesc != null">
+				item_desc = #{itemDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="skuId != null">
+				sku_id = #{skuId,jdbcType=BIGINT},
+			</if>
+			<if test="properties != null">
+				properties = #{properties,jdbcType=VARCHAR},
+			</if>
+			<if test="quantity != null">
+				quantity = #{quantity,jdbcType=INTEGER},
+			</if>
+			<if test="skuPrice != null">
+				sku_price = #{skuPrice,jdbcType=VARCHAR},
+			</if>
+			<if test="skuCreated != null">
+				sku_created = #{skuCreated,jdbcType=VARCHAR},
+			</if>
+			<if test="skuModified != null">
+				sku_modified = #{skuModified,jdbcType=VARCHAR},
+			</if>
+			<if test="skuStatus != null">
+				sku_status = #{skuStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="skuPropertiesName != null">
+				sku_properties_name = #{skuPropertiesName,jdbcType=VARCHAR},
+			</if>
+			<if test="skuSpecId != null">
+				sku_spec_id = #{skuSpecId,jdbcType=INTEGER},
+			</if>
+			<if test="skuWithHoldQuantity != null">
+				sku_with_hold_quantity = #{skuWithHoldQuantity,jdbcType=INTEGER},
+			</if>
+			<if test="skuDeliveryTime != null">
+				sku_delivery_time = #{skuDeliveryTime,jdbcType=VARCHAR},
+			</if>
+			<if test="changeProp != null">
+				change_prop = #{changeProp,jdbcType=VARCHAR},
+			</if>
+			<if test="propsName != null">
+				props_name = #{propsName,jdbcType=VARCHAR},
+			</if>
+			<if test="promotedService != null">
+				promoted_service = #{promotedService,jdbcType=VARCHAR},
+			</if>
+			<if test="isLightningConsignment != null">
+				is_lightning_consignment = #{isLightningConsignment,jdbcType=TINYINT},
+			</if>
+			<if test="isFenxiao != null">
+				is_fenxiao = #{isFenxiao,jdbcType=INTEGER},
+			</if>
+			<if test="auctionPoint != null">
+				auction_point = #{auctionPoint,jdbcType=INTEGER},
+			</if>
+			<if test="propertyAlias != null">
+				property_alias = #{propertyAlias,jdbcType=VARCHAR},
+			</if>
+			<if test="templateId != null">
+				template_id = #{templateId,jdbcType=VARCHAR},
+			</if>
+			<if test="afterSaleId != null">
+				after_sale_id = #{afterSaleId,jdbcType=BIGINT},
+			</if>
+			<if test="isXinpin != null">
+				is_xinpin = #{isXinpin,jdbcType=TINYINT},
+			</if>
+			<if test="subStock != null">
+				sub_stock = #{subStock,jdbcType=INTEGER},
+			</if>
+			<if test="features != null">
+				features = #{features,jdbcType=VARCHAR},
+			</if>
+			<if test="itemWeight != null">
+				item_weight = #{itemWeight,jdbcType=VARCHAR},
+			</if>
+			<if test="itemSize != null">
+				item_size = #{itemSize,jdbcType=VARCHAR},
+			</if>
+			<if test="sellPoint != null">
+				sell_point = #{sellPoint,jdbcType=VARCHAR},
+			</if>
+			<if test="validThru != null">
+				valid_thru = #{validThru,jdbcType=INTEGER},
+			</if>
+			<if test="autoFill != null">
+				auto_fill = #{autoFill,jdbcType=VARCHAR},
+			</if>
+			<if test="descModules != null">
+				desc_modules = #{descModules,jdbcType=VARCHAR},
+			</if>
+			<if test="customMadeTypeId != null">
+				custom_made_type_id = #{customMadeTypeId,jdbcType=VARCHAR},
+			</if>
+			<if test="wirelessDesc != null">
+				wireless_desc = #{wirelessDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="barcode != null">
+				barcode = #{barcode,jdbcType=VARCHAR},
+			</if>
+			<if test="newprepay != null">
+				newprepay = #{newprepay,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=VARCHAR},
+			</if>
+			<if test="postFee != null">
+				post_fee = #{postFee,jdbcType=VARCHAR},
+			</if>
+			<if test="expressFee != null">
+				express_fee = #{expressFee,jdbcType=VARCHAR},
+			</if>
+			<if test="emsFee != null">
+				ems_fee = #{emsFee,jdbcType=VARCHAR},
+			</if>
+			<if test="globalStockType != null">
+				global_stock_type = #{globalStockType,jdbcType=VARCHAR},
+			</if>
+			<if test="globalStockCountry != null">
+				global_stock_country = #{globalStockCountry,jdbcType=VARCHAR},
+			</if>
+			<if test="largeScreenImageUrl != null">
+				large_screen_image_url = #{largeScreenImageUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="optlock != null">
+				optlock = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="createdBy != null">
+				createdBy = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createdDate != null">
+				createdDate = #{createdDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifiedBy != null">
+				lastModifiedBy = #{lastModifiedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastModifiedDate != null">
+				lastModifiedDate = #{lastModifiedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="subTitle != null">
+				sub_title = #{subTitle,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.kycrm.member.domain.entity.item.Item">
+		update crm_item
+		set uid = #{uid,jdbcType=BIGINT},
+		user_name = #{userName,jdbcType=VARCHAR},
+		num_iid = #{numIid,jdbcType=BIGINT},
+		approve_status = #{approveStatus,jdbcType=VARCHAR},
+		cid = #{cid,jdbcType=VARCHAR},
+		has_showcase = #{hasShowcase,jdbcType=VARCHAR},
+		has_discount = #{hasDiscount,jdbcType=VARCHAR},
+		created = #{created,jdbcType=TIMESTAMP},
+		modified = #{modified,jdbcType=TIMESTAMP},
+		seller_cids = #{sellerCids,jdbcType=VARCHAR},
+		props = #{props,jdbcType=VARCHAR},
+		input_pids = #{inputPids,jdbcType=VARCHAR},
+		input_str = #{inputStr,jdbcType=VARCHAR},
+		num = #{num,jdbcType=INTEGER},
+		list_time = #{listTime,jdbcType=TIMESTAMP},
+		delist_time = #{delistTime,jdbcType=TIMESTAMP},
+		stuff_status = #{stuffStatus,jdbcType=TIMESTAMP},
+		zip = #{zip,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		city = #{city,jdbcType=VARCHAR},
+		state = #{state,jdbcType=VARCHAR},
+		country = #{country,jdbcType=VARCHAR},
+		district = #{district,jdbcType=VARCHAR},
+		freight_payer = #{freightPayer,jdbcType=VARCHAR},
+		url = #{url,jdbcType=VARCHAR},
+		is_3D = #{is3D,jdbcType=TINYINT},
+		score = #{score,jdbcType=INTEGER},
+		sell_promise = #{sellPromise,jdbcType=TINYINT},
+		title = #{title,jdbcType=VARCHAR},
+		type = #{type,jdbcType=VARCHAR},
+		item_desc = #{itemDesc,jdbcType=VARCHAR},
+		sku_id = #{skuId,jdbcType=BIGINT},
+		properties = #{properties,jdbcType=VARCHAR},
+		quantity = #{quantity,jdbcType=INTEGER},
+		sku_price = #{skuPrice,jdbcType=VARCHAR},
+		sku_created = #{skuCreated,jdbcType=VARCHAR},
+		sku_modified = #{skuModified,jdbcType=VARCHAR},
+		sku_status = #{skuStatus,jdbcType=VARCHAR},
+		sku_properties_name = #{skuPropertiesName,jdbcType=VARCHAR},
+		sku_spec_id = #{skuSpecId,jdbcType=INTEGER},
+		sku_with_hold_quantity = #{skuWithHoldQuantity,jdbcType=INTEGER},
+		sku_delivery_time = #{skuDeliveryTime,jdbcType=VARCHAR},
+		change_prop = #{changeProp,jdbcType=VARCHAR},
+		props_name = #{propsName,jdbcType=VARCHAR},
+		promoted_service = #{promotedService,jdbcType=VARCHAR},
+		is_lightning_consignment = #{isLightningConsignment,jdbcType=TINYINT},
+		is_fenxiao = #{isFenxiao,jdbcType=INTEGER},
+		auction_point = #{auctionPoint,jdbcType=INTEGER},
+		property_alias = #{propertyAlias,jdbcType=VARCHAR},
+		template_id = #{templateId,jdbcType=VARCHAR},
+		after_sale_id = #{afterSaleId,jdbcType=BIGINT},
+		is_xinpin = #{isXinpin,jdbcType=TINYINT},
+		sub_stock = #{subStock,jdbcType=INTEGER},
+		features = #{features,jdbcType=VARCHAR},
+		item_weight = #{itemWeight,jdbcType=VARCHAR},
+		item_size = #{itemSize,jdbcType=VARCHAR},
+		sell_point = #{sellPoint,jdbcType=VARCHAR},
+		valid_thru = #{validThru,jdbcType=INTEGER},
+		auto_fill = #{autoFill,jdbcType=VARCHAR},
+		desc_modules = #{descModules,jdbcType=VARCHAR},
+		custom_made_type_id = #{customMadeTypeId,jdbcType=VARCHAR},
+		wireless_desc = #{wirelessDesc,jdbcType=VARCHAR},
+		barcode = #{barcode,jdbcType=VARCHAR},
+		newprepay = #{newprepay,jdbcType=VARCHAR},
+		price = #{price,jdbcType=VARCHAR},
+		post_fee = #{postFee,jdbcType=VARCHAR},
+		express_fee = #{expressFee,jdbcType=VARCHAR},
+		ems_fee = #{emsFee,jdbcType=VARCHAR},
+		global_stock_type = #{globalStockType,jdbcType=VARCHAR},
+		global_stock_country = #{globalStockCountry,jdbcType=VARCHAR},
+		large_screen_image_url = #{largeScreenImageUrl,jdbcType=VARCHAR},
+		optlock = #{version,jdbcType=INTEGER},
+		createdBy = #{createdBy,jdbcType=VARCHAR},
+		createdDate = #{createdDate,jdbcType=TIMESTAMP},
+		lastModifiedBy = #{lastModifiedBy,jdbcType=VARCHAR},
+		lastModifiedDate = #{lastModifiedDate,jdbcType=TIMESTAMP},
+		sub_title = #{subTitle,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!--查询商品是否存在  -->
+	<select id="ItemIsExit" parameterType="com.kycrm.member.domain.entity.item.Item" resultMap="BaseResultMap">
+	     select
+		<include refid="Base_Column_List" />
+		 from crm_item${uid} where num_iid=#{numIid}
+	</select>
+	<!--更新商品  -->
+	<update id="updateItem" parameterType="com.kycrm.member.domain.entity.item.Item">
+	   update crm_item${uid}
+		<set>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="numIid != null">
+				num_iid = #{numIid,jdbcType=BIGINT},
+			</if>
+			<if test="approveStatus != null">
+				approve_status = #{approveStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="cid != null">
+				cid = #{cid,jdbcType=VARCHAR},
+			</if>
+			<if test="hasShowcase != null">
+				has_showcase = #{hasShowcase,jdbcType=VARCHAR},
+			</if>
+			<if test="hasDiscount != null">
+				has_discount = #{hasDiscount,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modified != null">
+				modified = #{modified,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sellerCids != null">
+				seller_cids = #{sellerCids,jdbcType=VARCHAR},
+			</if>
+			<if test="props != null">
+				props = #{props,jdbcType=VARCHAR},
+			</if>
+			<if test="inputPids != null">
+				input_pids = #{inputPids,jdbcType=VARCHAR},
+			</if>
+			<if test="inputStr != null">
+				input_str = #{inputStr,jdbcType=VARCHAR},
+			</if>
+			<if test="num != null">
+				num = #{num,jdbcType=INTEGER},
+			</if>
+			<if test="listTime != null">
+				list_time = #{listTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="delistTime != null">
+				delist_time = #{delistTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="stuffStatus != null">
+				stuff_status = #{stuffStatus,jdbcType=TIMESTAMP},
+			</if>
+			<if test="zip != null">
+				zip = #{zip,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				country = #{country,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				district = #{district,jdbcType=VARCHAR},
+			</if>
+			<if test="freightPayer != null">
+				freight_payer = #{freightPayer,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="is3D != null">
+				is_3D = #{is3D,jdbcType=TINYINT},
+			</if>
+			<if test="score != null">
+				score = #{score,jdbcType=INTEGER},
+			</if>
+			<if test="sellPromise != null">
+				sell_promise = #{sellPromise,jdbcType=TINYINT},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="itemDesc != null">
+				item_desc = #{itemDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="skuId != null">
+				sku_id = #{skuId,jdbcType=BIGINT},
+			</if>
+			<if test="properties != null">
+				properties = #{properties,jdbcType=VARCHAR},
+			</if>
+			<if test="quantity != null">
+				quantity = #{quantity,jdbcType=INTEGER},
+			</if>
+			<if test="skuPrice != null">
+				sku_price = #{skuPrice,jdbcType=VARCHAR},
+			</if>
+			<if test="skuCreated != null">
+				sku_created = #{skuCreated,jdbcType=VARCHAR},
+			</if>
+			<if test="skuModified != null">
+				sku_modified = #{skuModified,jdbcType=VARCHAR},
+			</if>
+			<if test="skuStatus != null">
+				sku_status = #{skuStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="skuPropertiesName != null">
+				sku_properties_name = #{skuPropertiesName,jdbcType=VARCHAR},
+			</if>
+			<if test="skuSpecId != null">
+				sku_spec_id = #{skuSpecId,jdbcType=INTEGER},
+			</if>
+			<if test="skuWithHoldQuantity != null">
+				sku_with_hold_quantity = #{skuWithHoldQuantity,jdbcType=INTEGER},
+			</if>
+			<if test="skuDeliveryTime != null">
+				sku_delivery_time = #{skuDeliveryTime,jdbcType=VARCHAR},
+			</if>
+			<if test="changeProp != null">
+				change_prop = #{changeProp,jdbcType=VARCHAR},
+			</if>
+			<if test="propsName != null">
+				props_name = #{propsName,jdbcType=VARCHAR},
+			</if>
+			<if test="promotedService != null">
+				promoted_service = #{promotedService,jdbcType=VARCHAR},
+			</if>
+			<if test="isLightningConsignment != null">
+				is_lightning_consignment = #{isLightningConsignment,jdbcType=TINYINT},
+			</if>
+			<if test="isFenxiao != null">
+				is_fenxiao = #{isFenxiao,jdbcType=INTEGER},
+			</if>
+			<if test="auctionPoint != null">
+				auction_point = #{auctionPoint,jdbcType=INTEGER},
+			</if>
+			<if test="propertyAlias != null">
+				property_alias = #{propertyAlias,jdbcType=VARCHAR},
+			</if>
+			<if test="templateId != null">
+				template_id = #{templateId,jdbcType=VARCHAR},
+			</if>
+			<if test="afterSaleId != null">
+				after_sale_id = #{afterSaleId,jdbcType=BIGINT},
+			</if>
+			<if test="isXinpin != null">
+				is_xinpin = #{isXinpin,jdbcType=TINYINT},
+			</if>
+			<if test="subStock != null">
+				sub_stock = #{subStock,jdbcType=INTEGER},
+			</if>
+			<if test="features != null">
+				features = #{features,jdbcType=VARCHAR},
+			</if>
+			<if test="itemWeight != null">
+				item_weight = #{itemWeight,jdbcType=VARCHAR},
+			</if>
+			<if test="itemSize != null">
+				item_size = #{itemSize,jdbcType=VARCHAR},
+			</if>
+			<if test="sellPoint != null">
+				sell_point = #{sellPoint,jdbcType=VARCHAR},
+			</if>
+			<if test="validThru != null">
+				valid_thru = #{validThru,jdbcType=INTEGER},
+			</if>
+			<if test="autoFill != null">
+				auto_fill = #{autoFill,jdbcType=VARCHAR},
+			</if>
+			<if test="descModules != null">
+				desc_modules = #{descModules,jdbcType=VARCHAR},
+			</if>
+			<if test="customMadeTypeId != null">
+				custom_made_type_id = #{customMadeTypeId,jdbcType=VARCHAR},
+			</if>
+			<if test="wirelessDesc != null">
+				wireless_desc = #{wirelessDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="barcode != null">
+				barcode = #{barcode,jdbcType=VARCHAR},
+			</if>
+			<if test="newprepay != null">
+				newprepay = #{newprepay,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=VARCHAR},
+			</if>
+			<if test="postFee != null">
+				post_fee = #{postFee,jdbcType=VARCHAR},
+			</if>
+			<if test="expressFee != null">
+				express_fee = #{expressFee,jdbcType=VARCHAR},
+			</if>
+			<if test="emsFee != null">
+				ems_fee = #{emsFee,jdbcType=VARCHAR},
+			</if>
+			<if test="globalStockType != null">
+				global_stock_type = #{globalStockType,jdbcType=VARCHAR},
+			</if>
+			<if test="globalStockCountry != null">
+				global_stock_country = #{globalStockCountry,jdbcType=VARCHAR},
+			</if>
+			<if test="largeScreenImageUrl != null">
+				large_screen_image_url = #{largeScreenImageUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				optlock = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="createdBy != null">
+				createdBy = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createdDate != null">
+				createdDate = #{createdDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastModifiedBy != null">
+				lastModifiedBy = #{lastModifiedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastModifiedDate != null">
+				lastModifiedDate = #{lastModifiedDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="subTitle != null">
+				sub_title = #{subTitle,jdbcType=VARCHAR},
+			</if>
+		</set>
+	       where num_iid=#{numIid} 
+	</update>
+	
+</mapper>

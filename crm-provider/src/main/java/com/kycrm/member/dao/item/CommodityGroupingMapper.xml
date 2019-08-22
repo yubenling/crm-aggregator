@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.item.ICommodityGroupingDao">
+	<resultMap type="com.kycrm.member.domain.entity.item.CommodityGrouping" id="commodityGroup">
+		<result column="id" property="id"/>
+		<result column="optlock" property="version"/>
+		<result column="uid" property="uid"/>
+		<result column="group_name" property="groupName"/>
+		<result column="commodity_num" property="commodityNum"/>
+		<result column="remark" property="remark"/>
+		<result column="cTime" property="cTime"/>
+		<result column="modify_time" property="modifyTime"/>
+		<result column="title" property="title"/>
+		<result column="is_title" property="isTitle"/>
+		<result column="createdBy" property="createdBy"/>
+		<result column="createdDate" property="createdDate"/>
+		<result column="lastModifiedBy" property="lastModifiedBy"/>
+		<result column="lastModifiedDate" property="lastModifiedDate"/>
+	</resultMap>
+	
+	<!-- 查询所有商品的分组(商品缩写页面) -->
+	<select id="listUidItemGroup" parameterType="java.util.Map" resultMap="commodityGroup">
+	  SELECT id,group_name,commodity_num,remark,title,is_title FROM crm_commodity_grouping
+	  <where>
+	    <if test="uid !=null">
+	      uid = #{uid}
+	    </if>
+	  </where>
+	  ORDER BY CTIME DESC
+	  <if test="startRow != null and pageSize != null">
+	  	limit #{startRow},#{pageSize}
+	  </if>
+	</select>
+	
+	<!-- 查询用户商品分组个数 -->
+	<select id="countUidItemGroup" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT count(id) FROM crm_commodity_grouping
+	  	where uid = #{uid}
+	</select>
+	
+	<!-- 是否已存在分组名称 -->
+	<select id="findIdByGroupName" resultType="java.lang.Long">
+		select id
+		from crm_commodity_grouping
+		where uid = #{0} and group_name = #{1}
+	</select>
+	
+	<!-- 保存商品分组 -->
+	<insert id="saveCommodityGrouping" parameterType="com.kycrm.member.domain.vo.item.CommodityVO">
+		insert into crm_commodity_grouping(uid,GROUP_NAME,COMMODITY_NUM,REMARK,CTIME,MODIFY_TIME,optlock,lastModifiedBy
+	    ,lastModifiedDate,createdDate,title,is_title)
+	    value(#{uid},#{groupName},#{commodityNum},#{remark},NOW(),NOW(),0,NOW(),NOW(),NOW(),#{title},#{isTitle})
+	</insert>
+	
+	<!-- 根据id更新商品分组 -->
+	<update id="updateCommodityGrouping" parameterType="com.kycrm.member.domain.vo.item.CommodityVO">
+		update crm_commodity_grouping
+		<set>
+			<if test="groupName != null and groupName != ''">
+				GROUP_NAME = #{groupName},
+			</if>
+			<if test="remark != null and remark != ''">
+				REMARK = #{remark},
+			</if>
+			<if test="commodityNum != null">
+				COMMODITY_NUM = #{commodityNum},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME =  #{modifyTime},
+			</if>
+			<if test="title != null and title != ''">
+				title = #{title},
+			</if>
+			<if test="isTitle != null and isTitle != ''">
+				is_title = #{isTitle}
+			</if>
+		</set>
+		where id = #{groupId}
+	</update>
+	
+	<!-- 删除分组 -->
+	<delete id="removeCommodityGroupById" parameterType="java.lang.Long">
+		DELETE FROM crm_commodity_grouping WHERE id=#{_parameter}
+	</delete>
+	
+	<!-- 根据id查询分组信息 -->
+	<select id="queryCommodityGroupById" resultMap="commodityGroup">
+		select id,group_name,commodity_num,remark,title,is_title
+		from crm_commodity_grouping
+		where uid = #{0} and id = #{1}
+	</select>
+	<!-- 设置页查询分组名称 -->
+	<select id="findCommName" resultMap="commodityGroup" parameterType="java.lang.Long">
+	    SELECT GROUP_NAME,id FROM crm_commodity_grouping WHERE uid=#{uid}
+	</select>
+</mapper>

@@ -1,0 +1,895 @@
+
+#alertBannerBox{
+	width:10rem;
+	height:3.38rem;
+	background: url(../images/alertBanner2.png) no-repeat;
+	background-size:10rem 3.38rem;
+	position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -1.69rem;
+    margin-left: -5rem;
+    z-index: 31;
+    border-radius:.2rem;
+    display:none;
+}
+#alertBannerBox .alertBannerClose{
+	position:absolute;
+	right:-.13rem;
+	top:-.15rem;
+	background: url(../images/chazi.png) no-repeat;
+	background-size:.4rem .4rem;
+	width:.4rem;
+	height:.4rem;
+	cursor: pointer;
+    z-index: 33;
+}
+#alertBannerBox a{
+	width:100%;
+	height:100%;
+	position: absolute;
+	left:0;
+	top:0;
+}
+#banner{
+	background: url(../images/banner.jpg) #1b2744 center center;
+	height: 2.46rem;
+	margin: .2rem .2rem 0 .2rem;
+	
+}
+#content{
+	margin: .2rem .2rem .2rem .2rem;
+
+}
+.contentLeft{
+	width: 70%;
+
+	
+}
+.contentRight{
+	width: 29%;
+	
+	
+	
+}
+.storeData{
+	width: 58%;
+
+	background-color: #fff;
+	height: 2.8rem;
+}
+.shortcutEntrance{
+	width: 40%;
+
+	background-color: #fff;
+	height: 2.8rem;
+}
+
+.storeTop{
+	height: .45rem;
+	line-height: .45rem;
+	padding-left: .3rem;
+}
+.storeMembersBox{
+	height: .45rem;
+	line-height: .45rem;
+	margin-right: .4rem;
+}
+.storeMembersBox span,.lookOrder span{
+	color: #333;
+	font-size: .16rem;
+	
+}
+.storeMembersBox strong{
+	font-size: .2rem;
+	color: #5cc3f9;
+}
+.lookOrder{
+	height: .45rem;
+	line-height: .45rem;
+	margin-right: .3rem;
+}
+.lookOrder a{
+	display: inline-block;
+	width: 1.8rem;
+	height: .27rem;
+	line-height: .27rem;
+	border: 1px solid #29b5ff;
+	color: #29b5ff;
+	border-radius: .04rem;
+	box-sizing: border-box;
+	text-align: center;
+	margin-left: .1rem;
+	font-size: .14rem;
+}
+.storeBottom ul{
+	height: 1.225rem;
+}
+ul.ulTop{
+	border-bottom: 1px dashed #ebebeb;
+}
+.storeBottom ul li{
+	float: left;
+	height: 1.225rem;
+	line-height: 1.225rem;
+	width: 33%;
+	display: table;
+}
+.storeBottom ul li strong,.storeBottom ul li span{
+	display: block;
+	height: .4rem;
+	line-height: .4rem;
+	text-align: center;
+}
+.storeBottom ul li span{
+	font-size: .16rem;
+	color: #666;
+}
+.storeBottom ul li strong{
+	margin-top: .2rem;
+	font-weight: normal;
+
+
+	
+}
+.storeBottom ul li strong i{
+	font-size: .27rem;
+	color: #5cc3f9;
+	height: .4rem;
+	line-height: .4rem;
+
+}
+.storeBottom ul li strong em{
+	font-size: .18rem;
+	color: #5cc3f9;
+	height: .4rem;
+	line-height: .4rem;
+	
+}
+
+.border-dee{
+	border-right: 1px dashed #ebebeb ;
+}
+.shortcutEntranceTop{
+	height: .35rem;
+	
+}
+.shortcutEntranceTop .title{
+	height: .35rem;
+	line-height: .35rem;
+	padding-left: .2rem;
+}
+i.cIcon{
+	display: inline-block;
+	width: .13rem;
+	height: .13rem;
+	background-color: #5cc3f9;
+	border-radius: .02rem;
+	margin-right: .07rem;
+}
+.shortcutEntranceTop .title span{
+	display: inline-block;
+	font-size: .16rem;
+	color: #333;
+	height: .35rem;
+	line-height: .35rem;
+}
+.shortcutEntranceLink{
+	position: relative;
+	z-index: 5;
+}
+.higgchartHeight{
+	height:3.17rem;
+}
+.shortcutEntranceLinkBox{
+	width: 4.24rem;
+	height: 3.55rem;
+	position: absolute;
+	background-color: #fff;
+	box-shadow: 0.01rem 0.01rem 0.08rem #ccc;
+	border-radius: .05rem;
+	box-sizing: border-box;
+	padding: .32rem .3rem .12rem .3rem;
+	display:none;
+	left:-4rem;
+}
+.shortcutEntranceLinkClose{
+	position: absolute;
+	width: .15rem;
+	height: .15rem;
+	background: url(../images/bgicon.png) no-repeat 0 -1.11rem;
+	background-size: .5rem 4rem;
+	right: .1rem;
+	top: .1rem;
+	cursor: pointer;
+}
+.shortcutEntranceLinkTitle{
+	height: .25rem;
+	line-height: .25rem;
+	font-size: .16rem;
+	color: #333;
+}
+.shortcutEntranceLinkCheckBox{
+
+}
+.shortcutEntranceLinkCheckBoxLeft{
+	width: 30%;
+}
+.shortcutEntranceLinkCheckBoxCenter{
+	width: 30%;
+}
+.shortcutEntranceLinkCheckBoxRight{
+	width: 40%;
+}
+.shortcutEntranceLinkCheckDiv{
+	margin-top: .15rem
+	
+}
+.shortcutEntranceLinkCheckDiv span{
+	width: .18rem;
+	height: .18rem;
+	border: 1px solid #cecece;
+	border-radius: .05rem;
+	background-color: #fff;
+	cursor: pointer;
+	position: relative;
+}
+.shortcutEntranceLinkCheckDiv span.on{
+	background-color: #2d8cf0;
+	border-color: #2d8cf0;
+}
+.shortcutEntranceLinkCheckDiv span.on::after{
+	content: '';
+    display: table;
+    width: .06rem;
+    height: .12rem;
+    position: absolute;
+    top: .01rem;
+    left: .05rem;
+    border: .02rem solid #fff;
+    border-top: 0;
+    border-left: 0;
+	-webkit-transform: rotate(45deg) scale(1);
+    -ms-transform: rotate(45deg) scale(1);
+    transform: rotate(45deg) scale(1);
+}
+.shortcutEntranceLinkCheckDiv label{
+	height: .18rem;
+	line-height: .18rem;
+	color: #666;
+	margin-left: .1rem;
+	font-size: .14rem;
+}
+.shortcutEntranceLink i{
+	width: .19rem;
+	height: .19rem;
+	background: url(../images/bgicon1.png) 0 -.04rem;
+	background-size: .3rem 3rem;
+	float: left;
+	margin-top: .13rem;
+
+}
+.shortcutEntranceLinkBtn{
+	height: .36rem;
+	text-align: center;
+	margin-top: .1rem
+}
+.shortcutEntranceLink .shortcutEntranceLinkBtn a{
+	display: inline-block;
+	width: 1.2rem;
+	height: .36rem;
+	line-height: .36rem;
+	border-radius: .05rem;
+	background-color: #4eb9f1;
+	color: #fff;
+	font-size: .16rem;
+}
+.shortcutEntranceLink a{
+	font-size: .16rem;
+	color: #999;
+	height: .45rem;
+	line-height: .45rem;
+	margin-right: .15rem;
+	margin-left: .06rem;
+}
+.shortcutEntranceBottom ul{
+	height: 1.16rem;
+}
+.shortcutEntranceBottom ul li{
+	float: left;
+	width: 49.5%;
+	text-align: center;
+	height: 100%;
+	padding-top: .14rem;
+	position: relative;
+}
+.shortcutEntranceBottom ul li a{
+	display:block;
+	width:100%;
+	height:100%;
+	
+}
+.shortcutEntranceBottom ul li p{
+	height: .28rem;
+	line-height: .28rem;
+	font-size: .16rem;
+	color: #666;
+}
+.shortcutEntranceBottom ul li div{
+	text-align: center;
+	height:.6rem;
+}
+
+.contentLeftBottom{
+	height: 3.72rem;
+	width: 100%;
+	background-color: #fff;
+	margin-top: .2rem;
+}
+.contentLeftBottom2{
+	height: 4.2rem;
+	width: 100%;
+	background-color: #fff;
+	margin-top: .2rem;
+}
+.contentLeftBottom .title,.contentLeftBottom2 .title{
+	height: .55rem;
+	line-height: .55rem;
+}
+.contentLeftBottom .title h4,.contentLeftBottom2 .title h4{
+	font-size: .16rem;
+	color: #333;
+}
+.contentLeftBottom .title .cIcon,.contentLeftBottom2 .title .cIcon{
+	margin-top: .2rem;
+	margin-left: .16rem;
+}
+.storeInformation{
+	height: 2.8rem;
+	background-color: #fff;
+}
+.storeInformation h3{
+	height: .5rem;
+	line-height: .5rem;
+	font-size: .22rem;
+	color: #122029;
+	text-align: center;
+}
+.showInformation{
+	padding: 0 .3rem;
+	margin-bottom: .2rem;
+}
+.showInformationTop{
+	height: .28rem;
+	line-height: .28rem;
+}
+.showInformationTop p{
+	font-size: .16rem;
+	color: #666;
+}
+.showInformationTop p span{
+	font-size: .2rem;
+	color: #48a3f8;
+}
+.showInformationTop a{
+	border: 1px solid #29b5ff;
+	width: .5rem;
+	height: .28rem;
+	box-sizing: border-box;
+	text-align: center;
+	line-height: .28rem;
+	border-radius: .03rem;
+	font-size: .14rem;
+	color:#29b5ff;
+}
+.changeColor .ivu-progress-bg{
+	background-color: #d95f47;
+}
+.notice{
+	height: 3.72rem;
+    width: 100%;
+    background-color: #fff;
+    margin-top: .2rem;
+}
+.shortcutEntranceLink i.wenhao{
+	background-position: 0 -.3rem;
+	margin-top: .14rem;
+}
+.noticeShow{
+	height: 3.2rem;
+	overflow-y: auto;
+	width:100%;
+}
+.noticeShow li{
+	
+	padding:.1rem .2rem;
+	box-sizing: content-box;
+}
+.noticeShow li a{
+	display: block;
+	height: .3rem;
+	line-height: .3rem;
+	
+}
+.noticeShow li a i{
+	margin: .12rem .12rem 0 0;
+	width: .08rem;
+	height: .08rem;
+	border-radius: 1rem;
+	background-color: #ceedfd;
+}
+.noticeShow li a span{
+	
+	height: .3rem;
+	line-height: .3rem;
+	font-size: .16rem;
+	color:#666;
+}
+.noticeShow li a em{
+	font-size: .14rem;
+	color: #666;
+	height: .3rem;
+	line-height: .3rem;
+	
+}
+.SMSBox{
+	height: 4.2rem;
+	margin-top: .2rem;
+}
+.smsMoney{
+	height: 1.6rem;
+	background-color: #fff;
+}
+.smsPassageway{
+	height: 2.4rem;
+	margin-top: .2rem;
+	background-color: #fff;
+}
+.smsPassagewayTitle span{
+	height: .45rem;
+	line-height: .45rem;
+	display: inline-block;
+	font-size: .16rem;
+    color: #999;
+   	margin-right: .15rem;
+}
+.smsDetailed li{
+	float: left;
+	text-align: center;
+	width: 49.5%;
+	height: 1rem;
+	
+}
+.smsDetailed li strong{
+	margin-top: .2rem;
+    font-weight: normal;
+    display: block;
+    height: .4rem;
+    line-height: .4rem;
+    text-align: center;
+}
+.smsDetailed li strong i{
+	font-size: .27rem;
+	color: #5cc3f9;
+	
+}
+.smsDetailed li strong em{
+	font-size: .18rem;
+	color: #5cc3f9;
+}
+.smsDetailed li span{
+	font-size: .16rem;
+	color: #666;
+}
+.smsPassagewayTitleBox{
+	border-bottom: 1px dashed #ebebeb;
+}
+.smsPassagewayDiv{
+	padding: .15rem 0;
+	padding-left: .2rem;
+}
+.smsPassagewayDiv h3{
+	height: .3rem;
+	line-height: .3rem;
+}
+.smsPassagewayDiv h3 i{
+	margin: .12rem .12rem 0 0;
+    width: .08rem;
+    height: .08rem;
+    border-radius: 1rem;
+    background-color: #ceedfd;
+}
+.smsPassagewayDiv ul{
+	margin-top: .1rem;
+	padding-left: .2rem;
+}
+.smsPassagewayDiv ul li{
+	float: left;
+	font-size: .16rem;
+	color: #666;
+}
+.smsPassagewayDiv ul li.marginX{
+	margin-right: 1rem;
+}
+.smsPassagewayDiv ul li span{
+	font-size: .16rem;
+	color: #5cc3f9;
+}
+.toggleAlertDiv{
+	padding: .06rem 0;
+}
+.toggleAlertDiv i{
+	display: inline-block;
+	width: .07rem;
+	height: .07rem;
+	background-color: #5cc3f9;
+	border-radius: 1rem;
+	margin-right: .15rem;
+	margin-top: .12rem;
+}
+.toggleAlertDiv *{
+	font-size: .16rem;
+	
+}
+.toggleAlertDiv label,.toggleAlertDiv span,.toggleAlertDiv p{
+	height: .27rem;
+	line-height: .27rem;
+}
+.toggleAlertDiv a{
+	width: .5rem;
+	height: .27rem;
+	line-height: .27rem;
+	text-align: center;
+	border: 1px solid #4fbcee;
+	border-radius: .03rem;
+	margin-left: .1rem;
+	color: #4fbcee;
+}
+.userBtn{
+	margin-top: .08rem;
+	text-align: center;
+}
+.userBtn a{
+	display: inline-block;
+	width: 1.2rem;
+	height: .38rem;
+	line-height: .38rem;
+	text-align: center;
+	border-radius: .03rem;
+	background-color: #4eb9f1;
+	color: #fff;
+}
+.toggleAlertDiv strong{
+	color: #5cc4f9;
+}
+
+.progress{
+	height: .1rem;
+	position: relative;
+	width: 100%;
+	border-radius: 1rem;
+	background-color: #edeeef;
+	margin-top: .12rem;
+	overflow:hidden;
+}
+.progress span{
+	position: absolute;
+	height: .1rem;
+	border-radius: 1rem;
+	width: 0%;
+	
+	left: 0;
+	top: 0;
+	
+}
+.progress span.red{
+	background-color:#d66046;
+}
+.progress span.blue{
+	background-color:#4ba9f8;
+}
+.shortcutEntranceBottom ul li i{
+	display: inline-block;
+	
+	background: url(../images/kjBgicon.png) no-repeat;
+	background-size: .7rem 20rem;
+}
+.shortcutEntranceBottom ul li i.icon1{
+	width:.41rem;
+	height:.51rem;
+	background-position: -.00rem -.65rem;
+}
+.shortcutEntranceBottom ul li i.icon2{
+	width:.5rem;
+	height:.43rem;
+	background-position: -.00rem -1.32rem;
+}
+.shortcutEntranceBottom ul li i.icon3{
+	width:.39rem;
+	height:.5rem;
+	background-position: -.00rem -1.94rem;
+}
+.shortcutEntranceBottom ul li i.icon4{
+	width:.5rem;
+	height:.52rem;
+	background-position: -.00rem -2.6rem;
+}
+.shortcutEntranceBottom ul li i.icon13{
+	width:.46rem;
+	height:.46rem;
+	background-position: -.00rem -3.23rem;
+}
+.shortcutEntranceBottom ul li i.icon6{
+	width:.56rem;
+	height:.4rem;
+	background-position: -.00rem -3.79rem;
+}
+.shortcutEntranceBottom ul li i.icon11{
+	width:.44rem;
+	height:.41rem;
+	background-position: -.00rem -4.29rem;
+}
+.shortcutEntranceBottom ul li i.icon7{
+	width:.52rem;
+	height:.33rem;
+	background-position: -.00rem -4.8rem;
+}
+.shortcutEntranceBottom ul li i.icon8{
+	width:.46rem;
+	height:.38rem;
+	background-position: -.00rem -5.25rem;
+}
+.shortcutEntranceBottom ul li i.icon9{
+	width:.45rem;
+	height:.37rem;
+	background-position: -.00rem -5.73rem;
+}
+.shortcutEntranceBottom ul li i.icon12{
+	width:.45rem;
+	height:.5rem;
+	background-position: -.00rem -6.24rem;
+}
+.shortcutEntranceBottom ul li i.icon14{
+	width:.42rem;
+	height:.35rem;
+	background-position: -.00rem -6.82rem;
+}
+.shortcutEntranceBottom ul li i.icon15{
+	width:.46rem;
+	height:.44rem;
+	background-position: -.00rem -7.32rem;
+}
+.shortcutEntranceBottom ul li i.icon16{
+	width:.35rem;
+	height:.43rem;
+	background-position: -.00rem -7.86rem;
+}
+.shortcutEntranceBottom ul li i.icon19{
+	width:.46rem;
+	height:.45rem;
+	background-position: -.00rem -8.36rem;
+}
+.shortcutEntranceBottom ul li i.icon37{
+	width:.45rem;
+	height:.45rem;
+	background-position: -.00rem -8.91rem;
+}
+.shortcutEntranceBottom ul li i.icon33{
+	width:.42rem;
+	height:.44rem;
+	background-position: -.00rem -9.41rem;
+}
+.shortcutEntranceBottom ul li i.icon34{
+	width:.42rem;
+	height:.42rem;
+	background-position: -.00rem -10rem;
+}
+.shortcutEntranceBottom ul li i.icon35{
+	width:.45rem;
+	height:.32rem;
+	background-position: -.00rem -10.6rem;
+}
+.shortcutEntranceBottom ul li i.icon38{
+	width:.41rem;
+	height:.38rem;
+	background-position: -.00rem -11.04rem;
+}
+/* 首页使用帮助 */
+#helpBox{
+	width:7rem;
+	height: 4.38rem;
+	background-color: rgba(0,0,0, 0.5);
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-left: -3.5rem;
+	margin-top: -2.19rem;
+	background-color: #fff;
+	z-index: 40;
+	display: none;
+}
+#helpBox .title{
+	height: .6rem;
+	background-color: #f3f3f5;
+	text-align: center;
+	font-size: .22rem;
+	color: #122029;
+	position: relative;
+	font-weight: normal;
+	line-height: .6rem;
+}
+#helpBox .title i{
+	position: absolute;
+	width: .15rem;
+	height: .15rem;
+	background: url(../images/bgicon.png) no-repeat 0 -1.11rem;
+	background-size: .5rem 4rem;
+	right: .15rem;
+	top: .25rem;
+	cursor: pointer;
+}
+#helpBox .helpBox{
+	padding: .3rem;
+}
+#helpBox .helpBox{
+	height: 3.1rem;
+	overflow-y: auto;
+}
+#helpBox .helpBox .helpDiv a{
+	display: block;
+	font-size: .14rem;
+	color: #5cc3f9;
+	height: .25rem;
+	line-height: .25rem;
+	text-decoration: underline;
+	position: relative;
+	padding-left: .15rem;
+	margin-bottom: .06rem;
+}
+#helpBox .helpBox .helpDiv a i{
+	position: absolute;
+	width: .08rem;
+	height: .08rem;
+	background-color: #ceedfd;
+	border-radius: 1rem;
+	left: 0;
+	top: .08rem;
+}
+#helpBox .helpBox .helpDiv p{
+	padding: .1rem;
+	background-color: #f7f6f6;
+	color: #666666;
+	font-size: .12rem;
+	border: 1px solid #ccc;
+	display: none;
+}
+#helpBox .helpDiv{}
+#markBg,#markBgRight{
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 30;
+}
+/* #markBg2{
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: 0.7;
+	filter: alpha(opacity=50);
+	display:none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 30;
+} */
+#markBg.on,#markBgRight.on{
+	display: block;
+}
+.msgAlert {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    background-color: #000;
+    color: #fff;
+    border-radius: .05rem;
+    z-index: 60;
+    display: none;
+    padding: .3rem;
+}
+/*首页红包 */
+#hongbaoBox{
+	width: 6.6rem;
+	height: 6.2rem;
+	background: url(../images/waikuang.png) no-repeat;
+	background-size: 6.6rem 6.2rem;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-left: -3.3rem;
+	margin-top: -3.1rem;
+	z-index: 35;
+	display:none;
+}
+.hongbaoClose{
+	width: .41rem;
+	height: .41rem;
+	background: url(../images/shibaiicon2.png)no-repeat;
+	background-size: .41rem .41rem;
+	right: 1.3rem;
+    top: .8rem;
+	position: absolute;
+	cursor: pointer;
+}
+.hongbaoFormBox{
+	width: 4.15rem;
+	height: 2.16rem;
+	position: absolute;
+	top: 1.3rem;
+	left: .8rem;
+	padding-left: .3rem;
+}
+.hongbaoFormDiv{
+	height: .5rem;
+	padding: .1rem 0;
+	box-sizing: content-box;
+}
+.hongbaoFormDiv label{
+	float: left;
+	height:.5rem;
+	line-height:.5rem;
+	font-size: .16rem;
+	color: #384856;
+	margin-right: .2rem;
+}
+.hongbaoFormDiv input{
+	height: .5rem;
+	line-height: .5rem;
+	background-color: #f4f6fa;
+	padding-left: .1rem;
+	font-size: .16rem;
+	outline: none;
+	width: 2.5rem;
+	float: left;
+}
+.hongbaoFormDiv a{
+	width: 1rem;
+	float: left;
+	height: .5rem;
+	line-height: .5rem;
+	background-color: #00a0e9;
+	text-align: center;
+	color: #fff;
+	margin-left: .2rem;
+	font-size: .16rem;
+}
+.hongbaoBtn{
+	margin-top: 3.55rem;
+	height: 1rem;
+	position: relative;
+}
+.hongbaoBtn a{
+	position: absolute;
+	width: 1rem;
+	height: 1rem;
+	left: 2.3rem;
+}
+.getCodeClick.active{
+	background-color: #ccc;
+	color:#fff;
+	font-size:.14rem;
+}
+
+.noticeTitleBox{
+	padding: .1rem;
+    background-color: #f7f6f6;
+    color: #666666;
+    font-size: .14rem;
+    border: 1px solid #ccc;
+    display: none;
+}

@@ -1,0 +1,1022 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kycrm.member.dao.marketing.IMarketingMemberFilterDao">
+
+	<resultMap type="com.kycrm.member.domain.entity.member.MemberInfoDTO"
+		id="memberInfoDTO">
+		<result column="ID" property="id" />
+		<result column="BUYER_NICK" property="buyerNick" />
+		<result column="RECEIVER_NAME" property="receiverName" />
+		<result column="MOBILE" property="mobile" />
+		<result column="BUYER_ALIPAY_NO" property="buyerAlipayNo" />
+		<result column="BUYER_EMAIL" property="buyerEmail" />
+		<result column="GENDER" property="gender" />
+		<result column="BIRTHDAY" property="birthday" />
+		<result column="AGE" property="age" />
+		<result column="WE_CHAT" property="weChat" />
+		<result column="QQ" property="qq" />
+		<result column="OCCUPATION" property="occupation" />
+		<result column="PROVINCE" property="province" />
+		<result column="CITY" property="city" />
+		<result column="RELATION_SOURCE" property="relationSource" />
+		<result column="TRADE_NUM" property="tradeNum" />
+		<result column="TRADE_AMOUNT" property="tradeAmount" />
+		<result column="AVG_TRADE_PRICE" property="avgTradePrice" />
+		<result column="ITEM_NUM" property="itemNum" />
+		<result column="CLOSE_TRADE_NUM" property="closeTradeNum" />
+		<result column="LAST_TRADE_TIME" property="lastTradeTime" />
+		<result column="REMARKS" property="remarks" />
+		<result column="REMARK_STR_TIME" property="remarkStrTime" />
+		<!-- <association property="orderDTO" javaType="com.kycrm.member.domain.entity.order.OrderDTO"> 
+			<result column="RECEIVER_ADDRESS" property="receiverAddress"/> </association> -->
+	</resultMap>
+
+	<resultMap type="com.kycrm.member.domain.entity.member.MemberDetailDTO"
+		id="memberDetailDTO">
+		<result column="ID" property="id" />
+		<result column="BUYER_NICK" property="buyerNick" />
+		<result column="RECEIVER_NAME" property="receiverName" />
+		<result column="MOBILE" property="mobile" />
+		<result column="BUYER_ALIPAY_NO" property="buyerAlipayNo" />
+		<result column="BUYER_EMAIL" property="buyerEmail" />
+		<result column="GENDER" property="gender" />
+		<result column="BIRTHDAY" property="birthday" />
+		<result column="AGE" property="age" />
+		<result column="WE_CHAT" property="weChat" />
+		<result column="QQ" property="qq" />
+		<result column="OCCUPATION" property="occupation" />
+		<result column="PROVINCE" property="province" />
+		<result column="CITY" property="city" />
+		<result column="RELATION_SOURCE" property="relationSource" />
+		<result column="TRADE_NUM" property="tradeNum" />
+		<result column="TRADE_AMOUNT" property="tradeAmount" />
+		<result column="AVG_TRADE_PRICE" property="avgTradePrice" />
+		<result column="ITEM_NUM" property="itemNum" />
+		<result column="CLOSE_TRADE_NUM" property="closeTradeNum" />
+		<result column="LAST_TRADE_TIME" property="lastTradeTime" />
+		<result column="REMARKS" property="remarks" />
+		<result column="REMARK_STR_TIME" property="remarkStrTime" />
+		<result column="RECEIVER_INFO_STR" property="receiverInfoStr" />
+	</resultMap>
+
+	<!-- 使用会员表和订单表关联查询会员信息 -->
+	<select id="findFromMemberInfoDTOJoinOrderDTO" parameterType="java.util.Map"
+		resultMap="memberInfoDTO">
+		SELECT
+		MEM.ID,
+		MEM.BUYER_NICK,
+		MEM.RECEIVER_NAME,
+		MEM.LAST_TRADE_TIME,
+		MEM.TRADE_NUM,
+		MEM.TRADE_AMOUNT,
+		MEM.AVG_TRADE_PRICE,
+		MEM.MOBILE,
+		M1.RECEIVER_ADDRESS
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} MEM, (
+		SELECT
+		M.ID,
+		O.RECEIVER_ADDRESS
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} M,
+		CRM_ORDER_DTO${uid}
+		O
+		WHERE
+		M.BUYER_NICK = O.BUYER_NICK
+		AND
+		M.UID = #{uid}
+		<!-- 最近交易时间与最近未交易时间* -->
+		<include refid="memberInfoDTO_tradeTimeAndUntradeTime" />
+		<!-- 订单来源* -->
+		<include refid="orderDTO_orderFrom" />
+		<!-- 交易成功次数* -->
+		<include refid="memberInfoDTO_tradeNum" />
+		<!-- 订单状态* -->
+		<include refid="orderDTO_status" />
+		<!-- 累计消费金额* -->
+		<include refid="memberInfoDTO_tradeAmount" />
+		<!-- 平均订单金额* -->
+		<include refid="memberInfoDTO_avgTradePrice" />
+		<!-- 指定商品* -->
+		<include refid="orderDTO_numIid" />
+		<!-- 关闭交易次数* -->
+		<include refid="memberInfoDTO_closeTradeNum" />
+		<!-- 地区筛选【省份】* -->
+		<include refid="memberInfoDTO_province" />
+		<!-- 地区筛选【城市】* -->
+		<include refid="memberInfoDTO_city" />
+		<!-- 交易宝贝件数 -->
+		<include refid="memberInfoDTO_itemNum" />
+		<!-- 拍下订单时段* -->
+		<include refid="orderDTO_tradeCreatedTime" />
+		<!-- 参与短信营销活动次数* -->
+		<include refid="memberInfoDTO_marketingSmsNumber" />
+		<!-- 卖家标记* -->
+		<include refid="orderDTO_sellerFlag" />
+		<!-- 已发送过滤* -->
+		<include refid="memberInfoDTO_lastMarketingTime" />
+		<!-- 黑名单* -->
+		<include refid="memberInfoDTO_status" />
+		<!-- 中差评 -->
+		<include refid="memberInfoDTO_neutralBadRate" />
+		<!-- 发送短信时配合limit使用 -->
+		<include refid="limit_id" />
+		GROUP BY M.ID
+		ORDER BY M.ID DESC
+		<!-- 分页组件 -->
+		<include refid="pagination" />
+		) M1
+		WHERE
+		MEM.ID = M1.ID
+	</select>
+
+	<!-- 所有筛选条件都在会员表中，只进行会员表的单表查询 -->
+	<select id="findFromMemberInfoDTO" parameterType="java.util.Map"
+		resultMap="memberInfoDTO">
+		SELECT
+		MEM.ID,
+		MEM.BUYER_NICK,
+		MEM.RECEIVER_NAME,
+		MEM.LAST_TRADE_TIME,
+		MEM.TRADE_NUM,
+		MEM.TRADE_AMOUNT,
+		MEM.AVG_TRADE_PRICE,
+		MEM.MOBILE
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} MEM, (
+		SELECT
+		ID
+		FROM
+		CRM_MEMBER_INFO_DTO${uid}
+		M
+		WHERE
+		UID = #{uid}
+		<!-- 最近交易时间* -->
+		<include refid="memberInfoDTO_tradeTimeAndUntradeTime" />
+		<!-- 交易成功次数* -->
+		<include refid="memberInfoDTO_tradeNum" />
+		<!-- 累计消费金额* -->
+		<include refid="memberInfoDTO_tradeAmount" />
+		<!-- 平均订单金额* -->
+		<include refid="memberInfoDTO_avgTradePrice" />
+		<!-- 关闭交易次数* -->
+		<include refid="memberInfoDTO_closeTradeNum" />
+		<!-- 地区筛选【省份】* -->
+		<include refid="memberInfoDTO_province" />
+		<!-- 地区筛选【城市】* -->
+		<include refid="memberInfoDTO_city" />
+		<!-- 交易宝贝件数 -->
+		<include refid="memberInfoDTO_itemNum" />
+		<!-- 参与短信营销活动次数* -->
+		<include refid="memberInfoDTO_marketingSmsNumber" />
+		<!-- 已发送过滤* -->
+		<include refid="memberInfoDTO_lastMarketingTime" />
+		<!-- 黑名单* -->
+		<include refid="memberInfoDTO_status" />
+		<!-- 中差评 -->
+		<include refid="memberInfoDTO_neutralBadRate" />
+		<!-- 发送短信时配合limit使用 -->
+		<include refid="limit_id" />
+		ORDER BY M.ID DESC
+		<include refid="pagination" />
+		) M1
+		WHERE
+		MEM.ID = M1.ID
+	</select>
+
+	<!-- 根据会员筛选条件，使用会员表和订单表联合查询会员数量 -->
+	<select id="findCountFromMemberInfoDTOJoinOrderDTO"
+		parameterType="java.util.Map" resultType="java.lang.Long">
+		SELECT
+		COUNT(1)
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} MEM,(
+		SELECT
+		M.ID
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} M,
+		CRM_ORDER_DTO${uid} O
+		WHERE
+		M.BUYER_NICK =
+		O.BUYER_NICK
+		AND
+		M.UID = #{uid}
+		<!-- 最近交易时间* -->
+		<include refid="memberInfoDTO_tradeTimeAndUntradeTime" />
+		<!-- 订单来源* -->
+		<include refid="orderDTO_orderFrom" />
+		<!-- 交易成功次数* -->
+		<include refid="memberInfoDTO_tradeNum" />
+		<!-- 订单状态* -->
+		<include refid="orderDTO_status" />
+		<!-- 累计消费金额* -->
+		<include refid="memberInfoDTO_tradeAmount" />
+		<!-- 平均订单金额* -->
+		<include refid="memberInfoDTO_avgTradePrice" />
+		<!-- 指定商品* -->
+		<include refid="orderDTO_numIid" />
+		<!-- 关闭交易次数* -->
+		<include refid="memberInfoDTO_closeTradeNum" />
+		<!-- 地区筛选【省份】* -->
+		<include refid="memberInfoDTO_province" />
+		<!-- 地区筛选【城市】* -->
+		<include refid="memberInfoDTO_city" />
+		<!-- 交易宝贝件数 -->
+		<include refid="memberInfoDTO_itemNum" />
+		<!-- 拍下订单时段* -->
+		<include refid="orderDTO_tradeCreatedTime" />
+		<!-- 参与短信营销活动次数* -->
+		<include refid="memberInfoDTO_marketingSmsNumber" />
+		<!-- 卖家标记* -->
+		<include refid="orderDTO_sellerFlag" />
+		<!-- 已发送过滤* -->
+		<include refid="memberInfoDTO_lastMarketingTime" />
+		<!-- 黑名单* -->
+		<include refid="memberInfoDTO_status" />
+		<!-- 中差评 -->
+		<include refid="memberInfoDTO_neutralBadRate" />
+		<!-- 买家昵称 -->
+		<include refid="memberInfoDTO_buyerNick" />
+		<!-- 手机号码 -->
+		<include refid="memberInfoDTO_mobile" />
+		GROUP BY M.ID
+		) M1
+		WHERE
+		MEM.ID = M1.ID
+	</select>
+
+	<!-- 根据会员筛选条件，使用会员表查询会员数量 -->
+	<select id="findCountFromMemberInfoDTO" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		SELECT
+		COUNT(1)
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} MEM,(
+		SELECT
+		ID
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} M
+		WHERE
+		UID = #{uid}
+		<!-- 最近交易时间* -->
+		<include refid="memberInfoDTO_tradeTimeAndUntradeTime" />
+		<!-- 交易成功次数* -->
+		<include refid="memberInfoDTO_tradeNum" />
+		<!-- 累计消费金额* -->
+		<include refid="memberInfoDTO_tradeAmount" />
+		<!-- 平均订单金额* -->
+		<include refid="memberInfoDTO_avgTradePrice" />
+		<!-- 关闭交易次数* -->
+		<include refid="memberInfoDTO_closeTradeNum" />
+		<!-- 地区筛选【省份】* -->
+		<include refid="memberInfoDTO_province" />
+		<!-- 地区筛选【城市】* -->
+		<include refid="memberInfoDTO_city" />
+		<!-- 交易宝贝件数 -->
+		<include refid="memberInfoDTO_itemNum" />
+		<!-- 参与短信营销活动次数* -->
+		<include refid="memberInfoDTO_marketingSmsNumber" />
+		<!-- 已发送过滤* -->
+		<include refid="memberInfoDTO_lastMarketingTime" />
+		<!-- 黑名单* -->
+		<include refid="memberInfoDTO_status" />
+		<!-- 中差评 -->
+		<include refid="memberInfoDTO_neutralBadRate" />
+		<!-- 买家昵称 -->
+		<include refid="memberInfoDTO_buyerNick" />
+		<!-- 手机号码 -->
+		<include refid="memberInfoDTO_mobile" />
+		<!-- 客户来源 -->
+		<include refid="memberInfoDTO_relationSource" />
+		) M1
+		WHERE
+		MEM.ID = M1.ID
+	</select>
+
+	<!-- 使用会员表查询会员信息 -->
+	<select id="findFromMemberInfoDTOForMemberInformation"
+		parameterType="java.util.Map" resultMap="memberInfoDTO">
+		SELECT
+		MEM.ID,
+		MEM.BUYER_NICK,
+		MEM.MOBILE,
+		MEM.TRADE_AMOUNT,
+		MEM.TRADE_NUM,
+		MEM.AVG_TRADE_PRICE,
+		MEM.RELATION_SOURCE,
+		MEM.LAST_TRADE_TIME
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} MEM,(
+		SELECT
+		ID
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} M
+		WHERE
+		UID = #{uid}
+		<!-- 买家昵称 -->
+		<include refid="memberInfoDTO_buyerNick" />
+		<!-- 客户来源 -->
+		<include refid="memberInfoDTO_relationSource" />
+		<!-- 交易成功次数* -->
+		<include refid="memberInfoDTO_tradeNum" />
+		<!-- 手机号码 -->
+		<include refid="memberInfoDTO_mobile" />
+		<!-- 累计消费金额* -->
+		<include refid="memberInfoDTO_tradeAmount" />
+		<!-- 平均订单金额* -->
+		<include refid="memberInfoDTO_avgTradePrice" />
+		<!-- 最近交易时间与最近未交易时间* -->
+		<include refid="memberInfoDTO_tradeTimeAndUntradeTime" />
+		<include refid="pagination" />
+		) M1
+		WHERE
+		MEM.ID = M1.ID
+	</select>
+
+	<!-- 查询指定会员详情 -->
+	<select id="findMemberInfoDetail" parameterType="java.util.Map"
+		resultMap="memberDetailDTO">
+		SELECT
+		M.ID,
+		M.BUYER_NICK,
+		M.RECEIVER_NAME,
+		M.MOBILE,
+		M.BUYER_ALIPAY_NO,
+		M.BUYER_EMAIL,
+		M.GENDER,
+		M.BIRTHDAY,
+		M.AGE,
+		M.WE_CHAT,
+		M.QQ,
+		M.OCCUPATION,
+		M.PROVINCE,
+		M.CITY,
+		M.RECEIVER_INFO_STR,
+		M.CUR_GRADE_NAME,
+		M.RELATION_SOURCE,
+		M.TRADE_NUM,
+		M.TRADE_AMOUNT,
+		M.AVG_TRADE_PRICE,
+		M.CLOSE_TRADE_NUM,
+		M.ITEM_NUM,
+		M.CLOSE_ITEM_NUM,
+		M.LAST_TRADE_TIME,
+		M.REMARKS,
+		M.REMARK_STR_TIME
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} M
+		LEFT OUTER JOIN
+		CRM_ORDER_DTO${uid} O
+		ON
+		M.BUYER_NICK = O.BUYER_NICK
+		WHERE
+		M.UID = #{uid}
+		AND
+		M.ID = #{id}
+		LIMIT 0,1
+	</select>
+
+	<update id="updateMemberInformationDetail" parameterType="java.util.Map">
+		UPDATE
+		CRM_MEMBER_INFO_DTO${uid}
+		SET
+		BUYER_EMAIL = #{buyerEmail},
+		GENDER =
+		#{gender},
+		BIRTHDAY = #{birthday},
+		AGE = #{age},
+		WE_CHAT = #{weChat},
+		QQ =
+		#{qq},
+		OCCUPATION = #{occupation}
+		WHERE
+		UID = #{uid}
+		AND
+		ID = #{id}
+	</update>
+
+	<update id="updateMemberRemark" parameterType="java.util.Map">
+		UPDATE
+		CRM_MEMBER_INFO_DTO${uid}
+		SET
+		REMARKS = #{remark},
+		REMARK_STR_TIME =
+		#{remarkStrTime}
+		WHERE
+		UID = #{uid}
+		AND
+		ID = #{id}
+	</update>
+
+	<update id="deleteMemberRemark" parameterType="java.util.Map">
+		UPDATE
+		CRM_MEMBER_INFO_DTO${uid}
+		SET
+		REMARKS = null
+		WHERE
+		UID = #{uid}
+		AND
+		ID =
+		#{id}
+	</update>
+
+	<!-- 查询店铺内成交一次的客户数量 -->
+	<select id="findBuyingOneTimeCustomer" parameterType="java.util.Map"
+		resultType="int">
+		SELECT
+		COUNT(1)
+		FROM
+		(
+		SELECT
+		COUNT(1) AS TRADE_TIMES
+		FROM
+		CRM_ORDER_DTO${uid} O
+		GROUP BY
+		O.BUYER_NICK
+		) T
+		WHERE
+		T.TRADE_TIMES = 1
+	</select>
+
+	<!-- 查询店铺内成交两次及两次以上的客户数量 -->
+	<select id="findBuyingGreaterThanTwoTimes" parameterType="java.util.Map"
+		resultType="int">
+		SELECT
+		COUNT(1)
+		FROM
+		(
+		SELECT
+		COUNT(1) AS TRADE_TIMES
+		FROM
+		CRM_ORDER_DTO${uid} O
+		GROUP BY
+		O.BUYER_NICK
+		) T
+		WHERE
+		T.TRADE_TIMES &gt;= 2
+	</select>
+
+	<!-- 查询意向客户 -->
+	<select id="findIntentionCustomer" parameterType="java.util.Map"
+		resultType="int">
+		SELECT
+		COUNT(1)
+		FROM
+		CRM_ORDER_DTO${uid} O
+		WHERE
+		O.UID = #{uid}
+		AND
+		O.STATUS = 'WAIT_BUYER_PAY'
+	</select>
+
+	<!-- 查询近三个月未交易的客户数量 -->
+	<select id="findLastThreeMonthsUntradedCustomer" parameterType="java.util.Map"
+		resultType="int">
+		SELECT
+		COUNT(1)
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} M
+		WHERE
+		M.UID =
+		#{uid}
+		AND M.LAST_TRADE_TIME &lt;= DATE_FORMAT(
+		DATE_ADD(NOW(), INTERVAL
+		- 3 MONTH),
+		'%Y-%m-%d %H:%i:%s')
+	</select>
+
+	<!-- 查询指定店铺所有客户数量 -->
+	<select id="findAllCustomer" parameterType="java.util.Map"
+		resultType="int">
+		SELECT
+		COUNT(1) AS TRADE_TIMES
+		FROM
+		CRM_MEMBER_INFO_DTO${uid}
+		M
+		WHERE
+		M.UID = #{uid}
+	</select>
+
+	<select id="findMemberCountByCreatedDate" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		SELECT
+		COUNT(1)
+		FROM
+		CRM_MEMBER_INFO_DTO${uid} MEM,
+		(
+		SELECT
+		DISTINCT M.ID
+		FROM
+		CRM_MEMBER_INFO_DTO196 M,
+		CRM_ORDER_DTO196 O
+		WHERE
+		M.BUYER_NICK = O.BUYER_NICK
+		AND M.UID = 196
+		AND O.CREATEDDATE &lt;=
+		DATE("2018-11-20 00:00:00")
+		AND M.OPERATOR IS NULL
+		AND M.DNSEG_THREE IS
+		NULL
+		AND M.DNSEG_PROVINCE IS NULL
+		AND M.DNSEG_CITY IS NULL
+		) M1
+		WHERE
+		MEM.ID = M1.ID
+	</select>
+
+	<!-- ##### 以下是CRM_MEMBER_INFO_DTO筛选条件 ##### -->
+	<!-- 交易时间与未交易时间 -->
+	<sql id="memberInfoDTO_tradeTimeAndUntradeTime">
+		<if test="tradeTimeOrUntradeTime != null ">
+			<choose>
+				<when test="tradeTimeOrUntradeTime == 1 ">
+					<if test="tradeTime != null">
+						AND
+						M.LAST_TRADE_TIME &gt;= #{tradeTime}
+					</if>
+					<if test="minTradeTime != null and maxTradeTime == null">
+						AND
+						M.LAST_TRADE_TIME &gt;= #{minTradeTime}
+					</if>
+					<if test="maxTradeTime != null and minTradeTime == null">
+						AND
+						M.LAST_TRADE_TIME &lt;= #{maxTradeTime}
+					</if>
+					<if test="minTradeTime != null and maxTradeTime != null">
+						AND
+						(
+						M.LAST_TRADE_TIME &gt;= #{minTradeTime}
+						AND
+						M.LAST_TRADE_TIME &lt;= #{maxTradeTime}
+						)
+					</if>
+				</when>
+				<otherwise>
+					<if test="tradeTime != null ">
+						AND
+						M.LAST_TRADE_TIME &lt;= #{tradeTime}
+					</if>
+					<if test="minTradeTime != null and maxTradeTime == null">
+						AND
+						M.LAST_TRADE_TIME &lt;= #{minTradeTime}
+					</if>
+					<if test="maxTradeTime != null and minTradeTime == null">
+						AND
+						M.LAST_TRADE_TIME &gt;= #{maxTradeTime}
+					</if>
+					<if test="minTradeTime != null and maxTradeTime != null">
+						AND
+						(
+						M.LAST_TRADE_TIME &lt;= #{minTradeTime}
+						OR
+						M.LAST_TRADE_TIME &gt;= #{maxTradeTime}
+						)
+					</if>
+				</otherwise>
+			</choose>
+		</if>
+	</sql>
+
+	<!-- 交易成功次数 -->
+	<sql id="memberInfoDTO_tradeNum">
+		<choose>
+			<when test="tradeNum != null">
+				AND
+				M.TRADE_NUM = #{tradeNum}
+			</when>
+			<otherwise>
+				<if test="minTradeNum != null and maxTradeNum== null">
+					AND
+					M.TRADE_NUM &gt;= #{minTradeNum}
+				</if>
+				<if test="maxTradeNum != null and minTradeNum == null">
+					AND
+					M.TRADE_NUM &lt;= #{maxTradeNum}
+				</if>
+				<if test="minTradeNum != null and maxTradeNum != null">
+					AND
+					(
+					M.TRADE_NUM &gt;= #{minTradeNum}
+					AND
+					M.TRADE_NUM &lt;=
+					#{maxTradeNum}
+					)
+				</if>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<!-- 累计消费金额 -->
+	<sql id="memberInfoDTO_tradeAmount">
+		<choose>
+			<when test="tradeAmount != null">
+				AND
+				M.TRADE_AMOUNT = #{tradeAmount}
+			</when>
+			<otherwise>
+				<if test="minTradeAmount != null and maxTradeAmount == null">
+					AND
+					M.TRADE_AMOUNT &gt;= #{minTradeAmount}
+				</if>
+				<if test="maxTradeAmount != null and minTradeAmount == null">
+					AND
+					M.TRADE_AMOUNT &lt;= #{maxTradeAmount}
+				</if>
+				<if test="minTradeAmount != null and maxTradeAmount != null">
+					AND
+					(
+					M.TRADE_AMOUNT &gt;= #{minTradeAmount}
+					AND
+					M.TRADE_AMOUNT &lt;= #{maxTradeAmount}
+					)
+				</if>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<!-- 平均订单金额 -->
+	<sql id="memberInfoDTO_avgTradePrice">
+		<choose>
+			<when test="avgTradePrice != null">
+				AND
+				M.AVG_TRADE_PRICE = #{avgTradePrice}
+			</when>
+			<otherwise>
+				<if test="minAvgTradePrice != null and maxAvgTradePrice == null">
+					AND
+					M.AVG_TRADE_PRICE &gt;= #{minAvgTradePrice}
+				</if>
+				<if test="maxAvgTradePrice != null and minAvgTradePrice == null">
+					AND
+					M.AVG_TRADE_PRICE &lt;= #{maxAvgTradePrice}
+				</if>
+				<if test="minAvgTradePrice != null and maxAvgTradePrice != null">
+					AND
+					(
+					M.AVG_TRADE_PRICE &gt;= #{minAvgTradePrice}
+					AND
+					M.AVG_TRADE_PRICE &lt;= #{maxAvgTradePrice}
+					)
+				</if>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<!-- 关闭交易次数 -->
+	<sql id="memberInfoDTO_closeTradeNum">
+		<choose>
+			<when test="closeTradeNum != null">
+				AND
+				M.CLOSE_TRADE_NUM = #{closeTradeNum}
+			</when>
+			<otherwise>
+				<if test="minCloseTradeNum != null and maxCloseTradeNum == null">
+					AND
+					M.CLOSE_TRADE_NUM &gt;= #{minCloseTradeNum}
+				</if>
+				<if test="maxCloseTradeNum != null and minCloseTradeNum == null">
+					AND
+					M.CLOSE_TRADE_NUM &lt;= #{maxCloseTradeNum}
+				</if>
+				<if test="minCloseTradeNum != null and maxCloseTradeNum != null">
+					AND
+					(
+					M.CLOSE_TRADE_NUM &gt;= #{minCloseTradeNum}
+					AND
+					M.CLOSE_TRADE_NUM &lt;= #{maxCloseTradeNum}
+					)
+				</if>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<!--交易宝贝件数 -->
+	<sql id="memberInfoDTO_itemNum">
+		<choose>
+			<when test="itemNum != null">
+				AND
+				M.ITEM_NUM = #{itemNum}
+			</when>
+			<otherwise>
+				<if test="minItemNum != null and maxItemNum == null">
+					AND
+					M.ITEM_NUM &gt;= #{minItemNum}
+				</if>
+				<if test="maxItemNum != null and minItemNum == null">
+					AND
+					M.ITEM_NUM &lt;= #{maxItemNum}
+				</if>
+				<if test="minItemNum != null and maxItemNum != null">
+					AND
+					(
+					M.ITEM_NUM &gt;= #{minItemNum}
+					AND
+					M.ITEM_NUM &lt;=
+					#{maxItemNum}
+					)
+				</if>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<!-- 地区筛选【省份】 -->
+	<sql id="memberInfoDTO_province">
+		<if test="provinceArray != null and sendOrNotSendForArea == 1">
+			AND
+			M.PROVINCE IN
+			<foreach collection="provinceArray" item="province" open="("
+				close=")" separator=",">
+				#{province}
+			</foreach>
+		</if>
+		<if test="provinceArray != null and sendOrNotSendForArea == -1">
+			AND
+			M.PROVINCE NOT IN
+			<foreach collection="provinceArray" item="province" open="("
+				close=")" separator=",">
+				#{province}
+			</foreach>
+		</if>
+	</sql>
+
+	<!-- 地区筛选【城市】 -->
+	<sql id="memberInfoDTO_city">
+		<if test="cityArray != null and sendOrNotSendForArea == 1 ">
+			AND
+			M.CITY IN
+			<foreach collection="cityArray" item="city" open="(" close=")"
+				separator=",">
+				#{city}
+			</foreach>
+		</if>
+		<if test="cityArray != null and sendOrNotSendForArea == -1 ">
+			AND
+			M.CITY NOT IN
+			<foreach collection="cityArray" item="city" open="(" close=")"
+				separator=",">
+				#{city}
+			</foreach>
+		</if>
+	</sql>
+
+	<!-- 营销短信发送次数 -->
+	<sql id="memberInfoDTO_marketingSmsNumber">
+		<choose>
+			<when test="marketingSmsNumber != null">
+				AND
+				M.MARKETING_SMS_NUMBER = #{marketingSmsNumber}
+				<if test="minMarketingSmsNumber == 0">
+					OR
+					M.MARKETING_SMS_NUMBER IS NULL
+				</if>
+			</when>
+			<otherwise>
+				<if
+					test="minMarketingSmsNumber != null and maxMarketingSmsNumber == null">
+					AND
+					M.MARKETING_SMS_NUMBER &gt;= #{minMarketingSmsNumber}
+					<if test="minMarketingSmsNumber == 0">
+						OR
+						M.MARKETING_SMS_NUMBER IS NULL
+					</if>
+				</if>
+				<if
+					test="maxMarketingSmsNumber != null and minMarketingSmsNumber == null">
+					AND
+					M.MARKETING_SMS_NUMBER &lt;= #{maxMarketingSmsNumber}
+					<if test="minMarketingSmsNumber == null or maxMarketingSmsNumber == 0">
+						OR
+						M.MARKETING_SMS_NUMBER IS NULL
+					</if>
+				</if>
+				<if
+					test="minMarketingSmsNumber != null and maxMarketingSmsNumber != null">
+					AND
+					(
+					M.MARKETING_SMS_NUMBER &gt;= #{minMarketingSmsNumber}
+					AND
+					M.MARKETING_SMS_NUMBER &lt;= #{maxMarketingSmsNumber}
+					)
+					<if test="minMarketingSmsNumber == 0 or minMarketingSmsNumber == null">
+						OR
+						M.MARKETING_SMS_NUMBER IS NULL
+					</if>
+				</if>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<!-- 已发送过滤 -->
+	<sql id="memberInfoDTO_lastMarketingTime">
+		<if test="lastMarketingTime != null">
+			AND
+			(
+			M.LAST_SEND_TIME &lt;= #{lastMarketingTime}
+			OR
+			M.LAST_SEND_TIME IS NULL
+			)
+		</if>
+	</sql>
+
+	<!-- 过滤条件【黑名单】 -->
+	<sql id="memberInfoDTO_status">
+		<if test="memberStatus != null and memberStatus != '' ">
+			AND
+			M.STATUS = #{memberStatus}
+		</if>
+	</sql>
+
+	<!-- 过滤条件【中差评】 -->
+	<sql id="memberInfoDTO_neutralBadRate">
+		<if test="neutralBadRate != null and neutralBadRate != '' ">
+			AND
+			M.NEUTRAL_BAD_RATE = #{neutralBadRate}
+		</if>
+	</sql>
+
+	<!-- 买家昵称 -->
+	<sql id="memberInfoDTO_buyerNick">
+		<if test="buyerNick != null and buyerNick != '' ">
+			AND
+			M.BUYER_NICK = #{buyerNick}
+		</if>
+	</sql>
+
+	<!-- 手机号码 -->
+	<sql id="memberInfoDTO_mobile">
+		<if test="mobile != null and mobile != '' ">
+			AND
+			M.MOBILE = #{mobile}
+		</if>
+	</sql>
+
+	<!-- 客户来源 -->
+	<sql id="memberInfoDTO_relationSource">
+		<if test="relationSource != null and relationSource != '' ">
+			AND
+			M.RELATION_SOURCE = #{relationSource}
+		</if>
+	</sql>
+	<!-- ##### 以上是CRM_MEMBER_INFO_DTO筛选条件 ##### -->
+
+	<!-- #####以下是CRM_ORDER_DTO表筛选条件##### -->
+	<!-- 订单来源 -->
+	<sql id="orderDTO_orderFrom">
+		<if test="orderFrom != null ">
+			AND
+			O.ORDER_FROM LIKE "%${orderFrom}%"
+		</if>
+	</sql>
+
+	<!-- 订单状态 -->
+	<sql id="orderDTO_status">
+		<choose>
+			<when test="orderStatus != null and orderStatus != ''">
+				AND
+				O.STATUS = #{orderStatus}
+			</when>
+			<otherwise>
+				<if test="orderStatusArray != null">
+					AND
+					O.STATUS IN
+					<foreach collection="orderStatusArray" item="orderStatus"
+						open="(" close=")" separator=",">
+						#{orderStatus}
+					</foreach>
+				</if>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<!-- 指定商品编号 -->
+	<sql id="orderDTO_numIid">
+		<if test="sendOrNotSendForGoods == 1">
+			<if test="specifyGoodsOrKeyCodeGoods == 1">
+				<if test="numIidArray != null ">
+					AND
+					O.NUM_IID IN
+					<foreach collection="numIidArray" item="item" open="("
+						close=")" separator=",">
+						#{item}
+					</foreach>
+				</if>
+			</if>
+			<if test="specifyGoodsOrKeyCodeGoods == -1">
+				<if test="goodsKeyCode != null and goodsKeyCode != ''">
+					AND
+					O.NUM_IID IN (SELECT I.NUM_IID FROM CRM_ITEM${uid} I
+					WHERE I.TITLE LIKE
+					"%"#{goodsKeyCode}"%")
+				</if>
+			</if>
+		</if>
+		<if test="sendOrNotSendForGoods == -1">
+			<if test="specifyGoodsOrKeyCodeGoods == 1">
+				<if test="numIidArray != null ">
+					AND
+					O.NUM_IID NOT IN
+					<foreach collection="numIidArray" item="item" open="("
+						close=")" separator=",">
+						#{item}
+					</foreach>
+				</if>
+			</if>
+			<if test="specifyGoodsOrKeyCodeGoods == -1">
+				<if test="goodsKeyCode != null and goodsKeyCode != ''">
+					AND
+					O.NUM_IID NOT IN (SELECT I.NUM_IID FROM
+					CRM_ITEM${uid}
+					I WHERE I.TITLE LIKE
+					"%"#{goodsKeyCode}"%")
+				</if>
+			</if>
+		</if>
+	</sql>
+
+	<!-- 拍下订单时段 -->
+	<sql id="orderDTO_tradeCreatedTime">
+		<if test="orderTimeSectionStart != null and orderTimeSectionEnd == null">
+			AND
+			O.TRADE_CREATED_TIME &gt;= #{orderTimeSectionStart}
+		</if>
+		<if test="orderTimeSectionEnd != null and orderTimeSectionStart == null">
+			AND
+			O.TRADE_CREATED_TIME &lt;= #{orderTimeSectionEnd}
+		</if>
+		<if test="orderTimeSectionStart != null and orderTimeSectionEnd != null">
+			AND
+			(
+			O.TRADE_CREATED_TIME &gt;= #{orderTimeSectionStart}
+			AND
+			O.TRADE_CREATED_TIME &lt;= #{orderTimeSectionEnd}
+			)
+		</if>
+	</sql>
+
+	<!-- 卖家标记 -->
+	<sql id="orderDTO_sellerFlag">
+		<if test="sellerFlagArray != null">
+			AND (
+			O.SELLER_FLAG IN
+			<foreach collection="sellerFlagArray" item="sellerFlag" open="("
+				close=")" separator=",">
+				#{sellerFlag}
+			</foreach>
+			<if test="unsign == true">
+				OR
+				O.SELLER_FLAG IS NULL
+			</if>
+			)
+		</if>
+	</sql>
+	<sql id="orderDTO_sellerFlag_new">
+		<if test="sellerFlagArray != null">
+			<if test="unsign == true or colorFlag == true">
+				AND NOT EXISTS (
+				SELECT 1 FROM CRM_ORDER_DTO${uid} CO
+				WHERE
+				O.TID =
+				CO.TID
+				AND
+				<choose>
+					<when
+						test="unsign == true and (colorFlag == false or colorFlag == null)">
+						CO.SELLER_FLAG IN (1,2,3,4,5)
+					</when>
+					<when test="(unsign == false or unsign == null) and colorFlag == true">
+						CO.SELLER_FLAG = 0 OR CO.SELLER_FLAG IS NULL
+					</when>
+					<otherwise>
+						(CO.SELLER_FLAG = 0 OR CO.SELLER_FLAG IS NULL)
+						OR
+						CO.SELLER_FLAG IN
+						<foreach collection="sellerFlagArray" item="sellerFlag"
+							open="(" close=")" separator=",">
+							#{sellerFlag}
+						</foreach>
+					</otherwise>
+				</choose>
+				GROUP BY CO.BUYER_NICK
+				)
+			</if>
+		</if>
+	</sql>
+	<!-- ##### 以上是CRM_ORDER_DTO筛选条件 ##### -->
+
+	<!-- ID范围 -->
+	<sql id="limit_id">
+		<if test="limitId != null">
+			AND
+			M.ID &lt; #{limitId}
+		</if>
+	</sql>
+
+	<!-- 分页 -->
+	<sql id="pagination">
+		<if test="startRows !=null  and currentRows != null ">
+			LIMIT #{startRows},#{currentRows}
+		</if>
+	</sql>
+</mapper>

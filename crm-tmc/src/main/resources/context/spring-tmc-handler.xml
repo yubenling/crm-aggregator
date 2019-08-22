@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	
+	<!-- 下单关怀 -->
+	<bean id="tradeCreateChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+<!-- 				<ref bean="tradeVendormarkHandler" />   		卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 常规催付 -->
+	<bean id="tradeFirstPaymentChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+<!-- 				<ref bean="tradeVendormarkHandler" />   		卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="tradeReminderTimeHandler" />			<!-- 进行延后时间拼凑 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 二次催付 -->
+	<bean id="tradeSecondPaymentChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+<!-- 				<ref bean="tradeVendormarkHandler" />   		卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="tradeReminderTimeHandler" />			<!-- 进行延后时间拼凑 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 聚划算催付 -->
+	<bean id="tradeDiscountPaymentChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+<!-- 				<ref bean="tradeVendormarkHandler" />   		卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="tradeReminderTimeHandler" />			<!-- 进行延后时间拼凑 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 好评提醒 -->
+	<bean id="tradeBuyerRatedRemindChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+				<ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="tradeReminderTimeHandler" />			<!-- 进行延后时间拼凑 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	<!-- 中差评安抚 -->
+	<bean id="ratePacifyChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	<!-- 中差评监控 -->
+	<bean id="rateMonitoringChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 付款关怀-->
+	<bean id="tradeBuyerPayChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 延迟发货 -->
+	<bean id="tradeDelaySendGoodsChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="tradeReminderTimeHandler" />			<!-- 进行延后时间拼凑 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 发货关怀 -->
+	<bean id="tradeGoodsSendChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!--到达同城 -->
+	<bean id="tradeArrivalCityChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!--派件提醒 -->
+	<bean id="tradeSentScanChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!--签收提醒 -->
+	<bean id="tradeGoodsSingnedChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 宝贝关怀 -->
+	<bean id="tradeGoodsCareChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="tradeReminderTimeHandler" />			<!-- 进行延后时间拼凑 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 回款提醒 -->
+	<bean id="tradeRemindTradeFinshedChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="tradeReminderTimeHandler" />			<!-- 进行延后时间拼凑 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 申请退款 -->
+	<bean id="tradeRefundCreateChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 同意退款 -->
+	<bean id="tradeRefundAgreeChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 拒绝退款，等待买家退货 -->
+	<bean id="tradeRefundRefuseChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 退款成功 -->
+	<bean id="tradeRefundSuccessChain" class="com.kycrm.tmc.core.handle.impl.DefaultHandlerChain">
+		<property name="handlerList">
+			<list>
+				<ref bean="tradeExecuteTimeHandler" />   		<!-- 任务时间 -->
+                <ref bean="tradeValidateCratedTimeHandler" />   <!-- 订单创建时间判断 -->
+				<ref bean="tradeVendormarkHandler" />   		<!-- 卖家标记 -->
+				<ref bean="tradeFromHandler" />					<!-- 订单来源 -->
+				<ref bean="tradeMemberLevelHandler" />			<!-- 会员等级  暂未实现 -->
+				<ref bean="tradeProductNumkHandler" />			<!-- 商品数量 -->
+				<ref bean="tradePaymentHandler" />				<!-- 支付金额 -->
+				<ref bean="tradeLocationHandler" />				<!-- 地区筛选 -->
+				<ref bean="tradeGoodsHandler" />				<!-- 指定商品 -->
+				<ref bean="tradeBlackListHandler" />			<!-- 黑名单过滤 -->
+				<ref bean="sendTimeHandler" />         			<!-- 发送时间校验 -->
+			</list>
+		</property>
+	</bean>
+</beans>               

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans          
+    http://www.springframework.org/schema/beans/spring-beans.xsd          
+    http://code.alibabatech.com/schema/dubbo          
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!--消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="${dubbo.name}" />
+
+	<!--zookeeper注册中心 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}"
+		file="${dubbo.registry.base.path}/crm-tmc/dubbo-registry.properties" />
+
+	<!-- 协议 -->
+	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" />
+
+	<!-- 生成远程服务代理，可以和本地bean一样使用IMbrService -->
+	<!-- <dubbo:reference id="userInfoService" interface="com.kycrm.member.service.user.IUserInfoService" 
+		/> <dubbo:reference id="userAccountServiceImpl" interface="com.kycrm.member.service.user.IUserAccountService" 
+		/> -->
+	<!-- 黑名单服务 -->
+	<!-- <dubbo:reference id="smsBlackListServiceImpl" interface="com.kycrm.member.service.message.ISmsBlackListService" 
+		/> <dubbo:reference id="smsSendInfoServiceImpl" interface="com.kycrm.member.service.message.ISmsSendInfoService" 
+		/> <dubbo:reference id="smsSendInfoScheduleServiceImpl" interface="com.kycrm.member.service.message.ISmsSendInfoScheduleService" 
+		/> <dubbo:reference id="msgSendRecordServiceImpl" interface="com.kycrm.member.service.message.IMsgSendRecordService" 
+		/> <dubbo:reference id="pushSmsServiceImpl" interface="com.kycrm.member.service.message.IPushSmsService" 
+		/> <dubbo:reference id="smsRecordDTOServiceImpl" interface="com.kycrm.member.service.message.ISmsRecordDTOService" 
+		/> <dubbo:reference id="vipUserServiceImpl" interface="com.kycrm.member.service.vip.IVipUserService" 
+		/> -->
+
+	<!-- 生成远程服务代理，可以和本地bean一样使用IMbrService -->
+	<dubbo:reference id="userInfoService"
+		interface="com.kycrm.member.service.user.IUserInfoService" />
+	<dubbo:reference id="memberInfoService"
+		interface="com.kycrm.member.service.member.IMemberDTOService" />
+	<dubbo:reference id="tradeInfoService"
+		interface="com.kycrm.member.service.trade.ITradeDTOService" />
+	<dubbo:reference id="alipayService"
+		interface="com.kycrm.member.service.payment.IAlipayService" />
+	<dubbo:reference id="feedBackService"
+		interface="com.kycrm.member.service.feedback.IFeedBackService" />
+	<!-- 后台管理 author:jackstraw_yu -->
+	<dubbo:reference id="mobileSettingService"
+		interface="com.kycrm.member.service.other.IMobileSettingService" />
+	<!-- 订单中心 author:jackstraw_yu -->
+	<dubbo:reference id="tradeSetupService"
+		interface="com.kycrm.member.service.tradecenter.ITradeSetupService" />
+	<!-- 充值记录服务 -->
+	<dubbo:reference id="userRechargeService"
+		interface="com.kycrm.member.service.user.IUserRechargeService" />
+
+	<dubbo:reference id="marketingCenterEffectService"
+		interface="com.kycrm.member.service.effect.IMarketingCenterEffectService" />
+	<dubbo:reference id="tradeCenterEffectService"
+		interface="com.kycrm.member.service.effect.ITradeCenterEffectService" />
+	<dubbo:reference id="commodityGroupingService"
+		interface="com.kycrm.member.service.item.ICommodityGroupingService" />
+	<dubbo:reference id="groupedGoodsService"
+		interface="com.kycrm.member.service.item.IGroupedGoodsService" />
+	<dubbo:reference id="itemService"
+		interface="com.kycrm.member.service.item.IItemService" />
+	<dubbo:reference id="loginService"
+		interface="com.kycrm.member.service.login.ILoginService" />
+	<dubbo:reference id="msgSendRecordService"
+		interface="com.kycrm.member.service.message.IMsgSendRecordService" />
+	<dubbo:reference id="multithreadBatchSmsService"
+		interface="com.kycrm.member.service.message.IMultithreadBatchSmsService" />
+	<dubbo:reference id="pushSmsService"
+		interface="com.kycrm.member.service.message.IPushSmsService" />
+	<dubbo:reference id="smsReceiveInfoService"
+		interface="com.kycrm.member.service.message.ISmsReceiveInfoService" />
+	<dubbo:reference id="smsRecordDTOService"
+		interface="com.kycrm.member.service.message.ISmsRecordDTOService" />
+	<dubbo:reference id="smsSendInfoSchduleService"
+		interface="com.kycrm.member.service.message.ISmsSendInfoScheduleService" />
+	<dubbo:reference id="smsSendInfoService"
+		interface="com.kycrm.member.service.message.ISmsSendInfoService" />
+	<dubbo:reference id="orderDTOService"
+		interface="com.kycrm.member.service.order.IOrderDTOService" />
+	<dubbo:reference id="taskNodeService"
+		interface="com.kycrm.member.service.other.ITaskNodeService" />
+	<dubbo:reference id="tbTransactionOrderService"
+		interface="com.kycrm.member.service.trade.ITbTransactionOrderService" />
+	<dubbo:reference id="tradeRatesService"
+		interface="com.kycrm.member.service.traderate.ITradeRatesService" />
+	<dubbo:reference id="RechargeMenuService"
+		interface="com.kycrm.member.service.user.IRechargeMenuService" />
+	<dubbo:reference id="userPartitionInfoService"
+		interface="com.kycrm.member.service.user.IUserPartitionInfoService" />
+	<dubbo:reference id="vipUserService"
+		interface="com.kycrm.member.service.vip.IVipUserService" />
+	<dubbo:reference id="userAccountService"
+		interface="com.kycrm.member.service.user.IUserAccountService" />
+	<dubbo:reference id="smsBlackListDTOService"
+		interface="com.kycrm.member.service.message.ISmsBlackListDTOService" />
+	<dubbo:reference id="multithreadBatchIndividuationSmsService"
+		interface="com.kycrm.member.service.message.IMultithreadBatchIndividuationSmsService"></dubbo:reference>
+	<dubbo:reference id="itemDetailService"
+		interface="com.kycrm.member.service.effect.IItemDetailService"></dubbo:reference>
+	<dubbo:reference id="smsReportInfoService"
+		interface="com.kycrm.member.service.message.ISmsReportInfoService"
+		check="false" />
+	<dubbo:reference id="tempTradeService"
+		interface="com.kycrm.member.service.message.IMsgTempTradeService"
+		check="false" />
+	<dubbo:reference 
+	      id="batchSendMemberMessageService" 
+	      interface="com.kycrm.member.service.message.IBatchSendMemberMessageService"
+	      check="false"/>
+	<dubbo:reference id="effectStandardRFMService"
+		interface="com.kycrm.member.service.effect.IEffectStandardRFMService"
+		check="false" />
+</beans>
