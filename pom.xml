@@ -93,7 +93,7 @@
 		<standard.version>1.1.2</standard.version>
 		<taobao.version>1.0</taobao.version>
 		<jedis.version>2.9.0</jedis.version>
-		<logback.version>1.0.7</logback.version>
+		<logback.version>1.2.0</logback.version>
 	</properties>
 
 	<!-- 依赖管理 -->
