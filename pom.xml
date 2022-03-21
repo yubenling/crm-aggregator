@@ -72,7 +72,7 @@
 		<mysql-connector-java.version>5.1.36</mysql-connector-java.version>
 		<tomcat-servlet-api.version>7.0.42</tomcat-servlet-api.version>
 		<javax-jsr.version>1.0</javax-jsr.version>
-		<dubbo.version>2.5.8</dubbo.version>
+		<dubbo.version>2.6.9</dubbo.version>
 		<zkclient.version>0.4</zkclient.version>
 		<zookeeper.version>3.4.9</zookeeper.version>
 		<common.lang.version>3.4</common.lang.version>
