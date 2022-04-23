@@ -64,7 +64,7 @@
 		<!-- 以下是第三方依赖包版本 -->
 		<junit.version>4.10</junit.version>
 		<javax.servlet-api.version>3.0.1</javax.servlet-api.version>
-		<spring.version>4.2.9.RELEASE</spring.version>
+		<spring.version>5.3.19</spring.version>
 		<mybatis.version>3.3.1</mybatis.version>
 		<spring.mybatis.version>1.3.0</spring.mybatis.version>
 		<log4j.version>1.2.16</log4j.version>
