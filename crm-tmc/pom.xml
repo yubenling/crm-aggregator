@@ -18,7 +18,7 @@
 	<description>tmc模块</description>
 	
 	<properties>
-		<spring.version>4.3.8.RELEASE</spring.version>
+		<spring.version>5.2.22.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
