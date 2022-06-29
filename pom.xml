@@ -74,7 +74,7 @@
 		<javax-jsr.version>1.0</javax-jsr.version>
 		<dubbo.version>2.5.8</dubbo.version>
 		<zkclient.version>0.4</zkclient.version>
-		<zookeeper.version>3.4.9</zookeeper.version>
+		<zookeeper.version>3.4.14</zookeeper.version>
 		<common.lang.version>3.4</common.lang.version>
 		<guava.version>19.0</guava.version>
 		<gson.version>1.7.2</gson.version>
