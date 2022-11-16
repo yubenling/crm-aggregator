@@ -86,7 +86,7 @@
 		<httpclient.version>4.5</httpclient.version>
 		<joda.version>2.9.4</joda.version>
 		<disruptor.version>3.3.4</disruptor.version>
-		<jackson.version>2.4.5</jackson.version>
+		<jackson.version>2.12.7.1</jackson.version>
 		<beanutils.version>1.8.3</beanutils.version>
 		<logging.version>1.1.1</logging.version>
 		<jstl.version>1.2</jstl.version>
